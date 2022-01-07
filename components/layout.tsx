@@ -1,79 +1,57 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from './layout.module.css'
-import utilStyles from '../styles/utils.module.css'
-import Link from 'next/link'
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const name = '[Your Name]'
-export const siteTitle = 'Next.js Sample Website'
+const name = '[Your Name]';
+export const siteTitle = 'Next.js Sample Website';
 
-export default function Layout({
-  children,
-  home
-}: {
-  children: React.ReactNode
-  home?: boolean
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content="Learn how to build a personal website using Next.js"
-        />
-        <meta
-          property="og:image"
-          content={`https://og-image.vercel.app/${encodeURI(
-            siteTitle
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-        />
+        <meta name="description" content="Learn how to build a personal website using Next.js" />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="crossorigin" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Dosis:400,500,700&amp;subset=latin,latin-ext"
+          rel="stylesheet"
+          type="text/css"
+        />
       </Head>
-      <header className={styles.header}>
-        {home ? (
-          <>
-            <Image
-              priority
-              src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt={name}
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <a>
-                <Image
-                  priority
-                  src="/images/profile.jpg"
-                  className={utilStyles.borderCircle}
-                  height={108}
-                  width={108}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
-              </Link>
-            </h2>
-          </>
-        )}
+      <header>
+        <h1 className="blog-name">vespaiach</h1>
+        <p className="sub-blog-name">LEARN, SHARE,...REPEAT</p>
       </header>
+      <nav>
+        <ul>
+          <li>
+            <Link href="/">HOME</Link>
+          </li>
+          <li>
+            <Link href="/">ABOUT</Link>
+          </li>
+          <li>
+            <Link href="/">FACEBOOK</Link>
+          </li>
+          <li>
+            <Link href="/">TWITTER</Link>
+          </li>
+        </ul>
+      </nav>
       <main>{children}</main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>← Back to home</a>
-          </Link>
-        </div>
-      )}
+      <style>{`
+      .container { max-width: 48rem; margin: 0 auto; }
+      .blog-name { font-size: 4rem;font-weight: 700; line-height: normal; margin: 0 0 12px 0;   }
+      .sub-blog-name { font-size: 2rem; font-weight: 300; line-height: 1.4; margin: 0 0 16px 0; }
+      .sub-blog-name, .blog-name { text-align: center; font-family: 'Amatic SC',sans-serif; }
+      nav { margin-bottom: 24px; }
+      nav ul { margin: 0; padding: 0; list-style: none; display: flex; }
+      nav ul li + li { margin-left: 12px; }
+      nav ul li a { font-weight: 400; font-size: 1rem; }
+      `}</style>
     </div>
-  )
+  );
 }
