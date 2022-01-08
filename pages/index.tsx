@@ -15,7 +15,7 @@ export default function Home({ posts }: { posts: PostData[] }) {
       </Head>
 
       {posts.map((post) => (
-        <Post post={post} key={post.id} short />
+        <Post post={post} key={post.id} excerpt />
       ))}
 
       <style jsx>{`

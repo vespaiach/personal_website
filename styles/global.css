@@ -5,9 +5,11 @@ body {
   font-family: Dosis, sans-serif;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.4;
   font-weight: 500;
+  color: hsl(0, 0%, 20%);
+  background: hsl(0, 0%, 80%);
 }
 
 * {
@@ -15,8 +17,11 @@ body {
 }
 
 a {
-  color: #0070f3;
   text-decoration: none;
+}
+
+a:visited {
+  color: hsl(0, 0%, 20%);
 }
 
 a:hover {
@@ -26,4 +31,17 @@ a:hover {
 img {
   max-width: 100%;
   display: block;
+}
+
+.icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  background: none;
 }
