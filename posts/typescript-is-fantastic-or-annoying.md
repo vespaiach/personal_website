@@ -22,5 +22,14 @@ I hope you won’t stumble into a wall anyway. Here are some tips about Typescri
 type NonNullable<T> = T extends null | undefined ? never : T;
 ```
 
+## keyof any
+
+That is string | number | symbol
+
+```Typescript
+type KeyofAny = string | number | symbol;
+```
+
+In fact, I use a PropertyType = string | number | symbol instead of keyof any. The reason why we still see keyof any in type declaration files of some libraries is for backward compatible purpose.
 
 
