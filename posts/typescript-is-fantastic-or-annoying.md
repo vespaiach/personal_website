@@ -32,4 +32,36 @@ type KeyofAny = string | number | symbol;
 
 In fact, I use a PropertyType = string | number | symbol instead of keyof any. The reason why we still see keyof any in type declaration files of some libraries is for backward compatible purpose.
 
+## Discriminated type union note
+
+Discriminated type union is great, it helps to show us possible values that we should handle when we come across `if` cases. Example: 
+
+```
+type Shape =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; x: number }
+
+const geometry: Shape;
+
+if (geometry.kind === 'circle') // editor will show us only possible values of geometry and that is `radius` in the case.
+```
+
+However, when Discriminated type union won't work with variable destructuring. Something like the code below won't work, and the editor won't show us the exact possible values that we want
+
+```
+type Shape =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; x: number }
+
+const geometry: Shape = { kind: 'circle', radius: 10 };
+
+const { kind, radius } = geometry;
+
+if (kind === 'circle') // editor get confused here
+```
+This is an knowning issue of current version of Typescript. I hope that will be fixed in next release.
+
+
+
+
 
