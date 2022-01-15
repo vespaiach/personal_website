@@ -18,7 +18,7 @@ I hope you won’t stumble into a wall anyway. Here are some tips about Typescri
  - When I don’t know exactly the type of my value, and my value can be any possible value: string, number, object… or union types… I will use unknown
  - I use never type in conditional type to narrow results, and it can say like that will never happen (No value can be assignable to variables of never type)
 
-```Typescript
+```typescript
 type NonNullable<T> = T extends null | undefined ? never : T;
 ```
 
@@ -26,7 +26,7 @@ type NonNullable<T> = T extends null | undefined ? never : T;
 
 That is string | number | symbol
 
-```Typescript
+```typescript
 type KeyofAny = string | number | symbol;
 ```
 
@@ -36,7 +36,7 @@ In fact, I use a PropertyType = string | number | symbol instead of keyof any. T
 
 Discriminated type union is great, it helps to show us possible values that we should handle when we come across `if` cases. Example: 
 
-```
+```typescript
 type Shape =
   | { kind: "circle"; radius: number }
   | { kind: "square"; x: number }
@@ -48,7 +48,7 @@ if (geometry.kind === 'circle') // editor will show us only possible values of g
 
 However, when Discriminated type union won't work with variable destructuring. Something like the code below won't work, and the editor won't show us the exact possible values that we want
 
-```
+```typescript
 type Shape =
   | { kind: "circle"; radius: number }
   | { kind: "square"; x: number }
