@@ -104,47 +104,6 @@ export function Post({ excerpt = true, post }: { excerpt?: boolean; post: PostDa
           </a>
         )}
       </p>
-
-      <style jsx>{`
-        article + article {
-          margin-top: 54px;
-        }
-        article {
-          color: hsl(0, 0%, 25%);
-        }
-        article h2,
-        article strong {
-          color: hsl(0, 0%, 0%);
-        }
-        article h2 {
-          font-size: 3.3125rem;
-          line-height: 1.3em;
-          font-weight: 700;
-          font-family: 'Amatic SC', sans-serif;
-          margin: 0 0 18px 0;
-        }
-        article h2 + p {
-          margin: 0 0 32px 0;
-        }
-        article .sub {
-          font-size: 0.9rem;
-        }
-        article .share {
-          margin: 24px 0 0 0;
-          display: flex;
-          align-items: center;
-        }
-        article .share a {
-          margin-left: 8px;
-        }
-        article .share a {
-          color: hsl(0, 0%, 0%);
-        }
-        article .share a.read-more {
-          color: hsl(0, 0%, 25%);
-          margin-left: auto;
-        }
-      `}</style>
     </article>
   );
 }

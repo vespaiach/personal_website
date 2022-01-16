@@ -3,8 +3,9 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import prism from 'remark-prism';
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+const postsDirectory = path.join(process.cwd(), 'docs');
 
 export function getSortedPostsData() {
   const fileNames = fs.readdirSync(postsDirectory);
@@ -21,7 +22,7 @@ export function getSortedPostsData() {
       ...matterResult.data,
     } as PostData;
   });
-  
+
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
       return 1;
@@ -48,7 +49,7 @@ export async function getPost(id: string) {
 
   const matterResult = matter(fileContents);
 
-  const processedContent = await remark().use(html).process(matterResult.content);
+  const processedContent = await remark().use(html, { sanitize: false }).use(prism).process(matterResult.content);
   const content = processedContent.toString();
 
   return {

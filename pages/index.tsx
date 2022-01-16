@@ -13,17 +13,9 @@ export default function Home({ posts }: { posts: PostData[] }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-
       {posts.map((post) => (
         <Post post={post} key={post.id} excerpt />
       ))}
-
-      <style jsx>{`
-        .blog-caption {
-          font-size: 3rem;
-          text-align: center;
-        }
-      `}</style>
     </Layout>
   );
 }
