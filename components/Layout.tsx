@@ -26,14 +26,18 @@ export default function Layout({
       <Head>
         <link rel="stylesheet" href="/main.css" />
       </Head>
-      <header className="bg-amber-500">
-        <div className="container px-6 py-9 mb-4 font-bold">
-          <h2 className="text-sm mb-1 text-slate-800">Vespaiach's Blog</h2>
-          <h1 className="text-2xl text-slate-800">LEARN TO SHARE</h1>
+      <header className="mb-11 pb-8 pt-10">
+        <div className="max-w-3xl mx-5 md:ml-20">
+          <h1 className="text-red-900 text-3xl font-bold">LEARN TO SHARE</h1>
+          <h2 className="text-slate-900 font-bold">
+            by{' '}
+            <a className="underline decoration-red-900" href="https://github.com/vespaiach">
+              Vespaiach
+            </a>
+          </h2>
         </div>
       </header>
-      <main className="container px-6">{children}</main>
-
+      <main className="max-w-3xl mx-5 md:ml-20">{children}</main>
       <footer></footer>
     </>
   );
