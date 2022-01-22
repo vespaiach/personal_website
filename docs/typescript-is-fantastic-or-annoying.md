@@ -1,20 +1,20 @@
 ---
-title: "Typescript is fantastic or annoying"
-date: "2022-01-08"
+title: 'Typescript is fantastic or annoying'
+date: '2022-01-08'
 excerpt: "Typescript is a great tool to help Javascript developers create clean, robust and stable code. However, I found it annoying sometimes, especially when I needed my jobs done fast, but didn't know how to fix TypeError. And that gave me a feeling like I have just headed myself into wall-bricks but didn't break through it 😎"
-github: https://github.com/vespaiach/personal_website/blob/main/posts/polymorphic-react-as-property.md
-tags: react,polymorphic react
+github: https://github.com/vespaiach/personal_website/blob/main/docs/typescript-is-fantastic-or-annoying.md
+tags: typescript
 ---
 
 I hope you won’t stumble into a wall anyway. Here are some tips about Typescript I’d love to share with you.
 
-## Any,  unknown, never
+## Any, unknown, never
 
-`any` type was added to Typescript first, later on v2 and v3 of Typescript respectively `unknown` type and `never` type were  introduced. Personally, I found their names confused, so don’t read them, here are how I recognize them:
+`any` type was added to Typescript first, later on v2 and v3 of Typescript respectively `unknown` type and `never` type were introduced. Personally, I found their names confused, so don’t read them, here are how I recognize them:
 
- - When I want my value to be free of type-checking, I will use `any`
- - When I don’t know exactly the type of my value, and my value can be any possible value: string, number, object… or union types… I will use `unknown`
- - I use `never` type in conditional type to narrow results, and it can say like that will never happen (No value can be assignable to variables of never type)
+- When I want my value to be free of type-checking, I will use `any`
+- When I don’t know exactly the type of my value, and my value can be any possible value: string, number, object… or union types… I will use `unknown`
+- I use `never` type in conditional type to narrow results, and it can say like that will never happen (No value can be assignable to variables of never type)
 
 ```typescript
 type NonNullable<T> = T extends null | undefined ? never : T;
@@ -32,7 +32,7 @@ In fact, I use a PropertyType = string | number | symbol instead of keyof any. T
 
 ## Discriminated type union note
 
-Discriminated type union is great, it helps to show us possible values that we should handle when we come across `if` cases. Example: 
+Discriminated type union is great, it helps to show us possible values that we should handle when we come across `if` cases. Example:
 
 ```typescript
 type Shape =
@@ -41,9 +41,9 @@ type Shape =
 
 const geometry: Shape;
 
-if (geometry.kind === 'circle') 
+if (geometry.kind === 'circle')
 /*
- * Editor will show us only possible values of geometry 
+ * Editor will show us only possible values of geometry
  * and that is `radius` in the case.
  * /
 ```
@@ -61,9 +61,15 @@ const { kind, radius } = geometry;
 
 if (kind === 'circle') // editor get confused here
 ```
-This is an knowning issue of current version of Typescript. I hope that will be fixed in next release.
 
+This is an knowning issue of current version of Typescript, and I hope that will be fixed in next release.
 
+## Digit string type
 
+We can use [Template Literal Type](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) to define a number-digit string type that are only digits.
 
+```typescript
+type StringDigitOnly = `${number}`
 
+const var : StringDigitOnly = "123";
+```
