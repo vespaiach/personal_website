@@ -22,7 +22,7 @@ type NonNullable<T> = T extends null | undefined ? never : T;
 
 ## Keyof any
 
-That is `string | number | symbol`
+That are `string | number | symbol`
 
 ```typescript
 type KeyofAny = string | number | symbol;

@@ -6,17 +6,20 @@ import { Share } from '@components/Share';
 import { getAllPostIds, getPost } from '@lib/posts';
 import Layout from '@components/Layout';
 
-export default function PostI({ post }: { post: PostData }) {
+export default function Post({ post }: { post: PostData }) {
+  const date = format(new Date(post.date), 'MMMM qq, yyyy');
+
   return (
     <Layout>
       <Head>
-        <title>{post.title} - by Vespaiach</title>
+        <title>{post.title}</title>
+        <meta name="description" content={post.excerpt} />
       </Head>
       <header className="max-w-3xl mx-5 md:ml-20">
-        <h1 id={post.id} className="font-heading text-4xl mt-16 text-red-900 font-bold mb-6">
+        <h1 id={post.id} className="font-heading text-5xl mt-16 text-red-900 font-bold mb-6">
           {post.title}
         </h1>
-        <p className="mb-12 uppercase text-sm ml-1">{format(new Date(post.date), 'MMMM qq, yyyy')}</p>
+        <p className="mb-12 uppercase text-sm ml-1">{date}</p>
       </header>
       <main className="max-w-3xl mx-5 md:ml-20">
         <article className="mb-16">
@@ -26,7 +29,7 @@ export default function PostI({ post }: { post: PostData }) {
             <a href={`#${post.id}`} className="underline">
               top
             </a>
-            <span className="px-4"> | </span>
+            <span className="px-3"> | </span>
             <a href="/" className="underline">
               home
             </a>
@@ -34,6 +37,19 @@ export default function PostI({ post }: { post: PostData }) {
           </p>
         </article>
       </main>
+      <footer className="py-3 bg-red-900">
+        <p className="mx-5 max-w-3xl md:ml-20 text-white flex items-center">
+          <span className="mr-1">by</span>
+          <a href="https://github.com/vespaiach" className="underline">
+            Vespaiach
+          </a>
+          <a
+            href={`https://github.com/vespaiach/personal_website/issues/new?title=${post.title}`}
+            className="ml-auto underline">
+            report
+          </a>
+        </p>
+      </footer>
     </Layout>
   );
 }
