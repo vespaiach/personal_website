@@ -4,3 +4,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .article p {
+    @apply mb-2;
+  }
+  .article h2 {
+    @apply mb-3 mt-8 text-2xl font-semibold;
+  }
+}

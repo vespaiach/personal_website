@@ -21,13 +21,13 @@ const markdownContent = `\n#Hello\n\nThis is me\n`;
 const result = await remark().use(html, { sanitize: false }).use(prism).process(markdownContent);
 ```
 
-First, we need `remark` for sure, then we need `remark-html` to transform markdown to html, finally the plugin `remark-prism` will help to highlight code examples by wrapping code examples into html tags: <pre> or <code> and insert appropriately class attributes into those tags.
+First, we need `remark` for sure, then we need `remark-html` to transform markdown to html, finally the plugin `remark-prism` will help to highlight code examples by wrapping code examples into html tags: `<pre>` or `<code>` and insert appropriately class attributes into those tags.
 
 ```javascript
-\`\`\`javascript
-const a = 1;
-console.log(a);
-```
+\\ ```javascript
+\\   const a = 1;
+\\   console.log(a);
+\\ ```
 to:
 
 <pre class="lang-javascript">

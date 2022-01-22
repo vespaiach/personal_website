@@ -6,7 +6,6 @@ declare module 'remark-html' {
 declare interface PostData {
   github?: string;
   excerpt: string;
-  avatar?: string;
   content: string;
   date: string;
   title: string;

@@ -28,7 +28,7 @@ export function Share({ link, title }) {
         onClick={(e) => {
           e.preventDefault();
           window.open(
-            `https://www.facebook.com/share.php?v=4&amp;src=bm&amp;u=${link}&amp;t=${title}`,
+            `https://www.facebook.com/share.php?v=4&src=bm&u=${link}&t=${title}`,
             'sharer',
             'toolbar=0,status=0,width=626,height=436'
           );

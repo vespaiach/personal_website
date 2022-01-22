@@ -6,11 +6,9 @@ github: https://github.com/vespaiach/personal_website/blob/main/posts/polymorphi
 tags: react,polymorphic react
 ---
 
-Typescript is a great tool to help Javascript developers create clean, robust and stable code. However, I found it annoying sometimes, especially when I needed my jobs done fast, but didn't know how to fix TypeError. And that gave me a feeling like I have just headed myself into wall-bricks but didn't break through it 😎.
-
 I hope you won’t stumble into a wall anyway. Here are some tips about Typescript I’d love to share with you.
 
-## any,  unknown, never
+## Any,  unknown, never
 
 `any` type was added to Typescript first, later on v2 and v3 of Typescript respectively `unknown` type and `never` type were  introduced. Personally, I found their names confused, so don’t read them, here are how I recognize them:
 
@@ -22,7 +20,7 @@ I hope you won’t stumble into a wall anyway. Here are some tips about Typescri
 type NonNullable<T> = T extends null | undefined ? never : T;
 ```
 
-## keyof any
+## Keyof any
 
 That is string | number | symbol
 
