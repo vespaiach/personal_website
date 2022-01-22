@@ -427,16 +427,41 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
+.article{
+  line-height: 1.625;
+}
+
 .article p{
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.article code:not(.remark-highlight code){
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-color: #f55e61ff;
+          text-decoration-color: #f55e61ff;
 }
 
 .article h2{
-  margin-bottom: 0.75rem;
-  margin-top: 2rem;
-  font-size: 1.5rem;
-  line-height: 2rem;
+  margin-bottom: 1.25rem;
+  margin-top: 3rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
   font-weight: 600;
+}
+
+.article ul{
+  margin-bottom: 1.75rem;
+  list-style-type: disc;
+  padding-left: 3rem;
+}
+
+.article ul li + li{
+  margin-top: 0.75rem;
+}
+
+.article .remark-highlight{
+  margin-bottom: 1.75rem;
 }
 
 *, ::before, ::after{
@@ -489,24 +514,44 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 1.25rem;
 }
 
-.mb-16{
-  margin-bottom: 4rem;
+.mb-11{
+  margin-bottom: 2.75rem;
+}
+
+.mb-20{
+  margin-bottom: 5rem;
 }
 
 .mb-2{
   margin-bottom: 0.5rem;
 }
 
-.mb-4{
-  margin-bottom: 1rem;
+.mb-7{
+  margin-bottom: 1.75rem;
 }
 
-.mb-11{
-  margin-bottom: 2.75rem;
+.mb-5{
+  margin-bottom: 1.25rem;
+}
+
+.mt-16{
+  margin-top: 4rem;
 }
 
 .mb-6{
   margin-bottom: 1.5rem;
+}
+
+.mb-12{
+  margin-bottom: 3rem;
+}
+
+.ml-1{
+  margin-left: 0.25rem;
+}
+
+.mb-16{
+  margin-bottom: 4rem;
 }
 
 .mt-8{
@@ -521,20 +566,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 0.5rem;
 }
 
-.mt-6{
-  margin-top: 1.5rem;
-}
-
-.mb-10{
-  margin-bottom: 2.5rem;
-}
-
-.mt-12{
-  margin-top: 3rem;
-}
-
-.mt-10{
-  margin-top: 2.5rem;
+.mr-3{
+  margin-right: 0.75rem;
 }
 
 .flex{
@@ -557,12 +590,26 @@ Ensure the default browser behavior of the `hidden` attribute.
   align-items: center;
 }
 
-.pb-8{
-  padding-bottom: 2rem;
+.bg-red-900{
+  background-color: #f55e61ff;
 }
 
-.pt-10{
-  padding-top: 2.5rem;
+.px-2{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.px-4{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.pb-10{
+  padding-bottom: 2.5rem;
+}
+
+.pt-16{
+  padding-top: 4rem;
 }
 
 .font-heading{
@@ -574,31 +621,54 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.75rem;
 }
 
+.text-5xl{
+  font-size: 3rem;
+  line-height: 1;
+}
+
 .text-3xl{
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
 
-.text-2xl{
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-bold{
   font-weight: 700;
 }
 
+.font-medium{
+  font-weight: 500;
+}
+
 .font-semibold{
   font-weight: 600;
 }
 
-.leading-8{
-  line-height: 2rem;
+.uppercase{
+  text-transform: uppercase;
+}
+
+.leading-relaxed{
+  line-height: 1.625;
 }
 
 .text-slate-900{
   --tw-text-opacity: 1;
   color: rgb(94 105 108 / var(--tw-text-opacity));
+}
+
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-red-900{
@@ -610,9 +680,9 @@ Ensure the default browser behavior of the `hidden` attribute.
           text-decoration-line: underline;
 }
 
-.decoration-red-900{
-  -webkit-text-decoration-color: #f55e61ff;
-          text-decoration-color: #f55e61ff;
+.decoration-white{
+  -webkit-text-decoration-color: #fff;
+          text-decoration-color: #fff;
 }
 
 @media (min-width: 768px){

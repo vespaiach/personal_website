@@ -6,6 +6,9 @@ module.exports = {
         red: {
           900: '#f55e61ff',
         },
+        cyan: {
+          900: '#5EF5F2ff',
+        },
         slate: {
           900: '#5e696c',
         },

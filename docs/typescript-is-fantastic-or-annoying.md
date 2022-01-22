@@ -12,9 +12,9 @@ I hope you won’t stumble into a wall anyway. Here are some tips about Typescri
 
 `any` type was added to Typescript first, later on v2 and v3 of Typescript respectively `unknown` type and `never` type were  introduced. Personally, I found their names confused, so don’t read them, here are how I recognize them:
 
- - When I want my value to be free of type-checking, I will use any
- - When I don’t know exactly the type of my value, and my value can be any possible value: string, number, object… or union types… I will use unknown
- - I use never type in conditional type to narrow results, and it can say like that will never happen (No value can be assignable to variables of never type)
+ - When I want my value to be free of type-checking, I will use `any`
+ - When I don’t know exactly the type of my value, and my value can be any possible value: string, number, object… or union types… I will use `unknown`
+ - I use `never` type in conditional type to narrow results, and it can say like that will never happen (No value can be assignable to variables of never type)
 
 ```typescript
 type NonNullable<T> = T extends null | undefined ? never : T;
@@ -22,7 +22,7 @@ type NonNullable<T> = T extends null | undefined ? never : T;
 
 ## Keyof any
 
-That is string | number | symbol
+That is `string | number | symbol`
 
 ```typescript
 type KeyofAny = string | number | symbol;
@@ -41,7 +41,11 @@ type Shape =
 
 const geometry: Shape;
 
-if (geometry.kind === 'circle') // editor will show us only possible values of geometry and that is `radius` in the case.
+if (geometry.kind === 'circle') 
+/*
+ * Editor will show us only possible values of geometry 
+ * and that is `radius` in the case.
+ * /
 ```
 
 However, when Discriminated type union won't work with variable destructuring. Something like the code below won't work, and the editor won't show us the exact possible values that we want
