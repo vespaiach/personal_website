@@ -2,8 +2,8 @@
 title: 'Use PrismJS with Remark to hightlight code'
 date: '2022-01-15'
 excerpt: "When I first tried to adopt PrismJS to hightlight code examples for my websites, I spent a lot of time to investigate why it didn't work for me. And that was so paintful for adopting just a small of code...😞"
-github: https://github.com/vespaiach/personal_website/blob/main/posts/use-prismjs-in-nextjs-with-remark-to-hightlight-code.md
-tags: prismjs,remark-prism,nextjs
+github: https://github.com/vespaiach/personal_website/blob/main/docs/use-prismjs-in-nextjs-with-remark-to-hightlight-code.md
+tags: prismjs,remark
 ---
 
 Honestly, I didn't read the documentation of all plugins which are used alone with Remark to produce code highlights. And I had paid for it my whole day of debugging. 

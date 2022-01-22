@@ -27,4 +27,7 @@
   .article .remark-highlight {
     @apply mb-7
   }
+  .article a {
+    @apply underline
+  }
 }
