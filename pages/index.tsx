@@ -32,7 +32,7 @@ export default function Home({ posts }: { posts: PostData[] }) {
         {posts.map((post) => (
           <article key={post.id} className="mb-20">
             <h3 className="font-heading text-3xl text-red-900 font-bold mb-2">{post.title}</h3>
-            <p className="mb-7 uppercase text-sm">{format(new Date(post.date), 'MMMM qq, yyyy')}</p>
+            <p className="mb-7 uppercase text-sm">{format(new Date(post.date), 'MMMM dd, yyyy')}</p>
             <p className="mb-5 font-semibold">{post.excerpt}</p>
             <p className="flex flex-row items-center">
               <Link href={`/posts/${post.id}`}>

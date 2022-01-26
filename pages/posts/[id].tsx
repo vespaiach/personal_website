@@ -7,7 +7,7 @@ import { getAllPostIds, getPost } from '@lib/posts';
 import Layout from '@components/Layout';
 
 export default function Post({ post }: { post: PostData }) {
-  const date = format(new Date(post.date), 'MMMM qq, yyyy');
+  const date = format(new Date(post.date), 'MMMM dd, yyyy');
 
   return (
     <Layout>
@@ -44,7 +44,7 @@ export default function Post({ post }: { post: PostData }) {
             Vespaiach
           </a>
           <a
-            href={`https://github.com/vespaiach/personal_website/issues/new?title=${post.title}`}
+            href={`https://github.com/vespaiach/personal_website/issues/new?title=[Report] ${post.title}&body=[${post.title}](${post.github})`}
             className="ml-auto underline">
             report
           </a>
