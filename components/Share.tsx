@@ -1,10 +1,20 @@
-export function Share({ link, title }) {
+import { Analytics } from '@segment/analytics-next';
+
+export function Share({ link, title, segment }: { link: string; title: string; segment?: Analytics }) {
+  const stopAndTrack = (e, target) => {
+    e.preventDefault();
+    segment?.track('Share link', {
+      target,
+      title,
+    });
+  };
+
   return (
     <>
       <a
         href="#"
         onClick={(e) => {
-          e.preventDefault();
+          stopAndTrack(e, 'Twitter');
           window.open(
             `https://twitter.com/intent/tweet?url=${link}&text=${title}`,
             'sharer',
@@ -26,7 +36,7 @@ export function Share({ link, title }) {
         href="#"
         className="flex items-center mr-3"
         onClick={(e) => {
-          e.preventDefault();
+          stopAndTrack(e, 'Facebook');
           window.open(
             `https://www.facebook.com/share.php?v=4&src=bm&u=${link}&t=${title}`,
             'sharer',
@@ -50,7 +60,7 @@ export function Share({ link, title }) {
         className="flex items-center"
         href="#"
         onClick={(e) => {
-          e.preventDefault();
+          stopAndTrack(e, 'Linkedin');
           window.open(
             `https://www.linkedin.com/shareArticle?mini=true&amp;url=${link}`,
             'sharer',

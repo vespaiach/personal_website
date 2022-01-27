@@ -1,13 +1,21 @@
-import Head from 'next/head';
+import { Analytics } from '@segment/analytics-next';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 
 import Layout from '@components/Layout';
 import { getSortedPostsData } from '@lib/posts';
 import { Share } from '@components/Share';
+import { useEffect } from 'react';
 
-export default function Home({ posts }: { posts: PostData[] }) {
+export default function Home({ posts, segment }: { posts: PostData[]; segment?: Analytics }) {
+  useEffect(() => {
+    if (segment) {
+      segment.page('Home page');
+    }
+  }, [segment]);
+
   return (
     <Layout>
       <Head>
@@ -38,7 +46,7 @@ export default function Home({ posts }: { posts: PostData[] }) {
               <Link href={`/posts/${post.id}`}>
                 <span className="underline cursor-pointer">read more</span>
               </Link>
-              <Share link={`https://vespaiach.com/posts/${post.id}`} title={post.title} />
+              <Share link={`https://vespaiach.com/posts/${post.id}`} title={post.title} segment={segment} />
             </p>
           </article>
         ))}
