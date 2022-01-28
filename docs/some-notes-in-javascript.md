@@ -47,7 +47,7 @@ The `n|0` or `n >> 0` operation simply truncates the decimal number n, because a
 
 ```javascript
 (5.1 | 0) === 5;
-5.1 >> 0 === 5;
+(5.1 >> 0) === 5;
 ```
 
 Since, we have `Math.trunc(x)` function now, let's not use bitwise-truncating. Otherwise, we have to aware of some odd comparision.
@@ -111,7 +111,7 @@ const y = 1;
  *
  * Whole evaluation will stop at x, because of x = false
  */
-const result = x && y + 1;
+const result = x && (y + 1);
 ```
 
 We also can use optional chain ?. operator to short-circuit expressions.
