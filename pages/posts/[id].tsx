@@ -1,20 +1,12 @@
-import { Analytics } from '@segment/analytics-next';
 import { format } from 'date-fns';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { useEffect } from 'react';
 import Head from 'next/head';
 
 import { getAllPostIds, getPost } from '@lib/posts';
 import { Share } from '@components/Share';
 import Layout from '@components/Layout';
 
-export default function Post({ post, segment }: { segment?: Analytics; post: PostData }) {
-  useEffect(() => {
-    if (segment) {
-      segment.page('Home page');
-    }
-  }, [segment]);
-
+export default function Post({ post }: { post: PostData }) {
   const date = format(new Date(post.date), 'MMMM dd, yyyy');
 
   return (
@@ -41,7 +33,7 @@ export default function Post({ post, segment }: { segment?: Analytics; post: Pos
             <a href="/" className="underline">
               home
             </a>
-            <Share link={`https://vespaiach.com/posts/${post.id}`} title={post.title} segment={segment} />
+            <Share link={`https://vespaiach.com/posts/${post.id}`} title={post.title} />
           </p>
         </article>
       </main>
