@@ -1,13 +1,13 @@
 import { Analytics } from '@segment/analytics-next';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
 import Layout from '@components/Layout';
 import { getSortedPostsData } from '@lib/posts';
 import { Share } from '@components/Share';
-import { useEffect } from 'react';
 
 export default function Home({ posts, segment }: { posts: PostData[]; segment?: Analytics }) {
   useEffect(() => {
