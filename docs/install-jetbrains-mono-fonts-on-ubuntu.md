@@ -2,7 +2,7 @@
 title: 'Install Jetbrains Mono fonts on Ubuntu'
 date: '2022-05-08'
 
-github: https://github.com/vespaiach/personal_website/blob/main/posts/install-jetbrains-mono-fonts-in-ubuntu.md
+github: https://github.com/vespaiach/personal_website/blob/main/docs/install-jetbrains-mono-fonts-on-ubuntu.md
 tags: ubuntu, jetbrains mono
 ---
 
