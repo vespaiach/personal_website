@@ -1,8 +1,8 @@
 ---
-title: 'Use Flake8 and Black to lint and format Python code in VSCode.'
+title: 'Use Flake8 and Black to lint and format Python code.'
 date: '2022-05-15'
 excerpt: 'Regularly, writing code is meant to be read by other programmers, that’s why making our code easy to read and easy to follow along are necessary especially when we are in a team.'
-github: https://github.com/vespaiach/personal_website/blob/main/docs/use-flake8-black-in-vscode.md
+github: https://github.com/vespaiach/personal_website/blob/main/docs/use-flake8-and-black.md
 tags: flake8, black, python
 ---
 
@@ -20,7 +20,9 @@ Install Flake8 with pip:
 pip install flake8
 ```
 
-To run Flake8, simply invoke `flake8` in the root folder of the project. Flake will run through all files and print out any error or warning. It is also possible to pass some arguments directly to Flake8.
+To run Flake8, simply invoke `flake8` in the root folder of the project. Flake will run through all files and print out any error or warning. 
+
+It is also possible to pass some arguments directly to Flake8.
 
 
 ```bash
@@ -39,7 +41,7 @@ max-doc-length = 100
 ```
 
 **Note:** 
- - Flake8 hasn't support (`pyproject.toml`](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/) which is a minus point of Flake8.
+ - Flake8 hasn't supported (`pyproject.toml`](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/) which is a minus point of Flake8.
  - For complete options, please refer to this [link](https://flake8.pycqa.org/en/latest/user/options.html)
 
 ## Black
