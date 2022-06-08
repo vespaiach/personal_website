@@ -24,14 +24,10 @@ Copy fonts to local share directory:
 cp ./jetbrains-fonts/fonts/ttf/JetBrainsMono-*.ttf ~/.local/share/fonts
 rm -rf ./jetbrains-fonts
 ```
-Copy fonts to local share directory:
+
+Or install it on system-wide, you will need sudo permission to do that
 
 ```bash
-cp ./jetbrains-fonts/fonts/ttf/JetBrainsMono-*.ttf ~/.local/share/fonts
-rm -rf ./jetbrains-fonts
-
-# Or install it on system-wide, you will need sudo permission to do that
-
 sudo cp ./jetbrains-fonts/fonts/ttf/JetBrainsMono-*.ttf /usr/local/share/fonts
 rm -rf ./jetbrains-fonts
 ```

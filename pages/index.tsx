@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
-import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -13,6 +12,17 @@ export default function Home({ posts }: { posts: PostData[] }) {
     <Layout>
       <Head>
         <title>Learn to share - by Vespaiach</title>
+
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_GTAG_ID}`}></script>
+        <script dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_GTAG_ID}');
+            `
+        }}/>
+
         <meta
           name="description"
           content="Knowledge sharing is the way to make our life better, and that is all this website about."
