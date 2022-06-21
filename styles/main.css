@@ -1,33 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Spline+Sans:wght@300;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;600&family=Spline+Sans:wght@300;500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  .article {
-    @apply leading-relaxed;
-  }
-  .article p {
-    @apply mb-7;
-  }
-  .article code:not(.remark-highlight code) {
-    @apply underline decoration-red-900;
-  }
-  .article h2 {
-    @apply mb-5 mt-12 text-3xl font-semibold;
-  }
-  .article ul {
-    @apply pl-12 list-disc mb-7
-  }
-  .article ul li + li {
-    @apply mt-3
-  }
-  .article .remark-highlight {
-    @apply mb-7
-  }
-  .article a {
-    @apply underline
-  }
+    .article {
+        @apply leading-relaxed;
+    }
+    .article p {
+        @apply mb-7;
+    }
+    .article code:not(.remark-highlight code) {
+        @apply underline decoration-red-900;
+    }
+    .article h2 {
+        @apply mb-5 mt-12 text-3xl font-semibold;
+    }
+    .article ul {
+        @apply pl-12 list-disc mb-7;
+    }
+    .article ul li + li {
+        @apply mt-3;
+    }
+    .article .remark-highlight {
+        @apply mb-7;
+    }
+    .article a {
+        @apply underline;
+    }
 }

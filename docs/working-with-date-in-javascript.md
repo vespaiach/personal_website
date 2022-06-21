@@ -1,5 +1,5 @@
 ---
-title: 'Working With Date In Javascript'
+title: 'Working With Date object In Javascript'
 date: '2022-06-20'
 excerpt: "Working with Date is not always straightforward, sometimes it may overwhelm developers, even seasoned ones. In this article, I will share my experience that will help you to deal with Date in Javascript."
 github: https://github.com/vespaiach/personal_website/blob/main/docs/working-with-date-in-javascript.md
@@ -94,41 +94,6 @@ if (date1 == date2) {} // this will always be false, two objects can be equality
 ## Loop through date range or month range
 
 In Date constructor, what if we put a wrong date in, for instance new Date(2022, 12, 32), Javascript will automatically correct them which is very handy in this case. We can leverage this autocorection to loop through the date range.
-
-
-```js
-// Loop through date range
-const fromDate = new Date(2022, 0, 1)
-const currDate = new Date()
-while(fromDate < currDate) {
-    ....
-    fromDate.setDate(fromDate.getDate() + 1)
-}
-```
-
-```js
-// Loop through month range
-const fromDate = new Date(2022, 0, 1)
-const currDate = new Date()
-while(fromDate < currDate) {
-    ....
-    fromDate.setMonth(fromDate.getMonth() + 1)
-}
-```
-
-## Get first date of month
-
-If we are given a Date object, we can get the first date of its month by setting it date to 1
-
-```js
-// Loop through month range
-const date = new Date()
-date.setDate(1)
-```
-
-## Loop through date range or month range
-
-In Date constructor, what if we put a wrong date in, for instance new Date(2022, 12, 32), Javascript will automatically correct them which is very handy in this case. We can leverage this autocorection to loop through date range (in the same timezone/offest).
 
 
 ```js
