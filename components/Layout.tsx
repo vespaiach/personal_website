@@ -118,7 +118,7 @@ export default function Layout({ children, report }: { report?: string; children
                                         </div>
                                     </nav>
                                     <div className="flex-1 flex justify-center items-end">
-                                        <span className='mb-3    text-orange-600 font-bold'>Vespaiach's Blog</span>
+                                        <span className='mb-3 text-orange-600 font-bold text-xl'>Vespaiach's Blog</span>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@ export default function Layout({ children, report }: { report?: string; children
                                 {report && (
                                     <>
                                         <div> • </div>
-                                        <a href={report} target="_blank">
+                                        <a href={report} target="_blank" className='text-orange-600'>
                                             Report
                                         </a>
                                     </>

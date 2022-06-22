@@ -1,4 +1,5 @@
 module.exports = {
+    darkMode: 'class',
     content: ['./pages/**/*.tsx', './components/**/*.tsx'],
     plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
     theme: {
