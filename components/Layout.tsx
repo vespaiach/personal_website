@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { useCallback, useRef } from 'react';
 import BulbIcon from './BulbIcon';
 import CloseIcon from './CloseIcon';
 import GithubIcon from './GithubIcon';
@@ -8,6 +9,28 @@ import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
 
 export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {
+    const menuRef = useRef<HTMLDivElement | null>(null);
+    const handleOpen = useCallback(
+        (evt) => {
+            if (!menuRef.current) return;
+
+            menuRef.current.classList.add('translate-x-0');
+            menuRef.current.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden';
+        },
+        [menuRef.current],
+    );
+    const handleClose = useCallback(
+        (evt) => {
+            if (!menuRef.current) return;
+
+            menuRef.current.classList.add('translate-x-full');
+            menuRef.current.classList.remove('translate-x-0');
+            document.body.style.overflow = 'unset';
+        },
+        [menuRef.current],
+    );
+
     return (
         <>
             <Head>
@@ -21,7 +44,7 @@ export default function Layout({ children, report }: { report?: string; children
                         <div>
                             <a aria-label="Vespaiach's Blog" href="/" title="Vespaiach's Blog">
                                 <div className="flex items-center justify-between">
-                                    <div className="hidden h-6 text-2xl text-orange-600 font-semibold sm:block">
+                                    <div className="sm:h-8 md:h-6 text-2xl text-orange-600 font-semibold sm:block">
                                         Vespaiach's Blog
                                     </div>
                                 </div>
@@ -53,43 +76,50 @@ export default function Layout({ children, report }: { report?: string; children
                             </button>
                             <div className="sm:hidden">
                                 <button
+                                    onClick={handleOpen}
                                     type="button"
                                     className="ml-1 mr-1 h-8 w-8 rounded py-1"
-                                    aria-label="Toggle Menu">
+                                    aria-label="Open Menu">
                                     <HamburgerIcon />
                                 </button>
-                                <div className="fixed top-0 left-0 z-10 h-full w-full transform bg-gray-200 opacity-95 duration-300 ease-in-out dark:bg-gray-800 translate-x-full">
+                                <div
+                                    ref={menuRef}
+                                    className="flex flex-col fixed top-0 left-0 z-10 h-full w-full transform bg-[#fafafa] opacity-95 duration-300 ease-in-out dark:bg-gray-800 translate-x-full">
                                     <div className="flex justify-end">
                                         <button
+                                            onClick={handleClose}
                                             type="button"
-                                            className="mr-5 mt-11 h-8 w-8 rounded"
-                                            aria-label="Toggle Menu">
+                                            className="mr-5 mt-11 h-8 w-8 rounded text-gray-800"
+                                            aria-label="Close menu">
                                             <CloseIcon />
                                         </button>
                                     </div>
-                                    <nav className="fixed mt-8 h-full">
+                                    <nav className="mt-8">
                                         <div className="px-12 py-4">
-                                            <a
-                                                className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
-                                                href="/blog">
-                                                Posts
-                                            </a>
+                                            <Link href="/posts">
+                                                <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
+                                                    Posts
+                                                </a>
+                                            </Link>
                                         </div>
                                         <div className="px-12 py-4">
-                                            <a
-                                                className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
-                                                href="/tags">
-                                                Tags
-                                            </a>
+                                            <Link href="/tags">
+                                                <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
+                                                    Tags
+                                                </a>
+                                            </Link>
                                         </div>
                                         <div className="px-12 py-4">
-                                            <a
-                                                className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
-                                                href="/about">
-                                                About
-                                            </a>
+                                            <Link href="/about">
+                                                <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
+                                                    About
+                                                </a>
+                                            </Link>
                                         </div>
                                     </nav>
+                                    <div className="flex-1 flex justify-center items-end">
+                                        <span className='mb-3    text-orange-600 font-bold'>Vespaiach's Blog</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
