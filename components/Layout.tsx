@@ -11,8 +11,7 @@ export default function Layout({ children, report }: { report?: string; children
         <>
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="author" content="Vespaiach - I'm a web developer."></meta>
-                <link rel="stylesheet" href="/main.css" />
+                <meta name="author" content="Vespaiach - I'm a web developer." />
             </Head>
 
             <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">

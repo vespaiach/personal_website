@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from 'next/head';
 
-import { getAllPostIds, getPost } from '@lib/posts';
+import { getAllPostIds, getPostById } from '@lib/posts';
 import Layout from '@components/Layout';
 import UpIcon from '@components/UpIcon';
 import { format } from '@lib/utils';
@@ -67,7 +67,7 @@ export default function Post({ post }: { post: PostData }) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const paths = getAllPostIds();
+    const paths = await getAllPostIds();
     return {
         paths,
         fallback: false,
@@ -75,7 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const post = await getPost(params.id as string);
+    const post = await getPostById(params.id as string);
     return {
         props: {
             post,

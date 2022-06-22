@@ -37,3 +37,7 @@ export const MONTHS = [
 export function format(dt: Date) {
     return `${MONTHS[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
 }
+
+export function cx(...name: unknown[]) {
+    return name.filter(Boolean).map(String).join(' ') || undefined;
+}
