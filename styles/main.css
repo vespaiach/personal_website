@@ -27,4 +27,8 @@
     .article a {
         @apply underline;
     }
+    a:hover {
+        @apply text-cyan-600;
+    }
 }
+

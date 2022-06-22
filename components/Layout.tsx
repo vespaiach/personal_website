@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import BulbIcon from './BulbIcon';
 import CloseIcon from './CloseIcon';
 import GithubIcon from './GithubIcon';
@@ -18,10 +19,9 @@ export default function Layout({ children, report }: { report?: string; children
                 <div className="flex h-screen flex-col justify-between">
                     <header className="flex items-center justify-between py-10">
                         <div>
-                            <a aria-label="TailwindBlog" href="/">
+                            <a aria-label="Vespaiach's Blog" href="/" title="Vespaiach's Blog">
                                 <div className="flex items-center justify-between">
-                                    <div className="mr-3"></div>
-                                    <div className="hidden h-6 text-2xl font-semibold sm:block">
+                                    <div className="hidden h-6 text-2xl text-orange-600 font-semibold sm:block">
                                         Vespaiach's Blog
                                     </div>
                                 </div>
@@ -29,26 +29,26 @@ export default function Layout({ children, report }: { report?: string; children
                         </div>
                         <div className="flex items-center text-base leading-5">
                             <div className="hidden sm:block">
-                                <a
-                                    className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
-                                    href="/">
-                                    Posts
-                                </a>
-                                <a
-                                    className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
-                                    href="/tags">
-                                    Tags
-                                </a>
-                                <a
-                                    className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
-                                    href="/about">
-                                    About
-                                </a>
+                                <Link href="/">
+                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                        Posts
+                                    </a>
+                                </Link>
+                                <Link href="/tags">
+                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                        Tags
+                                    </a>
+                                </Link>
+                                <Link href="/about">
+                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                        About
+                                    </a>
+                                </Link>
                             </div>
                             <button
                                 aria-label="Toggle Dark Mode"
                                 type="button"
-                                className="ml-1 mr-1 h-8 w-8 rounded p-1 sm:ml-4">
+                                className="ml-1 mr-1 h-8 w-8 rounded p-1 sm:ml-4 text-gray-500 hover:text-cyan-600">
                                 <BulbIcon />
                             </button>
                             <div className="sm:hidden">
@@ -128,7 +128,9 @@ export default function Layout({ children, report }: { report?: string; children
                                 <div> • </div>
                                 <div>© 2022</div>
                                 <div> • </div>
-                                <a href="/">Vespaiach's Blog</a>
+                                <a href="/" title="Vespaiach's blog">
+                                    Vespaiach's Blog
+                                </a>
                                 {report && (
                                     <>
                                         <div> • </div>

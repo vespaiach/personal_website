@@ -1,5 +1,5 @@
-import { format } from "@lib/utils";
-import Link from "next/link";
+import { format } from '@lib/utils';
+import Link from 'next/link';
 
 export default function PostList({ posts }: { posts: PostData[] }) {
     return (
@@ -19,7 +19,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                     <h3 className="text-2xl font-bold leading-8 tracking-tight">
                                         <Link href={`/posts/${post.id}`}>
                                             <a
-                                                className="text-gray-900 dark:text-gray-100"
+                                                className="text-gray-800 dark:text-gray-100 hover:text-cyan-600"
                                                 title={post.title}>
                                                 {post.title}
                                             </a>
@@ -28,7 +28,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                     <div className="flex flex-wrap">
                                         {post.tags.map((tag, i) => (
                                             <Link key={i} href={`/tags/${tag}`}>
-                                                <a className="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                                                <a className="mr-3 text-sm font-medium uppercase text-gray-200 hover:text-cyan-600">
                                                     {tag}
                                                 </a>
                                             </Link>

@@ -1,9 +1,9 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 
 import Layout from '@components/Layout';
 import { getAllTagsData } from '@lib/posts';
+import TagList from '@components/TagList';
 
 export default function Tags({ tags }: { tags: TagData[] }) {
     return (
@@ -18,22 +18,7 @@ export default function Tags({ tags }: { tags: TagData[] }) {
                             Tags
                         </h1>
                     </div>
-                    <div className="flex max-w-lg flex-wrap">
-                        {tags.map((tag, i) => (
-                            <div key={i} className="mt-2 mb-2 mr-5">
-                                <Link href={`/tags/${tag.name}`}>
-                                    <a className="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                                        {tag.name}
-                                    </a>
-                                </Link>
-                                <Link href={`/tags/${tag.name}`}>
-                                    <a className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300">
-                                        ({tag.count})
-                                    </a>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
+                    <TagList tags={tags} />
                 </div>
             </main>
         </Layout>
