@@ -48,8 +48,8 @@ export default function Post({ post }: { post: PostData }) {
                             className="divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:divide-y-0"
                             style={{ gridTemplateRows: 'auto 1fr' }}>
                             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-                                <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">
-                                    <p className="text-gray-800">{post.excerpt}</p>
+                                <div className="prose max-w-none pt-10 pb-8 dark:prose-invert">
+                                    <p>{post.excerpt}</p>
                                     <div dangerouslySetInnerHTML={{ __html: post.content }} />
                                 </div>
                             </div>

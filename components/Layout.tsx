@@ -81,7 +81,7 @@ export default function Layout({ children, report }: { report?: string; children
                                 <button
                                     onClick={handleOpen}
                                     type="button"
-                                    className="ml-1 mr-1 h-8 w-8 rounded py-1"
+                                    className="ml-1 mr-1 h-8 w-8 rounded p-1 sm:ml-4 text-gray-500 hover:text-cyan-600"
                                     aria-label="Open Menu">
                                     <HamburgerIcon />
                                 </button>
@@ -99,7 +99,7 @@ export default function Layout({ children, report }: { report?: string; children
                                     </div>
                                     <nav className="mt-8">
                                         <div className="px-12 py-4">
-                                            <Link href="/posts">
+                                            <Link href="/">
                                                 <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
                                                     Posts
                                                 </a>
