@@ -10,7 +10,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                         <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                             <dl>
                                 <dt className="sr-only">Published on</dt>
-                                <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-500">
+                                <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                                     <time dateTime={post.date.toISOString()}>{format(post.date)}</time>
                                 </dd>
                             </dl>
