@@ -1,12 +1,20 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from 'next/head';
 
-import { getAllTagsData, getPostsByTag } from '@lib/posts';
+import { getAllTagsData, getPostsByTag, serialize } from '@lib/posts';
 import Layout from '@components/Layout';
 import PostList from '@components/PostList';
 import TagList from '@components/TagList';
 
-export default function Tag({ posts, tag, tags }: { tag: string; posts: PostData[]; tags: TagData[] }) {
+export default function Tag({
+    posts,
+    tag,
+    tags,
+}: {
+    tag: string;
+    posts: SerializedPostData[];
+    tags: TagData[];
+}) {
     return (
         <Layout>
             <Head>
@@ -40,7 +48,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const posts = await getPostsByTag(params.name as string);
+    const posts = (await getPostsByTag(params.name as string)).map(serialize);
     const tags = await getAllTagsData();
     return {
         props: {
