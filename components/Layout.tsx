@@ -1,3 +1,4 @@
+import useTheme from '@lib/useTheme';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useCallback, useRef } from 'react';
@@ -9,6 +10,7 @@ import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
 
 export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {
+    const { toggle } = useTheme();
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(
         (evt) => {
@@ -69,6 +71,7 @@ export default function Layout({ children, report }: { report?: string; children
                                 </Link>
                             </div>
                             <button
+                                onClick={toggle}
                                 aria-label="Toggle Dark Mode"
                                 type="button"
                                 className="ml-1 mr-1 h-8 w-8 rounded p-1 sm:ml-4 text-gray-500 hover:text-cyan-600">
@@ -118,7 +121,9 @@ export default function Layout({ children, report }: { report?: string; children
                                         </div>
                                     </nav>
                                     <div className="flex-1 flex justify-center items-end">
-                                        <span className='mb-3 text-orange-600 font-bold text-xl'>Vespaiach's Blog</span>
+                                        <span className="mb-3 text-orange-600 font-bold text-xl">
+                                            Vespaiach's Blog
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +169,7 @@ export default function Layout({ children, report }: { report?: string; children
                                 {report && (
                                     <>
                                         <div> • </div>
-                                        <a href={report} target="_blank" className='text-orange-600'>
+                                        <a href={report} target="_blank" className="text-orange-600">
                                             Report
                                         </a>
                                     </>
