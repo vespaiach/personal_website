@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 
-export default function useTheme() {
+export const ThemeContext = createContext(() => {});
+
+export function ThemeContextProvider({ children }) {
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {
@@ -22,5 +24,5 @@ export default function useTheme() {
 
     const toggle = useCallback(() => void setTheme(theme === 'dark' ? 'light' : 'dark'), [theme, setTheme]);
 
-    return { theme, toggle };
+    return <ThemeContext.Provider value={toggle}>{children}</ThemeContext.Provider>;
 }

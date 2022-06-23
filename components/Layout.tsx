@@ -1,7 +1,8 @@
-import useTheme from '@lib/useTheme';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useCallback, useRef } from 'react';
+import { useCallback, useContext, useRef } from 'react';
+
+import { ThemeContext } from '@lib/useTheme';
 import BulbIcon from './BulbIcon';
 import CloseIcon from './CloseIcon';
 import GithubIcon from './GithubIcon';
@@ -10,28 +11,22 @@ import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
 
 export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {
-    const { toggle } = useTheme();
+    const toggle = useContext(ThemeContext);
     const menuRef = useRef<HTMLDivElement | null>(null);
-    const handleOpen = useCallback(
-        () => {
-            if (!menuRef.current) return;
+    const handleOpen = useCallback(() => {
+        if (!menuRef.current) return;
 
-            menuRef.current.classList.add('translate-x-0');
-            menuRef.current.classList.remove('translate-x-full');
-            document.body.style.overflow = 'hidden';
-        },
-        [menuRef.current],
-    );
-    const handleClose = useCallback(
-        () => {
-            if (!menuRef.current) return;
+        menuRef.current.classList.add('translate-x-0');
+        menuRef.current.classList.remove('translate-x-full');
+        document.body.style.overflow = 'hidden';
+    }, [menuRef.current]);
+    const handleClose = useCallback(() => {
+        if (!menuRef.current) return;
 
-            menuRef.current.classList.add('translate-x-full');
-            menuRef.current.classList.remove('translate-x-0');
-            document.body.style.overflow = 'unset';
-        },
-        [menuRef.current],
-    );
+        menuRef.current.classList.add('translate-x-full');
+        menuRef.current.classList.remove('translate-x-0');
+        document.body.style.overflow = 'unset';
+    }, [menuRef.current]);
 
     return (
         <>
