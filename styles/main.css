@@ -3,30 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-    .article {
-        @apply leading-relaxed;
-    }
-    .article p {
-        @apply mb-7;
-    }
-    .article code:not(.remark-highlight code) {
-        @apply underline decoration-red-900;
-    }
-    .article h2 {
-        @apply mb-5 mt-12 text-3xl font-semibold;
-    }
-    .article ul {
-        @apply pl-12 list-disc mb-7;
-    }
-    .article ul li + li {
-        @apply mt-3;
-    }
-    .article .remark-highlight {
-        @apply mb-7;
-    }
-    .article a {
-        @apply underline;
-    }
     a:hover {
         @apply text-cyan-600;
     }
