@@ -10,7 +10,7 @@ export default function Tag({ posts, tag, tags }: { tag: string; posts: PostData
     return (
         <Layout>
             <Head>
-                <title>Tags: {tag} - Vespaiach</title>
+                <title>{`Tags: ${tag} - Vespaiach`}</title>
             </Head>
             <main className="flex-1">
                 <div className="border-b-1 flex flex-col items-start divide-y divide-gray-200 dark:divide-gray-700 md:mt-8 md:mb-10 sm:mb-6 md:flex-row md:items-center md:space-x-6 md:divide-y-0">
