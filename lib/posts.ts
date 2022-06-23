@@ -6,6 +6,8 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import prism from 'remark-prism';
 
+import { format } from './utils';
+
 const postsDirectory = path.join(process.cwd(), 'docs');
 let posts: PostData[];
 
@@ -117,4 +119,11 @@ function toPostData(
         tags: data.tags ? (data.tags as string).split(',').map((t) => t.trim()) : [],
         date: new Date(data.date as string),
     } as unknown as PostData;
+}
+
+export function serialize(d: PostData): SerializedPostData {
+    return {
+        ...d,
+        date: format(d.date),
+    };
 }

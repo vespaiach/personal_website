@@ -1,12 +1,11 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from 'next/head';
 
-import { getAllPostIds, getPostById } from '@lib/posts';
+import { serialize, getAllPostIds, getPostById } from '@lib/posts';
 import Layout from '@components/Layout';
 import UpIcon from '@components/UpIcon';
-import { format } from '@lib/utils';
 
-export default function Post({ post }: { post: PostData }) {
+export default function Post({ post }: { post: SerializedPostData }) {
     return (
         <Layout
             report={`https://github.com/vespaiach/personal_website/issues/new?title=[Report] ${post.title}&body=[${post.title}](${post.github})`}>
@@ -31,9 +30,7 @@ export default function Post({ post }: { post: PostData }) {
                                     <div>
                                         <dt className="sr-only">Published on</dt>
                                         <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                                            <time dateTime={post.date.toISOString()}>
-                                                {format(post.date)}
-                                            </time>
+                                            <time dateTime={post.date}>{post.date}</time>
                                         </dd>
                                     </div>
                                 </dl>
@@ -70,7 +67,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const post = await getPostById(params.id as string);
+    const post = serialize(await getPostById(params.id as string));
     return {
         props: {
             post,

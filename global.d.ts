@@ -13,6 +13,10 @@ declare interface PostData {
     id: string;
 }
 
+declare type SerializedPostData = Omit<PostData, 'date'> & {
+    date: string;
+};
+
 declare interface TagData {
     name: string;
     count: number;

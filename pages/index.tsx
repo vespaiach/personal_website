@@ -1,13 +1,11 @@
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 
 import Layout from '@components/Layout';
-import { getSortedPostsData } from '@lib/posts';
-import { format } from '@lib/utils';
+import { getSortedPostsData, serialize } from '@lib/posts';
 import PostList from '@components/PostList';
 
-export default function Home({ posts }: { posts: PostData[] }) {
+export default function Home({ posts }: { posts: SerializedPostData[] }) {
     return (
         <Layout>
             <Head>
@@ -44,7 +42,7 @@ export default function Home({ posts }: { posts: PostData[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const posts = await getSortedPostsData();
+    const posts = (await getSortedPostsData()).map(serialize);
     return {
         props: {
             posts,

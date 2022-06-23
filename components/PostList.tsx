@@ -1,7 +1,6 @@
-import { format } from '@lib/utils';
 import Link from 'next/link';
 
-export default function PostList({ posts }: { posts: PostData[] }) {
+export default function PostList({ posts }: { posts: SerializedPostData[] }) {
     return (
         <div className="divide-y divide-gray-200 dark:divide-gray-700">
             <ul>
@@ -11,7 +10,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                             <dl>
                                 <dt className="sr-only">Published on</dt>
                                 <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                                    <time dateTime={post.date.toISOString()}>{format(post.date)}</time>
+                                    <time dateTime={post.date}>{post.date}</time>
                                 </dd>
                             </dl>
                             <div className="space-y-3 xl:col-span-3">
