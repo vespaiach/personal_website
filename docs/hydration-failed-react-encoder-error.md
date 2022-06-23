@@ -10,8 +10,8 @@ tags: javascript,date,nextjs,reactjs
 
 After adding dark mode support to my website, I deployed it to production and got back these error:
 
-- https://reactjs.org/docs/error-decoder.html/?invariant=425
-- https://reactjs.org/docs/error-decoder.html/?invariant=418
+- [https://reactjs.org/docs/error-decoder.html/?invariant=425](https://reactjs.org/docs/error-decoder.html/?invariant=425)
+- [https://reactjs.org/docs/error-decoder.html/?invariant=418](https://reactjs.org/docs/error-decoder.html/?invariant=418)
 
 More often, it wouldn’t be difficult to find out the root cause might be that some of my codes had access to DOM while the website was in server-side rendering (SSR) progress. For instance, in my case, there might be a call to `window.localstorage` to get dark mode preference while the app was in SSR, and the result would be the miss-match HTML rendering between server response and client rendering, just because window object was undefined in server-side.
 
@@ -19,7 +19,7 @@ However, it wasn’t the case for me, I had carefully added a check `typeof wind
 
 ## The error
 
-In my website, I previously sorted articles by alphabet. Then, I changed to sort them by date, and dates were stored as string, so I converted date strings into Date objects (JS), sorted them, serialized them  and returned them to client-side - note that NextJS does not serialize Date objects for us by default, this library [superjson-next](https://www.npmjs.com/package/babel-plugin-superjson-next) will help to do that. Read [this thread](https://github.com/vercel/next.js/issues/13209#issuecomment-633149650) to see why NextJS fails to serialize Date objects 
+In my website, I previously sorted articles by alphabet. Then, I changed to sort them by date, and dates were stored as string, so I converted date strings into Date objects (JS), sorted them, serialized them  and returned them to client-side - note that NextJS does not serialize Date objects for us by default, this library [superjson-next](https://www.npmjs.com/package/babel-plugin-superjson-next) will help to do that. Read [this thread](https://github.com/vercel/next.js/issues/13209#issuecomment-633149650) to see why NextJS fails to serialize Date objects.
 
 The problem came from how browsers parse date string format into Date objects. For example, in data send to client, I have a date string in ISO format `2022-06-20T00:00:00.000Z`, that was date in UTC time, but when my browser parsed that date string, it automatically converted the date into local offset, and for me that was June 19th in Eastern Time.
 
