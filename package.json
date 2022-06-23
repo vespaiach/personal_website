@@ -5,7 +5,7 @@
     },
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "npx tailwindcss -i ./styles/main.css -o ./public/main.css & next build",
         "start": "next start",
         "tw": "npx tailwindcss -i ./styles/main.css -o ./public/main.css --watch"
     },

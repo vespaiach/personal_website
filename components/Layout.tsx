@@ -13,7 +13,7 @@ export default function Layout({ children, report }: { report?: string; children
     const { toggle } = useTheme();
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(
-        (evt) => {
+        () => {
             if (!menuRef.current) return;
 
             menuRef.current.classList.add('translate-x-0');
@@ -23,7 +23,7 @@ export default function Layout({ children, report }: { report?: string; children
         [menuRef.current],
     );
     const handleClose = useCallback(
-        (evt) => {
+        () => {
             if (!menuRef.current) return;
 
             menuRef.current.classList.add('translate-x-full');
