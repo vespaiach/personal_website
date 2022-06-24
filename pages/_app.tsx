@@ -7,7 +7,7 @@ import { ThemeContextProvider } from '@lib/useTheme';
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <ThemeContextProvider>
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
         </ThemeContextProvider>
     );
 }

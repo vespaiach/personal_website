@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useCallback, useContext, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { ThemeContext } from '@lib/useTheme';
 import BulbIcon from './BulbIcon';
@@ -27,6 +27,10 @@ export default function Layout({ children, report }: { report?: string; children
         menuRef.current.classList.remove('translate-x-0');
         document.body.style.overflow = 'unset';
     }, [menuRef.current]);
+
+    useEffect(() => {
+        document.body.style.overflow = 'unset';
+    }, []);
 
     return (
         <>
