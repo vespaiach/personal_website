@@ -53,7 +53,7 @@ export default function Layout({ children, report }: { report?: string; children
                         </div>
                         <div className="flex items-center text-base leading-5">
                             <div className="hidden sm:block">
-                                <Link href="/">
+                                <Link href="/posts">
                                     <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
                                         Posts
                                     </a>
@@ -98,7 +98,7 @@ export default function Layout({ children, report }: { report?: string; children
                                     </div>
                                     <nav className="mt-8">
                                         <div className="px-12 py-4">
-                                            <Link href="/">
+                                            <Link href="/posts">
                                                 <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
                                                     Posts
                                                 </a>
