@@ -25,7 +25,7 @@ export default function About({ tags }: { tags: TagData[] }) {
                                 Developer / Programmer / Coder
                             </div>
                         </div>
-                        <div className="prose max-w-none pt-10 pb-8 dark:prose-invert">
+                        <div className="prose max-w-none pt-10 pb-8 dark:prose-invert xl:col-span-2">
                             <p>
                                 Hello, my name is Trinh Nguyen. I'm a developer with a passion for the web and
                                 all things Open Source. I've been spending most of my time on the front end
