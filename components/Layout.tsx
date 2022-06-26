@@ -46,14 +46,14 @@ export default function Layout({ children, report }: { report?: string; children
                             <a aria-label="Vespaiach's Blog" href="/" title="Vespaiach's Blog">
                                 <div className="flex items-center justify-between">
                                     <div className="sm:h-8 md:h-6 text-2xl text-orange-600 font-semibold sm:block">
-                                        Vespaiach's Blog
+                                        Nguyen's Blog
                                     </div>
                                 </div>
                             </a>
                         </div>
                         <div className="flex items-center text-base leading-5">
                             <div className="hidden sm:block">
-                                <Link href="/">
+                                <Link href="/posts">
                                     <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
                                         Posts
                                     </a>
@@ -98,7 +98,7 @@ export default function Layout({ children, report }: { report?: string; children
                                     </div>
                                     <nav className="mt-8">
                                         <div className="px-12 py-4">
-                                            <Link href="/">
+                                            <Link href="/posts">
                                                 <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
                                                     Posts
                                                 </a>
@@ -121,7 +121,7 @@ export default function Layout({ children, report }: { report?: string; children
                                     </nav>
                                     <div className="flex-1 flex justify-center items-end">
                                         <span className="mb-3 text-orange-600 font-bold text-xl">
-                                            Vespaiach's Blog
+                                            Nguyen's Blog
                                         </span>
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@ export default function Layout({ children, report }: { report?: string; children
                                 <div>© 2022</div>
                                 <div> • </div>
                                 <a href="/" title="Vespaiach's blog">
-                                    Vespaiach's Blog
+                                    Nguyen's Blog
                                 </a>
                                 {report && (
                                     <>
