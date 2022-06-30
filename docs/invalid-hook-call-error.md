@@ -1,9 +1,9 @@
 ---
 title: 'Invalid Hook Call Error'
 date: '2022-06-29'
-excerpt: '"Invalid hook call. Hook can only be called inside of the body of a function component.". That was what warning message I got back and then an error showed up which wan't hint any clue.'
+excerpt: '"Invalid hook call. Hook can only be called inside of the body of a function component". That was what warning message I got back and then an error showed up which was’t hint any clue.'
 github: https://github.com/vespaiach/personal_website/blob/main/docs/invalid-hook-call-error.md
-tags: reactjs,invalid hook call
+tags: reactjs, react hook
 ---
 
 ## The error
