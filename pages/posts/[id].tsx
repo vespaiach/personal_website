@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { serialize, getAllPostIds, getPostById } from '@lib/posts';
 import Layout from '@components/Layout';
 import UpIcon from '@components/UpIcon';
+import { separator } from '@lib/utils';
 
 export default function Post({ post }: { post: SerializedPostData }) {
     return (
@@ -66,11 +67,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const post = serialize(await getPostById(params.id as string));
+export const getStaticProps: GetStaticProps = async (ctx) => {
+    const { params } = ctx;
+    const parsedIds = (params.id as string).split(separator());
+    const post = serialize(await getPostById(parsedIds[0]));
     return {
         props: {
             post,
+            themeMode: parsedIds[1] || null,
         },
     };
 };

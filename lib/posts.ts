@@ -6,8 +6,9 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import prism from 'remark-prism';
 
-import { format } from './utils';
+import { format, separator } from './utils';
 
+const themeModes = process.env.NEXT_THEME_MODES ? process.env.NEXT_THEME_MODES.split(',') : [];
 const postsDirectory = path.join(process.cwd(), 'docs');
 let posts: PostData[];
 
@@ -90,17 +91,29 @@ export async function getAllTagsData(): Promise<TagData[]> {
 
 export async function getAllPostIds() {
     const posts = await getAllPosts();
-    return posts.map((p) => {
-        return {
-            params: {
-                id: p.id,
-            },
-        };
-    });
+    return posts.reduce((a, p) => {
+        if (themeModes.length) {
+            return a.concat(
+                themeModes.map((m) => ({
+                    params: {
+                        id: `${p.id}${separator()}${m}`,
+                    },
+                })),
+            );
+        } else {
+            a.push({
+                params: {
+                    id: p.id,
+                },
+            });
+            return a;
+        }
+    }, []);
 }
 
 export async function getPostById(id: string) {
-    return (await getAllPosts()).find((p) => p.id === id);
+    const parsedId = id.indexOf(separator()) > -1 ? id.split(separator()) : [id];
+    return (await getAllPosts()).find((p) => p.id === parsedId[0]);
 }
 
 export async function getPostsByTag(tag: string) {

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { ThemeContext } from '@lib/useTheme';
 import BulbIcon from './BulbIcon';
@@ -9,9 +10,19 @@ import GithubIcon from './GithubIcon';
 import HamburgerIcon from './HamburgerIcon';
 import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
+import { cx } from '@lib/utils';
+
+function toogleThemeMode() {
+    let mode = 'light';
+    if (document.documentElement.classList.contains('light')) {
+        mode = 'dark';
+    }
+
+    document.documentElement.setAttribute('class', cx('scroll-smooth', mode));
+    Cookies.set('theme-mode', mode, { expires: 365 });
+}
 
 export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {
-    const toggle = useContext(ThemeContext);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(() => {
         if (!menuRef.current) return;
@@ -70,7 +81,7 @@ export default function Layout({ children, report }: { report?: string; children
                                 </Link>
                             </div>
                             <button
-                                onClick={toggle}
+                                onClick={toogleThemeMode}
                                 aria-label="Toggle Dark Mode"
                                 type="button"
                                 className="ml-1 mr-1 h-8 w-8 rounded p-1 sm:ml-4 text-gray-500 hover:text-cyan-600">

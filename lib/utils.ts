@@ -41,3 +41,11 @@ export function format(dt: Date) {
 export function cx(...name: unknown[]) {
     return name.filter(Boolean).map(String).join(' ') || undefined;
 }
+
+export function getThemeModes() {
+    return ['light', 'dark'];
+}
+
+export function separator() {
+    return '----';
+}
