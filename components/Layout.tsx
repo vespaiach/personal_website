@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useCallback, useEffect, useRef } from 'react';
 
-import { ThemeContext } from '@lib/useTheme';
 import BulbIcon from './BulbIcon';
 import CloseIcon from './CloseIcon';
 import GithubIcon from './GithubIcon';
@@ -19,7 +18,11 @@ function toogleThemeMode() {
     }
 
     document.documentElement.setAttribute('class', cx('scroll-smooth', mode));
-    Cookies.set('theme-mode', mode, { expires: 365 });
+    if (process.env.NODE_ENV === 'production') {
+        Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'lax', domain: '.vepaiach.com' });
+    } else {
+        Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'strict' });
+    }
 }
 
 export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {

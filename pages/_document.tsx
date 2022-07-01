@@ -30,10 +30,6 @@ class MyDocument extends Document {
             );
         }
 
-        /**
-         * When dark mode is on, there is still a flashing on first-loading request.
-         * At the time page is rendered, boby is set to white and then change to black --> flickering
-         */
         return (
             <Html lang="en" className={cx('scroll-smooth', themeMode)}>
                 <Head>
