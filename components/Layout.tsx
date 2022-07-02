@@ -10,6 +10,7 @@ import HamburgerIcon from './HamburgerIcon';
 import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
 import { cx } from '@lib/utils';
+import NavigatingLink from './NavigatingLink';
 
 function toogleThemeMode() {
     let mode = 'light';
@@ -67,21 +68,21 @@ export default function Layout({ children, report }: { report?: string; children
                         </div>
                         <div className="flex items-center text-base leading-5">
                             <div className="hidden sm:block">
-                                <Link href="/posts">
-                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
-                                        Posts
-                                    </a>
-                                </Link>
-                                <Link href="/tags">
-                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
-                                        Tags
-                                    </a>
-                                </Link>
-                                <Link href="/about">
-                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
-                                        About
-                                    </a>
-                                </Link>
+                                <NavigatingLink
+                                    href="/posts"
+                                    className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                    Posts
+                                </NavigatingLink>
+                                <NavigatingLink
+                                    href="/tags"
+                                    className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                    Tags
+                                </NavigatingLink>
+                                <NavigatingLink
+                                    href="/about"
+                                    className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                    About
+                                </NavigatingLink>
                             </div>
                             <button
                                 onClick={toogleThemeMode}
