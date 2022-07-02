@@ -19,11 +19,7 @@ function toogleThemeMode() {
     }
 
     document.documentElement.setAttribute('class', cx('scroll-smooth', mode));
-    if (process.env.NODE_ENV === 'production') {
-        Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'lax', domain: '.vepaiach.com' });
-    } else {
-        Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'strict' });
-    }
+    Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'lax' });
 }
 
 export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {
