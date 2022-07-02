@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import { getThemeModes, separator } from '@lib/utils';
+import { getMode, separator } from '@lib/utils';
 
-export function middleware(request: NextRequest, a, b, c) {
+export function middleware(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith('/posts/')) {
-        const subfix = `${separator()}${getMode(request)}`;
+        const subfix = `${separator()}${getMode(request.cookies)}`;
         request.nextUrl.pathname = `${request.nextUrl.pathname}${subfix}`;
 
         if (request.nextUrl.searchParams.has('id')) {
@@ -14,14 +14,23 @@ export function middleware(request: NextRequest, a, b, c) {
         }
 
         return NextResponse.rewrite(request.nextUrl);
+    } else if (request.nextUrl.pathname.startsWith('/tags/')) {
+        const subfix = `${separator()}${getMode(request.cookies)}`;
+        request.nextUrl.pathname = `${request.nextUrl.pathname}${subfix}`;
+
+        if (request.nextUrl.searchParams.has('name')) {
+            request.nextUrl.searchParams.set('name', `${request.nextUrl.searchParams.get('name')}${subfix}`);
+            request.nextUrl.search = request.nextUrl.searchParams.toString();
+        }
+
+        return NextResponse.rewrite(request.nextUrl);
+    } else if (['/posts', '/tags'].includes(request.nextUrl.pathname)) {
+        const subfix = `${separator()}${getMode(request.cookies)}`;
+        request.nextUrl.pathname = `${request.nextUrl.pathname}/${request.nextUrl.pathname.substring(
+            1,
+        )}-index${subfix}`;
+        return NextResponse.rewrite(request.nextUrl);
     }
 
     return NextResponse.next();
-}
-
-function getMode(request: NextRequest) {
-    const modes = getThemeModes();
-    return request.cookies.has('theme-mode') && modes.includes(request.cookies.get('theme-mode'))
-        ? request.cookies.get('theme-mode')
-        : modes[0];
 }

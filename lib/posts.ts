@@ -6,9 +6,9 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import prism from 'remark-prism';
 
-import { format, separator } from './utils';
+import { format, getThemeModes, postIndexPrefix, separator, tagIndexPrefix } from './utils';
 
-const themeModes = process.env.NEXT_THEME_MODES ? process.env.NEXT_THEME_MODES.split(',') : [];
+const themeModes = getThemeModes();
 const postsDirectory = path.join(process.cwd(), 'docs');
 let posts: PostData[];
 
@@ -89,9 +89,24 @@ export async function getAllTagsData(): Promise<TagData[]> {
         }));
 }
 
+export function mixTagsWithTheme(tags: TagData[]) {
+    const result = tags.reduce((a, it) => {
+        return a.concat(themeModes.map((m) => ({ name: `${it.name}${separator()}${m}`, count: it.count })));
+    }, [] as TagData[]);
+
+    themeModes.forEach((m) => {
+        result.push({
+            name: `${tagIndexPrefix}${separator()}${m}`,
+            count: 1,
+        });
+    });
+
+    return result;
+}
+
 export async function getAllPostIds() {
     const posts = await getAllPosts();
-    return posts.reduce((a, p) => {
+    const result = posts.reduce((a, p) => {
         if (themeModes.length) {
             return a.concat(
                 themeModes.map((m) => ({
@@ -109,6 +124,12 @@ export async function getAllPostIds() {
             return a;
         }
     }, []);
+
+    themeModes.forEach((m) => {
+        result.push({ params: { id: `${postIndexPrefix}${separator()}${m}` } });
+    });
+
+    return result;
 }
 
 export async function getPostById(id: string) {
