@@ -1,11 +1,23 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from 'next/head';
 
-import { serialize, getAllPostIds, getPostById } from '@lib/posts';
+import { serialize, getAllPostIds, getPostById, getSortedPostsData } from '@lib/posts';
 import Layout from '@components/Layout';
 import UpIcon from '@components/UpIcon';
+import { postIndexPrefix, separator } from '@lib/utils';
+import Home from '.';
 
-export default function Post({ post }: { post: SerializedPostData }) {
+export default function Post({
+    post,
+    posts,
+}: {
+    post: SerializedPostData | null;
+    posts: SerializedPostData[] | null;
+}) {
+    if (posts && !post) {
+        return <Home posts={posts} />;
+    }
+
     return (
         <Layout
             report={`https://github.com/vespaiach/personal_website/issues/new?title=[Report] ${post.title}&body=[${post.title}](${post.github})`}>
@@ -66,11 +78,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const post = serialize(await getPostById(params.id as string));
+export const getStaticProps: GetStaticProps = async (ctx) => {
+    const { params } = ctx;
+    const parsedIds = (params.id as string).split(separator());
+    let posts = null;
+    let post = null;
+
+    if (parsedIds[0] === postIndexPrefix) {
+        posts = (await getSortedPostsData()).map(serialize);
+    } else {
+        post = serialize(await getPostById(parsedIds[0]));
+    }
+
     return {
         props: {
             post,
+            posts,
+            themeMode: parsedIds[1] || null,
         },
     };
 };

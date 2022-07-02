@@ -41,3 +41,22 @@ export function format(dt: Date) {
 export function cx(...name: unknown[]) {
     return name.filter(Boolean).map(String).join(' ') || undefined;
 }
+
+export function getThemeModes() {
+    return ['light', 'dark'];
+}
+
+export function separator() {
+    return '----';
+}
+
+export function getMode(cookies: Map<string, string>): string {
+    const modes = getThemeModes();
+
+    return cookies.has('theme-mode') && modes.includes(cookies.get('theme-mode'))
+        ? cookies.get('theme-mode')
+        : modes[0];
+}
+
+export const postIndexPrefix = 'posts-index';
+export const tagIndexPrefix = 'tags-index';

@@ -1,13 +1,13 @@
-import { GetStaticProps } from 'next';
 import Head from 'next/head';
+import Cookies from 'js-cookie';
 
 import Layout from '@components/Layout';
-import { getAllTagsData } from '@lib/posts';
 import MailIcon from '@components/MailIcon';
 import LinkedInIcon from '@components/LinkedInIcon';
 import GithubIcon from '@components/GithubIcon';
+import { getMode } from '@lib/utils';
 
-export default function About({ tags }: { tags: TagData[] }) {
+export default function About() {
     return (
         <Layout>
             <Head>
@@ -39,7 +39,7 @@ export default function About({ tags }: { tags: TagData[] }) {
                             </p>
                             <p>
                                 I'm opening for new opportunites, now. Please reach me at:
-                                <span className='inline-flex items-baseline gap-2 ml-2'>
+                                <span className="inline-flex items-baseline gap-2 ml-2">
                                     <a
                                         className="text-sm text-gray-500 transition hover:text-gray-600"
                                         target="_blank"
@@ -74,11 +74,14 @@ export default function About({ tags }: { tags: TagData[] }) {
     );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-    const tags = await getAllTagsData();
-    return {
-        props: {
-            tags,
-        },
-    };
+About.getInitialProps = async (ctx) => {
+    if (typeof window === 'undefined') {
+        return {
+            themeMode: getMode(new Map(Object.entries(ctx.req.cookies))),
+        };
+    } else {
+        return {
+            themeMode: Cookies.get('theme-mode'),
+        };
+    }
 };

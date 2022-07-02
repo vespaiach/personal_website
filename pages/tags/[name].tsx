@@ -1,20 +1,26 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from 'next/head';
 
-import { getAllTagsData, getPostsByTag, serialize } from '@lib/posts';
+import { getAllTagsData, getPostsByTag, mixTagsWithTheme, serialize } from '@lib/posts';
 import Layout from '@components/Layout';
 import PostList from '@components/PostList';
 import TagList from '@components/TagList';
+import { separator, tagIndexPrefix } from '@lib/utils';
+import Tags from '.';
 
 export default function Tag({
     posts,
     tag,
     tags,
+    indexLayout,
 }: {
     tag: string;
     posts: SerializedPostData[];
     tags: TagData[];
+    indexLayout: boolean;
 }) {
+    if (indexLayout) return <Tags tags={tags} />;
+
     return (
         <Layout>
             <Head>
@@ -36,7 +42,7 @@ export default function Tag({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const tags = await getAllTagsData();
+    const tags = mixTagsWithTheme(await getAllTagsData());
     return {
         paths: tags.map((t) => ({
             params: {
@@ -48,13 +54,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const posts = (await getPostsByTag(params.name as string)).map(serialize);
+    const parsedNames = (params.name as string).split(separator());
     const tags = await getAllTagsData();
+    let posts = null;
+    let indexLayout = false;
+
+    if (parsedNames[0] === tagIndexPrefix) {
+        indexLayout = true;
+    } else {
+        indexLayout = false;
+        posts = (await getPostsByTag(parsedNames[0])).map(serialize);
+    }
+
     return {
         props: {
             posts,
             tags,
             tag: params.name,
+            indexLayout,
+            themeMode: parsedNames[1] || null,
         },
     };
 };

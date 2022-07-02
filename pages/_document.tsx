@@ -1,8 +1,10 @@
 import Script from 'next/script';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { cx } from '@lib/utils';
 
 class MyDocument extends Document {
     render() {
+        const themeMode = this.props.__NEXT_DATA__.props.pageProps['themeMode'];
         const scripts = [];
         if (process.env.NEXT_PUBLIC_GTAG_ID) {
             scripts.push(
@@ -29,7 +31,7 @@ class MyDocument extends Document {
         }
 
         return (
-            <Html lang="en" className="scroll-smooth">
+            <Html lang="en" className={cx('scroll-smooth', themeMode)}>
                 <Head>
                     <link rel="stylesheet" href="/main.css" />
                     {scripts}

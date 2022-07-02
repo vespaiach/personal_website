@@ -6,8 +6,9 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import prism from 'remark-prism';
 
-import { format } from './utils';
+import { format, getThemeModes, postIndexPrefix, separator, tagIndexPrefix } from './utils';
 
+const themeModes = getThemeModes();
 const postsDirectory = path.join(process.cwd(), 'docs');
 let posts: PostData[];
 
@@ -88,19 +89,52 @@ export async function getAllTagsData(): Promise<TagData[]> {
         }));
 }
 
+export function mixTagsWithTheme(tags: TagData[]) {
+    const result = tags.reduce((a, it) => {
+        return a.concat(themeModes.map((m) => ({ name: `${it.name}${separator()}${m}`, count: it.count })));
+    }, [] as TagData[]);
+
+    themeModes.forEach((m) => {
+        result.push({
+            name: `${tagIndexPrefix}${separator()}${m}`,
+            count: 1,
+        });
+    });
+
+    return result;
+}
+
 export async function getAllPostIds() {
     const posts = await getAllPosts();
-    return posts.map((p) => {
-        return {
-            params: {
-                id: p.id,
-            },
-        };
+    const result = posts.reduce((a, p) => {
+        if (themeModes.length) {
+            return a.concat(
+                themeModes.map((m) => ({
+                    params: {
+                        id: `${p.id}${separator()}${m}`,
+                    },
+                })),
+            );
+        } else {
+            a.push({
+                params: {
+                    id: p.id,
+                },
+            });
+            return a;
+        }
+    }, []);
+
+    themeModes.forEach((m) => {
+        result.push({ params: { id: `${postIndexPrefix}${separator()}${m}` } });
     });
+
+    return result;
 }
 
 export async function getPostById(id: string) {
-    return (await getAllPosts()).find((p) => p.id === id);
+    const parsedId = id.indexOf(separator()) > -1 ? id.split(separator()) : [id];
+    return (await getAllPosts()).find((p) => p.id === parsedId[0]);
 }
 
 export async function getPostsByTag(tag: string) {

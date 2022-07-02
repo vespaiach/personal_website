@@ -1,17 +1,32 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
+import { useCallback, useEffect, useRef } from 'react';
 
-import { ThemeContext } from '@lib/useTheme';
 import BulbIcon from './BulbIcon';
 import CloseIcon from './CloseIcon';
 import GithubIcon from './GithubIcon';
 import HamburgerIcon from './HamburgerIcon';
 import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
+import { cx } from '@lib/utils';
+import NavigatingLink from './NavigatingLink';
+
+function toogleThemeMode() {
+    let mode = 'light';
+    if (document.documentElement.classList.contains('light')) {
+        mode = 'dark';
+    }
+
+    document.documentElement.setAttribute('class', cx('scroll-smooth', mode));
+    if (process.env.NODE_ENV === 'production') {
+        Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'lax', domain: '.vepaiach.com' });
+    } else {
+        Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'strict' });
+    }
+}
 
 export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {
-    const toggle = useContext(ThemeContext);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(() => {
         if (!menuRef.current) return;
@@ -53,24 +68,24 @@ export default function Layout({ children, report }: { report?: string; children
                         </div>
                         <div className="flex items-center text-base leading-5">
                             <div className="hidden sm:block">
-                                <Link href="/posts">
-                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
-                                        Posts
-                                    </a>
-                                </Link>
-                                <Link href="/tags">
-                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
-                                        Tags
-                                    </a>
-                                </Link>
-                                <Link href="/about">
-                                    <a className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
-                                        About
-                                    </a>
-                                </Link>
+                                <NavigatingLink
+                                    href="/posts"
+                                    className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                    Posts
+                                </NavigatingLink>
+                                <NavigatingLink
+                                    href="/tags"
+                                    className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                    Tags
+                                </NavigatingLink>
+                                <NavigatingLink
+                                    href="/about"
+                                    className="p-1 font-medium text-gray-500 dark:text-gray-100 sm:p-4 hover:text-cyan-600">
+                                    About
+                                </NavigatingLink>
                             </div>
                             <button
-                                onClick={toggle}
+                                onClick={toogleThemeMode}
                                 aria-label="Toggle Dark Mode"
                                 type="button"
                                 className="ml-1 mr-1 h-8 w-8 rounded p-1 sm:ml-4 text-gray-500 hover:text-cyan-600">
