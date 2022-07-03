@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useCallback, useEffect, useRef } from 'react';
@@ -11,6 +10,7 @@ import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
 import { cx } from '@lib/utils';
 import NavigatingLink from './NavigatingLink';
+import Head from './Head';
 
 function toogleThemeMode() {
     let mode = 'light';
@@ -22,7 +22,17 @@ function toogleThemeMode() {
     Cookies.set('theme-mode', mode, { expires: 365, sameSite: 'lax' });
 }
 
-export default function Layout({ children, report }: { report?: string; children: React.ReactNode }) {
+export default function Layout({
+    children,
+    report,
+    title,
+    description,
+}: {
+    title?: string;
+    description?: string;
+    report?: string;
+    children: React.ReactNode;
+}) {
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(() => {
         if (!menuRef.current) return;
@@ -45,9 +55,9 @@ export default function Layout({ children, report }: { report?: string; children
 
     return (
         <>
-            <Head>
+            <Head title={title} description={description}>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="author" content="Vespaiach - I'm a web developer." />
+                <meta name="author" content="Trinh Nguyen" />
             </Head>
 
             <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
@@ -147,6 +157,7 @@ export default function Layout({ children, report }: { report?: string; children
                                     className="text-sm text-gray-500 transition hover:text-gray-600"
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    title="Trinh Nguyen's email"
                                     href="mailto:nta.toan@gmail.com">
                                     <span className="sr-only">mail</span>
                                     <MailIcon />
@@ -155,6 +166,7 @@ export default function Layout({ children, report }: { report?: string; children
                                     className="text-sm text-gray-500 transition hover:text-gray-600"
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    title="Trinh Nguyen's Github"
                                     href="https://github.com/vespaiach">
                                     <span className="sr-only">github</span>
                                     <GithubIcon />
@@ -163,6 +175,7 @@ export default function Layout({ children, report }: { report?: string; children
                                     className="text-sm text-gray-500 transition hover:text-gray-600"
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    title="Trinh Nguyen's LinkedIn"
                                     href="https://www.linkedin.com/in/trinh-nguyen-0a701526/">
                                     <span className="sr-only">linkedin</span>
                                     <LinkedInIcon />

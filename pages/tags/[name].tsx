@@ -1,5 +1,4 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import Head from 'next/head';
 
 import { getAllTagsData, getPostsByTag, mixTagsWithTheme, serialize } from '@lib/posts';
 import Layout from '@components/Layout';
@@ -22,10 +21,7 @@ export default function Tag({
     if (indexLayout) return <Tags tags={tags} />;
 
     return (
-        <Layout>
-            <Head>
-                <title>{`Tags: ${tag} - Vespaiach`}</title>
-            </Head>
+        <Layout title={`${tag} - Nguyen's Blog`} description={tags.map((t) => t.name).join(',')}>
             <main className="flex-1">
                 <div className="flex flex-col items-start divide-y divide-gray-200 dark:divide-gray-700 mb-8 md:mt-8 md:mb-10 md:flex-row md:items-center md:space-x-6 md:divide-y-0">
                     <div className="space-x-2 pt-4 pb-4 md:pt-6 md:pb-8 md:space-y-5">

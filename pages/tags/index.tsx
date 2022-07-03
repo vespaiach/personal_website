@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next';
-import Head from 'next/head';
 
 import Layout from '@components/Layout';
 import { getAllTagsData } from '@lib/posts';
@@ -7,10 +6,7 @@ import TagList from '@components/TagList';
 
 export default function Tags({ tags }: { tags: TagData[] }) {
     return (
-        <Layout>
-            <Head>
-                <title>Tags - Vespaiach</title>
-            </Head>
+        <Layout title="Tags List - Nguyen's Blog">
             <main className="mb-auto">
                 <div className="flex flex-col items-start divide-y divide-gray-200 dark:divide-gray-700 md:mt-24 md:flex-row md:items-center md:space-x-6 md:divide-y-0">
                     <div className="space-x-2 pt-6 pb-8 md:space-y-5">

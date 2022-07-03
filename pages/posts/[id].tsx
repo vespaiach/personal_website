@@ -1,5 +1,4 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import Head from 'next/head';
 
 import { serialize, getAllPostIds, getPostById, getSortedPostsData } from '@lib/posts';
 import Layout from '@components/Layout';
@@ -20,11 +19,9 @@ export default function Post({
 
     return (
         <Layout
+            title={`${post.title} - Nguyen's Blog`}
+            description={post.excerpt}
             report={`https://github.com/vespaiach/personal_website/issues/new?title=[Report] ${post.title}&body=[${post.title}](${post.github})`}>
-            <Head>
-                <title>{post.title}</title>
-                <meta name="description" content={post.excerpt} />
-            </Head>
             <main className="mb-auto mt-2">
                 <div className="fixed right-8 bottom-8 hidden flex-col gap-3 md:hidden">
                     <button
