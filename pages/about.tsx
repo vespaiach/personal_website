@@ -9,10 +9,7 @@ import { getMode } from '@lib/utils';
 
 export default function About() {
     return (
-        <Layout>
-            <Head>
-                <title>About - Nguyen</title>
-            </Head>
+        <Layout title="About - Nguyen's Blog">
             <main className="mb-auto">
                 <div className="divide-y divide-gray-200 dark:divide-gray-700">
                     <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
@@ -44,6 +41,7 @@ export default function About() {
                                         className="text-sm text-gray-500 transition hover:text-gray-600"
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        title="Trinh Nguyen's email"
                                         href="mailto:nta.toan@gmail.com">
                                         <span className="sr-only">mail</span>
                                         <MailIcon />
@@ -52,6 +50,7 @@ export default function About() {
                                         className="text-sm text-gray-500 transition hover:text-gray-600"
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        title="Trinh Nguyen's LinkedIn"
                                         href="https://www.linkedin.com/in/trinh-nguyen-0a701526/">
                                         <span className="sr-only">linkedin</span>
                                         <LinkedInIcon />
@@ -60,6 +59,7 @@ export default function About() {
                                         className="text-sm text-gray-500 transition hover:text-gray-600"
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        title="Trinh Nguyen's Github"
                                         href="https://github.com/vespaiach">
                                         <span className="sr-only">github</span>
                                         <GithubIcon />
