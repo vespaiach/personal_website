@@ -10,7 +10,7 @@ tags: nextjs,dark mode,screen flicker,theme mode
 
 Here was what my website looked like before (I used NextJS and Static Generation features to build my website).
 
-[vespaiach.com](https://www.vespaiach.com/images/vespaiach_flashing.gif)
+![vespaiach.com](https://www.vespaiach.com/images/vespaiach_flashing.gif)
 
 If you look at the `<html>` tag, you will see its class attribute change after page refreshing. That was because I instructed the web page to read dark-mode preference from local storage and updated the class attribute accordingly after browsers had rendered the page. So, the flow of updating theme site was:
 
