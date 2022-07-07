@@ -5,6 +5,7 @@ import Layout from '@components/Layout';
 import UpIcon from '@components/UpIcon';
 import { postIndexPrefix, separator } from '@lib/utils';
 import Home from '.';
+import TagList from '@components/TagList';
 
 export default function Post({
     post,
@@ -31,7 +32,7 @@ export default function Post({
                         <UpIcon />
                     </button>
                 </div>
-                <article>
+                <article itemProp="article" itemScope itemType="https://schema.org/Article">
                     <div>
                         <header>
                             <div className="space-y-1 border-b border-slate-100 pb-10 dark:border-gray-700">
@@ -39,24 +40,37 @@ export default function Post({
                                     <div>
                                         <dt className="sr-only">Published on</dt>
                                         <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                                            <time dateTime={post.date}>{post.date}</time>
+                                            <time dateTime={post.date} itemProp="datePublished">
+                                                {post.date}
+                                            </time>
                                         </dd>
                                     </div>
                                 </dl>
                                 <div>
-                                    <h2 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-800 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl md:leading-14">
+                                    <h2
+                                        itemProp="name"
+                                        className="text-3xl font-extrabold leading-9 tracking-tight text-gray-800 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl md:leading-14">
                                         {post.title}
                                     </h2>
                                 </div>
+                                <TagList
+                                    className="flex flex-wrap"
+                                    tagClassName="mr-3 text-sm font-medium uppercase text-gray-200 hover:text-cyan-600"
+                                    tags={post.tags.map((t) => ({ name: t }))}
+                                />
                             </div>
+                            <meta itemProp="genre" content="http://vocab.getty.edu/aat/300054641" />
                         </header>
                         <div
                             className="divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:divide-y-0"
                             style={{ gridTemplateRows: 'auto 1fr' }}>
                             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
                                 <div className="prose max-w-none pt-10 pb-8 dark:prose-invert">
-                                    <p>{post.excerpt}</p>
-                                    <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                                    <p itemProp="headline">{post.excerpt}</p>
+                                    <div
+                                        itemProp="articleBody"
+                                        dangerouslySetInnerHTML={{ __html: post.content }}
+                                    />
                                 </div>
                             </div>
                         </div>
