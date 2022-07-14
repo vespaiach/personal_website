@@ -4,12 +4,6 @@
 
 # Development
 
-Run Tailwindcss CLI
-
-```bash
-npm run tw
-```
-
 Run NextJS
 
 ```bash

@@ -32,10 +32,7 @@ class MyDocument extends Document {
 
         return (
             <Html lang="en" className={cx('scroll-smooth', themeMode)}>
-                <Head>
-                    <link rel="stylesheet" href="/main.css" />
-                    {scripts}
-                </Head>
+                <Head>{scripts}</Head>
                 <body className="bg-white text-gray-500 antialiased dark:bg-gray-900 dark:text-white">
                     <Main />
                     <NextScript />

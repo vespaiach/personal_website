@@ -1,5 +1,5 @@
-import 'tailwindcss/tailwind.css';
 import '@styles/prism.css';
+import '@styles/main.css';
 
 import { AppProps } from 'next/app';
 

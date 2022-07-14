@@ -6,7 +6,7 @@ export default function Custom404() {
     return (
         <>
             <Head title="Page not found - Nguyen's Blog" />
-            <div className="flex h-full w-full items-center justify-center">
+            <div className="flex h-screen w-full items-center justify-center">
                 <div className="flex flex-row items-center">
                     <h3 className="mr-5 font-bold text-2xl">404</h3>
                     <div className="border-l pl-5">
