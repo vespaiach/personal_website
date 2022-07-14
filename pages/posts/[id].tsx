@@ -20,6 +20,7 @@ export default function Post({
 
     return (
         <Layout
+            posts={[post]}
             title={`${post.title} - Nguyen's Blog`}
             description={post.excerpt}
             report={`https://github.com/vespaiach/personal_website/issues/new?title=[Report] ${post.title}&body=[${post.title}](${post.github})`}>

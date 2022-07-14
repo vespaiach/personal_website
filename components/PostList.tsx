@@ -10,7 +10,7 @@ export default function PostList({ posts }: { posts: SerializedPostData[] }) {
                             className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0"
                             itemProp="article"
                             itemScope
-                            itemType="https://schema.org/Article">
+                            itemType="https://schema.org/NewsArticle">
                             <dl>
                                 <dt className="sr-only">Published on</dt>
                                 <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">

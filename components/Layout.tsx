@@ -11,6 +11,7 @@ import MailIcon from './MailIcon';
 import { cx } from '@lib/utils';
 import NavigatingLink from './NavigatingLink';
 import Head from './Head';
+import StructuredData from './StructuredData';
 
 function toogleThemeMode() {
     let mode = 'light';
@@ -27,11 +28,13 @@ export default function Layout({
     report,
     title,
     description,
+    posts,
 }: {
     title?: string;
     description?: string;
     report?: string;
     children: React.ReactNode;
+    posts?: SerializedPostData[];
 }) {
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(() => {
@@ -58,6 +61,7 @@ export default function Layout({
             <Head title={title} description={description}>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="author" content="Trinh Nguyen" />
+                <StructuredData posts={posts} />
             </Head>
 
             <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
