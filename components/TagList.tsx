@@ -13,7 +13,7 @@ export default function TagList({
     selectedTag?: string;
 }) {
     return (
-        <div className={className} itemScope itemProp="keywords" itemType="https://schema.org/DefinedTerm">
+        <div className={className}>
             {tags.map((t) => (
                 <Link key={t.name} href={`/tags/${t.name}`}>
                     <a
@@ -23,7 +23,7 @@ export default function TagList({
                             tagClassName,
                         )}
                         title={t.name}>
-                        <span itemProp="name">{t.name}</span>
+                        <span>{t.name}</span>
                         {`${t.count && t.count > 0 ? ` (${t.count})` : ''}`}
                     </a>
                 </Link>
