@@ -1,4 +1,4 @@
-export default function StructuredData({ posts }: { posts?: PostData[] }) {
+export default function StructuredData({ posts }: { posts?: SerializedPostData[] }) {
     if (!posts || !posts.length) return null;
 
     return (

@@ -5,7 +5,7 @@
     },
     "scripts": {
         "dev": "next dev",
-        "build": "npx tailwindcss -i ./styles/main.css -o ./public/main.css & next build",
+        "build": "npx tailwindcss -i ./styles/main.css -o ./public/main.css & next build && next-sitemap",
         "start": "next start",
         "tw": "npx tailwindcss -i ./styles/main.css -o ./public/main.css --watch"
     },
@@ -15,6 +15,7 @@
         "gray-matter": "^4.0.2",
         "js-cookie": "^3.0.1",
         "next": "^12.2.0",
+        "next-sitemap": "^3.1.10",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "remark": "^14.0.1",
