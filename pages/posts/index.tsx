@@ -6,7 +6,7 @@ import PostList from '@components/PostList';
 
 export default function Home({ posts }: { posts: SerializedPostData[] }) {
     return (
-        <Layout title="Posts List - Nguyen's Blog" posts={posts}>
+        <Layout title="Posts List - Nguyen's Blog">
             <main className="mb-auto">
                 <PostList posts={posts} />
             </main>
