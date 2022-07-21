@@ -28,13 +28,13 @@ export default function Layout({
     report,
     title,
     description,
-    posts,
+    post,
 }: {
     title?: string;
     description?: string;
     report?: string;
     children: React.ReactNode;
-    posts?: SerializedPostData[];
+    post?: SerializedPostData;
 }) {
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(() => {
@@ -61,7 +61,7 @@ export default function Layout({
             <Head title={title} description={description}>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="author" content="Trinh Nguyen" />
-                <StructuredData posts={posts} />
+                <StructuredData post={post} />
             </Head>
 
             <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
