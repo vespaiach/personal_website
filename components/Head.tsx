@@ -12,15 +12,15 @@ interface HeadProps {
     tags?: string[];
     publishedAt?: string;
     modifiedAt?: string;
-    cardWidth?: string;
-    cardHeight?: string;
+    imageWidth?: string;
+    imageHeight?: string;
 }
 
 export default function Head(props: HeadProps) {
     const {
         image = null,
-        cardWidth = null,
-        cardHeight = null,
+        imageWidth = null,
+        imageHeight = null,
         children,
         description = "Nguyen's blog is a programming website which shares knowledge and experiences about computer programming.",
         title = "Nguyen's blog - Programming sharing",
@@ -53,8 +53,8 @@ export default function Head(props: HeadProps) {
             <meta property="og:description" content={description} />
             <meta property="og:ttl" content="604800" />
             {image && <meta property="og:image" content={`${HOST}images/${image}`} />}
-            {cardWidth && <meta property="og:image:width" content={cardWidth} />}
-            {cardHeight && <meta property="og:image:height" content={cardHeight} />}
+            {imageWidth && <meta property="og:image:width" content={imageWidth} />}
+            {imageHeight && <meta property="og:image:height" content={imageHeight} />}
 
             <meta property="article:publisher" content="https://twitter.com/vespaiach" />
             {publishedAt && <meta property="article:published_time" content={publishedAt} />}
