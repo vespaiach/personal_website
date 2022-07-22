@@ -6,9 +6,8 @@ const HOST = 'https://www.vespaiach.com/';
 
 interface HeadProps {
     children?: React.ReactNode;
-    card?: string;
+    image?: string;
     description?: string;
-    largeCard?: boolean;
     title?: string;
     tags?: string[];
     publishedAt?: string;
@@ -19,8 +18,7 @@ interface HeadProps {
 
 export default function Head(props: HeadProps) {
     const {
-        card = null,
-        largeCard = true,
+        image = null,
         cardWidth = null,
         cardHeight = null,
         children,
@@ -45,8 +43,8 @@ export default function Head(props: HeadProps) {
             <meta name="twitter:title" content={title} />
             <meta name="twitter:description" content={description} />
             <meta name="twitter:url" content={articleURL} />
-            {card && <meta name="twitter:card" content="summary_large_image" />}
-            {card && <meta name="twitter:image" content={card} />}
+            {image && <meta name="twitter:image" content="summary_large_image" />}
+            {image && <meta name="twitter:image" content={`${HOST}images/${image}`} />}
 
             <meta property="og:site_name" content="Nguyen's Blog" />
             <meta property="og:type" content="article" />
@@ -54,7 +52,7 @@ export default function Head(props: HeadProps) {
             <meta property="og:url" content={articleURL} />
             <meta property="og:description" content={description} />
             <meta property="og:ttl" content="604800" />
-            {card && <meta property="og:image" content={card} />}
+            {image && <meta property="og:image" content={`${HOST}images/${image}`} />}
             {cardWidth && <meta property="og:image:width" content={cardWidth} />}
             {cardHeight && <meta property="og:image:height" content={cardHeight} />}
 

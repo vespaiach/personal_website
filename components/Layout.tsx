@@ -58,7 +58,7 @@ export default function Layout({
 
     return (
         <>
-            <Head title={title} description={description}>
+            <Head title={title} description={description} image={`${post.id}.jpg`}>
                 <StructuredData post={post} />
             </Head>
 
