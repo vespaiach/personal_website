@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
+import { ArticleJsonLd, NextSeo } from 'next-seo';
 
 import { serialize, getAllPostIds, getPostById, getSortedPostsData } from '@lib/posts';
 import Layout from '@components/Layout';
@@ -21,9 +22,54 @@ export default function Post({
     return (
         <Layout
             post={post}
-            title={`${post.title} - Nguyen's Blog`}
-            description={post.excerpt}
             report={`https://github.com/vespaiach/personal_website/issues/new?title=[Report] ${post.title}&body=[${post.title}](${post.github})`}>
+            <NextSeo
+                title={`${post.title} - Nguyen's Blog`}
+                description={post.excerpt}
+                canonical={`https://www.vespaiach.com/posts/${post.id}`}
+                openGraph={{
+                    title: `${post.title} - Nguyen's Blog`,
+                    description: post.excerpt,
+                    url: `https://www.vespaiach.com/posts/${post.id}`,
+                    type: 'article',
+                    article: {
+                        publishedTime: post.date,
+                        modifiedTime: post.date,
+                        section: 'Computer Programming',
+                        authors: ['https://www.vespaiach.com/about'],
+                        tags: post.tags,
+                    },
+                    images: [
+                        {
+                            url: `https://www.vespaiach.com/images/${post.id}.jpg`,
+                            width: 1024,
+                            height: 1366,
+                            alt: post.title,
+                        },
+                    ],
+                }}
+                twitter={{
+                    cardType: 'summary_large_image',
+                    site: '@vespaiach',
+                    handle: '@vespaiach',
+                }}
+            />
+            <ArticleJsonLd
+                url={`https://www.vespaiach.com/images/${post.id}.jpg`}
+                title={post.title}
+                description={post.excerpt}
+                images={[`https://www.vespaiach.com/images/${post.id}.jpg`]}
+                datePublished={post.date}
+                dateModified={post.date}
+                authorName={[
+                    {
+                        name: 'Trinh Nguyen',
+                        url: 'https://www.vespaiach.com/about',
+                    },
+                ]}
+                publisherName="Trinh Nguyen's Blog"
+                publisherLogo="https://www.vespaiach.com/about"
+            />
             <main className="mb-auto mt-2">
                 <div className="fixed right-8 bottom-8 hidden flex-col gap-3 md:hidden">
                     <button
