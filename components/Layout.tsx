@@ -11,7 +11,6 @@ import MailIcon from './MailIcon';
 import { cx } from '@lib/utils';
 import NavigatingLink from './NavigatingLink';
 import Head from './Head';
-import StructuredData from './StructuredData';
 
 function toogleThemeMode() {
     let mode = 'light';
@@ -58,11 +57,13 @@ export default function Layout({
 
     return (
         <>
-            <Head title={title} description={description}>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta name="author" content="Trinh Nguyen" />
-                <StructuredData post={post} />
-            </Head>
+            <Head
+                title={title}
+                description={description}
+                image={post ? `${post.id}.jpg` : null}
+                imageWidth="1024"
+                imageHeight="1366"
+            />
 
             <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
                 <div className="flex h-screen flex-col justify-between">
