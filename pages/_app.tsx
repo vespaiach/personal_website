@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     cardType: 'summary_large_image',
                 }}
             />
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
         </>
     );
 }

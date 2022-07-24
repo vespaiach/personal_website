@@ -197,7 +197,7 @@ export default function Layout({
                                 {report && (
                                     <>
                                         <div> • </div>
-                                        <a href={report} target="_blank" className="text-orange-600">
+                                        <a href={report} target="_blank" className="text-orange-600 font-semibold">
                                             Report
                                         </a>
                                     </>
