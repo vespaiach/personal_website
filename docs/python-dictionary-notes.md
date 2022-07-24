@@ -1,10 +1,10 @@
 ---
 title: 'Python Dictionary Notes'
-date: '2022-07-23'
-modify: '2022-07-23'
-excerpt: 'I\'m trying to summarize all knowledge about Python dictionaries into this post.'
+date: '2022-07-24'
+excerpt: >
+    Dictionaries are the most common data structures in Python. They are playing critical roles in Python code. Actually, Python is really built on dictionaries. As Python Developers, you should know them clearly and use them efficiently for your better code. In this post, I will summarize all knowledge about Python dictionaries, and you can overview them or use them as glue for your next research.
 github: https://github.com/vespaiach/personal_website/blob/main/docs/python-dictionary-notes.md
-tags: comprehensive python dictionary
+tags: python dictionary overview
 ---
 
 ## Create dictionaries
@@ -12,11 +12,10 @@ tags: comprehensive python dictionary
 1. Use curly braces
 
 ```python
-        a_dict = {
-                key1: value,
-                ......
-                keyn: value
-        }
+a_dict = {
+        "Tony": 10,
+        "Kenny": 20
+}
 ```
 
 2. Use constructor dict()
@@ -24,20 +23,20 @@ tags: comprehensive python dictionary
 The argument to the constructor should be a sequence of key-value pairs, or a list of keyword arguments if the key value are simple string (like \*kwargs)
 
 ```python
-        a_dict = dict([
-                ('Tom', 21),
-                ('Anna', 20),
-                ('Amy', 18),
-                ('John', 20),
-        ])
+a_dict = dict([
+        ('Tom', 21),
+        ('Anna', 20),
+        ('Amy', 18),
+        ('John', 20),
+])
 
-        a_dict = dict([
-                ['Tom', 21],
-                ['Anna', 20],
-                ['Amy', 18],
-        ])
+a_dict = dict([
+        ['Tom', 21],
+        ['Anna', 20],
+        ['Amy', 18],
+])
 
-        a_dict = dict(Joe=22, Harry=23)
+a_dict = dict(Joe=22, Harry=23)
 ```
 
 3. Use **fromkeys** function
@@ -45,12 +44,12 @@ The argument to the constructor should be a sequence of key-value pairs, or a li
 You can also create a `dictionary_name = dict.fromkeys(sequence,value)`
 
 ```python
-        a_dict = dict(['Jane', 'Bush']) # { 'Jane': None, 'Bush': None }
+a_dict = dict(['Jane', 'Bush']) # { 'Jane': None, 'Bush': None }
 
-        a_dict = dict(['Nancy', 'Kate'], 10) # { 'Nancy': 10, 'Kate': 10 }
+a_dict = dict(['Nancy', 'Kate'], 10) # { 'Nancy': 10, 'Kate': 10 }
 ```
 
-## Keys and Values of dictionaries
+## Keys and Values
 
 -   Dictionary keys must be of a [hashable](https://docs.python.org/3/glossary.html#term-hashable) type.
 -   Dictionary values can be any type, from immutable to mutable, built-in functions or even another dictionary (dictionaries can be nested to any depth)
@@ -188,19 +187,18 @@ for value in d.values():
 
 Dictionary comprehension is an elegant way to process all or just part of items in a collection to produce dictionaries as a result
 
-`{ key: value for key, value in a collection if some conditions }`
-
 ```python
 keys = ['apple', 'peach', 'orange']
 values = [10, 11, 30]
 
+# { key: value for key, value in a collection if some conditions }
 a_dict = { key: val for key, val in zip(keys, values) }
-# {'apple': 10, 'peach': 11, 'orange': 30}
+# a_dict = {'apple': 10, 'peach': 11, 'orange': 30}
 ```
 
 ## View objects
 
-These methods `.keys()`, `.items()`, and `.values()` return view objects of dictionaries. You can think these view objects as a window of items in dictionary, so any change in dictionaries will reflect on views
+These methods `.keys()`, `.items()`, and `.values()` return view objects of dictionaries. You can think these view objects as a window of items in dictionary, so any change in dictionaries will reflect on them.
 
 ```python
 fruits = {'apple': 10, 'peach': 11, 'orange': 30}
@@ -210,10 +208,9 @@ fruits['apple'] = 100 # now numbers will be [100,11,30]
 
 ## `dict` Versus `UserDict`
 
-| **dict**                                                                          | **UserDict**                                                                        |
-| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| - A Built-in class, written in C, offer better performance and used in most cases | - A Class in Collection module, written in pure Python and designed for subclassing |
+-   **dict**: is a built-in class, it is written in C and normally offer better performance in most of use cases. Its code is closed for modifying.
+-   **UserDict**: is a custom class in `collection` module, it is written in pure Python and designed for subclassing.
 
-It is not always able to create a subclass inherited from **dict** that you can totally control its behaviors, because **dict** is written in C and it closes for modifying. That's why **UserDict** exists. You can easily extend from it and fully control its behaviors.
+So when you are finding your code subclassing from **dict** built-in class, but you can't totally control all behaviors of the **dict** class, that is a chance to switch to subclassing from **UserDict** instead.
 
 **UserDict** source code can be found [here](https://github.com/python/cpython/blob/79ac8c1c0d7cfc955a82af123471c28944e61c18/Lib/collections/__init__.py#L1106)
