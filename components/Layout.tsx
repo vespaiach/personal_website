@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useCallback, useEffect, useRef } from 'react';
+import { ArticleJsonLd } from 'next-seo';
 
 import BulbIcon from './BulbIcon';
 import CloseIcon from './CloseIcon';
@@ -28,12 +29,14 @@ export default function Layout({
     title,
     description,
     post,
+    defaultBlogJsonLdOn = false,
 }: {
     title?: string;
     description?: string;
     report?: string;
     children: React.ReactNode;
     post?: SerializedPostData;
+    defaultBlogJsonLdOn?: boolean;
 }) {
     const menuRef = useRef<HTMLDivElement | null>(null);
     const handleOpen = useCallback(() => {
@@ -65,11 +68,23 @@ export default function Layout({
                 imageHeight="1366"
             />
 
+            {defaultBlogJsonLdOn && (
+                <ArticleJsonLd
+                    type="Blog"
+                    url="https://www.vespaiach.com"
+                    title="Nguyen's Blog"
+                    images={['https://www.vespaiach.com/images/about.jpg']}
+                    datePublished={new Date().toISOString()}
+                    authorName="Trinh Nguyen"
+                    description="Nguyen's blog is a website for sharing knowledge and experiences about computer programming"
+                />
+            )}
+
             <div className="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
                 <div className="flex h-screen flex-col justify-between">
                     <header className="flex items-center justify-between py-10">
                         <div>
-                            <a aria-label="Vespaiach's Blog" href="/" title="Vespaiach's Blog">
+                            <a aria-label="Vespaiach's Blog" href="/" title="Nguyen's Blog">
                                 <div className="flex items-center justify-between">
                                     <div className="sm:h-8 md:h-6 text-2xl text-orange-600 font-semibold sm:block">
                                         Nguyen's Blog
@@ -197,7 +212,10 @@ export default function Layout({
                                 {report && (
                                     <>
                                         <div> • </div>
-                                        <a href={report} target="_blank" className="text-orange-600 font-semibold">
+                                        <a
+                                            href={report}
+                                            target="_blank"
+                                            className="text-orange-600 font-semibold">
                                             Report
                                         </a>
                                     </>

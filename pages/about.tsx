@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Cookies from 'js-cookie';
 
 import Layout from '@components/Layout';
@@ -9,7 +8,7 @@ import { getMode } from '@lib/utils';
 
 export default function About() {
     return (
-        <Layout title="About - Nguyen's Blog">
+        <Layout title="About - Nguyen's Blog" defaultBlogJsonLdOn>
             <main className="mb-auto">
                 <div className="divide-y divide-gray-200 dark:divide-gray-700">
                     <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
