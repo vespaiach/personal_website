@@ -15,17 +15,15 @@ export default function TagList({
     return (
         <div className={className}>
             {tags.map((t) => (
-                <Link key={t.name} href={`/tags/${t.name}`}>
-                    <a
-                        itemProp="url"
-                        className={cx(
-                            selectedTag && t.name === selectedTag && 'border-b-2 border-orange-600',
-                            tagClassName,
-                        )}
-                        title={t.name}>
-                        <span>{t.name}</span>
-                        {`${t.count && t.count > 0 ? ` (${t.count})` : ''}`}
-                    </a>
+                <Link key={t.name} href={`/tags/${t.name}`}
+                    itemProp="url"
+                    className={cx(
+                        selectedTag && t.name === selectedTag && 'border-b-2 border-orange-600',
+                        tagClassName,
+                    )}
+                    title={t.name}>
+                    <span>{t.name}</span>
+                    {`${t.count && t.count > 0 ? ` (${t.count})` : ''}`}
                 </Link>
             ))}
         </div>

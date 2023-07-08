@@ -16,20 +16,16 @@ export default function PostList({ posts }: { posts: SerializedPostData[] }) {
                             <div className="space-y-3 xl:col-span-3">
                                 <div>
                                     <h3 className="text-2xl font-bold leading-8 tracking-tight">
-                                        <Link href={`/posts/${post.id}`}>
-                                            <a
-                                                className="text-gray-800 dark:text-gray-100 hover:text-cyan-600"
-                                                title={post.title}>
-                                                <span>{post.title}</span>
-                                            </a>
+                                        <Link href={`/posts/${post.id}`}
+                                            className="text-gray-800 dark:text-gray-100 hover:text-cyan-600"
+                                            title={post.title}>
+                                            <span>{post.title}</span>
                                         </Link>
                                     </h3>
                                     <div className="flex flex-wrap">
                                         {post.tags.map((tag, i) => (
-                                            <Link key={i} href={`/tags/${tag}`}>
-                                                <a className="mr-3 text-sm font-medium uppercase text-gray-200 hover:text-cyan-600">
-                                                    <span>{tag}</span>
-                                                </a>
+                                            <Link key={i} href={`/tags/${tag}`} className="mr-3 text-sm font-medium uppercase text-gray-200 hover:text-cyan-600">
+                                                <span>{tag}</span>
                                             </Link>
                                         ))}
                                     </div>

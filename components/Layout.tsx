@@ -139,24 +139,18 @@ export default function Layout({
                                     </div>
                                     <nav className="mt-8">
                                         <div className="px-12 py-4">
-                                            <Link href="/posts">
-                                                <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
-                                                    Posts
-                                                </a>
+                                            <Link href="/posts" className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
+                                                Posts
                                             </Link>
                                         </div>
                                         <div className="px-12 py-4">
-                                            <Link href="/tags">
-                                                <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
-                                                    Tags
-                                                </a>
+                                            <Link href="/tags" className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
+                                                Tags
                                             </Link>
                                         </div>
                                         <div className="px-12 py-4">
-                                            <Link href="/about">
-                                                <a className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
-                                                    About
-                                                </a>
+                                            <Link href="/about" className="text-2xl font-bold tracking-widest text-gray-800 dark:text-gray-100">
+                                                About
                                             </Link>
                                         </div>
                                     </nav>
