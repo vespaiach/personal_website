@@ -1,16 +1,16 @@
 ---
 title: 'Simple solution for image slider'
-date: '2023-06-15T16:00:00.000-0500'
+date: '2023-07-15T16:00:00.000-0500'
 excerpt: "In this tutorial, I am going to show you how to build an image slider which is simple and doesn't require much coding but powerful enough for your website. Here is what we are building:"
 github: https://github.com/vespaiach/personal_website/blob/main/docs/image-slider.md
 tags: javascript
 ---
 
-<img src="/images/slider.gif" width="300" style="margin: 0 auto;" />
+<img src="/images/slider.gif" width="300" />
 
 We will need two div tags: one will be an image container to place all images horizontally; another will be a container wrapper to hold the image container and left/right scrolling buttons. Everytime, users click on left/right scrolling buttons, we instruct the image container to scroll to the left/right one image length while performing a little animation to make it look like a slider. The picture below will help you to visualize how all components attach together.
 
-<img src="/images/slider_visual.png" style="margin: 38px auto; max-width: 600px; width: 100%" />
+<img src="/images/slider_visual.png" style="margin: 38px 0; max-width: 600px; width: 100%" />
 
 The wrapper is just there to hold scrolling buttons, because if we put those buttons inside the image container, when the image container scrolls, those buttons will move.
 
@@ -28,16 +28,14 @@ Two scrolling buttons need to be positioned accordingly to the left and right of
 const LeftScrollButton = styled.button<{ hide?: boolean }>`
   position: absolute;
   left: 8px;
-  top: 50%; // center vertically
+  top: calc(50% - 14px); // center vertically
 
-  transform: rotate(180deg), translateY(-50%);
+  transform: rotate(180deg);
 `;
 const RightScrollButton = styled.button<{ hide?: boolean }>`
   position: absolute;
   left: 8px;
-  top: 50%; // center vertically
-
-  transform: translateY(-50%); // center vertically
+  top: calc(50% - 14px); // center vertically
 `;
 ```
 
@@ -79,4 +77,7 @@ const handleRightScrolling = () => {
 }
 ```
 
+When users scroll to start or end, we also need to hide scrolling buttons to tell users that they are at the edges. We can determine that by looking at the image container scrolling position, if it is 0, users are at the left edge, if it is equal to image container client width, users are at the right edge. 
+
+Finally, as you see, we don’t use any complex html structure or fancy css animation, but by putting all the above things together we will have a nice image slider that is cool enough for our websites. I think, the critical thing here is the scroll behavior smoothly which make it looks like a slider than a scrollbar and luckily that behavior are supporting in major of modern browsers. So, why bother? Enjoy it. You can check out the whole source code from this [Github repository](https://github.com/vespaiach/image-slider).
 
