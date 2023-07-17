@@ -12,7 +12,7 @@ function readPugLayout(layoutPath) {
     return cache.get(layoutPath);
 }
 
-export default function gulpPug(layoutPath, options) {
+export default function layoutMerging(layoutPath, options) {
     return through.obj(function compilePug(file, encoding, callback) {
         if (!Vinyl.isVinyl(file)) {
             callback(new Error('Must be a Vinyl object'));

@@ -5,16 +5,10 @@ import html from 'remark-html';
 import prism from 'remark-prism';
 import gfm from 'remark-gfm';
 
-export default function transform() {
+export default function mdToHtml() {
     // Monkey patch Transform or create your own subclass,
     // implementing `_transform()` and optionally `_flush()`
-    const transformStream = new Transform({ objectMode: true });
-    /**
-     * @param {Buffer|string} file
-     * @param {string=} encoding - ignored if file contains a Buffer
-     * @param {function(Error, object)} callback - Call this function (optionally with an
-     *          error argument and data) when you are done processing the supplied chunk.
-     */
+    const transformStream = new Transform({ objectMode: true })
     transformStream._transform = function (file, encoding, callback) {
         const content = file.contents.toString();
         const matterResult = matter(content);
