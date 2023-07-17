@@ -1,3 +1,5 @@
+import { RequestCookies } from "next/dist/server/web/spec-extension/cookies";
+
 export type EventMap<T extends EventTarget> = T extends MediaQueryList
     ? MediaQueryListEventMap
     : T extends Document
@@ -50,7 +52,7 @@ export function separator() {
     return '----';
 }
 
-export function getMode(cookies: Map<string, string>): string {
+export function getMode(cookies: RequestCookies): string {
     const modes = getThemeModes();
 
     return cookies.has('theme-mode') && modes.includes(cookies.get('theme-mode'))
