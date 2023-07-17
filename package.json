@@ -16,6 +16,7 @@
         "autoprefixer": "^10.4.14",
         "gray-matter": "^4.0.3",
         "gulp-rename": "^2.0.0",
+        "gulp-uglify": "^3.0.2",
         "js-cookie": "^3.0.5",
         "next": "^13.4.9",
         "next-seo": "^6.1.0",

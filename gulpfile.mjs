@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import rename from 'gulp-rename';
+import uglify  from 'gulp-uglify';
 import transform from './plugins/transform.mjs';
 import gulpPug from './plugins/gulpPug.mjs';
 
