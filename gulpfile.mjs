@@ -22,4 +22,4 @@ function assets(cb) {
     cb();
 }
 
-export default series(html, assets);
+gulp.task('build', series(html, assets));

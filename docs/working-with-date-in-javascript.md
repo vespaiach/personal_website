@@ -6,7 +6,7 @@ github: https://github.com/vespaiach/personal_website/blob/main/docs/working-wit
 tags: javascript,date
 ---
 
-## Definition
+# Definition
 
 Javascript doesn't date data type, instead it introduces Date object which is an integer number representing the number of milliseconds passed since midnight at the beginning of 01 January, 1970 UTC. Put in other words, Javascript Date objects use a time value that is an offset in milliseconds since 1970-01-01T00:00:00Z (UTC).
 
@@ -17,7 +17,7 @@ new Date(0) //01 January, 1970 UTC
 new Date(negative milliseconds) //time before midnight of 01 January, 1970 UTC
 ```
 
-## UTC and local time
+# UTC and local time
 
 It is worth noting that, from the definition, Date object is using UTC time but when creating, it always uses local timezone and offset. For instance, let’s create a date using new Date(0), it may show different than 01 January 1970 UTC and it depends on your local timezone.
 
@@ -26,7 +26,7 @@ new Date(0); //May show different time on you local machine
 new Date(0).toUTCString(); //To get date time string in UTC format
 ```
 
-## Convert between date representing and timestamp
+# Convert between date representing and timestamp
 
 Create a Date object by using Date constructor.
 
@@ -61,7 +61,7 @@ Get timestamp from Date object by using getTime method
 new Date().getTime(); // milliseconds
 ```
 
-## Clone/Create a copy of Date object
+# Clone/Create a copy of Date object
 
 A quick way to clone Date objects is to put it in Date constructor.
 
@@ -71,7 +71,7 @@ const copy = new Date(curr);
 const anotherCopy = new Date(curr.getTime());
 ```
 
-## Exchange Date with other systems
+# Exchange Date with other systems
 
 For example, we want to send a Date object to the server for saving and before doing that, we can convert that Date object to a string representation. The most common datetime format is [ISO8601](https://en.wikipedia.org/wiki/ISO_8601), and Javascript have a function that allow us to convert to ISO format `toISOString`
 
@@ -79,7 +79,7 @@ For example, we want to send a Date object to the server for saving and before d
 new Date().toISOString();
 ```
 
-## Compare two dates
+# Compare two dates
 
 Simply convert them to timestamp (in milliseconds) and compare them, or let Javascript do the type conversion.
 
@@ -104,7 +104,7 @@ if (date1 == date2) {
 } // this will always be false, two objects can be equality checked like this
 ```
 
-## Loop through date range or month range
+# Loop through date range or month range
 
 In Date constructor, what if we put a wrong date in, for instance new Date(2022, 12, 32), Javascript will automatically correct them which is very handy in this case. We can leverage this autocorection to loop through the date range.
 
@@ -128,7 +128,7 @@ while(fromDate < currDate) {
 }
 ```
 
-## Get the first date of month
+# Get the first date of month
 
 If we are given a Date object, we can get the first date of its month by setting it date to 1
 
@@ -137,7 +137,7 @@ const date = new Date();
 date.setDate(1);
 ```
 
-## Get the last date of month
+# Get the last date of month
 
 If we are given a Date object, we can get the last date of its month by setting it the next month and then setting its date by -1
 
@@ -147,7 +147,7 @@ date.setMonth(date.getMonth() + 1);
 date.setDate(-1);
 ```
 
-## Count date differences
+# Count date differences
 
 Disregard different timezone, we can use similar code below to calculate the differences.
 
@@ -161,7 +161,7 @@ Math.ceil(((date2 - date1) / 1000) * 60 * 60 * 24); // difference in every milis
 
 To calculate for different timezones, we need to find the different offset between two timezones and then subtract the result by that difference before converting it to date difference. (here is the code from [DayJs](https://github.com/iamkun/dayjs/blob/8e6d11d053393d97bee1ba411adb2d82de1a58c4/src/index.js#L317))
 
-## Count month differences
+# Count month differences
 
 `getMonth()` method returns the current month of Date (remember that, month begins from 0). We can use it to count the differences by substracting them.
 
@@ -177,7 +177,7 @@ const diff = -date1.getMonth() + (date2.getFullYear() - date1.getFullYear()) * 1
 
 Check out the sample code of [diffMonth from here](https://github.com/vespaiach/calendar-react/blob/main/src/utils.ts#L11)
 
-## Check if Daylight Saving Time is applied for a Date
+# Check if Daylight Saving Time is applied for a Date
 
 We base on the idea that in DST time Javascript `getTimezoneOffset` method will return greater value than in standard time and no country observe DST time more than six months.
 
@@ -191,7 +191,7 @@ const isDSTApplied =
 
 Check out the code from [moment.js](https://github.com/moment/moment/blob/e96809208c9d1b1bbe22d605e76985770024de42/src/lib/units/offset.js#L210)
 
-## Check if leap year
+# Check if leap year
 
 To check it, we only use math and not anything related to Date objects.
 

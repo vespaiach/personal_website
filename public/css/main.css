@@ -1,0 +1,38 @@
+body {
+    font-family: Lato;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 1.6;
+    background: linear-gradient(192.04deg, #FFF3E9 0%, #E4F3F8 100%);
+}
+h1 {
+    font-family: 'Playfair Display';
+    font-size: 1.4375rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 1.5rem 0 0.9rem 0;
+}
+h3 {
+    font-family: 'Playfair Display';
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 1.2rem 0 0.7rem 0;
+}
+blockquote {
+    font-size: 1.0625rem;
+}
+p {
+    margin: 0 0 0.8rem 0 !important;
+}
+pre {
+    margin: 1rem 0 !important;
+}
+.page {
+    padding: 1.6rem;
+    border-radius: 12px;
+    background: white;
+    margin: 20% 20px;
+}
