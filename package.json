@@ -9,7 +9,6 @@
         "start": "next start",
         "pic": "node ./screenshot.js",
         "gulp": "gulp"
-
     },
     "dependencies": {
         "@tailwindcss/forms": "^0.5.3",
@@ -35,6 +34,7 @@
         "tailwindcss": "^3.3.2",
         "through2": "^4.0.2",
         "typescript": "^5.1.6",
+        "uglify-js": "^3.17.4",
         "vinyl": "^3.0.0"
     },
     "devDependencies": {
