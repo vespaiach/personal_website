@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import build from './tasks/build.mjs';
-
-const { src, dest, series } = gulp
+import dev from './tasks/dev.mjs';
 
 gulp.task('build', build);
+gulp.task('dev', dev);

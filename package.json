@@ -4,7 +4,7 @@
         "node": ">=16.14.0"
     },
     "scripts": {
-        "dev": "npx http-server -p 3000 -c-1 ./build",
+        "dev": "gulp dev && node ./tasks/watch.mjs",
         "build": "gulp build",
         "start": "next start",
         "pic": "node ./screenshot.js",

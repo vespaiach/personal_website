@@ -5,10 +5,10 @@ import html from 'remark-html';
 import prism from 'remark-prism';
 import gfm from 'remark-gfm';
 
-export default function mdToHtml() {
+export default function transform() {
     // Monkey patch Transform or create your own subclass,
     // implementing `_transform()` and optionally `_flush()`
-    const transformStream = new Transform({ objectMode: true })
+    const transformStream = new Transform({ objectMode: true });
     transformStream._transform = function (file, encoding, callback) {
         const content = file.contents.toString();
         const matterResult = matter(content);
@@ -19,6 +19,7 @@ export default function mdToHtml() {
             .process(matterResult.content)
             .then((processedContent) => {
                 file.contents = Buffer.from(processedContent.value);
+                file.frontmatter = matterResult.data;
                 callback(null, file);
             });
     };

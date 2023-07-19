@@ -1,80 +1,75 @@
-import { Transform } from 'stream';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
-import prism from 'remark-prism';
-import gfm from 'remark-gfm';
 import gulp from 'gulp';
-import through from 'through2';
 import rename from 'gulp-rename';
-import Vinyl from 'vinyl';
-import PluginError from 'plugin-error';
-import pug from 'pug';
+import path from 'path';
+import fs from 'fs';
+import transform from '../plugins/transform.mjs';
+import pug from '../plugins/pug.mjs';
+import { fileURLToPath } from 'url';
+import { watch } from 'node:fs';
 
 const { src, dest } = gulp;
-const cache = new Map();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-function _readPugLayout(layoutPath) {
-    if (!cache.has(layoutPath)) {
-        cache.set(layoutPath, pug.compileFile(layoutPath));
-    }
-    return cache.get(layoutPath);
-}
+const pathToPublic = path.join(__dirname, '../public/');
+const pathToDocs = path.join(__dirname, '../docs/');
+const pathToBuild = path.join(__dirname, '../build/');
+const filePaths = fs.readdirSync(pathToDocs).map((fileName) => {
+    return path.join(pathToDocs, fileName);
+});
 
-function transformPlugin() {
-    // Monkey patch Transform or create your own subclass,
-    // implementing `_transform()` and optionally `_flush()`
-    const transformStream = new Transform({ objectMode: true });
-    transformStream._transform = function (file, encoding, callback) {
-        const content = file.contents.toString();
-        const matterResult = matter(content);
-        remark()
-            .use(html, { sanitize: false })
-            .use(gfm)
-            .use(prism)
-            .process(matterResult.content)
-            .then((processedContent) => {
-                file.contents = Buffer.from(processedContent.value);
-                file.frontmatter = matterResult.data;
-                callback(null, file);
-            });
-    };
-
-    return transformStream;
-}
-
-function pugLayoutPlugin() {
-    return through.obj(function compilePug(file, encoding, callback) {
-        if (!Vinyl.isVinyl(file)) {
-            callback(new Error('Must be a Vinyl object'));
-            return;
+function copyFileToFolder(sourcePath, targetFolder, callback) {
+    fs.mkdir(targetFolder, { recursive: true }, (err) => {
+        if (err) {
+            throw err;
         }
 
-        // If the file is null or a directory, do nothing
-        if (file.isNull() || file.isDirectory()) {
-            return callback(null, file);
-        }
+        const fileName = path.basename(sourcePath);
+        const targetPath = path.join(targetFolder, fileName);
 
-        // If the file is a buffer
-        if (file.isBuffer()) {
-            try {
-                const compiler = _readPugLayout('layouts/default.pug');
-                file.contents = Buffer.from(
-                    compiler({ content: file.contents.toString(), title: file.frontmatter.title }),
-                );
-            } catch (error) {
-                return callback(new PluginError('gulp-pug', error));
+        fs.copyFile(sourcePath, targetPath, (copyErr) => {
+            if (copyErr) {
+                throw copyErr;
             }
-        }
-
-        return callback(null, file);
+        });
     });
 }
 
-export default function buildFile(filePath) {
+function buildFile(filePath) {
     src(filePath)
-        .pipe(transformPlugin())
-        .pipe(pugLayoutPlugin())
+        .pipe(transform())
+        .pipe(pug())
         .pipe(rename({ extname: '.html' }))
         .pipe(dest('build/', { overwrite: true }));
+}
+
+export function watchMarkdownFiles() {
+    watch(pathToDocs, (eventType, fileName) => {
+        if (eventType === 'change') {
+            console.log('File changed: ', fileName);
+            console.log('Build again....');
+            buildFile(path.join(pathToDocs, fileName));
+        }
+    });
+}
+
+export function watchPublicFolder(folderName) {
+    const pathToWatchingFolder = path.join(pathToPublic, folderName);
+    const pathToBuildFolder = path.join(pathToBuild, folderName);
+    watch(pathToWatchingFolder, (eventType, fileName) => {
+        if (eventType === 'change') {
+            console.log('Image changed: ', fileName);
+            console.log('Copy again....');
+            copyAndOverwriteFile(
+                path.join(pathToWatchingFolder, fileName),
+                path.join(pathToBuildFolder, fileName),
+            );
+        }
+    });
+}
+
+export default function dev(callback) {
+    filePaths.forEach(buildFile);
+    src('public/**/*').pipe(dest('build/', { overwrite: true }));
+    callback();
 }
