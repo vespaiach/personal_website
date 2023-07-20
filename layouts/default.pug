@@ -2,13 +2,51 @@ doctype html
 html
   head
     title #{frontmatter.title} | vespaiach.com 
-    meta(name='description', content=`${frontmatter.excerpt}`)
+    meta(name="description", content=`${frontmatter.excerpt}`)
+    meta(name="keywords", content=frontmatter.tags)
+    meta(name="robots", content="index, nofollow")
+    meta(property="og:title", content=frontmatter.title)
+    meta(property="og:description", content=frontmatter.excerpt)
+    meta(property="og:type", content="article")
+    meta(property="og:url", content=`https://www.vespaiach.com/${frontmatter.fileName}.html`)
+    meta(property="og:image", content=`https://www.vespaiach.com/images/${frontmatter.fileName}.jpeg`)
+    meta(property="og:image:alt", content=frontmatter.title)
+    link(rel="canonical", href=`https://www.vespaiach.com/${frontmatter.fileName}.html`)
     link(rel="preconnect", href="https://fonts.googleapis.com")
     link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
     link(href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700&display=swap", rel="stylesheet")
     link(rel="stylesheet", href="/css/prism.css")
     link(rel="stylesheet", href="/css/main.css")
     script(src="/js/prism.js")
+    script(type='application/ld+json').
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://www.vespaiach.com/#{frontmatter.fileName}.html"
+        },
+        "headline": "#{frontmatter.title}",
+        "description": "#{frontmatter.excerpt}",
+        "image": `https://www.vespaiach.com/#{frontmatter.fileName}.jpeg`,
+        "datePublished": "#{frontmatter.date}",
+        "dateModified": "#{frontmatter.date}",
+        "author": {
+          "@type": "Person",
+          "name": "Trinh Nguyen (vespaiach)"
+        },
+        "publisher": {
+          "@type": "Person Blog",
+          "name": "vespaich.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.vespaiach.com/favicon.ico",
+          }
+        },
+        "articleBody": "#{content}",
+        "keywords": "#{frontmatter.tags}"
+      }
+
   body
     div(class='header')
       h1(class='title') #{frontmatter.title}

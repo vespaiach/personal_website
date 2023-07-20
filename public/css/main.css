@@ -82,6 +82,7 @@ body {
     line-height: 1.6;
     background: linear-gradient(192.04deg, #FFF3E9 0%, #E4F3F8 100%);
     color: rgb(43, 70, 82);
+    padding: 0 16px;
 }
 h1 {
     font-family: 'Playfair Display';

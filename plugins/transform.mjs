@@ -25,6 +25,7 @@ export default function transform() {
                 file.contents = Buffer.from(processedContent.value);
                 file.frontmatter = matterResult.data;
                 file.frontmatter.date = formatDate(file.frontmatter.date);
+                file.frontmatter.fileName = file.basename.replace(/\.[^/.]+$/, "")
                 callback(null, file);
             });
     };
