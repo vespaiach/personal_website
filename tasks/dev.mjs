@@ -56,14 +56,12 @@ export function watchMarkdownFiles() {
 export function watchPublicFolder(folderName) {
     const pathToWatchingFolder = path.join(pathToPublic, folderName);
     const pathToBuildFolder = path.join(pathToBuild, folderName);
+
     watch(pathToWatchingFolder, (eventType, fileName) => {
         if (eventType === 'change') {
             console.log('Image changed: ', fileName);
             console.log('Copy again....');
-            copyAndOverwriteFile(
-                path.join(pathToWatchingFolder, fileName),
-                path.join(pathToBuildFolder, fileName),
-            );
+            copyFileToFolder(path.join(pathToWatchingFolder, fileName), pathToBuildFolder);
         }
     });
 }

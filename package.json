@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "gulp dev && node ./tasks/watch.mjs",
         "build": "gulp build",
-        "start": "next start",
+        "start": "npx http-server -p 3000 -c-1 ./build",
         "pic": "node ./screenshot.js",
         "gulp": "gulp"
     },

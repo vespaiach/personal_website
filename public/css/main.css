@@ -1,3 +1,78 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+   scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
     font-family: Lato;
     font-size: 0.875rem;
@@ -6,6 +81,7 @@ body {
     font-weight: 400;
     line-height: 1.6;
     background: linear-gradient(192.04deg, #FFF3E9 0%, #E4F3F8 100%);
+    color: rgb(43, 70, 82);
 }
 h1 {
     font-family: 'Playfair Display';
@@ -30,9 +106,42 @@ p {
 pre {
     margin: 1rem 0 !important;
 }
+a, a:hover, a:focus, a:active, a:visited {
+    color: rgb(7, 117, 154);
+    text-decoration: none;
+    background-color: transparent;
+}
+a::after {
+    content: '↗';
+}
+.header, .page, .footer {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+}
 .page {
     padding: 1.6rem;
     border-radius: 12px;
     background: white;
-    margin: 100px 20%;
+}
+.header {
+    margin-top: 2rem;
+    margin-bottom: 1.2rem;
+}
+.footer {
+    font-family: Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;
+    font-size: small;
+    margin-top: 2.2rem;
+    margin-bottom: 5.2rem;
+}
+.title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0;
+}
+.subtitle {
+    margin: 0;
+    font-family: Lato;
+    font-size: 0.875rem;
+    font-weight: 400;
 }

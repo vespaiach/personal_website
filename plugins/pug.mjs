@@ -29,7 +29,7 @@ export default function pug() {
             try {
                 const compiler = _readPugLayout('layouts/default.pug');
                 file.contents = Buffer.from(
-                    compiler({ content: file.contents.toString(), title: file.frontmatter.title }),
+                    compiler({ content: file.contents.toString(), frontmatter: file.frontmatter }),
                 );
             } catch (error) {
                 return callback(new PluginError('gulp-pug', error));

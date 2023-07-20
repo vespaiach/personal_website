@@ -5,6 +5,10 @@ import html from 'remark-html';
 import prism from 'remark-prism';
 import gfm from 'remark-gfm';
 
+function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
 export default function transform() {
     // Monkey patch Transform or create your own subclass,
     // implementing `_transform()` and optionally `_flush()`
@@ -20,6 +24,7 @@ export default function transform() {
             .then((processedContent) => {
                 file.contents = Buffer.from(processedContent.value);
                 file.frontmatter = matterResult.data;
+                file.frontmatter.date = formatDate(file.frontmatter.date);
                 callback(null, file);
             });
     };
