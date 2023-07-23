@@ -60,9 +60,9 @@ select {
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
-   scroll-behavior: auto;
+    scroll-behavior: auto;
   }
-  
+
   *,
   *::before,
   *::after {
@@ -73,76 +73,129 @@ select {
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
 body {
-    font-family: Lato;
-    font-size: 0.875rem;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 1.6;
-    background: linear-gradient(192.04deg, #FFF3E9 0%, #E4F3F8 100%);
-    color: rgb(43, 70, 82);
-    padding: 0 16px;
+  font-family: Lato;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 1.6;
+  background: linear-gradient(192.04deg, #fff3e9 0%, #e4f3f8 100%);
+  color: rgb(43, 70, 82);
 }
 h1 {
-    font-family: 'Playfair Display';
-    font-size: 1.4375rem;
-    font-weight: 700;
-    line-height: 1.5;
-    margin: 1.5rem 0 0.9rem 0;
+  font-family: 'Playfair Display';
+  font-size: 1.4375rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 1.5rem 0 0.9rem 0;
 }
 h3 {
-    font-family: 'Playfair Display';
-    font-size: 1.0625rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin: 1.2rem 0 0.7rem 0;
+  font-family: 'Playfair Display';
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 1.2rem 0 0.7rem 0;
 }
 blockquote {
-    font-size: 1.0625rem;
+  font-size: 1.0625rem;
 }
 p {
-    margin: 0 0 0.8rem 0 !important;
+  margin: 0 0 1.4rem 0 !important;
 }
 pre {
-    margin: 1rem 0 !important;
+  margin: 1.4rem 0 !important;
 }
-a, a:hover, a:focus, a:active, a:visited {
-    color: rgb(7, 117, 154);
-    text-decoration: none;
-    background-color: transparent;
+a {
+  color: rgb(7, 117, 154);
+  text-decoration: none;
+  background-color: transparent;
 }
-a::after {
-    content: '↗';
+
+.header,
+.page,
+.footer,
+.top-bar > div {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1024px;
 }
-.header, .page, .footer {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1024px;
+.top-bar {
+  width: 100%;
+  top: 0px;
+  z-index: 1000;
+}
+.i-am-top{
+  height: 0px;
+}
+.top-bar > div {
+  display: flex;
+  gap: 1.2rem;
+  padding: 0.3rem 0;
+}
+html:not([data-scroll='0']) .i-am-top {
+  height: 28px;
+}
+html:not([data-scroll='0']) .top-bar {
+  position: fixed;
+  background: white;
+  transition: background 0.2s ease-in-out;
 }
 .page {
-    padding: 1.6rem;
-    border-radius: 12px;
-    background: white;
+  padding: 0.01rem 1.6rem 1.6rem 1.6rem;
+  border-radius: 1rem;
+  background: white;
 }
 .header {
-    margin-top: 2rem;
-    margin-bottom: 1.2rem;
+  margin-top: 2.2rem;
+  margin-bottom: 2.2rem;
+  padding: 0 1.6rem;
 }
 .footer {
-    font-family: Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;
-    font-size: small;
-    margin-top: 2.2rem;
-    margin-bottom: 5.2rem;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: small;
+  margin-top: 2.2rem;
+  margin-bottom: 5.2rem;
 }
 .title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
 }
 .subtitle {
-    margin: 0;
-    font-family: Lato;
-    font-size: 0.875rem;
-    font-weight: 400;
+  margin: 0;
+  font-family: Lato;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+html:not([data-scroll='0']) .back-to-top {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 0.8rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+@media screen and (max-width: 800px) {
+  .header,
+  .page,
+  .footer,
+  .top-bar > div {
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
+  }
+  .page, .header {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
 }
