@@ -1,0 +1,44 @@
+doctype html
+html
+  head
+    title Trinh Nguyen's blog | vespaiach.com
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700&display=swap", rel="stylesheet")
+    link(rel="stylesheet", href="/css/prism.css")
+    link(rel="stylesheet", href="/css/main.css")
+    script(src="/js/prism.js")
+    script(src="/js/main.js")
+
+  body
+    div(class='i-am-top', id='top')
+    nav
+      div
+        a(href="/") Home
+        span |
+        a(href="/about.html") About
+    header
+      p(class='tag-list')
+        span TAG:&nbsp;
+        a(href='#content', class="tag", data-tag='all') all(#{total}),
+        each tag, index in tags
+          a(href='#content', class="tag", data-tag=tag.slug) #{tag.slug}(#{tag.count})#{index < tags.length - 1 ? ', ' : ''}
+    div(class="content", id="content")
+      each item in frontmatters
+        section(class="excerpt")
+          h2= item.title
+          p
+            span(class="date", data-date=item.date)= item.date
+            span &nbsp;|&nbsp;
+            span(class="tags")= item.tags
+            span &nbsp;|&nbsp;
+            a(class="read-more", href=`${item.link}`) read more
+          p= item.excerpt
+    footer
+      a(href="https://www.linkedin.com/in/trinh-nguyen-0a701526") LinkedIn
+      span |
+      a(href='https://github.com/vespaiach') Me, myself and I
+      span |
+      span vespaich.com © #{new Date().getFullYear()}
+    a(class="back-to-top", href="#top") top
