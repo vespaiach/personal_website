@@ -91,23 +91,21 @@ h1 {
   font-size: 1.4375rem;
   font-weight: 700;
   line-height: 1.5;
-  margin: 1.5rem 0 0.9rem 0;
+}
+h2 {
+  font-family: 'Playfair Display';
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 h3 {
   font-family: 'Playfair Display';
   font-size: 1.0625rem;
   font-weight: 700;
   line-height: 1.3;
-  margin: 1.2rem 0 0.7rem 0;
 }
 blockquote {
   font-size: 1.0625rem;
-}
-p {
-  margin: 0 0 1.4rem 0 !important;
-}
-pre {
-  margin: 1.4rem 0 !important;
 }
 a {
   color: rgb(7, 117, 154);
@@ -115,26 +113,59 @@ a {
   background-color: transparent;
 }
 
-.header,
-.page,
-.footer,
-.top-bar > div {
+nav > div,
+header,
+.content,
+footer {
   margin-left: auto;
   margin-right: auto;
   max-width: 1024px;
 }
-.top-bar {
+
+nav {
   width: 100%;
   top: 0px;
   z-index: 1000;
 }
-.i-am-top{
-  height: 0px;
-}
-.top-bar > div {
+nav > div {
   display: flex;
   gap: 1.2rem;
   padding: 0.3rem 0;
+}
+
+header {
+  margin-top: 3rem;
+  margin-bottom: 3.2rem;
+}
+
+.content {
+  padding: 1.6rem;
+  border-radius: 1rem;
+  background: white;
+}
+
+footer {
+  font-size: small;
+  margin-top: 2.2rem;
+  margin-bottom: 5rem;
+}
+
+h2.tag-list span {
+  font-size: 1.8rem;
+  color: rgb(43, 70, 82);
+  margin-right: 10px;
+  text-transform: uppercase;
+}
+h2.tag-list a {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.tag-list h2,
+.tag-list a {
+  margin-right: 12px;
+}
+.i-am-top {
+  height: 0px;
 }
 html:not([data-scroll='0']) .i-am-top {
   height: 28px;
@@ -144,11 +175,6 @@ html:not([data-scroll='0']) .top-bar {
   background: white;
   transition: background 0.2s ease-in-out;
 }
-.page {
-  padding: 0.01rem 1.6rem 1.6rem 1.6rem;
-  border-radius: 1rem;
-  background: white;
-}
 .header {
   margin-top: 2.2rem;
   margin-bottom: 2.2rem;
@@ -156,9 +182,6 @@ html:not([data-scroll='0']) .top-bar {
 }
 .footer {
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: small;
-  margin-top: 2.2rem;
-  margin-bottom: 5.2rem;
 }
 .title {
   font-size: 2.2rem;
@@ -186,16 +209,27 @@ html:not([data-scroll='0']) .back-to-top {
   cursor: pointer;
   transition: background 0.2s ease-in-out;
 }
-@media screen and (max-width: 800px) {
-  .header,
-  .page,
-  .footer,
-  .top-bar > div {
-    margin-left: 1.6rem;
-    margin-right: 1.6rem;
+.excerpt h3 {
+  margin: 0 0 0.8rem 0;
+  font-size: 0.875rem;
+  display: flex;
+  gap: 6px;
+}
+.excerpt p {
+  margin: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  nav > div,
+  header,
+  .content,
+  footer {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
   }
-  .page, .header {
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+
+  .content {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
