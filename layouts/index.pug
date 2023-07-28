@@ -19,14 +19,13 @@ html
         span |
         a(href="/about.html") About
     header
-      p(class='tag-list')
-        span TAG:&nbsp;
-        a(href='#content', class="tag", data-tag='all') all(#{total}),
+      div(class='tag-list')
+        a(href='#', class="tag", data-tag='all') all(#{total})
         each tag, index in tags
-          a(href='#content', class="tag", data-tag=tag.slug) #{tag.slug}(#{tag.count})#{index < tags.length - 1 ? ', ' : ''}
+          a(href='#', class="tag", data-tag=tag.slug) #{tag.slug}(#{tag.count})
     div(class="content", id="content")
       each item in frontmatters
-        section(class="excerpt")
+        section(class="excerpt", data-tags=item.tags)
           h2= item.title
           p
             span(class="date", data-date=item.date)= item.date
@@ -37,8 +36,6 @@ html
           p= item.excerpt
     footer
       a(href="https://www.linkedin.com/in/trinh-nguyen-0a701526") LinkedIn
-      span |
-      a(href='https://github.com/vespaiach') Me, myself and I
-      span |
-      span vespaich.com © #{new Date().getFullYear()}
+      span &nbsp;|&nbsp;
+      a(href='https://github.com/vespaiach') Github 
     a(class="back-to-top", href="#top") top

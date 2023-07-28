@@ -129,7 +129,7 @@ nav {
 }
 nav > div {
   display: flex;
-  gap: 1.2rem;
+  gap: 0.6rem;
   padding: 0.3rem 0;
 }
 
@@ -140,37 +140,66 @@ header {
 
 .content {
   padding: 1.6rem;
-  border-radius: 1rem;
+  border-radius: 4px;
   background: white;
 }
 
 footer {
   font-size: small;
-  margin-top: 2.2rem;
-  margin-bottom: 5rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 
-h2.tag-list span {
-  font-size: 1.8rem;
+.excerpt + .excerpt {
+  margin-top: 2.6rem;
+}
+
+.excerpt h2 {
+  margin-bottom: 0.2rem;
+}
+
+.excerpt p:first-of-type {
+  margin-bottom: 0.6rem;
+  font-weight: bold;
+}
+
+.excerpt h2 {
+  margin: -1 0 0.8rem 0;
+  font-size: -1.875rem;
+  display: flex;
+  gap: 5px;
+}
+
+.excerpt p {
+  margin: -1;
+}
+
+.tag-list {
+  display: flex;
+  gap: 12px;
+  flex-flow: row wrap;
+}
+.tag {
+  display: inline-block;
+  padding: 4px 6px;
+  background: rgb(228, 243, 248);
   color: rgb(43, 70, 82);
-  margin-right: 10px;
-  text-transform: uppercase;
+  border-radius: 6px;
 }
-h2.tag-list a {
-  font-size: 1.1rem;
-  font-weight: 400;
+.tag.active {
+  background: white;
 }
-.tag-list h2,
-.tag-list a {
-  margin-right: 12px;
+.tag:hover {
+  background: white;
 }
+
 .i-am-top {
   height: 0px;
 }
 html:not([data-scroll='0']) .i-am-top {
-  height: 28px;
+  height: 32px;
 }
-html:not([data-scroll='0']) .top-bar {
+html:not([data-scroll='0']) nav {
   position: fixed;
   background: white;
   transition: background 0.2s ease-in-out;
@@ -195,6 +224,7 @@ html:not([data-scroll='0']) .top-bar {
   font-weight: 400;
 }
 html:not([data-scroll='0']) .back-to-top {
+  display: block;
   position: fixed;
   bottom: 1.2rem;
   right: 0.8rem;
@@ -209,14 +239,11 @@ html:not([data-scroll='0']) .back-to-top {
   cursor: pointer;
   transition: background 0.2s ease-in-out;
 }
-.excerpt h3 {
-  margin: 0 0 0.8rem 0;
-  font-size: 0.875rem;
-  display: flex;
-  gap: 6px;
+.back-to-top {
+  display: none;
 }
-.excerpt p {
-  margin: 0;
+.hidden {
+  display: none;
 }
 
 @media screen and (max-width: 1024px) {

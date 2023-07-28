@@ -49,7 +49,7 @@ export default function buildIndex(callback) {
 
           frontmatters.push({
             ...frontmatter,
-            tags: tagsList,
+            tags: tagsList.join(','),
             link: `${file.basename.replace(/\.[^/.]+$/, '')}.html`,
           });
         }
