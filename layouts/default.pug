@@ -64,7 +64,8 @@ html
       != content
     div(class="footer")
       a(href="https://www.linkedin.com/in/trinh-nguyen-0a701526") LinkedIn
-      | &nbsp;|&nbsp;
+      span |
       a(href=`https://github.com/vespaiach/personal_website/issues/new?title=[Report] ${frontmatter.title}&body=[${frontmatter.title}](${frontmatter.github})`) Report
-      | &nbsp;|&nbsp;vespaich.com © #{new Date().getFullYear()}
+      span |
+      span vespaich.com © #{new Date().getFullYear()}
     a(class="back-to-top", href="#top") top
