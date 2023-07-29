@@ -12,7 +12,7 @@ function _readPugLayout(layoutPath) {
     return cache.get(layoutPath);
 }
 
-export default function pug() {
+export default function pug(layout) {
     return through.obj(function compilePug(file, encoding, callback) {
         if (!Vinyl.isVinyl(file)) {
             callback(new Error('Must be a Vinyl object'));
@@ -27,7 +27,7 @@ export default function pug() {
         // If the file is a buffer
         if (file.isBuffer()) {
             try {
-                const compiler = _readPugLayout('layouts/default.pug');
+                const compiler = _readPugLayout('layouts/post.pug');
                 file.contents = Buffer.from(
                     compiler({ content: file.contents.toString(), frontmatter: file.frontmatter }),
                 );
