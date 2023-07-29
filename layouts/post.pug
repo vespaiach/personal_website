@@ -16,11 +16,10 @@ html
     link(rel="preconnect", href="https://fonts.googleapis.com")
     link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
     link(href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700&display=swap", rel="stylesheet")
-    link(rel="stylesheet", href="/css/prism.css")
-    link(rel="stylesheet", href="/css/base.css")
-    link(rel="stylesheet", href="/css/post.css")
-    script(src="/js/prism.js")
-    script(src="/js/main.js")
+    each item in links
+      link(rel="stylesheet", href=item)
+    each item in scripts
+      script(src=item)
     script(type='application/ld+json').
       {
         "@context": "https://schema.org",
