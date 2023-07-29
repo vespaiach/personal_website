@@ -8,7 +8,8 @@
         "build": "gulp build",
         "start": "npx http-server -p 3000 -c-1 ./build",
         "pic": "node ./screenshot.js",
-        "gulp": "gulp"
+        "gulp": "gulp",
+        "fake": "echo 'Build: already success.'"
     },
     "dependencies": {
         "@minify-html/node": "^0.11.1",
