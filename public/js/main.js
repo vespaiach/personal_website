@@ -46,7 +46,7 @@ function formatDate(dateInString) {
 }
 
 function setTagActive(tags) {
-  const tagEls = document.querySelectorAll('.tag:not([data-tag="all"])');
+  const tagEls = document.querySelectorAll('[data-tag]:not([data-tag="all"])');
   if (!tags || tags.length === 0) {
     document.querySelector('[data-tag="all"]').classList.add('active');
   } else {
@@ -78,13 +78,13 @@ window.onload = () => {
     el.innerText = formatDate(el.dataset.date);
   });
 
-  document.querySelectorAll('.tag[data-tag="all"]').forEach((el) => {
+  document.querySelectorAll('[data-tag="all"]').forEach((el) => {
     el.onclick = (e) => {
       e.preventDefault();
       window.filteringTags = [];
     };
   });
-  document.querySelectorAll('.tag:not([data-tag="all"])').forEach((el) => {
+  document.querySelectorAll('[data-tag]:not([data-tag="all"])').forEach((el) => {
     el.onclick = (e) => {
       e.preventDefault();
       const tag = el.dataset.tag;
