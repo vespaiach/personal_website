@@ -26,3 +26,7 @@ yarn-error.log*
 
 # Sentry
 .sentryclirc
+
+
+build/
+.vscode

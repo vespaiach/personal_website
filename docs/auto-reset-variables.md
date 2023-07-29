@@ -6,7 +6,7 @@ github: https://github.com/vespaiach/personal_website/blob/main/docs/auto-reset-
 tags: javascript
 ---
 
-This question came to me when I was implementing a piece of code that needed to pass a value from one place to another place, and that value needed to be reseted to undefined after reading. 
+1234This question came to me when I was implementing a piece of code that needed to pass a value from one place to another place, and that value needed to be reseted to undefined after reading. 
 
 Basically, I can achieve it easily by manually resetting the value after the reading statement. However, for the researching purpose, it is good to know if there are other ways to make variables somehow automatically reset their values after being read.
 
