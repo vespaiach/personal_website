@@ -14,6 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const order = [
+  'image-slider',
   'working-with-date-in-javascript',
   'wheel-event-fired-twice-in-react-gesture-library',
   'use-prismjs-in-nextjs-with-remark-to-hightlight-code',
