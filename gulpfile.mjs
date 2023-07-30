@@ -9,6 +9,7 @@ import buildJsForPostPage from './tasks/buildJsForPostPage.mjs';
 import buildDocsFolder from './tasks/buildDocsFolder.mjs';
 import buildIndexPage from './tasks/buildIndexPage.mjs';
 import copyImages from './tasks/copyImages.mjs';
+import cleanBuildFolder from './tasks/cleanBuildFolder.mjs';
 
 // gulp.task('build', build);
 // gulp.task('dev', dev);
@@ -20,10 +21,12 @@ gulp.task('build-js-for-post-page', buildJsForPostPage);
 gulp.task('build-docs-folder', buildDocsFolder);
 gulp.task('build-index-page', buildIndexPage);
 gulp.task('copy-images', copyImages);
+gulp.task('clean-build-folder', cleanBuildFolder);
 
 gulp.task(
   'build',
   gulp.series(
+    'clean-build-folder',
     'build-css-for-index-page',
     'build-js-for-index-page',
     'build-css-for-post-page',
