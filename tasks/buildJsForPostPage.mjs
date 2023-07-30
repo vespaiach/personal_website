@@ -11,6 +11,11 @@ export default function buildJsForPostPage(cb) {
     .pipe(concat('post.js'))
     .pipe(minifyJs())
     .pipe(hashToFilename('js'))
-    .pipe(gulp.dest('build/js', { overwrite: true }));
-  cb();
+    .pipe(gulp.dest('build/js', { overwrite: true }))
+    .on('finish', () => {
+      cb();
+    })
+    .on('error', (err) => {
+      cb(err);
+    });
 }

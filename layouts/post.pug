@@ -13,9 +13,6 @@ html
     meta(property="og:image", content=`https://www.vespaiach.com/images/${frontmatter.fileName}.jpeg`)
     meta(property="og:image:alt", content=frontmatter.title)
     link(rel="canonical", href=`https://www.vespaiach.com/${frontmatter.fileName}.html`)
-    link(rel="preconnect", href="https://fonts.googleapis.com")
-    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
-    link(href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700&display=swap", rel="stylesheet")
     each item in links
       link(rel="stylesheet", href=item)
     each item in scripts

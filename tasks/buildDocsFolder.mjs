@@ -6,13 +6,17 @@ import minify from '../plugins/minifyHTML.mjs';
 
 const { src, dest } = gulp;
 
-export default function buildDocsFolder(callback) {
-    src('docs/*.md')
-        .pipe(transform())
-        .pipe(layoutPost())
-        .pipe(minify())
-        .pipe(rename({ extname: '.html' }))
-        .pipe(dest('build/', { overwrite: true }));
-
-    callback();
+export default function buildDocsFolder(cb) {
+  src('docs/*.md')
+    .pipe(transform())
+    .pipe(layoutPost())
+    .pipe(minify())
+    .pipe(rename({ extname: '.html' }))
+    .pipe(dest('build/', { overwrite: true }))
+    .on('finish', () => {
+      cb();
+    })
+    .on('error', (err) => {
+      cb(err);
+    });
 }
