@@ -89,11 +89,12 @@ body {
   margin: 0;
   padding: 0;
   color: var(--color-secondary);
-  font: normal normal 13px Open Sans, sans-serif;
+  font: normal normal 1rem Open Sans, sans-serif;
   text-align: left;
   width: 100%;
   height: 100%;
   line-height: 1.5;
+
 }
 svg {
   fill: var(--color-tertiary);
