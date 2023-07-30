@@ -11,6 +11,11 @@ export default function buildCssForIndexPage(cb) {
     .pipe(concat('index.css'))
     .pipe(cleanCSS({ compatibility: 'ie8' }))
     .pipe(hashToFilename('css'))
-    .pipe(gulp.dest('build/css', { overwrite: true }));
-  cb();
+    .pipe(gulp.dest('build/css', { overwrite: true }))
+    .on('finish', () => {
+      cb();
+    })
+    .on('error', (err) => {
+      cb(err);
+    });
 }
