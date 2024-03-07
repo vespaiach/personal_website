@@ -211,6 +211,6 @@ if (date1.getTime() === date2.getTime()) {
 }
 ```
 
-# You're rock
+# You're all set
 
 There you have it! Date objects in JavaScript don't have to be a headache. With these tips, you'll be waltzing through time and dates like a seasoned pro. Happy coding, time travelers! 🚀
