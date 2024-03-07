@@ -1,7 +1,7 @@
 ---
 title: 'Working With Date object In Javascript'
 date: '2024-03-06'
-excerpt: 'Hey, developers! Dealing with Date objects in JavaScript can be a bit like navigating a maze with shifting walls. It's easy to feel a bit lost, even if you've been around the block a few times. But don't worry, I've got some handy tips and tricks to share in this article that will help you get comfortable with Date objects in JavaScript.'
+excerpt: 'Hey, developers! Dealing with Date objects in JavaScript can be a bit like navigating a maze with shifting walls. It"s easy to feel a bit lost, even if you"ve been around the block a few times. But don"t worry, I"ve got some handy tips and tricks to share in this article that will help you get comfortable with Date objects in JavaScript.'
 github: https://github.com/vespaiach/personal_website/blob/main/docs/working-with-date-in-javascript.md
 tags: javascript, date
 layout: default
