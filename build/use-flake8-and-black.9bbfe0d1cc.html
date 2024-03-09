@@ -1,0 +1,20 @@
+<html><head><title>Use Flake8 and Black to lint and format Python code. | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Use Flake8 and Black to lint and format Python code.</h1><article class="prose prose-neutral prose-lg"><p>PEP8 (Python Enhancement Proposal 8) is widely accepted by the Python community. It provides guidelines and best practices on how to write Python code and by following PEP8 will make code files be consistent and be more readable.</p><p>To adopt PEP8 in our projects, we can use these two power tools:</p><ul><li><a href=https://github.com/PyCQA/flake8>Flake8</a> to check source code against PEP8</li><li><a href=https://github.com/psf/black>Black</a> to format source code</li></ul><h2>Flake8</h2><p>Install Flake8 with pip:</p><pre><code class=language-bash>pip install flake8
+</code></pre><p>To run Flake8, simply invoke <code>flake8</code> in the root folder of the project. Flake will run through all files and print out any error or warning.</p><p>It is also possible to pass some arguments directly to Flake8.</p><pre><code class=language-bash>flake8 --select E123 --ignore D302
+</code></pre><p>To config Flake8 per project, we can create an INI-format config file with name: <code>setup.cfg</code>, <code>tox.ini</code> or <code>.flake8</code> in root folder and specify any config options under <code>[flake8]</code> section.</p><pre><code class=language-bash>[flake8]
+ignore = D203
+exclude = .git,__pycache__,build,dist
+max-complexity = 10
+max-line-length = 110
+max-doc-length = 100
+</code></pre><p><strong>Note:</strong></p><ul><li>Flake8 hasn&#39;t supported (<code>pyproject.toml</code>](<a href=https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/ >https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/</a>) which is a minus point of Flake8.</li><li>For complete options, please refer to this <a href=https://flake8.pycqa.org/en/latest/user/options.html>link</a></li></ul><h2>Black</h2><p>Install Black with pip:</p><pre><code class=language-bash>pip install black
+</code></pre><p>Simply invoke <code>black .</code> in the root folder of the project and Black will format every code file. The manifesto of Black is <code>Black is the uncompromising Python code formatter</code>, that means it will provide just a few options to configure and it should run well without configuration by default. What Black focuses on is the code consistency not the code formatting styles, so it won’t have many options for us to configure.</p><p>To configure Black, create a file with the name <code>pyproject.toml</code> in the root folder and add <code>[tool.black]</code> section.</p><pre><code class=language-bash>[tool.black]
+line-length = 88
+target-version = [&#39;py37&#39;]
+include = &#39;\.pyi?$&#39;
+</code></pre><p><strong>Note:</strong></p><ul><li>In order to make Black works well with Flack8, we need to add these two options to Flake8 configuration</li></ul><pre><code class=language-bash>[flake8]
+max-line-length = 88 # or any length that we specify in Black configuration (88 is default value of Black)
+extend-ignore = E203 
+# Black will enforce an equal amount of whitespace around slice operators. 
+# Due to this, Flake8 will raise E203 whitespace before &#39;:&#39; warnings. 
+# Since this warning is not PEP 8 compliant, Flake8 should be configured to ignore it via extend-ignore = E203
+</code></pre><ul><li>If we use Black, that means we will follow Black code style formatting than ourself code style formatting, so please checkout this <a href=https://black.readthedocs.io/en/stable/the_black_code_style/index.html>link</a> for more details of Black&#39;s code formatting</li></ul></article></div></body></html>

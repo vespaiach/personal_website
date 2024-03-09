@@ -1,0 +1,13 @@
+<html><head><title>Typescript checks null/undefined | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Typescript checks null/undefined</h1><article class="prose prose-neutral prose-lg"><p>Let’s examine the code below. I have a function called <code>getFullname</code> that accepts a string argument (username) and returns a string value (fullname), and it also can return null if there is no username.</p><pre><code class=language-typescript>const getFullname = (username?: string) =&gt; {
+  switch (username) {
+    case &#39;nick&#39;:
+      return &#39;Nicky Hilton&#39;;
+    case &#39;cadc&#39;:
+      return &#39;Candy Crush&#39;;
+    case &#39;tom&#39;:
+      return &#39;Tommy Five&#39;;
+    default:
+      return null;
+  }
+};
+</code></pre><p>Link <a href="https://www.typescriptlang.org/play?strict=false&strictNullChecks=false&ts=4.5.4#code/MYewdgzgLgBA5gUygMQK4Bt1gIYFsEwC8MAFALABQMMqECATjvgPwBcM09AlmHJQJREAfDADelahADuXKMAAWpWgyYJB4qtRjBsdGAHIwXYAGt97eklSMDAOWMmAnjAASXdFHD6A3BK069fR0AE2BzGEsoazADAGFsMGDnWPpaeR8-agCCfU9ccMjogwAVEFxcZ2QuADcEDM1qYIQAM2wMKAsrGzAMdF9NAF9KAe8gA">playground</a></p><p>Obviously, Typescript should indicate the possible return values are <code>Nick Hilton</code>, <code>Candy Crush</code>, <code>Tommy Five</code> and <code>null</code>. However, if <code>strictNullChecks</code> option is set to false or ignored (in tsconfig.json), Typescript will remove the null value out of the return value list.</p><p>I don’t know why Typescript has that option and when/where it should apply for, but it is mentioned the Typescript’s document <a href=https://www.typescriptlang.org/tsconfig#strictNullChecks>here</a>. So, just give it a look and don’t let’s Typescript surprises us.</p></article></div></body></html>

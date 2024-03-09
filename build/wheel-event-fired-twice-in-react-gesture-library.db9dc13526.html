@@ -1,0 +1,14 @@
+<html><head><title>OnWheel Event Fired Twice In React Gesture Library | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">OnWheel Event Fired Twice In React Gesture Library</h1><article class="prose prose-neutral prose-lg"><p>After diving into the code of handling onwheel events in React Gesture library, I found that was by design and not a bug. For the last onwheel event, the library will fire onwheel event twice with field <strong>active</strong> changing from <strong>true</strong> to <strong>false</strong>. Here is the code of React Gesture&#39;s onwheel event handler:</p><pre><code class=language-js>  wheelChange(event) {
+    // ... some code here
+
+    this.compute(event);
+    this.emit(); // --&gt; fire onwheel event
+  }
+
+  wheelEnd() {
+    if (!this.state._active) return;
+    this.state._active = false; // set active field to false
+    this.compute();
+    this.emit(); // --&gt; fire the final onwheel event
+  }
+</code></pre><p>So to prevent the duplication, in my code, I have to check <code>active=true</code> before handling other logic.</p><p>The <strong>active</strong> field also is mentioned in <a href="https://use-gesture.netlify.app/docs/state/#:~:text=active%2C%20%20%20%20%20%20%20%20//%20true%20when%20the%20gesture%20is%20active">React Gesture&#39;s document</a>, but honestly, I had no idea how to use it when I first read the document.</p></article></div></body></html>

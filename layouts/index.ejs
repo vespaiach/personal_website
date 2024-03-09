@@ -1,0 +1,6 @@
+
+<body>
+  <% for (const page of pages) { %>
+    <a href="<%= page.url %>.html" class="text-blue-500"><%= page.frontMatter.title %></a>
+  <% } %>
+</body>

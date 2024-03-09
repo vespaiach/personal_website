@@ -1,0 +1,55 @@
+<html><head><title>Auto-reset variables | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Auto-reset variables</h1><article class="prose prose-neutral prose-lg"><p>1234This question came to me when I was implementing a piece of code that needed to pass a value from one place to another place, and that value needed to be reseted to undefined after reading.</p><p>Basically, I can achieve it easily by manually resetting the value after the reading statement. However, for the researching purpose, it is good to know if there are other ways to make variables somehow automatically reset their values after being read.</p><p>To do that, I used getter/setter syntax to create a variable onto window object and try to interfere with reading/writing of that variable. Then I used an array to hold the variable&#39;s values when it was set, and an index to keep the current position of that array. Everytime, the variable was read, just in increase the index one.</p><pre><code class=language-javascript>Object.defineProperty(window, &#39;useOnceAndForget&#39;, {
+  values: [],
+  index: 0,
+
+  get() {
+    const returnVar = this.values[this.index];
+    this.index++;
+    return returnVar;
+  },
+
+  set(value) {
+    this.values[this.index] = value;
+  },
+});
+</code></pre><p>Done! the <code>useOnceAndForget</code> variable got reseted after being read. However, using an array seemed to be not efficient, the values in the array wouldn’t be collected by the garbage collector. So I remove the array and add a variable for checking the reading statement instead.</p><pre><code class=language-javascript>Object.defineProperty(window, &#39;useOnceAndForget&#39;, {
+  get() {
+    if (this.isRead) {
+      return undefined;
+    }
+
+    this.isRead = true;
+    return this.value;
+  },
+
+  set(value) {
+    this.isRead = false;
+
+    this.value = value;
+  },
+});
+</code></pre><p>With this solution, the value of <code>useOnceAndForget</code> variable wouldn’t be swept away right after reading, but until the next set statement. Not perfect, but acceptable...! To make the solution more general, I used Javascript Proxy and created a function to make any property of an object reset its value.</p><pre><code class=language-javascript>function addAutoReset(obj, ...propNames) {
+  const readingStatus = Object.fromEntries((propNames || []).map((p) =&gt; [p, false]));
+
+  return new Proxy(obj, {
+    get(target, prop) {
+      if (readingStatus[prop] === undefined) return target[prop];
+
+      if (readingStatus[prop] === true) return undefined;
+
+      readingStatus[prop] = true;
+      return target[prop];
+    },
+
+    set(target, prop, value) {
+      if (readingStatus[prop] !== undefined) {
+        readingStatus[prop] = false;
+      }
+
+      target[prop] = value;
+    },
+  });
+}
+
+const myObj = addAutoReset({ name: &#39;tony&#39;, age: 11 }, &#39;name&#39;, &#39;age&#39;);
+</code></pre></article></div></body></html>

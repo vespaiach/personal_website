@@ -1,0 +1,73 @@
+<html><head><title>Python Dictionary Notes | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Python Dictionary Notes</h1><article class="prose prose-neutral prose-lg"><h2>Create dictionaries</h2><ol><li>Use curly braces</li></ol><pre><code class=language-python>a_dict = {
+        &quot;Tony&quot;: 10,
+        &quot;Kenny&quot;: 20
+}
+</code></pre><ol start=2><li>Use constructor dict()</li></ol><p>The argument to the constructor should be a sequence of key-value pairs, or a list of keyword arguments if the key value are simple string (like *kwargs)</p><pre><code class=language-python>a_dict = dict([
+        (&#39;Tom&#39;, 21),
+        (&#39;Anna&#39;, 20),
+        (&#39;Amy&#39;, 18),
+        (&#39;John&#39;, 20),
+])
+
+a_dict = dict([
+        [&#39;Tom&#39;, 21],
+        [&#39;Anna&#39;, 20],
+        [&#39;Amy&#39;, 18],
+])
+
+a_dict = dict(Joe=22, Harry=23)
+</code></pre><ol start=3><li>Use <strong>fromkeys</strong> function</li></ol><p>You can also create a <code>dictionary_name = dict.fromkeys(sequence,value)</code></p><pre><code class=language-python>a_dict = dict([&#39;Jane&#39;, &#39;Bush&#39;]) # { &#39;Jane&#39;: None, &#39;Bush&#39;: None }
+
+a_dict = dict([&#39;Nancy&#39;, &#39;Kate&#39;], 10) # { &#39;Nancy&#39;: 10, &#39;Kate&#39;: 10 }
+</code></pre><h2>Keys and Values</h2><ul><li>Dictionary keys must be of a <a href=https://docs.python.org/3/glossary.html#term-hashable>hashable</a> type.</li><li>Dictionary values can be any type, from immutable to mutable, built-in functions or even another dictionary (dictionaries can be nested to any depth)</li></ul><h2>Methods</h2><ul><li><code>dict.clear()</code> clear a dictionary</li><li><code>dict.get(key[, default])</code> return value for a key if exists or return default value</li><li><code>dict.items()</code> return list of key-pais values</li><li><code>dict.keys()</code> return list of keys in a dictionary</li><li><code>dict.values()</code> return list of values in a dictionary</li><li><code>dict.pop(key[, &lt;default&gt;])</code> removes a key from a dictionary, if it is present, and returns its value</li><li><code>dict.popitem()</code> removes the last key-value pair from a dictionary and returns it as a tuple</li><li><code>dict.update(&lt;obj&gt;)</code> merges a dictionary with another dictionary or with an iterable of key-value pairs</li></ul><pre><code class=language-python>d = {&#39;a&#39;: 20, &#39;d&#39;: 20, &#39;c&#39;: 30}
+
+d.pop(&#39;c&#39;) # return 30 and delete key &#39;c&#39; from dictionary
+d.pop(&#39;e&#39;) # raise Error, since &#39;e&#39; is not in dictionary
+d.pop(&#39;e&#39;, False) # return False instead of raising Error
+
+d.popitem() # return (&#39;c&#39;, 30)
+
+dd = { &#39;b&#39;: 40 }
+d.update(dd) # {&#39;a&#39;: 20, &#39;d&#39;: 20, &#39;c&#39;: 30, &#39;d&#39;: 40 }
+d.update([&#39;b&#39;, 40])
+</code></pre><h2>Ordering</h2><p>Since version 3.7, Python does guarantee that the order of items in a dictionary is preserved. When displayed, items will appear in the order that they were defined or added. And iterating through keys will occur in that same order as well.</p><h2>Sorting</h2><ol><li>By keys</li></ol><p>Since version 3.6 and beyond, you can sort a dictionary by its keys, just call <code>sorted()</code> function</p><pre><code class=language-python>students = { &quot;John&quot;: 23, &quot;Ben&quot;: 22, &quot;Lan&quot;: 19 }
+keys = sorted(students) # return [&#39;Ben&#39;, &#39;Lan&#39;, &#39;John&#39;]
+</code></pre><ol start=2><li>By values</li></ol><p>You can also use <code>sorted()</code> function to sort by value, just need to pass a function which will return value of dictionary&#39;s items as second parameters</p><pre><code class=language-python>students = { &quot;John&quot;: 23, &quot;Ben&quot;: 22, &quot;Lan&quot;: 19 }
+keys = sorted(students.items(), key=lambda item: item[1]) # return [(&#39;Lan&#39;, 19), (&#39;Ben&#39;, 22), (&#39;John&#39;, 23)]
+</code></pre><h2>Operators</h2><ul><li>Use <code>in</code> or <code>not in</code> to check if a key is in dictionary (can&#39;t not check with dict[key] due to short-circuit evaluation)</li></ul><pre><code class=language-python>students = { &quot;John&quot;: 23, &quot;Ben&quot;: 22, &quot;Lan&quot;: 19 }
+if &quot;John&quot; in students: # return True
+
+if students[&#39;Bob&#39;]: # raise Error
+</code></pre><ul><li><code>len(dict)</code> to get the number of key-pairs in dictionary</li><li>Use <code>del dict[key]</code> to delete an item from dictionary</li><li>Unpack dictionaries with <code>**</code></li></ul><pre><code class=language-python>students = { &quot;John&quot;: 23, &quot;Ben&quot;: 22, &quot;Lan&quot;: 19 }
+guests = { &quot;Peter&quot;: 23, &quot;Lan&quot;: 20 }
+new_students = { **students, **guests }
+# {&#39;John&#39;: 23, &#39;Ben&#39;: 22, &#39;Lan&#39;: 20, &#39;Peter&#39;: 23}
+</code></pre><h2>Copy dictionaries</h2><ol><li>Use <code>.update()</code> method</li></ol><pre><code class=language-python>fruits = {&#39;apple&#39;: 10, &#39;peach&#39;: 11, &#39;orange&#39;: 30}
+copy = {}
+copy.update(fruits)
+</code></pre><ol start=2><li>Use dictionary constructor</li></ol><pre><code class=language-python>fruits = {&#39;apple&#39;: 10, &#39;peach&#39;: 11, &#39;orange&#39;: 30}
+copy_1 = dict(fruits)
+copy_2 = dict(fruits.items())
+</code></pre><p><em>Note:</em></p><ul><li>These methods return shadow copies</li></ul><h2>Iterating</h2><ol><li>Through keys</li></ol><p>If you execute the <code>dir(a_dict)</code> command, you will see the <code>__iter__</code> method along with others. When iterating, this method will be called and will return a new iterator object that helps to iterate through all the items of dictionaries.</p><pre><code class=language-python>d = {&#39;apple&#39;: 10, &#39;peach&#39;: 11, &#39;orange&#39;: 30}
+for key in d:
+        print(key)
+
+# Or use the .keys() method of dictionaries
+for key in d.keys():
+        print(key)
+</code></pre><ol start=2><li>Through <code>.items()</code></li></ol><p>The <code>.items()</code> method will return a collection of key-pair tuple that you can iterate through.</p><pre><code class=language-python>d = {&#39;apple&#39;: 10, &#39;peach&#39;: 11, &#39;orange&#39;: 30}
+for key, value in d.items(): # because items() return a tuple, so you can destructure it to get key and value
+        print(key, value)
+</code></pre><ol start=3><li>Through <code>.values()</code></li></ol><p>The <code>.values()</code> method will return a collection of values in the dictionary that you can iterate through.</p><pre><code class=language-python>d = {&#39;apple&#39;: 10, &#39;peach&#39;: 11, &#39;orange&#39;: 30}
+for value in d.values():
+        print(value)
+</code></pre><h2>Comprehensions</h2><p>Dictionary comprehension is an elegant way to process all or just part of items in a collection to produce dictionaries as a result</p><pre><code class=language-python>keys = [&#39;apple&#39;, &#39;peach&#39;, &#39;orange&#39;]
+values = [10, 11, 30]
+
+# { key: value for key, value in a collection if some conditions }
+a_dict = { key: val for key, val in zip(keys, values) }
+# a_dict = {&#39;apple&#39;: 10, &#39;peach&#39;: 11, &#39;orange&#39;: 30}
+</code></pre><h2>View objects</h2><p>These methods <code>.keys()</code>, <code>.items()</code>, and <code>.values()</code> return view objects of dictionaries. You can think these view objects as a window of items in dictionary, so any change in dictionaries will reflect on them.</p><pre><code class=language-python>fruits = {&#39;apple&#39;: 10, &#39;peach&#39;: 11, &#39;orange&#39;: 30}
+numbers = fruits.values() # [10,11,30]
+fruits[&#39;apple&#39;] = 100 # now numbers will be [100,11,30]
+</code></pre><h2><code>dict</code> Versus <code>UserDict</code></h2><ul><li><strong>dict</strong>: is a built-in class, it is written in C and normally offer better performance in most of use cases. Its code is closed for modifying.</li><li><strong>UserDict</strong>: is a custom class in <code>collection</code> module, it is written in pure Python and designed for subclassing.</li></ul><p>So when you are finding your code subclassing from <strong>dict</strong> built-in class, but you can&#39;t totally control all behaviors of the <strong>dict</strong> class, that is a chance to switch to subclassing from <strong>UserDict</strong> instead.</p><p><strong>UserDict</strong> source code can be found <a href=https://github.com/python/cpython/blob/79ac8c1c0d7cfc955a82af123471c28944e61c18/Lib/collections/__init__.py#L1106>here</a></p></article></div></body></html>

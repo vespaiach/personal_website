@@ -1,0 +1,11 @@
+<html><head><title>Turn off browser&#39;s auto-scrolling behavior | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Turn off browser&#39;s auto-scrolling behavior</h1><article class="prose prose-neutral prose-lg"><p>Sometimes that behavior of browsers doesn’t provide the great experiences as it is supposed to be. In my case, when I made a landing page for a client&#39;s website. There is a marketing video at the top of the page, and clients wanted it to always play and show at the first look every time users visit or just refresh the landing page. However, the default browser’s behavior just kept restoring the last position of the page and it gave clients the feeling of browser’s jumping.</p><p>Luckily, most modern browsers give developers a way to turn off that behavior and let them control it manually by simply setting <code>history.scrollRestoration = &#39;manual&#39;</code>. For browsers don&#39;t support scroll behavior, developers can use below code to fallback to <code>window.scrollTo</code> function</p><pre><code class=language-javascript>if (history.scrollRestoration) {
+  history.scrollRestoration = &#39;manual&#39;;
+} else {
+  /**
+   * Use onbeforeunload event to prevent page jumping when refreshing
+   */
+  window.onbeforeunload = () =&gt; {
+    window.scrollTo(0, 0);
+  };
+}
+</code></pre></article></div></body></html>

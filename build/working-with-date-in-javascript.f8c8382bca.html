@@ -1,0 +1,83 @@
+<html><head><title>Working With Date object In Javascript | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Working With Date object In Javascript</h1><article class="prose prose-neutral prose-lg"><h3>Definition</h3><p>Hey, developers! Dealing with Date objects in JavaScript can be a bit like navigating a maze with shifting walls. It&#39;s easy to feel a bit lost, even if you&#39;ve been around the block a few times. But don&#39;t worry, I&#39;ve got some handy tips and tricks to share in this article that will help you get comfortable with Date objects in JavaScript.</p><h3>Let&#39;s Start with the Basics</h3><p>First, here&#39;s a straightforward and truthful statement about the value 0 in JavaScript&#39;s Date object: <code>The value 0 in JavaScript&#39;s Date object represents the precise moment of midnight at the beginning of January 1st, 1970.</code></p><p>So, JavaScript doesn&#39;t have a date data type, but it gives us the Date object instead. This little guy is like a time traveler, counting the milliseconds that have passed since the dawn of January 1, 1970, in UTC time.</p><pre><code class=language-js>new Date(0); // Boom! January 1, 1970, UTC
+new Date(negative milliseconds); // Time before January 1, 1970, UTC
+</code></pre><h3>Getting Timey-Wimey with UTC and Local Time</h3><p>Now, here&#39;s the cool part. While Date objects are all about that UTC life, they like to dress up in your local timezone when you create them. So, if you make a Date with new Date(0), it might look different depending on where you are. Let&#39;s try these in your browser console:</p><pre><code class=language-js>new Date(0); // Looks different on your local machine
+new Date(0).toUTCString(); // Get the date-time string in good ol&#39; UTC
+</code></pre><h3>Playing with Dates and Times</h3><p>Creating Date objects is pretty straightforward. You can go traditional with milliseconds (Milliseconds seem like a lot to me; I occasionally encounter them in my projects.)</p><pre><code class=language-js>new Date(milliseconds); // Milliseconds? Time for a little dance!
+new Date(1000 * 60 * 60 * 24); // That&#39;s a day in JavaScript land
+new Date(); // Get the current time on your local machine
+</code></pre><p>Or spice it up with years, months, and all that jazz:</p><pre><code class=language-js>new Date(year, month, date, hours, minutes, seconds, ms); // Date with all the fixings
+new Date(2022, 5, 20, 0, 0, 0, 0); // A delicious Date for your code cravings
+</code></pre><p>And hey, remember this quirk:</p><ul><li>Months start the party from 0 (0: January - 11: December).</li></ul><pre><code class=language-js>new Date(datestring); // JavaScript gets datestrings too!
+new Date(&#39;Thu Jan 01 1970 19:00:00 GMT-0500 (Eastern Standard Time)&#39;);
+new Date(&#39;2022-05-05&#39;);
+</code></pre><h3>Making Clones of Your Date Buds</h3><p>Need to clone a Date object? No problemo! JavaScript&#39;s got your back:</p><pre><code class=language-js>const curr = new Date();
+const copy = new Date(curr);
+const anotherCopy = new Date(curr.getTime());
+</code></pre><h3>Dating Across Systems</h3><p>Sending a Date object to the server? Just convert it to a string! The popular kid in datetime formats is ISO8601, and JavaScript&#39;s got a trick up its sleeve with toISOString():</p><pre><code class=language-js>new Date().toISOString(); // Look at that ISO charm!
+</code></pre><h3>Comparing Dates Like a Boss</h3><p>When comparing dates, you&#39;ve got options. You can compare them directly or let JavaScript do the magic:</p><pre><code class=language-js>const date1 = new Date();
+const date2 = new Date();
+
+if (date1 &gt; date2) {
+  // Your code here
+}
+
+if (date1.getTime() &gt; date2.getTime()) {
+  // This one&#39;s got style and performance!
+}
+</code></pre><p>Just remember, you can&#39;t compare Date objects directly like besties:</p><pre><code class=language-js>const date1 = new Date();
+const date2 = new Date();
+
+if (date1 == date2) {
+  // Nope, these two are not twins
+}
+</code></pre><h3>Looping Through Time</h3><p>JavaScript&#39;s Date constructor is pretty chill. If you mess up the date, no worries! It&#39;ll correct itself, which is handy for looping:</p><pre><code class=language-js>// Loop through a date range
+const fromDate = new Date(2022, 0, 1);
+const currDate = new Date();
+while (fromDate &lt; currDate) {
+  // Your loop magic here
+  fromDate.setDate(fromDate.getDate() + 1);
+}
+
+// Loop through a month range
+const fromDate = new Date(2022, 0, 1);
+const currDate = new Date();
+while (fromDate &lt; currDate) {
+  // More loop wizardry here
+  fromDate.setMonth(fromDate.getMonth() + 1);
+}
+</code></pre><h3>Getting Cozy with Dates</h3><p>Want to know the first date of the month? Just set the date to 1:</p><pre><code class=language-js>const date = new Date();
+date.setDate(1);
+</code></pre><p>And to find the last date of the month? Jump to the next month and then go back by one day:</p><pre><code class=language-js>const date = new Date();
+date.setMonth(date.getMonth() + 1);
+date.setDate(-1);
+</code></pre><h3>Crunching Numbers... with Dates</h3><p>Need to calculate date differences? No problemo! JavaScript&#39;s got you:</p><pre><code class=language-js>const date1 = new Date(2022, 1, 1);
+const date2 = new Date(2022, 5, 1);
+
+Math.trunc(((date2 - date1) / 1000) * 60 * 60 * 24); // Returns the full-date differences in between
+Math.ceil(((date2 - date1) / 1000) * 60 * 60 * 24); // Counts every millisecond as a date
+</code></pre><h3>Checking If It&#39;s Daylight Saving Time</h3><p>Wanna know if it&#39;s Daylight Saving Time? JavaScript can help with that too! Here&#39;s a neat little trick:</p><pre><code class=language-js>const currDate = new Date();
+
+// Is DST applied? Let&#39;s find out!
+const isDSTApplied =
+    currDate.getTimezoneOffset() &gt; new Date(currDate.getFullYear(), 0, 1).getTimezoneOffset() ||
+    currDate.getTimezoneOffset() &gt; new Date(currDate.getFullYear(), 5, 1).getTimezoneOffset();
+</code></pre><h3>Leap into Leap Years</h3><p>Ah, the leap year! Remember the Earth&#39;s 365.25-day dance around the Sun? JavaScript does! Check if it&#39;s a leap year with this code:</p><pre><code class=language-js>const date = new Date();
+const years = date.getFullYear();
+const isLeapYear = years % 4 === 0 &amp;&amp; years % 100 !== 0 &amp;&amp; years % 400 === 0;
+</code></pre><h3>Just Dates, no time please</h3><p>Sometimes, all you need is the date without any fuss about time. You can create Date objects with just the date part, omitting the time:</p><pre><code class=language-js>const justDate = new Date(&#39;2022-03-05&#39;);
+</code></pre><p>For today&#39;s date but without the time, we just need to reset that clock to midnight:</p><pre><code class=language-js>const today = new Date();
+today.setHours(0, 0, 0, 0);
+</code></pre><p>When comparing dates without considering time, let&#39;s make sure to strip the clocks from both dates first:</p><pre><code class=language-js>const date1 = new Date(&#39;2022-03-05&#39;);
+const date2 = new Date(&#39;2022-03-06&#39;);
+
+// Let&#39;s take the time out of the equation
+date1.setHours(0, 0, 0, 0);
+date2.setHours(0, 0, 0, 0);
+
+// Now let&#39;s compare!
+if (date1.getTime() === date2.getTime()) {
+  console.log(&#39;These dates are totally vibing together!&#39;);
+} else {
+  console.log(&#39;Whoa, these dates are dancing to different beats.&#39;);
+}
+</code></pre><h3>You&#39;re all set</h3><p>There you have it! Date objects in JavaScript don&#39;t have to be a headache. With these tips, you&#39;ll be waltzing through time and dates like a seasoned pro. Happy coding, time travelers! 🚀</p></article></div></body></html>

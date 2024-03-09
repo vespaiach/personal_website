@@ -1,0 +1,26 @@
+<html><head><title>Typescript is fantastic or annoying | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Typescript is fantastic or annoying</h1><article class="prose prose-neutral prose-lg"><p>I hope you won’t stumble into a wall anyway. Here are some tips about Typescript I’d love to share with you.</p><h2>Any, unknown, never</h2><p><code>any</code> type was added to Typescript first, later on v2 and v3 of Typescript respectively <code>unknown</code> type and <code>never</code> type were introduced. Personally, I found their names confused, so don’t read them, here are how I recognize them:</p><ul><li>When I want my value to be free of type-checking, I will use <code>any</code></li><li>When I don’t know exactly the type of my value, and my value can be any possible value: string, number, object… or union types… I will use <code>unknown</code></li><li>I use <code>never</code> type in conditional type to narrow results, and it can say like that will never happen (No value can be assignable to variables of never type)</li></ul><pre><code class=language-typescript>type NonNullable&lt;T&gt; = T extends null | undefined ? never : T;
+</code></pre><h2>Keyof any</h2><p>That are <code>string | number | symbol</code></p><pre><code class=language-typescript>type KeyofAny = string | number | symbol;
+</code></pre><p>In fact, I use a PropertyType = string | number | symbol instead of keyof any. The reason why we still see keyof any in type declaration files of some libraries is for backward compatible purpose.</p><h2>Discriminated type union note</h2><p>Discriminated type union is great, it helps to show us possible values that we should handle when we come across <code>if</code> cases. Example:</p><pre><code class=language-typescript>type Shape =
+  | { kind: &quot;circle&quot;; radius: number }
+  | { kind: &quot;square&quot;; x: number }
+
+const geometry: Shape;
+
+if (geometry.kind === &#39;circle&#39;)
+/*
+ * Editor will show us only possible values of geometry
+ * and that is `radius` in the case.
+ * /
+</code></pre><p>However, when Discriminated type union won&#39;t work with variable destructuring. Something like the code below won&#39;t work, and the editor won&#39;t show us the exact possible values that we want</p><pre><code class=language-typescript>type Shape =
+  | { kind: &quot;circle&quot;; radius: number }
+  | { kind: &quot;square&quot;; x: number }
+
+const geometry: Shape = { kind: &#39;circle&#39;, radius: 10 };
+
+const { kind, radius } = geometry;
+
+if (kind === &#39;circle&#39;) // editor get confused here
+</code></pre><p>This is an knowning issue of current version of Typescript, and I hope that will be fixed in next release.</p><h2>Digit string type</h2><p>We can use <a href=https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html>Template Literal Type</a> to define a number-digit string type that are only digits.</p><pre><code class=language-typescript>type StringDigitOnly = `${number}`
+
+const var : StringDigitOnly = &quot;123&quot;;
+</code></pre></article></div></body></html>

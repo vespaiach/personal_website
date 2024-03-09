@@ -1,0 +1,7 @@
+<html><head><title>Install Jetbrains Mono fonts on Ubuntu | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Install Jetbrains Mono fonts on Ubuntu</h1><article class="prose prose-neutral prose-lg"><p>Download font zip file, current version is 2.242, please check <a href=https://www.jetbrains.com/lp/mono/ >Jetbrains&#39;s website</a> for lastest one:</p><pre><code class=language-bash>curl -L -o JetBraninsMono-2.242.zip https://download.jetbrains.com/fonts/JetBrainsMono-2.242.zip
+</code></pre><p>Unzip downloaded file:</p><pre><code class=language-bash>unzip ./JetBraninsMono-2.242.zip -d ~/jetbrains-fonts
+</code></pre><p>Copy fonts to local share directory:</p><pre><code class=language-bash>cp ./jetbrains-fonts/fonts/ttf/JetBrainsMono-*.ttf ~/.local/share/fonts
+rm -rf ./jetbrains-fonts
+</code></pre><p>Or install it on system-wide, you will need sudo permission to do that</p><pre><code class=language-bash>sudo cp ./jetbrains-fonts/fonts/ttf/JetBrainsMono-*.ttf /usr/local/share/fonts
+rm -rf ./jetbrains-fonts
+</code></pre></article></div></body></html>

@@ -1,0 +1,68 @@
+<html><head><title>Some notes in Javascript | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Some notes in Javascript</h1><article class="prose prose-neutral prose-lg"><h2>Self-compare variables</h2><p>Sometimes, we will see the self-comparison like the code below</p><pre><code class=language-javascript>function compare(value newVal) {
+  if (newVal === value || (newVal !== newVal &amp;&amp; value !== value)) // is equal
+}
+</code></pre><p>That means the author just wants to include possible <code>NaN</code> value of the newVal variable and value variable in the comparision, because in Javascript NaN is not equal to NaN <code>NaN !== NaN</code>.</p><h2>Symbol is unique</h2><p>The symbol is the newest primitive type added in ES6 (find the document <a href=https://tc39.es/ecma262/multipage/ecmascript-data-types-and-values.html#sec-ecmascript-language-types-symbol-type>here</a>). We can use Symbol to create unique constants.</p><pre><code class=language-javascript>const UNI = Symbol(&#39;I am unique&#39;);
+const ANOTHER_UNI = Symbol(&#39;I am unique&#39;);
+
+UNI === ANOTHER_UNI; // false
+Symbol() === Symbol(); // false
+</code></pre><h2>Math.floor is a rounding function</h2><p>We might assume that <code>Math.floor</code> simply truncates the decimal number, but it&#39;s good to know that Math.floor is a rounding function.</p><pre><code class=language-javascript>Math.floor(1.1); // 1
+Math.floor(-1.1); // -2
+</code></pre><p>To truncate a number, let&#39;s use <code>Math.trunc(x)</code></p><h2>Use bitwise to truncate decimal numbers</h2><p>The <code>n|0</code> or <code>n &gt;&gt; 0</code> operation simply truncates the decimal number n, because all bitwise operations in Javascript works with 32-bit integers only.</p><pre><code class=language-javascript>(5.1 | 0) === 5;
+(5.1 &gt;&gt; 0) === 5;
+</code></pre><p>Since, we have <code>Math.trunc(x)</code> function now, let&#39;s not use bitwise-truncating. Otherwise, we have to aware of some odd comparision.</p><pre><code class=language-javascript>(NaN | 0) === 0;
+</code></pre><h2>Comma operator (,)</h2><p>The comma operator is used to separate one or more expressions when we want to combine multiple expressions in one location, and those expressions will be executed orderly from left to right. Value of the last statement will be the returning value of all expressions.</p><p>Actually, we see the comma operator a lot in for loop statement, but some developers might use it a reduce function, such as the code below.</p><pre><code class=language-javascript>// In for...loop statement
+let i = 0;
+let j = 10;
+for( ; i &lt; j; i++, j--)
+
+/**
+ * In a reduce function.
+ * To produce a name map:
+ *
+ * namesMap = {
+ *  Tony: true,
+ *  Nick: true,
+ *  Rose: true,
+ *  Jane: true
+ * }
+ */
+const names = [&#39;Tony&#39;, &#39;Nick&#39;, &#39;Rose&#39;, &#39;Jane&#39;];
+const namesMap = names.reduce((acc, n) =&gt; (acc[n] = true, acc), {});
+</code></pre><h2>Short-circuit evaluation</h2><p>Let&#39;s say we have multiple expressions needed to be evaluated from left to right and the evaluation should stop immediately whether it meets a certain condition. That&#39;s short-circuit evaluation. Usually, logical operators AND and OR are used for the evaluation.</p><pre><code class=language-javascript>const x = 1;
+const y = 0;
+const z = 2;
+
+const result1 = x &amp;&amp; y &amp;&amp; z;
+// the evaluation will stop at y and return 0
+
+const result2 = x || y || z;
+// the evaluation will stop at x and return 1
+</code></pre><p>It&#39;s worth noting that the group operator () won&#39;t change the order of evaluation</p><pre><code class=language-javascript>const x = false;
+const y = 1;
+
+/**
+ * We may expect result = 2, in fact,
+ * (y + 1) won&#39;t be executed first.
+ *
+ * Whole evaluation will stop at x, because of x = false
+ */
+const result = x &amp;&amp; (y + 1);
+</code></pre><p>We also can use optional chain ?. operator to short-circuit expressions.</p><pre><code class=language-javascript>/**
+ * If x is null/undefined,
+ * the expression will stop and return undefined.
+ *
+ * result can be undefined or a string
+ */
+const result = x?.person.name;
+</code></pre><h2>void 0</h2><p>Or void(0), or void keyword and follow by any number is actually <code>undefined</code> value.</p><pre><code class=language-javascript>void 0 === undefined;
+void 0 === undefined;
+void 1 === undefined;
+</code></pre><p><code>void</code> keyword makes sure that its following expression will be executed and then undefined value will be returned.</p><pre><code class=language-javascript>function hi() {
+  return &#39;hi&#39;;
+}
+
+void hi(); // undefined
+
+const a = () =&gt; void hi(); // a() will return undefined
+</code></pre></article></div></body></html>

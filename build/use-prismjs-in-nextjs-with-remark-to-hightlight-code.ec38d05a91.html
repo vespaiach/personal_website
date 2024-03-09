@@ -1,0 +1,29 @@
+<html><head><title>Use PrismJS with Remark to hightlight code | vespaiach.com</title><link rel=stylesheet href=main.ef6db93d77.css></head><body><div class="w-full max-w-4xl p-4 mx-auto pt-4"><div><a href=/ class=text-blue-500>← HOME</a></div><h1 class="text-3xl font-bold my-12 text-center">Use PrismJS with Remark to hightlight code</h1><article class="prose prose-neutral prose-lg"><p>Honestly, I didn&#39;t read the documentation of all plugins which are used alone with Remark to produce code highlights. And I had paid for it my whole day of debugging.</p><p>Here is the code of how to use them:</p><pre><code class=language-javascript>import { remark } from &#39;remark&#39;;
+import html from &#39;remark-html&#39;;
+import prism from &#39;remark-prism&#39;;
+
+const markdownContent = `\n#Hello\n\nThis is me\n`;
+
+// Note: sanitize is set to false 
+// in order to allow inserting class attribute
+const result = await remark()
+                .use(html, { sanitize: false })
+                .use(prism)
+                .process(markdownContent);
+</code></pre><p>First, we need <code>remark</code> for sure, then we need <code>remark-html</code> to transform markdown to html, finally the plugin <code>remark-prism</code> will help to highlight code examples by wrapping code examples into html tags: <code>&lt;pre&gt;</code> or <code>&lt;code&gt;</code> and insert appropriately class attributes into those tags.</p><pre><code class=language-javascript>/*
+ * Remark and PrismJS will convert our markdown code to HTML
+ * 
+ *```javascript
+ *  const a = 1;
+ *  console.log(a);
+ *```
+ * 
+ * to
+ * 
+ * &lt;pre class=&quot;lang-javascript&quot;&gt;
+ * const a = 1;
+ * console.log(a);
+ * &lt;/pre&gt;
+ *
+ */
+</code></pre><p>We also need to download <a href=https://prismjs.com/ >prism.css</a> file to make the code work.</p><p>One important thing to note here is <code>remark-html</code> from version <code>14.0.1</code> has marked the sanitize option to be true by default. That means it will strip off all unsafe html codes, and in this case are the <code>class</code> attributes, but <code>remark-prism</code> is reliant on that to work.</p><p>With the option <code>sanitize: false</code>, the code highlight should work fine.</p></article></div></body></html>
