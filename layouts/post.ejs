@@ -1,7 +1,7 @@
 <html>
   <head>
     <title><%= frontMatter.title %> | vespaiach.com</title>
-    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="<%= cssFileName %>">
   </head>
 
   <body>
@@ -13,7 +13,7 @@
       <h1 class="text-3xl font-bold my-12 text-center"><%= frontMatter.title %></h1>
 
       <article class="prose prose-neutral prose-lg">
-        <%- parsedMarkdown %>
+        <%- content %>
       </article>
     </div>
   </body>

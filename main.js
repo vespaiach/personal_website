@@ -1,21 +1,24 @@
-const fs = require('fs')
-const rimraf = require('rimraf')
-const compose = require('koa-compose')
+async function composer(context) {
+  await require('./tasks/readDocFile')(context, isProd)
+  await require('./tasks/processDocData')(context, isProd)
+  await require('./tasks/render')(context, isProd)
+  await require('./tasks/build')(context, isProd)
+  return context
+}
 
-const composer = compose([
-  require('./tasks/getRawData'),
-  require('./tasks/getFrontMatter'),
-  require('./tasks/parseMarkdown'),
-  require('./tasks/renderPage'),
-  require('./tasks/minifier'),
-  require('./tasks/hashUrl'),
-  require('./tasks/saveToFile')
-])
+import('zx').then(async function (zx) {
+  const isProd = zx.$.env.PROD === 'true'
 
-function putOnConveyor (fileName) { composer({ fileName }) }
-function clearDirectory(directory) { rimraf.sync(directory); fs.mkdirSync(directory) }
+  if (isProd) {
+    zx.fs.rmSync('./build', { recursive: true, force: true })
+  }
 
-// Call the function before triggering the build process
-clearDirectory('./build')
+  const cssFileName = await require('./tasks/buildCss')(isProd)
+  const fileNames = await require('./tasks/readDocFolder')()
+  const promises = fileNames.reduce((acc, fileName) => {
+    acc.push(composer({ fileName, cssFileName }))
+    return acc
+  }, [])
 
-fs.readdirSync('./docs').forEach(putOnConveyor)
+  await Promise.all(promises)
+})
