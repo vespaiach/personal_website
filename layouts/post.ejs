@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title><%= frontMatter.title %> | vespaiach.com</title>
+    <link rel="stylesheet" href="/main.css">
+  </head>
+
+  <body>
+    <div class="w-full max-w-4xl p-4 mx-auto pt-4">
+      <div>
+        <a href="/" class="text-blue-500">← HOME</a>
+      </div>
+
+      <h1 class="text-3xl font-bold my-12 text-center"><%= frontMatter.title %></h1>
+
+      <article class="prose prose-neutral prose-lg">
+        <%- parsedMarkdown %>
+      </article>
+    </div>
+  </body>
+</html>

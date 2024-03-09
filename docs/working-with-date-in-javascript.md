@@ -7,11 +7,11 @@ tags: javascript, date
 layout: default
 ---
 
-# Definition
+### Definition
 
 Hey, developers! Dealing with Date objects in JavaScript can be a bit like navigating a maze with shifting walls. It's easy to feel a bit lost, even if you've been around the block a few times. But don't worry, I've got some handy tips and tricks to share in this article that will help you get comfortable with Date objects in JavaScript.
 
-# Let's Start with the Basics
+### Let's Start with the Basics
 
 First, here's a straightforward and truthful statement about the value 0 in JavaScript's Date object: `The value 0 in JavaScript's Date object represents the precise moment of midnight at the beginning of January 1st, 1970.`
 
@@ -22,7 +22,7 @@ new Date(0); // Boom! January 1, 1970, UTC
 new Date(negative milliseconds); // Time before January 1, 1970, UTC
 ```
 
-# Getting Timey-Wimey with UTC and Local Time
+### Getting Timey-Wimey with UTC and Local Time
 
 Now, here's the cool part. While Date objects are all about that UTC life, they like to dress up in your local timezone when you create them. So, if you make a Date with new Date(0), it might look different depending on where you are. Let's try these in your browser console:
 
@@ -31,7 +31,7 @@ new Date(0); // Looks different on your local machine
 new Date(0).toUTCString(); // Get the date-time string in good ol' UTC
 ```
 
-# Playing with Dates and Times
+### Playing with Dates and Times
 
 Creating Date objects is pretty straightforward. You can go traditional with milliseconds (Milliseconds seem like a lot to me; I occasionally encounter them in my projects.)
 
@@ -58,7 +58,7 @@ new Date('Thu Jan 01 1970 19:00:00 GMT-0500 (Eastern Standard Time)');
 new Date('2022-05-05');
 ```
 
-# Making Clones of Your Date Buds
+### Making Clones of Your Date Buds
 
 Need to clone a Date object? No problemo! JavaScript's got your back:
 
@@ -68,7 +68,7 @@ const copy = new Date(curr);
 const anotherCopy = new Date(curr.getTime());
 ```
 
-# Dating Across Systems
+### Dating Across Systems
 
 Sending a Date object to the server? Just convert it to a string! The popular kid in datetime formats is ISO8601, and JavaScript's got a trick up its sleeve with toISOString():
 
@@ -76,7 +76,7 @@ Sending a Date object to the server? Just convert it to a string! The popular ki
 new Date().toISOString(); // Look at that ISO charm!
 ```
 
-# Comparing Dates Like a Boss
+### Comparing Dates Like a Boss
 
 When comparing dates, you've got options. You can compare them directly or let JavaScript do the magic:
 
@@ -104,7 +104,7 @@ if (date1 == date2) {
 }
 ```
 
-# Looping Through Time
+### Looping Through Time
 
 JavaScript's Date constructor is pretty chill. If you mess up the date, no worries! It'll correct itself, which is handy for looping:
 
@@ -126,7 +126,7 @@ while (fromDate < currDate) {
 }
 ```
 
-# Getting Cozy with Dates
+### Getting Cozy with Dates
 
 Want to know the first date of the month? Just set the date to 1:
 
@@ -143,7 +143,7 @@ date.setMonth(date.getMonth() + 1);
 date.setDate(-1);
 ```
 
-# Crunching Numbers... with Dates
+### Crunching Numbers... with Dates
 
 Need to calculate date differences? No problemo! JavaScript's got you:
 
@@ -155,7 +155,7 @@ Math.trunc(((date2 - date1) / 1000) * 60 * 60 * 24); // Returns the full-date di
 Math.ceil(((date2 - date1) / 1000) * 60 * 60 * 24); // Counts every millisecond as a date
 ```
 
-# Checking If It's Daylight Saving Time
+### Checking If It's Daylight Saving Time
 
 Wanna know if it's Daylight Saving Time? JavaScript can help with that too! Here's a neat little trick:
 
@@ -168,7 +168,7 @@ const isDSTApplied =
     currDate.getTimezoneOffset() > new Date(currDate.getFullYear(), 5, 1).getTimezoneOffset();
 ```
 
-# Leap into Leap Years
+### Leap into Leap Years
 
 Ah, the leap year! Remember the Earth's 365.25-day dance around the Sun? JavaScript does! Check if it's a leap year with this code:
 
@@ -178,7 +178,7 @@ const years = date.getFullYear();
 const isLeapYear = years % 4 === 0 && years % 100 !== 0 && years % 400 === 0;
 ```
 
-# Just Dates, no time please
+### Just Dates, no time please
 
 Sometimes, all you need is the date without any fuss about time. You can create Date objects with just the date part, omitting the time:
 
@@ -211,6 +211,6 @@ if (date1.getTime() === date2.getTime()) {
 }
 ```
 
-# You're all set
+### You're all set
 
 There you have it! Date objects in JavaScript don't have to be a headache. With these tips, you'll be waltzing through time and dates like a seasoned pro. Happy coding, time travelers! 🚀

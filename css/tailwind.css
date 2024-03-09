@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body, html {
+    color: #2B4652;
+    background: #F9F8F7;
+  }
+}

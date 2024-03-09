@@ -1,17 +1,21 @@
 const fs = require('fs')
-const matter = require('gray-matter')
+const rimraf = require('rimraf')
+const compose = require('koa-compose')
 
-const taskConveyor = [
-  require('./tasks/getRaw'),
-  require('./tasks/getMatter'),
-  require('./tasks/getHtml'),
-  function (item) {
-    console.log(item)
-  }
-]
+const composer = compose([
+  require('./tasks/getRawData'),
+  require('./tasks/getFrontMatter'),
+  require('./tasks/parseMarkdown'),
+  require('./tasks/renderPage'),
+  require('./tasks/minifier'),
+  require('./tasks/hashUrl'),
+  require('./tasks/saveToFile')
+])
 
-const putOnConveyor = (fileName) => {
-  taskConveyor.reduce((item, task) => task(item), { fileName })
-}
+function putOnConveyor (fileName) { composer({ fileName }) }
+function clearDirectory(directory) { rimraf.sync(directory); fs.mkdirSync(directory) }
+
+// Call the function before triggering the build process
+clearDirectory('./build')
 
 fs.readdirSync('./docs').forEach(putOnConveyor)
