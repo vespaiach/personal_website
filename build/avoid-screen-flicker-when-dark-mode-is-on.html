@@ -1,18 +1,29 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>Avoid Screen Flicker When Dark Mode Is On | vespaiach.com</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="main.css" />
   </head>
 
   <body>
-    <div class="w-full max-w-4xl p-4 mx-auto pt-4">
+    <div class="w-full max-w-2xl p-5 mx-auto pt-4">
       <div>
         <a href="/" class="text-blue-500">← HOME</a>
       </div>
 
-      <h1 class="text-3xl font-bold my-12 text-center">Avoid Screen Flicker When Dark Mode Is On</h1>
-
-      <article class="prose prose-neutral prose-lg">
+      <article class="prose prose-neutral prose-lg prose-headings:font-serif mb-12">
+        <h2 class="font-bold mb-1 mt-12">Avoid Screen Flicker When Dark Mode Is On</h2>
+        <p class="mb-12">July 01, 2022</p>
         <h2>Screen flicker</h2>
 <p>Here was what my website looked like before (I used NextJS and Static Generation features to build my website).</p>
 <p><img src="https://www.vespaiach.com/images/vespaiach_flashing.gif" alt="vespaiach.com"></p>
@@ -57,6 +68,10 @@ export async function getStaticPaths() {
 <p>These are two important steps that help my idea work. For more detail on how to implement it on my website, please check out the source code from <a href="https://github.com/vespaiach/personal_website">this link</a>.</p>
 
       </article>
+
+      <div class="flex justify-end my-11">
+        <a href="https://github.com/vespaiach/personal_website/blob/main/docs/hydration-failed-react-encoder-error.md" class="text-xs font-semibold text-secondary no-underline">GITHUB →</a>
+      </div>
     </div>
   </body>
 </html>

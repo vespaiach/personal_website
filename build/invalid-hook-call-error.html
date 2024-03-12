@@ -1,18 +1,29 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>Invalid Hook Call Error | vespaiach.com</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="main.css" />
   </head>
 
   <body>
-    <div class="w-full max-w-4xl p-4 mx-auto pt-4">
+    <div class="w-full max-w-2xl p-5 mx-auto pt-4">
       <div>
         <a href="/" class="text-blue-500">← HOME</a>
       </div>
 
-      <h1 class="text-3xl font-bold my-12 text-center">Invalid Hook Call Error</h1>
-
-      <article class="prose prose-neutral prose-lg">
+      <article class="prose prose-neutral prose-lg prose-headings:font-serif mb-12">
+        <h2 class="font-bold mb-1 mt-12">Invalid Hook Call Error</h2>
+        <p class="mb-12">June 28, 2022</p>
         <h2>The error</h2>
 <p>I was implementing a React component library - named <strong>calendar-ui</strong>.</p>
 <p>Then I created another React app - named <strong>test-calendar</strong> to test that library with help from the <code>npm link</code> command. I ran the command <code>npm link</code> in the root folder of <strong>calendar-ui</strong> and <code>npm link calendar-ui</code> in the root folder of <strong>test-calendar</strong>. After doing it, in the <strong>node_modules</strong> folder there was another <strong>calendar-ui</strong> folder under the <strong>node_modules</strong> folder of <strong>test-calendar</strong></p>
@@ -25,6 +36,10 @@
 <p>Basically, We can create another symbolic link of React module inside <strong>calendar-ui</strong> folder that points to React module of <strong>test-calendar</strong>, so that they both use the same React module. However, to make it easy, I simply deleted the <strong>node_modules</strong> folder of <strong>calendar-ui</strong> and everything worked fine.</p>
 
       </article>
+
+      <div class="flex justify-end my-11">
+        <a href="https://github.com/vespaiach/personal_website/blob/main/docs/invalid-hook-call-error.md" class="text-xs font-semibold text-secondary no-underline">GITHUB →</a>
+      </div>
     </div>
   </body>
 </html>

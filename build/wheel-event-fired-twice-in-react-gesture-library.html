@@ -1,18 +1,29 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>OnWheel Event Fired Twice In React Gesture Library | vespaiach.com</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="main.css" />
   </head>
 
   <body>
-    <div class="w-full max-w-4xl p-4 mx-auto pt-4">
+    <div class="w-full max-w-2xl p-5 mx-auto pt-4">
       <div>
         <a href="/" class="text-blue-500">← HOME</a>
       </div>
 
-      <h1 class="text-3xl font-bold my-12 text-center">OnWheel Event Fired Twice In React Gesture Library</h1>
-
-      <article class="prose prose-neutral prose-lg">
+      <article class="prose prose-neutral prose-lg prose-headings:font-serif mb-12">
+        <h2 class="font-bold mb-1 mt-12">OnWheel Event Fired Twice In React Gesture Library</h2>
+        <p class="mb-12">July 22, 2022</p>
         <p>After diving into the code of handling onwheel events in React Gesture library, I found that was by design and not a bug. For the last onwheel event, the library will fire onwheel event twice with field <strong>active</strong> changing from <strong>true</strong> to <strong>false</strong>. Here is the code of React Gesture&#39;s onwheel event handler:</p>
 <pre><code class="language-js">  wheelChange(event) {
     // ... some code here
@@ -32,6 +43,10 @@
 <p>The <strong>active</strong> field also is mentioned in <a href="https://use-gesture.netlify.app/docs/state/#:~:text=active%2C%20%20%20%20%20%20%20%20//%20true%20when%20the%20gesture%20is%20active">React Gesture&#39;s document</a>, but honestly, I had no idea how to use it when I first read the document.</p>
 
       </article>
+
+      <div class="flex justify-end my-11">
+        <a href="https://github.com/vespaiach/personal_website/blob/main/docs/wheel-event-fired-twice-in-react-gesture-library.md" class="text-xs font-semibold text-secondary no-underline">GITHUB →</a>
+      </div>
     </div>
   </body>
 </html>
