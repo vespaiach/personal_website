@@ -36,6 +36,7 @@ import('zx').then(async function (zx) {
     zx.fs.rmSync('./build', { recursive: true, force: true })
   }
 
+  await zx.$`cp -r ./js ./build`
   const cssFileName = await require('./tasks/buildCss')(isProd)
   const fileNames = await require('./tasks/readDocFolder')()
 
