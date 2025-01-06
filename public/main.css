@@ -1,0 +1,137 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap');
+
+/* General Styles */
+html {
+  font-size: 16px; /* 1rem = 16px */
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #3B3C4A;
+  line-height: 1.5;
+  background-color: white; /* Light gray background for light mode */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  color: #181a2a;
+  line-height: 1.2;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2.25rem; /* 36px */
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 1.875rem; /* 30px */
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 1.5rem; /* 24px */
+}
+
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  font-size: 1.25rem; /* 20px */
+  color: #97989f;
+}
+
+/* Links */
+a {
+  font-family: 'Roboto', sans-serif;
+  color: #4b6bfb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Captions and Small Text */
+small,
+.caption {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem; /* 12px */
+  color: #97989f;
+  line-height: 1.4;
+}
+
+.container {
+	max-width: 768px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.sitename {
+  font-family: Bangers, sans-serif;
+  font-size: 2rem;
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	margin: 3rem 0 2.5rem;
+}
+
+.sitename img {
+	width: 40px;
+}
+.sitename img:last-of-type {
+	display: none;
+}
+
+.articles > li {
+	margin-bottom: 1.5rem;
+}
+
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 3rem 0 1rem 0;
+}
+
+.footer img {
+	width: 36px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #141624; /* Dark gray background for dark mode */
+    color: #97989F; /* Light text for dark mode */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff; /* Light headings for dark mode */
+  }
+
+  a {
+    color: #4B6BFB; /* Emerald links for dark mode */
+  }
+
+	.sitename img:first-of-type {
+		display: none;
+	}
+	.sitename img:last-of-type {
+		display: block;
+	}
+}

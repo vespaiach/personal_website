@@ -4,6 +4,7 @@ import { getIndexLayout, getPostLayout } from './layout.js';
 import { getListOfArticleMetadata, getArticleDetail } from './db.js';
 
 const app = express()
+app.use(express.static('public'))
 const port = 3333
 
 app.get('/', async (__, res) => {

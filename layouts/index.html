@@ -3,106 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trinh Nguyen's Blog - Computer Lover</title>
-    <style>
-      @font-face {
-        font-family: 'Work Sans';
-        font-style: italic;
-        font-weight: 100 900;
-        font-display: swap;
-        src: url(https://fonts.gstatic.com/s/worksans/v19/QGYqz_wNahGAdqQ43Rh_eZDrv_1i4_D2.woff2)
-          format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
-          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-      }
-      @font-face {
-        font-family: 'Work Sans';
-        font-style: normal;
-        font-weight: 100 900;
-        font-display: swap;
-        src: url(https://fonts.gstatic.com/s/worksans/v19/QGYsz_wNahGAdqQ43Rh_fKDptfpA4Q.woff2)
-          format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
-          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-      }
-    </style>
-    <style>
-      :root {
-        --title-color: #181a2a;
-        --text-color: #97989f;
-      }
-      body {
-        font-family: 'Work Sans', sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      .container {
-        max-width: 768px;
-        margin: 0 auto;
-        padding: 1.2rem;
-      }
-      .list {
-        list-style: none;
-        padding: 0;
-      }
-      .list > li {
-        display: block;
-        margin-bottom: 1.5rem;
-      }
-      .heading2 {
-        font-size: 1.5rem;
-        font-weight: 500;
-        line-height: 1.75rem;
-        text-decoration: none;
-        color: var(--title-color);
-      }
-      .p2 {
-        font-size: 0.8rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: var(--text-color);
-        margin: 0;
-        display: flex;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .sub-list {
-        list-style: none;
-        color: var(--text-color);
-        padding: 0px;
-      }
-      .sub-list > li {
-        display: flex;
-        gap: 4px;
-      }
-      .tag {
-        text-decoration: none;
-        color: var(--text-color);
-      }
-    </style>
+    <title>Bug Bites - Trinh Nguyen - Computer Lover</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/reset.css" />
+    <link rel="stylesheet" href="/main.css" />
   </head>
-
   <body>
     <div class="container">
-      <ul class="list">
+      <h1 class="sitename">
+        BUG BITES
+        <img src="/bug.webp" alt="Bug" />
+        <img src="/bug_invert.webp" alt="Bug" />
+      </h1>
+      <ul class="articles">
         <% _.forEach(listOfArticleMetadata, function(article) { %>
         <li>
-          <a class="heading2" href="<%- article.slug %>" title="<%- article.title %>"><%- article.title %></a>
-          <ul class="sub-list">
-            <li class="p2"><%- article.date %></li>
-            <li class="p2">
-            <% _.forEach(article.tags, function(tag, i) { %>
-              <a href="#" class="tag"><%- tag %></a>
-              <% if (i < article.tags.length - 1) { %>
-                <span>•</span>
-              <% } %>
-            <% }); %>
-            </li>
-          </ul>
+          <a href="<%- article.slug %>" title="<%- article.title %>">
+            <h3><%- article.title %></h3>
+          </a>
+          <small><%- article.date %></small>
+          <span>•</span>
+          <% _.forEach(article.tags, function(tag, i) { %>
+          <a href="#"><small><%- tag %></small></a>
+          <% if (i < article.tags.length - 1) { %>
+          <span>•</span>
+          <% } %> <% }); %>
         </li>
         <% }); %>
       </ul>
-      
+
+      <div class="footer">
+        <img src="/grass.webp" alt="Grass" />
+      </div>
     </div>
   </body>
 </html>
