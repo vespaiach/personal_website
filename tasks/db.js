@@ -27,5 +27,6 @@ export const getListOfArticleMetadata = async () => {
  */
 export const getArticleDetail = async (slug) => {
   await ensureHandlerReady();
-  return await conn.getArticleDetail(slug);
+  const detail = await conn.getArticleDetail(slug);
+  return { ...detail, date: formatDate(detail.date) } 
 };

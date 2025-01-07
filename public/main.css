@@ -1,30 +1,40 @@
-/* Importing Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap');
+:root {
+  --font-size-base: 16px;
+  --font-family-base: 'Roboto', sans-serif;
+  --font-family-heading: 'Montserrat', sans-serif;
+  --color-text: #3b3c4a;
+  --color-heading: #181a2a;
+  --color-link: #4b6bfb;
+  --color-muted: #97989f;
+  --color-bg-light: white;
+  --color-bg-dark: #141624;
+  --color-text-dark: #97989f;
+  --color-heading-dark: #ffffff;
+}
 
-/* General Styles */
 html {
-  font-size: 16px; /* 1rem = 16px */
+  font-size: var(--font-size-base); /* 1rem = 16px */
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  color: #3B3C4A;
-  line-height: 1.5;
-  background-color: white; /* Light gray background for light mode */
+  font-family: var(--font-family-base);
+  color: var(--color-text);
+  line-height: 1.8; /* Increased line height for better readability */
+  background-color: var(--color-bg-light); /* Light gray background for light mode */
   transition: background-color 0.3s, color 0.3s;
 }
 
-
-/* Headings */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: 'Montserrat', sans-serif;
-  color: #181a2a;
+  font-family: var(--font-family-heading);
+  color: var(--color-heading);
   line-height: 1.2;
+  margin-top: 1.8rem; /* Space above headings */
+  margin-bottom: 0.3rem; /* Space below headings */
 }
 
 h1 {
@@ -47,13 +57,13 @@ h5,
 h6 {
   font-weight: 600;
   font-size: 1.25rem; /* 20px */
-  color: #97989f;
+  color: var(--color-muted);
 }
 
 /* Links */
 a {
-  font-family: 'Roboto', sans-serif;
-  color: #4b6bfb;
+  font-family: var(--font-family-base);
+  color: var(--color-link);
   text-decoration: none;
 }
 
@@ -64,55 +74,61 @@ a:hover {
 /* Captions and Small Text */
 small,
 .caption {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-family-base);
   font-weight: 300;
   font-size: 0.75rem; /* 12px */
-  color: #97989f;
+  color: var(--color-muted);
   line-height: 1.4;
 }
 
 .container {
-	max-width: 768px;
-	margin: 0 auto;
-	padding: 0 1rem;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .sitename {
   font-family: Bangers, sans-serif;
   font-size: 2rem;
-	display: flex;
-	align-items: baseline;
-	gap: 8px;
-	margin: 3rem 0 2.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 3rem 0 2.5rem;
 }
 
 .sitename img {
-	width: 40px;
+  width: 40px;
 }
+
 .sitename img:last-of-type {
-	display: none;
+  display: none;
 }
 
 .articles > li {
-	margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .footer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 3rem 0 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0 1rem 0;
 }
 
 .footer img {
-	width: 36px;
+  width: 36px;
+}
+
+p {
+  margin-top: 1rem; /* Space above paragraphs */
+  margin-bottom: 1rem; /* Space below paragraphs */
 }
 
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #141624; /* Dark gray background for dark mode */
-    color: #97989F; /* Light text for dark mode */
+    background-color: var(--color-bg-dark); /* Dark gray background for dark mode */
+    color: var(--color-text-dark); /* Light text for dark mode */
   }
 
   h1,
@@ -121,17 +137,44 @@ small,
   h4,
   h5,
   h6 {
-    color: #ffffff; /* Light headings for dark mode */
+    color: var(--color-heading-dark); /* Light headings for dark mode */
   }
 
   a {
-    color: #4B6BFB; /* Emerald links for dark mode */
+    color: var(--color-link); /* Emerald links for dark mode */
   }
 
-	.sitename img:first-of-type {
-		display: none;
-	}
-	.sitename img:last-of-type {
-		display: block;
-	}
+  .sitename img:first-of-type {
+    display: none;
+  }
+
+  .sitename img:last-of-type {
+    display: block;
+  }
+}
+
+header {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.footer {
+  padding-top: 2rem; /* Space above the footer content */
+  padding-bottom: 2rem; /* Space below the footer content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0 1rem 0;
+}
+
+pre {
+  background-color: #f5f5f5; /* Light gray background */
+  padding: 1rem; /* Padding around the code */
+  border-radius: 5px; /* Rounded corners */
+  overflow-x: auto; /* Horizontal scroll for long code lines */
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+  font-size: 0.875rem; /* Smaller font size */
+  color: #333; /* Dark text color */
 }
