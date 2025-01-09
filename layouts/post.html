@@ -11,8 +11,14 @@
       rel="stylesheet" />
     <link rel="stylesheet" href="/reset.css" />
     <link rel="stylesheet" href="/main.css" />
-    <link rel="stylesheet" media="all" id="light-theme-code" href="https://unpkg.com/@speed-highlight/core/dist/themes/github-light.css" />
-    <link rel="stylesheet" media="all" id="dark-theme-code" href="https://unpkg.com/@speed-highlight/core/dist/themes/github-dim.css" />
+    <link
+      rel="stylesheet"
+      id="light-theme-code"
+      href="https://unpkg.com/@speed-highlight/core/dist/themes/github-light.css" />
+    <link
+      rel="stylesheet"
+      id="dark-theme-code"
+      href="https://unpkg.com/@speed-highlight/core/dist/themes/github-dim.css" />
     <script>
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.getElementById('dark-theme-code').media = 'print';
@@ -28,20 +34,11 @@
         <small><%- article.date %></small>
       </header>
       <article class="article-content"><%= article.content %></article>
+      <a class="link-back" href="/" title="go back">back</a>
     </section>
     <script type="module">
-      import { highlightElement } from 'https://unpkg.com/@speed-highlight/core/dist/index.js';
-      Array.from(document.querySelectorAll('code[class*="language-"]')).map((elm) => {
-        let lang = elm.className.match(/language-([\w-]+)/)?.[1];
-        lang = lang === 'javascript' ? 'js' : lang;
-        const div = document.createElement('div');
-        div.innerHTML = elm.innerHTML;
-        highlightElement(div, lang);
-        div.classList.add('fira');
-        const pre = elm.parentElement;
-        pre.parentElement.insertBefore(div, pre);
-        pre.remove();
-      });
+      import { highlightAll } from 'https://unpkg.com/@speed-highlight/core/dist/index.js';
+      highlightAll();
     </script>
   </body>
 </html>

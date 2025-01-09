@@ -134,7 +134,7 @@ small,
 }
 
 .article-header {
-  margin: 3.8rem 0 2.8rem;
+  margin: 2rem 0 3.8rem;
 }
 
 .article-header small {
@@ -143,6 +143,11 @@ small,
 }
 
 .fira {font: 16px 'Fira Code', monospace !important}
+
+.link-back {
+  display: block;
+  margin: 5rem 0;
+}
 
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
