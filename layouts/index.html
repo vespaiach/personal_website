@@ -4,20 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bug Bites - Trinh Nguyen - Computer Lover</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@700&family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet" />
     <link rel="stylesheet" href="/reset.css" />
     <link rel="stylesheet" href="/main.css" />
   </head>
   <body>
-    <div class="container">
-      <h1 class="sitename">
+    <section class="container">
+      <h1 class="site-name">
         BUG BITES
         <img src="/bug.webp" alt="Bug" />
         <img src="/bug_invert.webp" alt="Bug" />
       </h1>
-      <ul class="articles">
+      <ul class="list-of-articles">
         <% _.forEach(listOfArticleMetadata, function(article) { %>
         <li>
           <a href="<%- article.slug %>" title="<%- article.title %>">
@@ -33,10 +35,6 @@
         </li>
         <% }); %>
       </ul>
-
-      <div class="footer">
-        <img src="/grass.webp" alt="Grass" />
-      </div>
-    </div>
+    </section>
   </body>
 </html>
