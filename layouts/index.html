@@ -3,38 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bug Bites - Trinh Nguyen - Computer Lover</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@700&family=Roboto:wght@300;400&display=swap"
-      rel="stylesheet" />
-    <link rel="stylesheet" href="/reset.css" />
-    <link rel="stylesheet" href="/main.css" />
+    <title>Coding Addict - Trinh Nguyen</title>
   </head>
   <body>
-    <section class="container">
-      <h1 class="site-name">
-        BUG BITES
-        <img src="/bug.webp" alt="Bug" />
-        <img src="/bug_invert.webp" alt="Bug" />
-      </h1>
-      <ul class="list-of-articles">
-        <% _.forEach(listOfArticleMetadata, function(article) { %>
-        <li>
-          <a href="<%- article.slug %>" title="<%- article.title %>">
-            <h3><%- article.title %></h3>
-          </a>
-          <small><%- article.date %></small>
-          <span>•</span>
-          <% _.forEach(article.tags, function(tag, i) { %>
-          <a href="#"><small><%- tag %></small></a>
-          <% if (i < article.tags.length - 1) { %>
-          <span>•</span>
-          <% } %> <% }); %>
-        </li>
+    <h1 style="margin-bottom: 1em">Coding Addict</h1>
+    <% _.forEach(listOfArticleMetadata, function(article) { %>
+    <article style="margin-bottom: 2.5em">
+      <a href="<%- article.slug %>" title="<%- article.title %>">
+        <h2 class="article-title"><%- article.title %></h2>
+      </a>
+      <p>
+        <%- article.date %>
+        <span>|</span>
+        <% _.forEach(article.tags, function(tag, i) { %>
+        <a href="#"> <%- `${tag}${i < article.tags.length - 1 ? ',' : ''}` %> </a>
         <% }); %>
-      </ul>
-    </section>
+      </p>
+    </article>
+    <% }); %>
   </body>
 </html>

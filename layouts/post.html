@@ -3,42 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bug Bites - Trinh Nguyen - Computer Lover - <%= article.title %></title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@700&family=Roboto:wght@300;400&family=Fira+Code:wght@400&display=swap"
-      rel="stylesheet" />
-    <link rel="stylesheet" href="/reset.css" />
-    <link rel="stylesheet" href="/main.css" />
-    <link
-      rel="stylesheet"
-      id="light-theme-code"
-      href="https://unpkg.com/@speed-highlight/core/dist/themes/github-light.css" />
-    <link
-      rel="stylesheet"
-      id="dark-theme-code"
-      href="https://unpkg.com/@speed-highlight/core/dist/themes/github-dim.css" />
-    <script>
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.getElementById('dark-theme-code').media = 'print';
-      } else {
-        document.getElementById('light-theme-code').media = 'print';
-      }
-    </script>
+    <title><%= article.title %> - Trinh Nguyen</title>
   </head>
   <body>
-    <section class="container">
-      <header class="article-header">
-        <h2><%= article.title %></h2>
-        <small><%- article.date %></small>
-      </header>
-      <article class="article-content"><%= article.content %></article>
-      <a class="link-back" href="/" title="go back">back</a>
-    </section>
-    <script type="module">
-      import { highlightAll } from 'https://unpkg.com/@speed-highlight/core/dist/index.js';
-      highlightAll();
-    </script>
+    <article>
+      <h1><%= article.title %></h1>
+      <p style="margin-bottom: 2em"><%- article.date %></p>
+      <%= article.content %>
+    </article>
+    <div style="margin-top: 2em">
+      <a href="/" title="go back">Go back</a>
+    </div>
   </body>
 </html>

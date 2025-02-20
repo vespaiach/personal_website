@@ -27,52 +27,9 @@ export const getListOfArticleMetadata = async () => {
   return (await Promise.all(filePaths.map(getFrontMatter))).map(({ rawBody, ...rest}) => rest);
 }
 
-const langMap = {
-  asm: 'shj-lang-asm',
-  bash: 'shj-lang-bash',
-  brainfuck: 'shj-lang-bf',
-  c: 'shj-lang-c',
-  css: 'shj-lang-css',
-  csv: 'shj-lang-csv',
-  diff: 'shj-lang-diff',
-  docker: 'shj-lang-docker',
-  git: 'shj-lang-git',
-  go: 'shj-lang-go',
-  html: 'shj-lang-html',
-  http: 'shj-lang-http',
-  ini: 'shj-lang-ini',
-  java: 'shj-lang-java',
-  javascript: 'shj-lang-js',
-  js: 'shj-lang-js',
-  jsdoc: 'shj-lang-jsdoc',
-  json: 'shj-lang-json',
-  log: 'shj-lang-log',
-  lua: 'shj-lang-lua',
-  makefile: 'shj-lang-make',
-  markdown: 'shj-lang-md',
-  md: 'shj-lang-md',
-  perl: 'shj-lang-pl',
-  plain: 'shj-lang-plain',
-  python: 'shj-lang-py',
-  py: 'shj-lang-py',
-  regex: 'shj-lang-regex',
-  rust: 'shj-lang-rs',
-  sql: 'shj-lang-sql',
-  todo: 'shj-lang-todo',
-  toml: 'shj-lang-toml',
-  typescript: 'shj-lang-ts',
-  ts: 'shj-lang-ts',
-  uri: 'shj-lang-uri',
-  xml: 'shj-lang-xml',
-  yaml: 'shj-lang-yaml'
-};
-
 export const getArticleDetail = async (slug) => {
   const filePath = path.join(docsDirectoryPath, `${slug}.md`);
   const { rawBody, ...rest } = await getFrontMatter(filePath);
   const renderer = new marked.Renderer();
-  renderer.code = ({ text, lang }) => {
-    return `<div class="${langMap[lang] ?? 'shj-lang-bash'}">${text}</div>`;
-  };
   return { ...rest, content: marked.parse(rawBody, { renderer }) };
 }
