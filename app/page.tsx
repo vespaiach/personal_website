@@ -11,7 +11,7 @@ export default async function Home() {
         {posts.map((post) => (
           <li key={post.slug} className="flex flex-col py-1">
             <Link href={`/posts/${post.slug}`}>{post.title}</Link>
-            <small className="text-gray-600">{formatDate(post.date)}</small>
+            <small className="text-gray-600 dark:text-gray-400">{formatDate(post.date)}</small>
           </li>
         ))}
       </ul>

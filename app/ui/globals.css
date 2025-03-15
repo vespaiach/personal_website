@@ -18,6 +18,9 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+  pre {
+    background: #333;
+  }
 }
 
 body {
