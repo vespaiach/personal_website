@@ -1,82 +1,111 @@
 ---
-title: 'Auto-reset variables'
-date: '2022-01-25T16:00:00.000-0500'
-excerpt: 'In Javascript, is there a way to get variables automatically reseted to undefined value after being read once?'
-github: https://github.com/vespaiach/personal_website/blob/main/docs/auto-reset-variables.md
+title: 'Discard after x times usage'
+date: '2022-01-25'
+excerpt: 'I often find food labels warning me to discard the contents after X days of opening. A question: how can I create a variable that automatically discards its content after X uses?'
+github: https://github.com/vespaiach/personal_website/blob/main/docs/discard=after-x-time-usage.md
 tags: javascript
 ---
 
-1234This question came to me when I was implementing a piece of code that needed to pass a value from one place to another place, and that value needed to be reseted to undefined after reading. 
+I often find food labels warning me to discard the contents after X days of opening. A question: how can I create a variable that automatically discards its content after X uses?
 
-Basically, I can achieve it easily by manually resetting the value after the reading statement. However, for the researching purpose, it is good to know if there are other ways to make variables somehow automatically reset their values after being read.
+## Encapsulate within a closure function
 
-To do that, I used getter/setter syntax to create a variable onto window object and try to interfere with reading/writing of that variable. Then I used an array to hold the variable's values when it was set, and an index to keep the current position of that array. Everytime, the variable was read, just in increase the index one.
+A closure function with a usage counter inside seems an easy solution.
 
 ```javascript
-Object.defineProperty(window, 'useOnceAndForget', {
-  values: [],
-  index: 0,
+function createPromoCode(validCode, maxUsages) {
+  let usageCounter = 0;
+  return function() {
+    if (usageCounter < maxUsages) { 
+      usageCounter++;
+      return validCode;
+    }
+    return null;
+  };
+}
 
-  get() {
-    const returnVar = this.values[this.index];
-    this.index++;
-    return returnVar;
-  },
-
-  set(value) {
-    this.values[this.index] = value;
-  },
-});
+const promo = createPromoCode('free beer 🍻😆', 3);
+console.log(`You are getting a ${promo()}`);
+console.log(`You are getting a ${promo()}`);
+console.log(`You are getting a ${promo()}`);
+console.log(`You are getting a ${promo()}`);
 ```
 
-Done! the `useOnceAndForget` variable got reseted after being read. However, using an array seemed to be not efficient, the values in the array wouldn’t be collected by the garbage collector. So I remove the array and add a variable for checking the reading statement instead.
+## Place inside a Getter/Setter
+
+JavaScript ES5 has getter and setter syntax, which fits very well as a solution.
 
 ```javascript
-Object.defineProperty(window, 'useOnceAndForget', {
+Object.defineProperty(window, 'discardAfterUsed', {
   get() {
-    if (this.isRead) {
-      return undefined;
+    if (this.read) {
+      return null;
     }
 
-    this.isRead = true;
+    this.read = true;
     return this.value;
   },
 
   set(value) {
-    this.isRead = false;
-
+    this.read = false;
     this.value = value;
   },
 });
+
+window.discardAfterUsed = 'one-time free beer'
+console.log(`You are getting a ${discardAfterUsed}`);
+console.log(`You are getting a ${discardAfterUsed}`);
 ```
 
-With this solution, the value of `useOnceAndForget` variable wouldn’t be swept away right after reading, but until the next set statement. Not perfect, but acceptable...! To make the solution more general, I used Javascript Proxy and created a function to make any property of an object reset its value.
+## Implement a class
+
+While defining a property on the window object is quick for demonstration purposes, it's not a practical solution. Instead, let's build a class for it.
 
 ```javascript
-function addAutoReset(obj, ...propNames) {
-  const readingStatus = Object.fromEntries((propNames || []).map((p) => [p, false]));
+class DiscardAfterUsed {
+  constructor(value) {
+    this._value = value;
+  }
 
-  return new Proxy(obj, {
-    get(target, prop) {
-      if (readingStatus[prop] === undefined) return target[prop];
-
-      if (readingStatus[prop] === true) return undefined;
-
-      readingStatus[prop] = true;
-      return target[prop];
-    },
-
-    set(target, prop, value) {
-      if (readingStatus[prop] !== undefined) {
-        readingStatus[prop] = false;
-      }
-
-      target[prop] = value;
-    },
-  });
+  get value() {
+    if (this._value !== null && this._value !== undefined) {
+      const temp = this._value;
+      this._value = null; // Ready for garbage collector
+      return temp;
+    }
+    return null;
+  }
 }
 
-const myObj = addAutoReset({ name: 'tony', age: 11 }, 'name', 'age');
+const onceOnly = new DiscardAfterUsed('one-time free beer');
+
+console.log(`You are getting a ${onceOnly.value}`);
+console.log(`You are getting a ${onceOnly.value}`);
 ```
 
+## Use proxy
 
+Using a proxy is often more complex than other solutions, but it is flexible and does not modify the original value.
+
+```javascript
+const discardAfterUsedHandler = {
+  get: function(target, prop, receiver) {
+    if (prop !== 'code') {
+      return Reflect.get(target, prop, receiver);
+    }
+
+    if (!receiver.read) {
+      receiver.read = true;
+      return target[prop];
+    }
+    return null; 
+  }
+};
+
+const promo = { code: 'one-time free beer' };
+const proxiedObj = new Proxy(promo, discardAfterUsedHandler);
+console.log(`You are getting a ${proxiedObj.code}`);
+console.log(`You are getting a ${proxiedObj.code}`);
+```
+
+In conclusion, while there are various 'discard-after-use' solutions, I prefer creating a class for it. It is clean and easy to understand. However, in terms of flexibility, the proxy solution is an excellent choice.
