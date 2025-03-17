@@ -12,6 +12,7 @@
   "dependencies": {
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
     "marked": "^15.0.7",
     "next": "15.2.2",
     "postcss": "^8.5.3",
