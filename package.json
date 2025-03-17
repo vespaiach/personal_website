@@ -1,23 +1,36 @@
 {
-  "engines": {
-    "npm": ">=8.3.1",
-    "node": ">=16.14.0"
-  },
-  "scripts": {
-    "dev": "node ./tasks/dev.js",
-    "build": "node ./tasks/build.js"
-  },
+  "name": "personal_website",
+  "version": "0.1.0",
+  "private": true,
   "type": "module",
-  "dependencies": {
-    "@speed-highlight/core": "^1.2.7",
-    "express": "^4.21.2",
-    "front-matter": "^4.0.2",
-    "html-minifier": "^4.0.0",
-    "lodash": "^4.17.21",
-    "marked": "^15.0.5"
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "handlers": {
-    "markdown": "markdownFiles",
-    "layout": "layoutFiles"
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "marked": "^15.0.7",
+    "next": "15.2.2",
+    "postcss": "^8.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remark": "^14.0.2",
+    "remark-html": "^15.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4.0.14",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.2",
+    "tailwindcss": "^4.0.14",
+    "typescript": "^5"
   }
 }
