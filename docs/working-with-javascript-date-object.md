@@ -1,10 +1,9 @@
 ---
-title: 'Working With Date object In Javascript'
+title: 'Working With Javascript Date Object'
 date: '2022-06-20'
 excerpt: 'Working with Date is not always straightforward, sometimes it may overwhelm developers, even seasoned ones. In this article, I will share my experience that will help you to deal with Date in Javascript.'
-github: https://github.com/vespaiach/personal_website/blob/main/docs/working-with-date-in-javascript.md
+github: https://github.com/vespaiach/personal_website/blob/main/docs/working-with-javascript-date-object.md
 tags: javascript, date
-layout: default
 ---
 
 # Definition

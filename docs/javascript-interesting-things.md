@@ -1,8 +1,8 @@
 ---
-title: 'Some notes in Javascript'
+title: 'Javascript Interesting Things'
 date: '2022-01-26T00:00:00.000-0500'
 excerpt: 'Here is a collection of some notes those I think Javacript developers should know about, in order to make their Javascript code more precise.'
-github: https://github.com/vespaiach/personal_website/blob/main/docs/some-notes-in-javascript.md
+github: https://github.com/vespaiach/personal_website/blob/main/docs/javascript-interesting-things.md
 tags: javascript
 ---
 

@@ -1,28 +1,42 @@
-import fs from 'fs'
 import matter from 'gray-matter'
 import { marked } from 'marked'
-import path from 'path'
+
+const basePath = 'https://github.com/vespaiach/personal_website/blob/main/docs'
 
 type Metadata = Omit<ShortPost, 'slug'> & { rawContent: string }
 
 export async function getPostsMetadata(): Promise<ShortPost[]> {
-  const files = fs.readdirSync(path.join('docs'))
-
-  return files.map((filename) => {
-    const slug = filename.replace('.md', '')
-    const rawData = readFile(slug)
-    return { ...getMetadata(rawData), slug }
-  })
+  const slugs = await getSlugs()
+  return await Promise.all(
+    slugs.map(async (slug) => {
+      const rawData = await readFile(buildURL(slug))
+      return { ...getMetadata(rawData), slug }
+    })
+  )
 }
 
 export async function getPostBySlug(slug: string): Promise<Post> {
-  const rawData = readFile(slug)
+  const rawData = await readFile(buildURL(slug))
   const { rawContent, ...rest } = getMetadata(rawData)
   return { ...rest, slug, content: await marked.parse(rawContent) }
 }
 
-function readFile(slug: string) {
-  return fs.readFileSync(path.join('docs', slug + '.md'), 'utf-8')
+async function getSlugs() {
+  const content = await readFile(`${basePath}/slugs.txt`)
+  return content.split('\n').map((slug) => slug.trim())
+}
+
+async function getListOfURLs() {
+  const slugs = await getSlugs()
+  return slugs.map(buildURL)
+}
+
+function buildURL(slug: string) {
+  return `${basePath}/posts/${slug}.md`
+}
+
+function readFile(file: string) {
+  return fetch(file).then((res) => res.text())
 }
 
 function getMetadata(rawData: string): Metadata {
