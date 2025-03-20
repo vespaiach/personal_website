@@ -14,8 +14,6 @@
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "marked": "^15.0.7",
-    "next": "15.2.2",
-    "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "remark": "^14.0.2",
@@ -23,6 +21,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.11.11",
     "@tailwindcss/postcss": "^4.0.14",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",

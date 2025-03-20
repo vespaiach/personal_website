@@ -1,6 +1,6 @@
 import { getPostBySlug } from 'shared/db'
 import { notFound } from 'next/navigation'
-import Article from '@/app/ui/Article'
+import Article from 'src/ui/Article'
 
 type Params = Promise<{ slug: string }>
 
