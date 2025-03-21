@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node ./src/build.js && pnpm run tailwind",
+    "build": "node ./src/build.js",
     "tailwind": "tailwindcss -i ./src/main.css -o ./dist/main.css",
     "preview": "http-server ./dist -p 8088"
   },
