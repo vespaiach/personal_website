@@ -1,7 +1,6 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@import 'highlight.js/styles/github-dark.css' screen and (prefers-color-scheme: dark);
-@import 'highlight.js/styles/github.css' screen and (prefers-color-scheme: light);
+
 
 :root {
   --background: #ffffff;
