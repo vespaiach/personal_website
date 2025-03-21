@@ -9,15 +9,12 @@
     "preview": "http-server ./dist -p 8088"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.0.15",
-    "@tailwindcss/typography": "github:tailwindcss/typography",
     "@types/lodash": "^4.17.16",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "http-server": "^14.1.1",
     "lodash": "^4.17.21",
-    "marked": "^15.0.7",
-    "tailwindcss": "^4.0.15"
+    "marked": "^15.0.7"
   }
 }
