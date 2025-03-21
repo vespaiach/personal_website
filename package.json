@@ -1,36 +1,23 @@
 {
   "name": "personal_website",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "node ./src/build.js && pnpm run tailwind",
+    "tailwind": "tailwindcss -i ./src/main.css -o ./dist/main.css",
+    "preview": "http-server ./dist -p 8088"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.0.15",
+    "@tailwindcss/typography": "github:tailwindcss/typography",
+    "@types/lodash": "^4.17.16",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
+    "http-server": "^14.1.1",
+    "lodash": "^4.17.21",
     "marked": "^15.0.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "remark": "^14.0.2",
-    "remark-html": "^15.0.0"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@swc/cli": "^0.6.0",
-    "@swc/core": "^1.11.11",
-    "@tailwindcss/postcss": "^4.0.14",
-    "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.2",
-    "tailwindcss": "^4.0.14",
-    "typescript": "^5"
+    "tailwindcss": "^4.0.15"
   }
 }
