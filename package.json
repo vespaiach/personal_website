@@ -4,13 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node ./src/build.js && pnpm run tailwind",
+    "build": "node ./src/build.js && npm run tailwind",
     "tailwind": "tailwindcss -i ./src/main.css -o ./dist/main.css",
     "preview": "http-server ./dist -p 8088"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.15",
-    "@tailwindcss/typography": "github:tailwindcss/typography",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/lodash": "^4.17.16",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
