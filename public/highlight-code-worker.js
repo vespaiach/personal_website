@@ -1,20 +1,8 @@
 onmessage = (event) => {
-	const { languages, text } = event.data;
+	const { language, text } = event.data;
+  const lang = language.replace('language-', '');
   importScripts('/highlight.min.js');
-  importScripts(`/language/${languages.replace('language-')}.min.js`);
-	debugger
-  const result = self.hljs.highlightAuto(event.data);
-  postMessage(result.value);
-	
-
-	for (const language of languages) {
-		try {
-			import(`/languages/${language}.min.js`).then((module) => {
-				hljs.registerLanguage(language, module.default)
-				hljs.highlightElement(element)
-			})
-		} catch (e) {
-			console.error(e)
-		}
-	}
+  importScripts(`/languages/${lang}.min.js`);
+  const result = self.hljs.highlight(text, { language: lang, ignoreIllegals: true });
+	postMessage({ highlightedCode: result.value, language: lang});
 };

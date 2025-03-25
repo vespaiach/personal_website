@@ -18,6 +18,10 @@
     --background: oklch(0.21 0.034 264.665);
     --foreground: #ededed;
   }
+  body pre {
+    background: #0d1117;
+    padding: 8px;
+  }
 }
 
 @media (prefers-color-scheme: light) {
