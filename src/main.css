@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-
 :root {
   --background: #ffffff;
   --foreground: rgb(13, 13, 13);
@@ -16,11 +15,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #212121;
+    --background: oklch(0.21 0.034 264.665);
     --foreground: #ededed;
   }
-  pre {
-    background: transparent;
+}
+
+@media (prefers-color-scheme: light) {
+  body pre, pre code.hljs {
+    background: oklch(0.97 0.001 106.424);
   }
 }
 
@@ -33,16 +35,15 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  max-width: 78ch !important;
+  max-width: 100%;
+  width: 100%;
 }
 
-body pre {
-  box-shadow: inset 0 0 0.1em rgba(0, 0, 0, 0.1);
+@font-face {
+  font-family: 'Handlee';
+  src: url('/handlee-regular.ttf') format('truetype');
 }
 
-body code {
-  border-radius: 0.3em;
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  padding: 1.6 rem;
+.blogname {
+  font-family: 'Handlee', sans-serif;
 }
