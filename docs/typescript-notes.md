@@ -1,8 +1,8 @@
 ---
-title: 'Typescript is fantastic or annoying'
-date: '2022-01-08'
+title: 'Typescript Notes'
+date: '2025-03-23'
 excerpt: "Typescript is a great tool to help Javascript developers create clean, robust and stable code. However, I found it annoying sometimes, especially when I needed my jobs done fast, but didn't know how to fix TypeError. And that gave me a feeling like I have just headed myself into wall-bricks but didn't break through it 😎"
-github: https://github.com/vespaiach/personal_website/blob/main/docs/typescript-is-fantastic-or-annoying.md
+github: https://github.com/vespaiach/personal_website/blob/main/docs/typescript-notes.md
 tags: typescript
 ---
 

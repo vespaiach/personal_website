@@ -1,19 +1,20 @@
 ---
 title: 'Discard after usages'
 date: '2022-01-25'
-excerpt: 'I often find food labels warning me to discard the contents after X days of opening. A question: how can I create a variable that automatically discards its content after X uses?'
+excerpt: 'Have you ever noticed food labels warning you to discard the contents after a certain number of days? That made me wonder: how can we create a variable in JavaScript that automatically discards its content after X uses? Lets explore some implementations.'
 github: https://github.com/vespaiach/personal_website/blob/main/docs/discard-after-usages.md
 tags: javascript
 ---
 
-I often find food labels warning me to discard the contents after X days of opening. A question: how can I create a variable that automatically discards its content after X uses?
+Have you ever noticed food labels warning you to discard the contents after a certain number of days? That made me wonder: how can we create a variable in JavaScript that automatically discards its content after X uses? Let's explore some implementations.
 
 ## Encapsulate within a closure function
 
-A closure function with a usage counter inside seems an easy solution.
+A closure is a simple and effective way to encapsulate state. By maintaining a usage counter within the closure, we can track the number of times a value is accessed.
 
 ```javascript
 function createPromoCode(validCode, maxUsages) {
+  // Closure keeps state private, avoiding external modifications.
   let usageCounter = 0;
   return function() {
     if (usageCounter < maxUsages) { 
@@ -45,7 +46,6 @@ Object.defineProperty(window, 'discardAfterUsed', {
     this.read = true;
     return this.value;
   },
-
   set(value) {
     this.read = false;
     this.value = value;
@@ -57,9 +57,11 @@ console.log(`You are getting a ${discardAfterUsed}`);
 console.log(`You are getting a ${discardAfterUsed}`);
 ```
 
+While defining a property on the window object is quick for demonstration purposes, it's not a practical solution.
+
 ## Implement a class
 
-While defining a property on the window object is quick for demonstration purposes, it's not a practical solution. Instead, let's build a class for it.
+A more structured approach involves creating a class, making it reusable and clear.
 
 ```javascript
 class DiscardAfterUsed {
@@ -108,4 +110,4 @@ console.log(`You are getting a ${proxiedObj.code}`);
 console.log(`You are getting a ${proxiedObj.code}`);
 ```
 
-In conclusion, while there are various 'discard-after-use' solutions, I prefer creating a class for it. It is clean and easy to understand. However, in terms of flexibility, the proxy solution is an excellent choice.
+In conclusion, ff you need a straightforward solution, closures work well. For a more reusable and structured approach, a class is ideal. When handling multiple properties dynamically, proxies offer the most flexibility.

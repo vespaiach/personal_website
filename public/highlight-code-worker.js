@@ -4,5 +4,6 @@ onmessage = (event) => {
   importScripts('/highlight.min.js');
   importScripts(`/languages/${lang}.min.js`);
   const result = self.hljs.highlight(text, { language: lang, ignoreIllegals: true });
-	postMessage({ highlightedCode: result.value, language: lang});
+	postMessage({ highlightedCode: result.value, language: lang, rawCode: text });
+  close();
 };
