@@ -13,7 +13,9 @@ async function generate() {
 	const postTemplate = await readFileContent(postTemplatePath)
 	const postCompiled = _.template(postTemplate)
 
+	// Create dist folder if it doesn't exist
 	if (!existsSync('dist')) { mkdirSync('dist') }
+
 	const posts = await getPosts()
 
 	const html = indexCompiled({ posts })
@@ -23,6 +25,9 @@ async function generate() {
 		const html = postCompiled({ post })
 		await fs.writeFile(`dist/${post.slug}.html`, html)
 	})
+
+	// Copy recursively all files in public folder to dist folder
+	await fs.cp('public', 'dist', { recursive: true })
 }
 
 generate()
