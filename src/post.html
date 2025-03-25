@@ -1,17 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>null Blog - Vespaiach</title>
-	<link rel="stylesheet" href="/main.css">
-</head>
-<body class="prose prose-stone lg:prose-xl dark:prose-invert p-5">
-	<main>
-		<a href="/"><small>← back</small></a>
-		<h1 className="!mt-3"><%- post.title %></h1>
-		<article><%= post.content %></article> 
-		<a href="/"><small>← back</small></a>
-	</main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trinh Nguyen's Blog - Vespaiach</title>
+    <link rel="stylesheet" href="/main.css" />
+    <script type="module" async>
+      const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (isDarkMode) {
+        document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="/github-dark.min.css" />');
+      } else {
+        document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="/github.min.css" />');
+      }
+    </script>
+  </head>
+  <body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
+    <main class="max-w-3xl mx-auto w-full px-4 py-6">
+      <a href="/" class="no-underline"><small>← back</small></a>
+      <h1 className="!mt-3"><%- post.title %></h1>
+      <article><%= post.content %></article>
+      <a href="/" class="no-underline"><small>← back</small></a>
+    </main>
+    <template id="code-header-template">
+      <div class="flex items-center justify-between flex-1 p-3">
+        <small class="language text-xs"></small>
+        <button class="cursor-pointer flex items-center gap-1 border-none bg-none p-0 outline-none shrink-0 w" onclick="copyCode(this);">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-copy">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+            <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+          </svg>
+          <small class="text-xs">Copy</small>
+        </button>
+      </div>
+    </template>
+    <script>
+      addEventListener('load', () => {
+        document.querySelectorAll('pre code').forEach((block) => {
+          const worker = new Worker('/highlight-code-worker.js');
+          worker.onmessage = (event) => {
+            syntaxHighlight(block, event.data);
+          };
+          worker.postMessage({ text: block.textContent, language: block.className });
+        });
+      });
+      function syntaxHighlight(element, { highlightedCode, language, rawCode }) {
+        element.innerHTML = highlightedCode;
+        element.classList.add('hljs');
+        const template = document.getElementById('code-header-template');
+        const header = document.createElement('div');
+        header.innerHTML = template.innerHTML;
+        header.classList.add('flex');
+        header.querySelector('.language').textContent = language;
+        element.parentElement.insertAdjacentElement('afterbegin', header);
+        header.querySelector('button').dataset.raw = rawCode;
+      }
+      async function copyCode(button) {
+        const rawCode = button.dataset.raw;
+        try {
+          const result = await navigator.permissions.query({ name: 'write-on-clipboard' });
+          if (result.state !== 'granted' && !result.state !== 'prompt') {
+            alert('Please allow clipboard access in your browser settings');
+            return;
+          }
+          await navigator.clipboard.writeText(rawCode);
+          button.querySelector('small').textContent = 'Copied!';
+          setTimeout(() => {
+            button.querySelector('small').textContent = 'Copy';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+        }
+      }
+    </script>
+  </body>
 </html>
