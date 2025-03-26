@@ -110,4 +110,4 @@ console.log(`You are getting a ${proxiedObj.code}`);
 console.log(`You are getting a ${proxiedObj.code}`);
 ```
 
-In conclusion, ff you need a straightforward solution, closures work well. For a more reusable and structured approach, a class is ideal. When handling multiple properties dynamically, proxies offer the most flexibility.
+In conclusion, if you need a straightforward solution, closures work well. For a more reusable and structured approach, a class is ideal. When handling multiple properties dynamically, proxies offer the most flexibility.
