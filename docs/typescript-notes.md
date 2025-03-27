@@ -58,7 +58,7 @@ A value of the bottom type can be assigned to a variable of any other type, but 
 
 Here's a visual representation of the hierarchy:
 
-```
+```base
    Top Type (any or unknown)
      / | \
     /  |  \
