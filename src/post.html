@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trinh Nguyen's Blog - Vespaiach</title>
     <link rel="stylesheet" href="/main.css" />
-    <script type="module" async>
-      const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (isDarkMode) {
-        document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="/prism-ocodia.css" />');
-      } else {
-        document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="/prism-coy.css" />');
+    <style>
+      code[class*='language-'],
+      pre[class*='language-'] {
+        font-size: 0.875em !important;
       }
-    </script>
+    </style>
   </head>
   <body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
     <main class="max-w-3xl mx-auto w-full px-4 py-6">
@@ -21,6 +19,11 @@
       <article><%= post.content %></article>
       <a href="/" class="no-underline"><small>← back</small></a>
     </main>
-    <script src="prism.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
+      integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/"
+      crossorigin="anonymous"
+      defer
+      class="dark:prism-okaidia prism-coy"></script>
   </body>
 </html>
