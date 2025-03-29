@@ -1,7 +1,7 @@
 ---
 title: 'Typescript Notes'
 date: '2025-03-23'
-excerpt: "In this post, I am outlining some fundamental notes about TypeScript that I believe will be helpful for developers starting their coding journey with TypeScript. Let's dive in!"
+excerpt: "Discover essential TypeScript concepts, including types like any, unknown, and never, type inference, type guards, and advanced features like the satisfies keyword. Perfect for developers starting with TypeScript!"
 github: https://github.com/vespaiach/personal_website/blob/main/docs/typescript-notes.md
 tags: typescript
 ---
