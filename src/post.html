@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trinh Nguyen's Blog - Vespaiach</title>
+    <title><%- post.title %> - Trinh Nguyen's Blog</title>
+    <meta name="description" content="<%= post.excerpt %>">
+    <meta name="keywords" content="<%= post.tags %>">
     <link rel="stylesheet" href="/main.css" />
     <style>
       code[class*='language-'],
@@ -15,7 +17,7 @@
   <body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
     <main class="max-w-3xl mx-auto w-full px-4 py-6">
       <a href="/" class="no-underline"><small>← back</small></a>
-      <h1 className="!mt-3"><%- post.title %></h1>
+      <h1 className="!mt-5"><%- post.title %></h1>
       <article><%= post.content %></article>
       <a href="/" class="no-underline"><small>← back</small></a>
     </main>
