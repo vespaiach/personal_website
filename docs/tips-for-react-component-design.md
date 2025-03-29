@@ -1,7 +1,7 @@
 ---
 title: 'Tips for React Component Design'
 date: '2025-03-26'
-excerpt: "In React projects, it's common to have hundreds of components—or even more—as the project evolves and scales. Without proper organization and design guidelines, managing these components can become challenging, making it difficult to locate or update them efficiently. In this post, I'll share my experiences and insights on designing and organizing React components in ways that I believe are beneficial for React projects overall."
+excerpt: "Discover essential tips for designing and organizing React components to improve scalability, reusability, and maintainability in your projects. Learn best practices for naming, structuring, and optimizing components for efficient development."
 github: https://github.com/vespaiach/personal_website/blob/main/docs/tips-for-react-component-design.md
 tags: react
 ---

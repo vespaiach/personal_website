@@ -1,7 +1,7 @@
 ---
 title: 'Discard after usages'
 date: '2022-01-25'
-excerpt: 'Have you ever noticed food labels warning you to discard the contents after a certain number of days? That made me wonder: how can we create a variable in JavaScript that automatically discards its content after X uses? Lets explore some implementations.'
+excerpt: 'Learn how to create self-discarding variables in JavaScript using closures, classes, proxies, and more. Explore practical implementations for managing variable usage limits effectively.'
 github: https://github.com/vespaiach/personal_website/blob/main/docs/discard-after-usages.md
 tags: javascript
 ---
