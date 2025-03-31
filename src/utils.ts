@@ -5,7 +5,8 @@ import templateEngine from 'nunjucks'
 
 const monthds = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 export const nunjucks = templateEngine.configure('templates', {
-  autoescape: true
+  autoescape: true,
+  noCache: true
 })
 
 nunjucks.addFilter('date', function (dateStr: string) {

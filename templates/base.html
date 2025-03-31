@@ -1,20 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block head %}
-    <link rel="stylesheet" href="/main.css" />
-    <title>{% block title %}{% endblock %} - Nguyen's Blog</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {% block head %}
+  <link rel="stylesheet" href="/main.css" />
+  <title>{% block title %}{% endblock %} - Nguyen-Blog</title>
+  {% endblock %}
+</head>
+
+<body class="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
+  <section class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
+    {% block header %}
+    <header class="flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10 px-4">
+      <a class="break-words" aria-label="TailwindBlog" href="/">
+        <div class="flex items-center justify-between">
+          <div class="h-6 text-2xl font-semibold">Nguyen-Blog</div>
+        </div>
+      </a>
+      <a class="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium text-gray-900 dark:text-gray-100"
+        href="/about.html" title="About">
+        <span class="sr-only">About</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+          class="bi bi-person-exclamation" viewBox="0 0 16 16">
+          <path
+            d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
+          <path
+            d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V11a.5.5 0 0 0-.5-.5m0 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+        </svg>
+      </a>
+    </header>
+    {% endblock %} {% block content %}{% endblock %} {% block footer %}
+    <footer>
+      <div class="mt-16 flex flex-col items-center">
+        <div class="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
+          <div>Trinh Nguyen</div>
+          <div> • </div>
+          <div>© 2025</div>
+          <div> • </div><a class="break-words" href="/">Nguyen-Blog</a>
+        </div>
+        <div class="mb-8 text-sm text-gray-500 dark:text-gray-400"><a class="break-words" target="_blank"
+            rel="noopener noreferrer" href="https://github.com/timlrx/tailwind-nextjs-starter-blog">Theme by Tailwind
+            NextJS Starter Blog</a></div>
+      </div>
+    </footer>
     {% endblock %}
-    <style>
-      code[class*='language-'],
-      pre[class*='language-'] {
-        font-size: 0.875em !important;
-      }
-    </style>
-  </head>
-  <body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
-    {% block content %}{% endblock %}
-  </body>
+  </section>
+</body>
+
 </html>
