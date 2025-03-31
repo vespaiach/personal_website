@@ -8,16 +8,43 @@
 {% endblock %}
 
 {% block content %}
-<main class="max-w-3xl mx-auto w-full px-4 py-6">
-  <a href="/" class="no-underline"><small>← back</small></a>
-  <h1 className="!mt-5">{{ article.title }}</h1>
-  <article>{{ article.content | safe }}</article>
-  <a href="/" class="no-underline"><small>← back</small></a>
+<main class="mx-auto w-full py-6">
+  <section class="mx-auto max-w-3xl xl:max-w-5xl">
+    <article>
+      <div class="flex flex-col items-center justify-between">
+        <dl class="space-y-10">
+          <div>
+            <dt class="sr-only">Published on</dt>
+            <dd class="text-base leading-6 font-medium text-gray-500 dark:text-gray-400"><time
+                datetime="{{ article.date }}">{{ article.date | wdate }}</time></dd>
+          </div>
+        </dl>
+        <h1
+          class="text-center text-3xl leading-9 sm:text-4xl sm:leading-10 font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
+          {{ article.title }}</h1>
+      </div>
+      <div class="mt-10 prose dark:prose-invert max-w-none pt-10 pb-8">{{ article.content | safe }}</div>
+      <footer>
+        <div
+          class="divide-gray-200 text-sm leading-5 font-medium xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
+          <div class="py-4 xl:py-8">
+            <h2 class="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">Tags</h2>
+            <div class="flex flex-wrap">
+              {% for tag in article.tags %}
+              <a class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase"
+                href="#">{{ tag }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="pt-4 xl:pt-8"><a href="/"
+            class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"><small>← Back to the
+              blog</small></a></div>
+      </footer>
+    </article>
 </main>
-<script
-  src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
-  integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/"
-  crossorigin="anonymous"
-  defer
+</section>
+<script src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
+  integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/" crossorigin="anonymous" defer
   class="dark:prism-okaidia prism-coy"></script>
 {% endblock %}
