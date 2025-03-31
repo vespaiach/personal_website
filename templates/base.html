@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head %}
+    <link rel="stylesheet" href="/main.css" />
+    <title>{% block title %}{% endblock %} - Nguyen's Blog</title>
+    {% endblock %}
+    <style>
+      code[class*='language-'],
+      pre[class*='language-'] {
+        font-size: 0.875em !important;
+      }
+    </style>
+  </head>
+  <body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
+    {% block content %}{% endblock %}
+  </body>
+</html>

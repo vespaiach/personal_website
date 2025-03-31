@@ -3,7 +3,7 @@ import * as path from 'node:path'
 import * as fs from 'node:fs/promises'
 import * as _ from 'lodash'
 import { BaseBuilder } from './BaseBuilder.js'
-import { getDocsFilePaths, sortByDate } from './utils.js'
+import { getDocsFilePaths, nunjucks, sortByDate } from './utils.js'
 
 export class ArticleIndexBuilder extends BaseBuilder {
   #reader: { read(name: string): Promise<Article> }
@@ -11,12 +11,10 @@ export class ArticleIndexBuilder extends BaseBuilder {
   constructor(reader: { read(name: string): Promise<Article> }) {
     super()
     this.#reader = reader
-    this.templateFilePath = path.resolve('./templates/index.html')
   }
 
   async generateHtml(articles: Article[]): Promise<string> {
-    const compiler = await this.getCompiledTemplate()
-    return compiler({ articles })
+    return nunjucks.render('index.html', { articles })
   }
 
   async getArticles(): Promise<Article[]> {

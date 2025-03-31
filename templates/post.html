@@ -1,31 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%- article.title %> - Nguyen's Blog</title>
-    <meta name="description" content="<%= article.excerpt %>">
-    <meta name="keywords" content="<%= article.tags %>">
-    <link rel="stylesheet" href="/main.css" />
-    <style>
-      code[class*='language-'],
-      pre[class*='language-'] {
-        font-size: 0.875em !important;
-      }
-    </style>
-  </head>
-  <body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
-    <main class="max-w-3xl mx-auto w-full px-4 py-6">
-      <a href="/" class="no-underline"><small>← back</small></a>
-      <h1 className="!mt-5"><%- article.title %></h1>
-      <article><%= article.content %></article>
-      <a href="/" class="no-underline"><small>← back</small></a>
-    </main>
-    <script
-      src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
-      integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/"
-      crossorigin="anonymous"
-      defer
-      class="dark:prism-okaidia prism-coy"></script>
-  </body>
-</html>
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/main.css" />
+<title>{{ article.title }} - Nguyen's Blog</title>
+<meta name="description" content="{{ article.excerpt }}" />
+<meta name="keywords" content="{{ article.tags }}" />
+{% endblock %}
+
+{% block content %}
+<main class="max-w-3xl mx-auto w-full px-4 py-6">
+  <a href="/" class="no-underline"><small>← back</small></a>
+  <h1 className="!mt-5">{{ article.title }}</h1>
+  <article>{{ article.content | safe }}</article>
+  <a href="/" class="no-underline"><small>← back</small></a>
+</main>
+<script
+  src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
+  integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/"
+  crossorigin="anonymous"
+  defer
+  class="dark:prism-okaidia prism-coy"></script>
+{% endblock %}

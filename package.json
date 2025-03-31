@@ -19,10 +19,12 @@
     "http-server": "^14.1.1",
     "lodash": "^4.17.21",
     "marked": "^15.0.7",
+    "nunjucks": "^3.2.4",
     "tailwindcss": "^4.0.15",
     "typescript": "^5.8.2"
   },
   "devDependencies": {
-    "@types/node": "^22.13.14"
+    "@types/node": "^22.13.14",
+    "@types/nunjucks": "^3.2.6"
   }
 }
