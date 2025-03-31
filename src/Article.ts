@@ -1,17 +1,24 @@
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 export class Article {
-  #_tags
+  title: string
+  date: Date
+  excerpt: string
+  github: string
+  tags: string[]
+  content: string
 
-  constructor({ title, date, excerpt, github, tags, rawContent, content = null }) {
+  constructor(title: string, date: Date, excerpt: string, github: string, tags: string[], content: string) {
     this.title = title
     this.date = date
     this.excerpt = excerpt
     this.github = github
-    this.#_tags = tags
-    this.rawContent = rawContent
+    this.tags = tags
     this.content = content
-    this.formattedDate = `${months[this.date.getMonth()]} ${this.date.getDate()}, ${this.date.getFullYear()}`
+  }
+
+  get formattedDate(): string {
+    return `${months[this.date.getMonth()]} ${this.date.getDate()}, ${this.date.getFullYear()}`
   }
 
   get slug() {
@@ -20,13 +27,4 @@ export class Article {
       .replace(/\s+/g, '-')
       .replace(/[^\w-]+/g, '')
   }
-
-  get tags() {
-    return (this.#_tags || '')
-      .split(',')
-      .filter(Boolean)
-      .map((tag) => tag.trim())
-  }
-
-  get;
 }
