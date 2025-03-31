@@ -11,10 +11,10 @@
       <div class="flex-1">
         <h1 class="blogname">Nguyen&apos;s Blog</h1>
         <ul class="!pl-0">
-          <% _.forEach(posts, function(post) { %>
+          <% _.forEach(articles, function(article) { %>
           <li class="flex flex-col py-1">
-            <a href="/<%- post.slug %>.html" title="<%- post.title %>"><%- post.title %></a>
-            <small><%- post.date %></small>
+            <a href="/<%- article.slug %>.html" title="<%- article.title %>"><%- article.title %></a>
+            <small><%- article.date %></small>
           </li>
           <% }); %>
         </ul>

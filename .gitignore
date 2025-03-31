@@ -32,3 +32,7 @@ yarn-error.log*
 *.tsbuildinfo
 
 dist
+
+.bin/
+
+.overmind.sock
