@@ -3,6 +3,7 @@ import * as path from 'node:path'
 import * as fs from 'node:fs/promises'
 import * as _ from 'lodash'
 import { BaseBuilder } from './BaseBuilder.js'
+import { marked } from 'marked'
 
 export class ArticleBuilder extends BaseBuilder {
   #reader: { read(name: string): Promise<Article> }
@@ -14,7 +15,7 @@ export class ArticleBuilder extends BaseBuilder {
 
   async generateHtml(article: Article): Promise<string> {
     const compiler = await this.getCompiledTemplate()
-    return compiler({ article })
+    return compiler({ article: { ...article, content: marked(article.content) } })
   }
 
   async build(name: string) {

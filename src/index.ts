@@ -1,12 +1,9 @@
 import { ArticleBuilder } from './ArticleBuilder.js'
-import * as fs from 'node:fs/promises'
 import * as fsSync from 'node:fs'
 import * as path from 'node:path'
 import { ArticleReader } from './ArticleReader.js'
 import { getDocsFilePaths } from './utils.js'
 import { ArticleIndexBuilder } from './ArticleIndexBuilder.js'
-
-const docsFolderPath: string = path.resolve('./docs')
 
 async function buildArticles() {
   const articleBuilder = new ArticleBuilder(new ArticleReader())
@@ -21,24 +18,18 @@ async function buildArticles() {
   indexBuilder.build()
   buildAllFiles()
 
-  if (process.env.NODE_ENV !== 'production') {
-    fsSync.watch(docsFolderPath, { persistent: true }, async (_, fileName) => {
-      if (!fileName) {
-        console.error('Filename is undefined')
-        return
-      }
-
-      try {
-        const filePath = path.join(docsFolderPath, fileName)
-        await fs.access(path.resolve('docs', filePath), fs.constants.F_OK)
-        await Promise.all([articleBuilder.build(filePath), indexBuilder.build()])
-        console.log(`File changed: ${fileName}`)
-      } catch (err) {
-        console.error(`File deleted: ${fileName}`)
-      }
+  if (process.argv && process.argv.includes('--watch')) {
+    fsSync.watch(path.resolve('./docs'), { persistent: true }, async () => {
+      buildAllFiles()
+      indexBuilder.build()
     })
 
     fsSync.watch(path.resolve('./templates'), { persistent: true }, async () => {
+      buildAllFiles()
+      indexBuilder.build()
+    })
+
+    fsSync.watch(path.resolve('./assets'), { persistent: true }, async () => {
       buildAllFiles()
       indexBuilder.build()
     })

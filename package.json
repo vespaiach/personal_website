@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc && node ./.bin/index.js && npm run tailwind",
-    "tailwind": "tailwindcss -i ./src/main.css -o ./dist/main.css",
+    "build": "tsc && node ./.bin/index.js && npm run tailwindcss",
+    "dev:build": "tsc && node ./.bin/index.js --watch",
+    "tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css",
+    "dev:tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css --watch",
     "preview": "http-server ./dist -p 8088",
     "tsc": "tsc"
   },
@@ -14,7 +16,6 @@
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash": "^4.17.16",
     "gray-matter": "^4.0.3",
-    "highlight.js": "^11.11.1",
     "http-server": "^14.1.1",
     "lodash": "^4.17.21",
     "marked": "^15.0.7",

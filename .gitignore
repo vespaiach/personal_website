@@ -34,3 +34,5 @@ yarn-error.log*
 dist
 
 .bin/
+
+.overmind.sock
