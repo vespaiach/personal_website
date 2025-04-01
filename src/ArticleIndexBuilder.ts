@@ -29,7 +29,7 @@ export class ArticleIndexBuilder extends BaseBuilder {
   }
 
   async build() {
-    const [articles] = await Promise.all([this.getArticles(), this.ensureOutputFolderExists()])
+    const [articles] = await Promise.all([this.getArticles(), BaseBuilder.ensureOutputFolderExists(this.outputFolderPath)])
     const html = await this.generateHtml(sortByDate(articles))
     const outputFilePath = path.join(`${this.outputFolderPath}/index.html`)
     await fs.writeFile(outputFilePath, html)

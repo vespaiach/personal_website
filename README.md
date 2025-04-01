@@ -6,6 +6,7 @@ https://www.vespaiach.com/
 
 ## What tools/libraries in this repository?
 
+- [Async-mutex](https://www.npmjs.com/package/async-mutex)
 - [Gray-matter](https://github.com/jonschlinkert/gray-matter)
 - [Http-server](https://github.com/http-party/http-server)
 - [Marked](https://github.com/markedjs/marked)

@@ -11,7 +11,7 @@ export class AboutBuilder extends BaseBuilder {
 
   // TODO; extract this to a base class, the only difference is here is generateHtml method 
   async build() {
-    const [html] = await Promise.all([this.generateHtml(), this.ensureOutputFolderExists()])
+    const [html] = await Promise.all([this.generateHtml(), BaseBuilder.ensureOutputFolderExists(this.outputFolderPath)])
     const outputFilePath = path.join(`${this.outputFolderPath}/about.html`)
     await fs.writeFile(outputFilePath, html)
   }
