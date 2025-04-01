@@ -33,7 +33,7 @@
       "@utils/*": ["src/utils/*"]
     },
     "rootDir": "./src" /* Specify root directory of input files. */,
-    "outDir": "./.bin" /* Specify output directory for compiled files. */,
+    "outDir": "./build" /* Specify output directory for compiled files. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
