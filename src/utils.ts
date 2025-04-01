@@ -4,13 +4,20 @@ import { Article } from './Article.js'
 import templateEngine from 'nunjucks'
 
 const monthds = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 export const nunjucks = templateEngine.configure('templates', {
-  autoescape: true
+  autoescape: true,
+  noCache: true
 })
 
 nunjucks.addFilter('date', function (dateStr: string) {
   const date = new Date(dateStr)
-  return `${monthds[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+  return `${monthds[date.getMonth()]}, ${date.getDate()}, ${date.getFullYear()}`
+})
+
+nunjucks.addFilter('wdate', function (dateStr: string) {
+  const date = new Date(dateStr)
+  return `${weekDays[date.getDay()]} ${monthds[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
 })
 
 export async function getDocsFilePaths() {

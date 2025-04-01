@@ -1,6 +1,8 @@
 import * as path from 'node:path'
 import * as fs from 'node:fs/promises'
-import _ from 'lodash'
+import { Mutex } from 'async-mutex'
+
+const mutex = new Mutex()
 
 export class BaseBuilder {
   outputFolderPath: string
@@ -9,11 +11,16 @@ export class BaseBuilder {
     this.outputFolderPath = path.resolve('./dist')
   }
 
-  async ensureOutputFolderExists() {
+  static async ensureOutputFolderExists(folderPath: string) {
+    const release = await mutex.acquire() // Lock
     try {
-      await fs.access(this.outputFolderPath)
-    } catch {
-      fs.mkdir(this.outputFolderPath)
+      await fs.access(folderPath)
+    } catch (error) {
+      console.error(error)
+      console.error('Output folder does not exist, creating it...')
+      fs.mkdir(folderPath)
+    } finally {
+      release() // Release the lock
     }
   }
 

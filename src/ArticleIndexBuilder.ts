@@ -1,7 +1,6 @@
 import { Article } from './Article.js'
 import * as path from 'node:path'
 import * as fs from 'node:fs/promises'
-import * as _ from 'lodash'
 import { BaseBuilder } from './BaseBuilder.js'
 import { getDocsFilePaths, nunjucks, sortByDate } from './utils.js'
 
@@ -30,7 +29,7 @@ export class ArticleIndexBuilder extends BaseBuilder {
   }
 
   async build() {
-    const [articles] = await Promise.all([this.getArticles(), this.ensureOutputFolderExists()])
+    const [articles] = await Promise.all([this.getArticles(), BaseBuilder.ensureOutputFolderExists(this.outputFolderPath)])
     const html = await this.generateHtml(sortByDate(articles))
     const outputFilePath = path.join(`${this.outputFolderPath}/index.html`)
     await fs.writeFile(outputFilePath, html)

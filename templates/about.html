@@ -1,57 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About - Nguyen's Blog</title>
-    <meta name="description" content="Code Wizard, Debugging Detective, Digital Builder, Open Source Contributor - Trinh Nguyen's personal blog about software development, open source, and technology." />
-    <meta name="keywords" content="Trinh Nguyen, About Me, Code Wizard, Debugging Detective, Digital Builder, Open Source Contributor, Software Development, Technology, Blog" />
-    <link rel="stylesheet" href="/main.css" />
-    <style>
-      code[class*='language-'],
-      pre[class*='language-'] {
-        font-size: 0.875em !important;
-      }
-    </style>
-  </head>
-  <body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
-    <main class="max-w-3xl mx-auto w-full px-4 py-6">
-      <a href="/" class="no-underline"><small>← back</small></a>
-      <img
-        src="https://avatars.githubusercontent.com/u/8703891?s=400&u=554843c698098ed4cb8a4abb9f8e3ac4060a56c2&v=4"
-        class="rounded-full w-36 h-36 mx-auto"
-        alt="Trinh Nguyen's Avatar" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Nguyen-Blog</title>
+  <meta name="description"
+    content="Code Wizard, Debugging Detective, Digital Builder, Open Source Contributor - Trinh Nguyen's personal blog about software development, open source, and technology." />
+  <meta name="keywords"
+    content="Trinh Nguyen, About Me, Code Wizard, Debugging Detective, Digital Builder, Open Source Contributor, Software Development, Technology, Blog" />
+  <link rel="stylesheet" href="/main.css" />
+  <style>
+    code[class*='language-'],
+    pre[class*='language-'] {
+      font-size: 0.875em !important;
+    }
+  </style>
+</head>
+
+<body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
+  <main class="max-w-3xl mx-auto w-full px-4 py-6">
+    <a href="/" class="no-underline"><small>← back</small></a>
+    <img src="https://avatars.githubusercontent.com/u/8703891?s=400&u=554843c698098ed4cb8a4abb9f8e3ac4060a56c2&v=4"
+      class="rounded-full w-36 h-36 mx-auto" alt="Trinh Nguyen's Avatar" />
+
+    <script src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
+      integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/" crossorigin="anonymous" defer
+      class="dark:prism-okaidia prism-coy"></script>
+  </main>
+</body>
+
+</html>
+
+
+
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/main.css" />
+<title>About - Nguyen-Blog</title>
+<meta name="description" content="Information about author of Nguyen-Blog" />
+{% endblock %}
+
+{% block content %}
+<main class="divide-y divide-gray-200 dark:divide-gray-700">
+  <div class="space-y-2 pt-6 pb-8 md:space-y-5">
+    <h1
+      class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+      About</h1>
+  </div>
+  <div class="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
+
+    <div class="flex flex-col items-center space-x-2 pt-8">
+      <img alt="avatar" width="192" height="192" class="h-48 w-48 rounded-full"
+        src="https://avatars.githubusercontent.com/u/8703891?s=192&v=4">
+      <h3 class="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Trinh Nguyen</h3>
+    </div>
+
+    <div class="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
       <pre>
   <code class="language-plaintext">
   ╭────┈ ↷
   │ ✎┊ Name: Trinh Nguyen
   │ ✎┊ Role: Coding Wizard, Debugging Detective, Script Ninja 
-  │ ✎┊ Status: Active, Online, Ready, On-duty
+  │ ✎┊ Status: Active, Online, Ready for duty
   │ ✎┊ Location: Earth 🌍
   │ ✎┊ Github: https://github.com/vespaiach 🐙
   │ ✎┊ LinkedIn: https://www.linkedin.com/in/trinh-nguyen-us/
   │╭────────────╯
-  ││•Moto: "Code is Poetry, Debugging is Art" 🎨
-  ││•Bio: Passionate software engineer with a knack for solving problems and a love for clean, efficient code.
-  ││•Experience: 15+ years in the tech industry, specializing in web development.
-  ││•Languages: JavaScript, Typescript, Ruby, Php, Python
+  ││•Moto: "Code is for human, not machine" 🎨
+  ││•Bio: Passionate software engineer with a love for solving problems.
+  ││•Experience: 8+ years in web development.
+  ││•Languages: JavaScript, Typescript, Ruby
   ││•Hobbies: Coding, Tinkering, Traveling, Coffee Enthusiast ☕
   ││•Favorite Techs: Web, Internet of Things (IoT), Cloud Computing
   ││•Current Projects:
-  ││  - Building helper tools for developers.
+  ││  - Building something to give back to the developer community.
   ││•Future Goals:
   ││  - Continue to learn and grow as a developer.
-  ││  - Contribute to more open-source projects and give back to the community.
-  ││  - Write more technical articles and share my knowledge with others.
+  ││  - Contribute to more open-source projects.
   │╰─────────── · · · · ✭
   </code>
 </pre>
-      <script
-        src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
-        integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/"
-        crossorigin="anonymous"
-        defer
-        class="dark:prism-okaidia prism-coy"></script>
-    </main>
-  </body>
-</html>
+    </div>
+
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
+  integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/" crossorigin="anonymous" defer
+  class="dark:prism-okaidia prism-coy"></script>
+{% endblock %}

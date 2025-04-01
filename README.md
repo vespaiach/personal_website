@@ -6,12 +6,13 @@ https://www.vespaiach.com/
 
 ## What tools/libraries in this repository?
 
-- [Date-fns](https://github.com/date-fns/date-fns)
-- [Esbuild](https://github.com/evanw/esbuild)
+- [Async-mutex](https://www.npmjs.com/package/async-mutex)
 - [Gray-matter](https://github.com/jonschlinkert/gray-matter)
-- [Highlight.js](https://github.com/highlightjs/highlight.js)
 - [Http-server](https://github.com/http-party/http-server)
-- [Lodash](https://github.com/lodash/lodash)
 - [Marked](https://github.com/markedjs/marked)
 - [Node.js](https://github.com/nodejs/node)
+- [Nunjucks](https://github.com/mozilla/nunjucks)
+- [Overmind](https://github.com/DarthSim/overmind)
+- [Tailwind NextJS Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog/tree/main)
 - [Tailwindcss](https://github.com/tailwindlabs/tailwindcss)
+- [Typescript](https://github.com/microsoft/TypeScript)
