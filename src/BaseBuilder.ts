@@ -11,7 +11,9 @@ export class BaseBuilder {
   async ensureOutputFolderExists() {
     try {
       await fs.access(this.outputFolderPath)
-    } catch {
+    } catch (error) {
+      console.error(error)
+      console.error('Output folder does not exist, creating it...') 
       fs.mkdir(this.outputFolderPath)
     }
   }
