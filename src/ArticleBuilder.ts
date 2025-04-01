@@ -1,7 +1,6 @@
 import { Article } from './Article.js'
 import * as path from 'node:path'
 import * as fs from 'node:fs/promises'
-import * as _ from 'lodash'
 import { BaseBuilder } from './BaseBuilder.js'
 import { nunjucks } from './utils.js'
 import { marked } from 'marked'

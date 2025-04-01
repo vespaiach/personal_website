@@ -8,8 +8,10 @@ https://www.vespaiach.com/
 
 - [Gray-matter](https://github.com/jonschlinkert/gray-matter)
 - [Http-server](https://github.com/http-party/http-server)
-- [Lodash](https://github.com/lodash/lodash)
 - [Marked](https://github.com/markedjs/marked)
 - [Node.js](https://github.com/nodejs/node)
 - [Nunjucks](https://github.com/mozilla/nunjucks)
+- [Overmind](https://github.com/DarthSim/overmind)
+- [Tailwind NextJS Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog/tree/main)
 - [Tailwindcss](https://github.com/tailwindlabs/tailwindcss)
+- [Typescript](https://github.com/microsoft/TypeScript)
