@@ -9,8 +9,9 @@ export class AboutBuilder extends BaseBuilder {
     return nunjucks.render('about.html')
   }
 
+  // TODO; extract this to a base class, the only difference is here is generateHtml method 
   async build() {
-    const html = await this.generateHtml()
+    const [html] = await Promise.all([this.generateHtml(), this.ensureOutputFolderExists()])
     const outputFilePath = path.join(`${this.outputFolderPath}/about.html`)
     await fs.writeFile(outputFilePath, html)
   }

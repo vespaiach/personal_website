@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc && node ./build/index.js && npm run tailwindcss",
-    "dev:build": "tsc && node ./build/index.js --watch",
+    "build": "tsc && node ./.bin/index.js && npm run tailwindcss",
+    "dev:build": "tsc && node ./.bin/index.js --watch",
     "tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css",
     "dev:tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css --watch",
     "preview": "http-server ./dist -p 8088",
