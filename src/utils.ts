@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 import { Article } from './Article.js'
 import templateEngine from 'nunjucks'
+import { minify as minifier } from 'html-minifier-terser'
 
 const monthds = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -28,4 +29,13 @@ export async function getDocsFilePaths() {
 
 export function sortByDate(articles: Article[]): Article[] {
   return articles.sort((a, b) => b.date.getTime() - a.date.getTime())
+}
+
+export async function minify(src: string) {
+  return await minifier(src, {
+    collapseWhitespace: true,
+    minifyCSS: true,
+    minifyJS: true,
+    minifyURLs: true
+  })
 }
