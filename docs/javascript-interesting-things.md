@@ -1,10 +1,13 @@
 ---
 title: 'JavaScript: Interesting Facts for Developers'
 date: '2022-01-26T00:00:00.000-0500'
+updatedAt: '2022-01-26T00:00:00.000-0500'
 excerpt: 'Discover essential JavaScript concepts and tips to enhance your coding skills, including unique features, best practices, and advanced techniques for writing precise and efficient JavaScript code.'
 github: https://github.com/vespaiach/personal_website/blob/main/docs/javascript-interesting-things.md
 tags: javascript
 ---
+
+JavaScript is a versatile and widely used programming language that enhances the interactivity and functionality of modern web applications. In this article, we explore fascinating aspects of JavaScript that will deepen our understanding of the language.
 
 ## Self-compare variables
 

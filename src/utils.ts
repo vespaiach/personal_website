@@ -3,22 +3,20 @@ import * as path from 'node:path'
 import { Article } from './Article.js'
 import templateEngine from 'nunjucks'
 import { minify as minifier } from 'html-minifier-terser'
+import { format } from 'date-fns'
 
-const monthds = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 export const nunjucks = templateEngine.configure('templates', {
   autoescape: true,
   noCache: true
 })
 
-nunjucks.addFilter('date', function (dateStr: string) {
+nunjucks.addFilter('date', function (dateStr: string, formatPattern = 'PPP') {
   const date = new Date(dateStr)
-  return `${monthds[date.getMonth()]}, ${date.getDate()}, ${date.getFullYear()}`
+  return format(date, formatPattern);
 })
 
-nunjucks.addFilter('wdate', function (dateStr: string) {
-  const date = new Date(dateStr)
-  return `${weekDays[date.getDay()]} ${monthds[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+nunjucks.addFilter('join', function (str: string[], by = ', ') {
+  return str.join(by)
 })
 
 export async function getDocsFilePaths() {
@@ -36,6 +34,7 @@ export async function minify(src: string) {
     collapseWhitespace: true,
     minifyCSS: true,
     minifyJS: true,
-    minifyURLs: true
+    minifyURLs: true,
+    // processScripts: ['application/ld+json']
   })
 }

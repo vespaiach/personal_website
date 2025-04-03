@@ -1,0 +1,28 @@
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Article",
+		"headline": "{{ article.title }}",
+		"datePublished": "{{ article.date | date('yyyy-MM-dd') }}",
+		"dateModified": "{{ article.date | date('yyyy-MM-dd') }}",
+		"description": "{{ article.excerpt }}",
+		"mainEntityOfPage": {
+			"@type": "WebPage",
+			"@id": "https://vespaiach.com/{{ article.slug }}.html",
+		},
+		"author": {
+			"@type": "Person",
+			"name": "Trinh Nguyen"
+		},
+		"publisher": {
+			"@type": "Organization",
+			"name": "Nguyen-Blog"
+		},
+		"keywords": "{{ article.tags | join }}",
+		"articleBody": "{{ article.content }}",
+		"sameAs": [
+			"{{ article.github }}",
+		]
+	}
+</script>
+	

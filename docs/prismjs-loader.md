@@ -1,12 +1,13 @@
 ---
 title: 'PrismJS Loader'
 date: '2025-03-29'
+updatedAt: '2025-03-29'
 excerpt: "Discover Prism.js Loader, and learn how it quickly integrate your webpages with PrismJS-Coding syntax highlight"
 github: https://github.com/vespaiach/personal_website/blob/main/docs/prismjs-loader.md
 tags: prismjs, syntax highlight
 ---
 
-Hey there! Are you looking for a quick way to highlight coding syntax on your website? Check out [Prism.js Loader](https://github.com/vespaiach/prismjs-loader). Simply grab the script and place it at the end of your web page, then you're all set! If you're curious about how the script works, keep reading.
+Hey there! Are you looking for a quick way to highlight coding syntax on your website? Check out Prism.js Loader. Simply grab the script and place it at the end of your web page, then you're all set! If you're curious about how the script works, keep reading.
 
 ## Official Integration Method for PrismJS
 
@@ -20,6 +21,8 @@ Follow these steps to integrate PrismJS officially:
 After downloading, you’ll receive a JavaScript file and a CSS file. Add them to your site, and you’re done!
 
 ## PrismJS Loader: A Smarter Alternative
+
+[PrismJS Loader](https://github.com/vespaiach/prismjs-loader)
 
 One limitation of the official integration is that it bundles all selected languages and plugins into a single JavaScript file, which can slow down page loading. If your webpage only needs to highlight one language, you might still end up loading unnecessary resources.
 
@@ -41,5 +44,5 @@ When the PrismJS Loader script runs on your webpage, it will:
 
 ## Conclusion
 
-PrismJS Loader is the ideal solution for developers who need a quick and efficient way to integrate PrismJS without compromising performance. Check it out!
+PrismJS Loader is the ideal solution for developers who need a quick and efficient way to integrate PrismJS without compromising performance. [Check it out!](https://github.com/vespaiach/prismjs-loader)
  
