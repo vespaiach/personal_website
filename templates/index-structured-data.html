@@ -7,6 +7,9 @@
 		"description": "A collection of recent articles.",
 		"mainEntity": [
 			{% for item in articles %}
+			{% if loop.index0 > 0 %}
+			,
+			{% endif %}
 			{
 				"@type": "Article",
 				"headline": "{{ item.title }}",
@@ -24,7 +27,7 @@
 				},
 				"publisher": {
 					"@type": "Organization",
-					"name": "Nguyen-Blog",
+					"name": "Nguyen-Blog"
 				}
 			}
 			{% endfor %}
