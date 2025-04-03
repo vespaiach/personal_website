@@ -3,17 +3,14 @@
 		"@context": "https://schema.org",
 		"@type": "Article",
 		"headline": "{{ article.title }}",
-		"datePublished": "{{ article.date | date('yyyy-MM-dd') }}",
-		"dateModified": "{{ article.date | date('yyyy-MM-dd') }}",
+		"datePublished": "{{ article.date | date('iso') }}",
+		"dateModified": "{{ article.date | date('iso') }}",
 		"description": "{{ article.excerpt }}",
 		"mainEntityOfPage": {
 			"@type": "WebPage",
-			"@id": "https://vespaiach.com/{{ article.slug }}.html",
+			"@id": "https://vespaiach.com/{{ article.slug }}.html"
 		},
-		"author": {
-			"@type": "Person",
-			"name": "Trinh Nguyen"
-		},
+		"author": {% include 'author.html' %},
 		"publisher": {
 			"@type": "Organization",
 			"name": "Nguyen-Blog"
@@ -21,8 +18,7 @@
 		"keywords": "{{ article.tags | join }}",
 		"articleBody": "{{ article.content }}",
 		"sameAs": [
-			"{{ article.github }}",
+			"{{ article.github }}"
 		]
 	}
 </script>
-	

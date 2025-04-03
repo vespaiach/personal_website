@@ -12,6 +12,9 @@ export const nunjucks = templateEngine.configure('templates', {
 
 nunjucks.addFilter('date', function (dateStr: string, formatPattern = 'PPP') {
   const date = new Date(dateStr)
+  if (formatPattern === 'iso') {
+    return date.toISOString();
+  }
   return format(date, formatPattern);
 })
 
@@ -35,6 +38,6 @@ export async function minify(src: string) {
     minifyCSS: true,
     minifyJS: true,
     minifyURLs: true,
-    processScripts: ['application/ld+json']
+    // processScripts: ['application/ld+json']
   })
 }

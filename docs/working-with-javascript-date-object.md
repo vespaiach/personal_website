@@ -1,7 +1,7 @@
 ---
 title: 'Working With Javascript Date Object'
-date: '2022-06-20'
-updatedAt: '2022-06-20'
+date: '2022-06-20T00:00:00.000Z'
+updatedAt: '2022-06-20T00:00:00.000Z'
 excerpt: 'Learn how to effectively work with the Javascript Date object. This guide covers essential tips, examples, and best practices to simplify handling dates and times in your projects.'
 github: https://github.com/vespaiach/personal_website/blob/main/docs/working-with-javascript-date-object.md
 tags: javascript, date
