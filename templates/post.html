@@ -3,7 +3,7 @@
 {% block head %}
 <link rel="stylesheet" href="/main.css" />
 <title>{{ article.title }} - Nguyen-Blog</title>
-<meta name="description" content="{{ article.excerpt }}" />
+<meta name="description" content="{{ article.seoDescription }}" />
 <meta name="keywords" content="{{ article.tags }}" />
 {% endblock %}
 
@@ -16,7 +16,7 @@
           <div>
             <dt class="sr-only">Published on</dt>
             <dd class="text-base leading-6 font-medium text-gray-500 dark:text-gray-400"><time
-                datetime="{{ article.date }}">{{ article.date | wdate }}</time></dd>
+                datetime="{{ article.date }}">{{ article.date | date('PPPP') }}</time></dd>
           </div>
         </dl>
         <h1
@@ -44,6 +44,7 @@
     </article>
 </main>
 </section>
+{% include 'article-structured-data.html' %}
 <script src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
   integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/" crossorigin="anonymous" defer
   class="dark:prism-okaidia prism-coy"></script>

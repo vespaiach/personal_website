@@ -1,6 +1,7 @@
 ---
 title: 'Discard after usages'
 date: '2022-01-25'
+updatedAt: '2022-01-25'
 excerpt: 'Learn how to create self-discarding variables in JavaScript using closures, classes, proxies, and more. Explore practical implementations for managing variable usage limits effectively.'
 github: https://github.com/vespaiach/personal_website/blob/main/docs/discard-after-usages.md
 tags: javascript

@@ -14,6 +14,14 @@ export class ArticleReader {
       .split(',')
       .filter(Boolean)
       .map((t) => t.trim())
-    return new Article(frontMatter.title, new Date(frontMatter.date), frontMatter.excerpt, frontMatter.github, tags, content)
+    return new Article(
+      frontMatter.title,
+      new Date(frontMatter.date),
+      new Date(frontMatter.updatedAt),
+      frontMatter.excerpt,
+      frontMatter.github,
+      tags,
+      content
+    )
   }
 }
