@@ -38,6 +38,6 @@ export async function minify(src: string) {
     minifyCSS: true,
     minifyJS: true,
     minifyURLs: true,
-    // processScripts: ['application/ld+json']
+    processScripts: ['application/ld+json']
   })
 }
