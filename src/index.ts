@@ -5,10 +5,12 @@ import { ArticleReader } from './ArticleReader.js'
 import { getDocsFilePaths } from './utils.js'
 import { ArticleIndexBuilder } from './ArticleIndexBuilder.js'
 import { AboutBuilder } from './AboutBuilder.js'
+import { SitemapBuilder } from './SitemapBuilder.js'
 
 async function buildArticles() {
+  const articleReader = new ArticleReader()
   const articleBuilder = new ArticleBuilder(new ArticleReader())
-  const indexBuilder = new ArticleIndexBuilder(new ArticleReader())
+  const indexBuilder = new ArticleIndexBuilder(articleReader)
   const aboutBuilder = new AboutBuilder()
 
   const buildAllFiles = () => {
@@ -19,6 +21,7 @@ async function buildArticles() {
     )
     indexBuilder.build()
     aboutBuilder.build()
+    new SitemapBuilder(articleReader).build()
   }
 
   buildAllFiles()
