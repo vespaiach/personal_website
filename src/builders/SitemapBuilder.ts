@@ -6,7 +6,7 @@ export class SitemapBuilder extends BaseBuilder {
   #articles: Article[]
 
   constructor(articles: Article[]) {
-    super('sitemap')
+    super('sitemap', 'xml')
     this.#articles = articles
   }
 
