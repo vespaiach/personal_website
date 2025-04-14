@@ -38,3 +38,4 @@ build
 
 
 .overmind.sock
+.DS_Store
