@@ -13,7 +13,7 @@ export class ArticleReader {
     const tags = ((frontMatter.tags || '') as string)
       .split(',')
       .filter(Boolean)
-      .map((t) => t.trim())
+      .map((t) => t.trim().replace(/\s+/g, ' ').replace(' ', '-').toLowerCase())
     return new Article(
       frontMatter.title,
       new Date(frontMatter.date),
