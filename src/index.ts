@@ -1,33 +1,48 @@
-import { ArticleBuilder } from './ArticleBuilder.js'
+import { ArticleBuilder } from './builders/ArticleBuilder.js'
 import * as fsSync from 'node:fs'
 import * as path from 'node:path'
 import { ArticleReader } from './ArticleReader.js'
 import { getDocsFilePaths } from './utils.js'
-import { ArticleIndexBuilder } from './ArticleIndexBuilder.js'
-import { AboutBuilder } from './AboutBuilder.js'
+import { ArticleIndexBuilder } from './builders/ArticleIndexBuilder.js'
+import { AboutBuilder } from './builders/AboutBuilder.js'
+import { SitemapBuilder } from './builders/SitemapBuilder.js'
+import * as fs from 'node:fs/promises'
+
+async function ensureOutputFolderExists(folderPath: string) {
+  try {
+    await fs.access(folderPath)
+  } catch (error) {
+    console.log('Output folder does not exist, creating it...')
+    await fs.mkdir(folderPath)
+  }
+}
 
 async function buildArticles() {
-  const articleBuilder = new ArticleBuilder(new ArticleReader())
-  const indexBuilder = new ArticleIndexBuilder(new ArticleReader())
-  const aboutBuilder = new AboutBuilder()
+  await ensureOutputFolderExists(path.resolve('./dist'))
 
-  const buildAllFiles = () => {
-    getDocsFilePaths().then((articles) =>
-      articles.forEach((fp) => {
-        articleBuilder.build(fp)
-      })
-    )
-    indexBuilder.build()
-    aboutBuilder.build()
+  const articleReader = new ArticleReader()
+
+  const buildAllFiles = async () => {
+    const articlesPaths = await getDocsFilePaths()
+    const articles = await Promise.all(articlesPaths.map(async (fp) => {
+      const article = await articleReader.read(fp)
+      new ArticleBuilder(article).build()
+      return article
+    }))
+
+    new ArticleIndexBuilder(articles).build()
+    new SitemapBuilder(articles).build()
+    new AboutBuilder().build()
   }
 
-  buildAllFiles()
+  await buildAllFiles()
 
   if (process.argv && process.argv.includes('--watch')) {
-    fsSync.watch(path.resolve('./docs'), { persistent: true },  buildAllFiles)
+    fsSync.watch(path.resolve('./docs'), { persistent: true }, buildAllFiles)
     fsSync.watch(path.resolve('./templates'), { persistent: true }, buildAllFiles)
     fsSync.watch(path.resolve('./assets'), { persistent: true }, buildAllFiles)
     console.log('Built! Watching for changes in the docs and templates directories...')
   }
 }
+
 buildArticles()
