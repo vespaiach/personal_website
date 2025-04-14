@@ -20,7 +20,7 @@ export class ArticleBuilder extends BaseBuilder {
   // TODO; extract this to a base class, the only difference is here is generateHtml method
   async build(name: string) {
     const article = await this.#reader.read(name)
-    const [html] = await Promise.all([this.generateHtml(article), BaseBuilder.ensureOutputFolderExists(this.outputFolderPath)])
+    const html = await this.generateHtml(article)
     const outputFilePath = path.join(`${this.outputFolderPath}/${article.slug}.html`)
     await fs.writeFile(outputFilePath, await minify(html))
   }

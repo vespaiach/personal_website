@@ -12,7 +12,7 @@ export class SitemapBuilder extends BaseBuilder {
     this.#reader = reader
   }
 
-  async generateHtml(articles: Article[]): Promise<string> {
+  generateHtml(articles: Article[]): string {
     return nunjucks.render('sitemap.xml', { articles })
   }
 
@@ -30,7 +30,7 @@ export class SitemapBuilder extends BaseBuilder {
 
   // TODO; extract this to a base class, the only difference is here is generateHtml method
   async build() {
-    const [html] = await Promise.all([this.generateHtml(await this.getArticles()), BaseBuilder.ensureOutputFolderExists(this.outputFolderPath)])
+    const html = this.generateHtml(await this.getArticles())
     const outputFilePath = path.join(`${this.outputFolderPath}/sitemap.xml`)
     await fs.writeFile(outputFilePath, await minify(html))
   }
