@@ -6,7 +6,7 @@
   <div class="flex-1">
     <ul>
       {% for item in articles %}
-      <li class="py-8">
+      <li class="py-8" data-tags="{{ item.tags | join(',') }}">
         <article class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
           <dl>
             <dt class="sr-only">Published on</dt>
@@ -23,7 +23,7 @@
                 </h2>
                 <div class="flex flex-wrap">
                   {% for tag in item.tags %}
-                  <a class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase"
+                  <a data-taglink="true" class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase"
                     href="#">{{ tag }}</a>
                   {% endfor %}
                 </div>
@@ -43,5 +43,41 @@
     </ul>
   </div>
 </main>
+<div id="filter-by" class="text-gray-500 dark:text-gray-400 bg-cyan-300 fixed -top-20 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full transition-all duration-300">
+  Filtered by: <a id="selected-tags" class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase" href="#"></a>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tagLinks = document.querySelectorAll('[data-taglink]');
+    tagLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tag = link.textContent.trim();
+        const items = document.querySelectorAll('li[data-tags]');
+        items.forEach(item => {
+          if (item.getAttribute('data-tags').includes(tag)) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const selectedTags = document.getElementById('selected-tags');
+        selectedTags.textContent = tag + ' X';
+        document.getElementById('filter-by').classList.add('top-0!');
+      });
+    });
+
+    document.getElementById('selected-tags').addEventListener('click', () => {
+      const items = document.querySelectorAll('li[data-tags]');
+      items.forEach(item => {
+        item.style.display = 'block';
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('filter-by').classList.remove('top-0!');
+    });
+  })
+</script>
 {% include 'index-structured-data.html' %}
 {% endblock %}
