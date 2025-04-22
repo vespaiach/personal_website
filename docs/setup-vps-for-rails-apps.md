@@ -3,7 +3,7 @@ title: 'Setting up a server for Rails Applications'
 date: '2025-04-21T00:00:00.000Z'
 updatedAt: '2025-04-21T00:00:00.000Z'
 excerpt: 'Learn how to set up a VPS for Rails applications with this step-by-step guide. From installing Nginx and securing with Let’s Encrypt SSL to configuring Ruby and PostgreSQL, ensure your server is optimized for performance and security.'
-github: https://github.com/vespaiach/personal_website/blob/main/docs/discard-after-usages.md
+github: https://github.com/vespaiach/personal_website/blob/main/docs/setup-vps-for-rails-apps.md
 tags: nginx, lets-encrypt, postgresql, ruby
 ---
 
