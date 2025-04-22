@@ -11,6 +11,16 @@ export class ArticleIndexBuilder extends BaseBuilder {
   }
 
   generateHtml(): string {
-    return nunjucks.render('index.html', { articles: this.#articles })
+    return nunjucks.render('index.html', { articles: this.#articles, tags: this.#getTags() })
+  }
+
+  #getTags(): string[] {
+    const tags = new Set<string>()
+    this.#articles.forEach((article) => {
+      article.tags.forEach((tag) => {
+        tags.add(`"${tag}"`)
+      })
+    })
+    return Array.from(tags)
   }
 }

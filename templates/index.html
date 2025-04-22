@@ -49,37 +49,48 @@
   </div>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tagLinks = document.querySelectorAll('[data-taglink]');
-    tagLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const tag = link.textContent.trim();
-        const items = document.querySelectorAll('li[data-tags]');
-        items.forEach(item => {
-          if (item.getAttribute('data-tags').includes(tag)) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
+  const tags = [{{ tags.join(', ') | safe }}];
+  console.log('Available tags:', tags);
+  function clearTagFilter(event) {
+    event.preventDefault();
+    const items = document.querySelectorAll('li[data-tags]');
+    items.forEach(item => { item.style.display = 'block'; });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('filter-by').classList.remove('top-0!');
+  }
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        const selectedTags = document.getElementById('selected-tags');
-        selectedTags.textContent = tag + ' X';
-        document.getElementById('filter-by').classList.add('top-0!');
-      });
-    });
-
-    document.getElementById('selected-tags').addEventListener('click', () => {
-      const items = document.querySelectorAll('li[data-tags]');
-      items.forEach(item => {
+  function filterByTag(tag) {
+    const items = document.querySelectorAll('li[data-tags]');
+    items.forEach(item => {
+      if (item.getAttribute('data-tags').includes(tag)) {
         item.style.display = 'block';
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.getElementById('filter-by').classList.remove('top-0!');
+      } else {
+        item.style.display = 'none';
+      }
     });
-  })
+
+    const selectedTags = document.getElementById('selected-tags');
+    selectedTags.textContent = tag + ' X';
+    document.getElementById('filter-by').classList.add('top-0!');
+  }
+
+  function handleTagClick(event) {
+    event.preventDefault();
+    filterByTag(event.target.textContent.trim());
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-taglink]').forEach(link => {
+      link.addEventListener('click', handleTagClick);
+    });
+    document.getElementById('selected-tags').addEventListener('click', clearTagFilter);
+    const urlParams = new URLSearchParams(window.location.search);
+    const tag = urlParams.get('t');
+    if (tags.indexOf(tag) > -1) {
+      filterByTag(tag);
+    }
+  });
 </script>
 {% include 'index-structured-data.html' %}
 {% endblock %}
