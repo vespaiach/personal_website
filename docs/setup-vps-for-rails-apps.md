@@ -88,7 +88,7 @@ restart nginx
 sudo systemctl restart nginx
 ```
 
-Install (acme.sh)[https://github.com/acmesh-official/acme.sh] to request Let's Encrypt for certificates. ACME.sh requires cron service which not installed on Debian by default
+Install [acme.sh](https://github.com/acmesh-official/acme.sh) to request Let's Encrypt for certificates. ACME.sh requires cron service which not installed on Debian by default
 
 ```bash
 sudo apt update

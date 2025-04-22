@@ -24,11 +24,12 @@ async function buildArticles() {
 
   const buildAllFiles = async () => {
     const articlesPaths = await getDocsFilePaths()
-    const articles = await Promise.all(articlesPaths.map(async (fp) => {
+    let articles = await Promise.all(articlesPaths.map(async (fp) => {
       const article = await articleReader.read(fp)
       new ArticleBuilder(article).build()
       return article
     }))
+    articles = articles.sort((a, b) => b.date.getTime() - a.date.getTime())  
 
     new ArticleIndexBuilder(articles).build()
     new SitemapBuilder(articles).build()
