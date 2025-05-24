@@ -7,8 +7,6 @@ github: https://github.com/vespaiach/personal_website/blob/main/docs/setup-a-hom
 tags: dns, dnsmasq
 ---
 
-## Introduction
-
 Setting up your own DNS server grants greater control over your local network. Imagine hosting a home web server to share content within your private network—having a DNS server makes this easier. Additionally, it can improve browsing speed.
 
 In my case, I use a local DNS server for web development. When testing websites on different devices, I can use my DNS server to point the domain back to my local computer, making the site accessible through the local network.
@@ -38,13 +36,13 @@ Three key configurations to consider:
 
 Find the dnsmasq.conf file location using:
 
-```
+```bash
 brew info dnsmasq
 ```
 
 Then update the configuration file (dnsmasq.conf) to set your Mac’s IP address for listening:
 
-```
+```bash
 # Bind DNSMASQ to your local network interface
 listen-address=your_mac_static_ip
 ```
@@ -53,7 +51,7 @@ Ensure your Mac has a static IP by configuring your router.
 
 Specify the upstream DNS servers:
 
-```
+```bash
 server=8.8.8.8       # Google DNS
 server=1.1.1.1       # Cloudflare DNS
 server=9.9.9.9       # Quad9 DNS
@@ -61,13 +59,13 @@ server=9.9.9.9       # Quad9 DNS
 
 Optionally, prevent DNSMASQ from reading /etc/resolv.conf by adding:
 
-```
+```bash
 no-resolv
 ```
 
 Map your custom domain to a local IP address:
 
-```
+```bash
 address=/mydomain.local/your_local_ip_address
 ```
 
@@ -202,7 +200,7 @@ dnsmasq   1234 nobody   ... TCP 192.168.1.100:53
 
 If missing, verify your dnsmasq.conf contains:
 
-```
+```bash
 listen-address=192.168.1.100
 ```
 
@@ -215,7 +213,7 @@ sudo launchctl load -w /Library/LaunchDaemons/homebrew.dnsmasq.plist
 
 2. Ping your Mac from another device:
 
-```
+```bash
 ping 192.168.4.100
 ```
 
@@ -223,7 +221,7 @@ ping 192.168.4.100
 
 Make sure your dnsmasq.conf has a line:
 
-```
+```bash
 address=/mylocal.test/192.168.1.30
 ```
 
