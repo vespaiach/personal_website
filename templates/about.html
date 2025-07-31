@@ -1,39 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About - Nguyen-Blog</title>
-  <meta name="description"
-    content="Code Wizard, Debugging Detective, Digital Builder, Open Source Contributor - Trinh Nguyen's personal blog about software development, open source, and technology." />
-  <meta name="keywords"
-    content="Trinh Nguyen, About Me, Code Wizard, Debugging Detective, Digital Builder, Open Source Contributor, Software Development, Technology, Blog" />
-  <link rel="stylesheet" href="/main.css" />
-  <style>
-    code[class*='language-'],
-    pre[class*='language-'] {
-      font-size: 0.875em !important;
-    }
-  </style>
-</head>
-
-<body class="prose prose-stone lg:prose-xl dark:prose-invert w-full p-0 m-0">
-  <main class="max-w-3xl mx-auto w-full px-4 py-6">
-    <a href="/" class="no-underline"><small>← back</small></a>
-    <img src="https://avatars.githubusercontent.com/u/8703891?s=400&u=554843c698098ed4cb8a4abb9f8e3ac4060a56c2&v=4"
-      class="rounded-full w-36 h-36 mx-auto" alt="Trinh Nguyen's Avatar" />
-
-    <script src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
-      integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/" crossorigin="anonymous" defer
-      class="dark:prism-okaidia prism-coy"></script>
-  </main>
-</body>
-
-</html>
-
-
-
 {% extends "base.html" %}
 
 {% block head %}
@@ -43,55 +7,56 @@
 {% endblock %}
 
 {% block content %}
-<main class="divide-y divide-gray-200 dark:divide-gray-700">
-  <div class="space-y-2 pt-6 pb-8 md:space-y-5">
-    <h1
-      class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
-      About</h1>
+<main class="space-y-6">
+  <h2 class="text-2xl font-bold">About Me</h2>
+
+  <div class="space-y-4">
+    <p>
+      I'm a software developer with many years of experience building websites/ web applications. I specialize in front-end
+      development using JavaScript, TypeScript, and Tailwind CSS, but I also equally enjoy working on back-end tasks and solving
+      system-level problems. My back-end toolkit includes Node.js, Ruby, PHP, and
+      PostgresQL. Some frameworks I frequently use are React.js, Ruby on Rails, WordPress, and Express.js.
+    </p>
+
+    <p>
+      I like figuring things out—whether it's fixing layout bugs, improving performance, or troubleshooting environment
+      setups. Problem solving and eager to learn new things are two things that keep me motivated and moving forward. I take a
+      thoughtful, hands-on approach to challenges and enjoy exploring different ways to make things work better.
+    </p>
+
+    <p>Reach out to me on:
+    <ul class="list-disc pl-5 space-y-1">
+      <li><a href="https://github.com/vespaiach" class="text-blue-500 hover:underline">github</a></li>
+      <li><a href="https://www.linkedin.com/in/trinh-nguyen-us/" class="text-blue-500 hover:underline">linkedin</a></li>
+    </ul>
+    </p>
   </div>
-  <div class="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
 
-    <div class="flex flex-col items-center space-x-2 pt-8">
-      <img alt="avatar" width="192" height="192" class="h-48 w-48 rounded-full"
-        src="https://avatars.githubusercontent.com/u/8703891?s=192&v=4">
-      <h3 class="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">Trinh Nguyen</h3>
-      
-    </div>
+  <h2 class="text-2xl font-bold">Projects</h2>
 
-    <div class="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
-      <pre>
-  <code class="language-plaintext">
-  ╭────┈ ↷
-  │ ✎┊ Name: Trinh Nguyen
-  │ ✎┊ Role: Coding Wizard, Debugging Detective, Script Ninja 
-  │ ✎┊ Status: Active, Online, Ready for duty
-  │ ✎┊ Location: Earth 🌍
-  │ ✎┊ Github: https://github.com/vespaiach 🐙
-  │ ✎┊ LinkedIn: https://www.linkedin.com/in/trinh-nguyen-us/
-  │╭────────────╯
-  ││•Moto: "Code is for human, not machine" 🎨
-  ││•Bio: Passionate software engineer with a love for solving problems.
-  ││•Experience: 8+ years in web development.
-  ││•Languages: JavaScript, Typescript, Ruby
-  ││•Hobbies: Coding, Tinkering, Traveling, Coffee Enthusiast ☕
-  ││•Favorite Techs: Web, Internet of Things (IoT), Cloud Computing
-  ││•Current Projects:
-  ││  - Building something to give back to the developer community.
-  ││•Future Goals:
-  ││  - Continue to learn and grow as a developer.
-  ││  - Contribute to more open-source projects.
-  ││•Blog source code: https://github.com/vespaiach/personal_website
-  ││•Based on theme: https://github.com/timlrx/tailwind-nextjs-starter-blog
-  │╰─────────── · · · · ✭
-  </code>
-</pre>
-    </div>
+  <ul class="list-disc pl-5 space-y-1">
+    <li><a href="https://github.com/vespaiach/prismjs-loader" class="text-blue-500 hover:underline">prismjs-loader</a>: a
+      convenient tool to quickly highlight code syntax on your web pages using PrismJS integration</li>
+    <li><a href="https://github.com/vespaiach/teamchat" class="text-blue-500 hover:underline">teamchat</a>: a real-time chat
+      application built with React and Ruby on Rails. It mimics the functionality of popular chat applications, such as Slack,
+      while providing some more applications integrations. I am actively working on this project to enhance its features.</li>
+  </ul>
 
-  </div>
+  <h2 class="text-2xl font-bold">About this site</h2>
+
+  <p>
+    I decided to not bind this site to any specific framework or deployment platform, and instead build it my own way just using
+    HTML and Tailwind CSS
+    for styling, and setup a simple development environment with Node.js for generating static files and Overmind tool for running
+    the
+    development server
+    and managing the build process. I also use a custom script to generate the structured data for the pages, which is important
+    for SEO and
+    improving the visibility of my content in search engines. You can find the source code for this site on my <a
+       href="https://github.com/vespaiach/personal_website">GitHub.</a></p>
+
 </main>
-<script src="https://cdn.jsdelivr.net/gh/vespaiach/prismjs-loader@v1.0.0/dist/prismjs-loader.js"
-  integrity="sha384-WxJ7af4egxjXGSl/0ldvVBiaBVhKXo3vu3qHG/Av4ZnfNVSJuX8d0Kgn5m7cFlI/" crossorigin="anonymous" defer
-  class="dark:prism-okaidia prism-coy"></script>
+
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",

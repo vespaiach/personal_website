@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/main.css" />
 <title>Nguyen-Blog - Vespaiach</title>
 {% endblock %} {% block content %}
-<main class="mx-auto px-5 max-w-4xl">
+<main>
   <ul class="space-y-5">
     {% for item in articles %}
     <li data-tags="{{ item.tags | join(',') }}">

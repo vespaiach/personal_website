@@ -25,35 +25,16 @@
   </head>
 
   <body class="bg-white text-stone-950 font-sans font-medium leading-7 text-lg antialiased">
-    {% block header %}
-    <header class="flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10">
-      <a class="break-words" aria-label="TailwindBlog" href="/">
-        <div class="flex items-center justify-between">
-          <div class="h-6 text-2xl font-semibold">Nguyen-Blog</div>
-        </div>
-      </a>
-      <a class="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium text-gray-900 dark:text-gray-100"
-         href="/about.html" title="About">
-        <span class="sr-only">About</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-exclamation"
-             viewBox="0 0 16 16">
-          <path
-                d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-          <path
-                d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V11a.5.5 0 0 0-.5-.5m0 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
-        </svg>
-      </a>
-    </header>
-    {% endblock %} {% block content %}{% endblock %} {% block footer %}
-    <footer>
-      <div class="mt-16 mb-8 flex flex-col items-center">
-        <div class="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
-          <div>Trinh Nguyen</div>
-          <div>© 2025</div>
-        </div>
-      </div>
-    </footer>
-    {% endblock %}
+    <section class="max-w-4xl mx-auto px-5 mb-6">
+      {% block header %}
+      <header class="border-b border-stone-400 pb-3 mb-6 flex justify-end pt-5">
+        <ul class="flex gap-4 font-heading text-sm">
+          <li><a href="/" class="text-blue-600 hover:text-blue-900">posts</a></li>
+          <li><a href="/about.html" class="text-blue-600 hover:text-blue-900">about</a></li>
+        </ul>
+      </header>
+      {% endblock %} {% block content %}{% endblock %}
+    </section>
   </body>
 
 </html>
