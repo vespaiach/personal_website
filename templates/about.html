@@ -1,53 +1,70 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="/main.css" />
 <title>About - Nguyen-Blog</title>
 <meta name="description" content="Information about author of Nguyen-Blog" />
 {% endblock %}
 
 {% block content %}
 <main class="space-y-6">
-  <h2 class="text-2xl font-bold">About Me</h2>
+  <h1>About Me</h1>
 
   <div class="space-y-4">
     <p>
-      I'm a software developer with many years of experience building websites/ web applications. I specialize in front-end
-      development using JavaScript, TypeScript, and Tailwind CSS, but I also equally enjoy working on back-end tasks and solving
-      system-level problems. My back-end toolkit includes Node.js, Ruby, PHP, and
-      PostgresQL. Some frameworks I frequently use are React.js, Ruby on Rails, WordPress, and Express.js.
-    </p>
+      Hi, my name is Trinh Nguyen and I'm a software developer focused on building websites/ web applications. I specialize in
+      front-end
+      development using modern web technologies, but I also equally enjoy working on back-end tasks and solving
+      system-level problems.</p>
 
     <p>
-      I like figuring things out—whether it's fixing layout bugs, improving performance, or troubleshooting environment
+      I like figuring things out—whether it's fixing bugs, improving performance, integrating complex systems, or troubleshooting
+      environment
       setups. Problem solving and eager to learn new things are two things that keep me motivated and moving forward. I take a
       thoughtful, hands-on approach to challenges and enjoy exploring different ways to make things work better.
     </p>
 
-    <p>Reach out to me on:
-    <ul class="list-disc pl-5 space-y-1">
-      <li><a href="https://github.com/vespaiach" class="text-blue-500 hover:underline">github</a></li>
-      <li><a href="https://www.linkedin.com/in/trinh-nguyen-us/" class="text-blue-500 hover:underline">linkedin</a></li>
+    <p>My development toolkit includes:
+    <ul>
+      <li>Front-end: Typescript, React.js, Tailwind CSS, Vite.js, Esbuild</li>
+      <li>Back-end: Ruby, Node.js, PHP, PostgresQL</li>
     </ul>
     </p>
+    <p>Some frameworks I frequently use to build websites/ web applications are: React.js, Ruby on Rails, WordPress, and
+      Express.js.</p>
+
   </div>
 
-  <h2 class="text-2xl font-bold">Projects</h2>
+  <h1>Projects</h1>
+
+  <p>These are projects I've worked on:</p>
+
+  <ul>
+    <li><a href="https://app.junecare.co/" target="_blank">app.junecare.co</a> - a web-based application for matching caregivers
+      with families who need childcare assistance</li>
+    <li><a href="https://crewelectricalservices.com/" target="_blank">crewelectricalservices.com</a> - a modern introduction
+      website for an electrical services company</li>
+    <li><a href="https://huskygc.com/" target="_blank">huskygc.com</a> - a timesheet tracking admin portal for a construction
+      company</li>
+  </ul>
+
+  <p>These are some of my side projects:</p>
 
   <ul class="list-disc pl-5 space-y-1">
-    <li><a href="https://github.com/vespaiach/prismjs-loader" class="text-blue-500 hover:underline">prismjs-loader</a>: a
+    <li><a href="https://github.com/vespaiach/prismjs-loader">prismjs-loader</a>: a
       convenient tool to quickly highlight code syntax on your web pages using PrismJS integration</li>
-    <li><a href="https://github.com/vespaiach/teamchat" class="text-blue-500 hover:underline">teamchat</a>: a real-time chat
+    <li><a href="https://github.com/vespaiach/teamchat">teamchat</a>: a real-time chat
       application built with React and Ruby on Rails. It mimics the functionality of popular chat applications, such as Slack,
       while providing some more applications integrations. I am actively working on this project to enhance its features.</li>
   </ul>
 
-  <h2 class="text-2xl font-bold">About this site</h2>
+  <h1>About this site</h1>
 
   <p>
-    I decided to not bind this site to any specific framework or deployment platform, and instead build it my own way just using
+    This site is not using any specific framework or deploying on a special platforms, instead it was built as static sites just
+    using
     HTML and Tailwind CSS
-    for styling, and setup a simple development environment with Node.js for generating static files and Overmind tool for running
+    for styling, and I set up a simple development environment with Node.js for generating static files and Overmind tool for
+    running
     the
     development server
     and managing the build process. I also use a custom script to generate the structured data for the pages, which is important
@@ -55,6 +72,12 @@
     improving the visibility of my content in search engines. You can find the source code for this site on my <a
        href="https://github.com/vespaiach/personal_website">GitHub.</a></p>
 
+
+  <h1>Reach me at:</h1>
+  <ul class="list-disc pl-5 space-y-1">
+    <li><a href="https://github.com/vespaiach">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/trinh-nguyen-us/">LinkedIn</a></li>
+  </ul>
 </main>
 
 <script type="application/ld+json">

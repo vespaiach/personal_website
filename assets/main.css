@@ -2,7 +2,52 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-heading: 'Inter', sans-serif;
-  --font-sans: 'Source Sans Pro', sans-serif;
+  --font-heading: 'IBM Plex Serif', serif;
+  --font-sans: sans-serif;
+  --font-serif: 'IBM Plex Serif', serif;
   --font-mono: 'JetBrains Mono', monospace;
+}
+
+@layer components {
+  .overline-text {
+    @apply text-xs font-normal;
+  }
+}
+
+@layer base {
+  body {
+    @apply font-serif font-normal text-base text-stone-950 bg-orange-50 antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold text-stone-950;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  p,ul {
+    @apply my-4; 
+  }
+
+  pre {
+    @apply my-4!;
+  }
+
+  a {
+    @apply text-blue-700 hover:underline visited:text-blue-900;
+  }
+
+  ul {
+    @apply list-disc pl-5;
+  }
+
+  main {
+    @apply my-10;
+  }
 }

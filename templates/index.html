@@ -1,15 +1,20 @@
 {% extends "base.html" %} {% block head %}
-<link rel="stylesheet" href="/main.css" />
 <title>Nguyen-Blog - Vespaiach</title>
 {% endblock %} {% block content %}
 <main>
-  <ul class="space-y-5">
+  <ul class="space-y-6 list-none!">
     {% for item in articles %}
     <li data-tags="{{ item.tags | join(',') }}">
       <article>
-        <a href="/{{ item.slug }}.html" title="Read more: {{ item.title }}" class="text-blue-600 hover:text-blue-900"><h6 class="inline">{{ item.title }}.</h6></a>
+        <h1 class="text-base! inline">
+          <a href="/{{ item.slug }}.html" title="Read more: {{ item.title }}">{{ item.title }}.</a>
+        </h1>
         &nbsp;
-        <p class="inline">{{ item.excerpt }}<time datetime="{{ item.date }}" class="text-stone-500"> — {{ item.date | date }}</time></p>
+        <p class="inline">
+          {{ item.excerpt }}
+          <span class="sr-only">Publish on</span>
+          <time datetime="{{ item.date }}" class="text-stone-600"> — {{ item.date | date }}</time>
+        </p>
       </article>
     </li>
     {% endfor %}

@@ -7,11 +7,11 @@
     <!-- Google Fonts Import -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
           rel="stylesheet">
 
-    {% block head %}
     <link rel="stylesheet" href="/main.css" />
+    {% block head %}
     <title>{% block title %}{% endblock %} - Nguyen-Blog</title>
     {% endblock %}
     <!-- Google tag (gtag.js) -->
@@ -24,13 +24,13 @@
     </script>
   </head>
 
-  <body class="bg-white text-stone-950 font-sans font-medium leading-7 text-lg antialiased">
-    <section class="max-w-4xl mx-auto px-5 mb-6">
+  <body>
+    <section class="max-w-3xl mx-auto px-5 mb-6">
       {% block header %}
-      <header class="border-b border-stone-400 pb-3 mb-6 flex justify-end pt-5">
-        <ul class="flex gap-4 font-heading text-sm">
-          <li><a href="/" class="text-blue-600 hover:text-blue-900">posts</a></li>
-          <li><a href="/about.html" class="text-blue-600 hover:text-blue-900">about</a></li>
+      <header class="sticky top-0 py-2 flex justify-end bg-orange-50 z-50">
+        <ul class="font-sans flex gap-4 text-[11px] font-medium my-0! list-none!">
+          <li><a href="/">POSTS</a></li>
+          <li><a href="/about.html">ABOUT</a></li>
         </ul>
       </header>
       {% endblock %} {% block content %}{% endblock %}
