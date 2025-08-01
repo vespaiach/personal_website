@@ -1,54 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  {% block head %}
-  <link rel="stylesheet" href="/main.css" />
-  <title>{% block title %}{% endblock %} - Nguyen-Blog</title>
-  {% endblock %}
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JQSXK6HX2"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-2JQSXK6HX2');
-  </script>
-</head>
 
-<body class="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
-  <section class="mx-auto max-w-3xl px-6 sm:px-6 xl:max-w-5xl xl:px-0">
-    {% block header %}
-    <header class="flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10">
-      <a class="break-words" aria-label="TailwindBlog" href="/">
-        <div class="flex items-center justify-between">
-          <div class="h-6 text-2xl font-semibold">Nguyen-Blog</div>
-        </div>
-      </a>
-      <a class="hover:text-primary-500 dark:hover:text-primary-400 m-1 font-medium text-gray-900 dark:text-gray-100"
-        href="/about.html" title="About">
-        <span class="sr-only">About</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-          class="bi bi-person-exclamation" viewBox="0 0 16 16">
-          <path
-            d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
-          <path
-            d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V11a.5.5 0 0 0-.5-.5m0 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
-        </svg>
-      </a>
-    </header>
-    {% endblock %} {% block content %}{% endblock %} {% block footer %}
-    <footer>
-      <div class="mt-16 mb-8 flex flex-col items-center">
-        <div class="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
-          <div>Trinh Nguyen</div>
-          <div>© 2025</div>
-        </div>
-      </div>
-    </footer>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="/main.css" />
+    {% block head %}
+    <title>{% block title %}{% endblock %} - Nguyen-Blog</title>
     {% endblock %}
-  </section>
-</body>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JQSXK6HX2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-2JQSXK6HX2');
+    </script>
+  </head>
+
+  <body>
+    <section class="max-w-3xl mx-auto px-5 mb-6">
+      {% block header %}
+      <header class="sticky top-0 py-2 flex justify-end bg-orange-50 z-50">
+        <ul class="font-sans flex gap-4 text-[11px] font-medium my-0! list-none!">
+          <li><a href="/">POSTS</a></li>
+          <li><a href="/about.html">ABOUT</a></li>
+        </ul>
+      </header>
+      {% endblock %} {% block content %}{% endblock %}
+    </section>
+  </body>
 
 </html>
