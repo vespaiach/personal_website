@@ -331,6 +331,7 @@ html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 
 body {
   margin: 0;
+  padding: 0;
   background: var(--canvas);
   color: var(--text-body);
   font-family: var(--font-body);
