@@ -1,5 +1,4 @@
-import "./styles/tokens.css";
-import "./styles/base.css";
+import "./styles/global.css";
 
 import Alpine from "alpinejs";
 

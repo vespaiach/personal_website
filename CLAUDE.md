@@ -15,10 +15,14 @@ personal_website/
 ├── content/
 │   ├── posts/*.md                2 dummy posts — replace with the real 10
 │   └── about/{me.md, stack.json, projects.json}   all placeholder content
+├── public/fonts/          7 self-hosted woff2 files (Latin subset only — trimmed from the
+│                          original's 19, which also covered cyrillic/greek/vietnamese)
 └── src/
     ├── alpine.d.ts              ambient shim — alpinejs ships no TS types of its own
     ├── main.ts                  Alpine.start(), registers every component below
-    ├── styles/{tokens.css, base.css}      real Nord tokens, compact subset (no self-hosted fonts yet)
+    ├── styles/global.css      full design system, ported from Vespaiach Terminal.html —
+    │                          fonts, colors, typography, spacing, shape, elevation,
+    │                          motion, base defaults, all in one file
     ├── lib/{markdown.ts, highlight.ts, format.ts}    stub functions, all TODO
     └── components/
         ├── header.ts            ⌘K listener + active-page label
