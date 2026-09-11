@@ -4,39 +4,29 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vespaiach — posts</title>
+    <title>vespaiach — topics</title>
   </head>
   <body>
     <!-- TODO: replace with partials/header.html, injected at build time -->
-    <header x-data="header('posts')">
+    <header x-data="header('topics')">
       <div class="brand">$ vespaiach</div>
       <nav>
-        <a href="/" aria-current="page">/posts</a>
-        <a href="/topics/">/topics</a>
+        <a href="/">/posts</a>
+        <a href="/topics/" aria-current="page">/topics</a>
         <a href="/about/">/about</a>
       </nav>
       <button type="button" @click="$store.palette.show()">run (⌘K)</button>
     </header>
 
-    <main x-data="postList">
-      <template x-if="loading">
-        <p>loading…</p>
-      </template>
-      <template x-for="post in posts" :key="post.slug">
-        <article @click="open(post.slug)">
-          <h2 x-text="post.title"></h2>
-          <p x-text="post.excerpt"></p>
-        </article>
+    <main x-data="topicList">
+      <template x-for="topic in topics" :key="topic.name">
+        <div class="topic-row">
+          <span x-text="'#' + topic.name"></span>
+          <span x-text="topic.count + ' posts'"></span>
+        </div>
       </template>
     </main>
 
-    <!-- dummy inline post reader — real version fetches + parses content/posts/<slug>.md -->
-    <section x-data x-show="$store.reader.open" style="display:none">
-      <h1 x-text="$store.reader.title"></h1>
-      <p x-text="$store.reader.body"></p>
-    </section>
-
-    <!-- command palette modal -->
     <div x-data x-show="$store.palette.open" style="display:none">
       <input type="text" x-model="$store.palette.query" placeholder="cd /posts && ls" />
       <ul>

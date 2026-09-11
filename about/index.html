@@ -4,39 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vespaiach — posts</title>
+    <title>vespaiach — about</title>
   </head>
   <body>
     <!-- TODO: replace with partials/header.html, injected at build time -->
-    <header x-data="header('posts')">
+    <header x-data="header('about')">
       <div class="brand">$ vespaiach</div>
       <nav>
-        <a href="/" aria-current="page">/posts</a>
+        <a href="/">/posts</a>
         <a href="/topics/">/topics</a>
-        <a href="/about/">/about</a>
+        <a href="/about/" aria-current="page">/about</a>
       </nav>
       <button type="button" @click="$store.palette.show()">run (⌘K)</button>
     </header>
 
-    <main x-data="postList">
-      <template x-if="loading">
-        <p>loading…</p>
-      </template>
-      <template x-for="post in posts" :key="post.slug">
-        <article @click="open(post.slug)">
-          <h2 x-text="post.title"></h2>
-          <p x-text="post.excerpt"></p>
-        </article>
+    <main x-data="aboutPage">
+      <p x-text="bio"></p>
+      <pre x-text="JSON.stringify(stack, null, 2)"></pre>
+      <template x-for="project in projects" :key="project.name">
+        <div class="project-row">
+          <a :href="project.url" target="_blank" rel="noreferrer" x-text="project.name"></a>
+          <span x-text="project.what"></span>
+        </div>
       </template>
     </main>
 
-    <!-- dummy inline post reader — real version fetches + parses content/posts/<slug>.md -->
-    <section x-data x-show="$store.reader.open" style="display:none">
-      <h1 x-text="$store.reader.title"></h1>
-      <p x-text="$store.reader.body"></p>
-    </section>
-
-    <!-- command palette modal -->
     <div x-data x-show="$store.palette.open" style="display:none">
       <input type="text" x-model="$store.palette.query" placeholder="cd /posts && ls" />
       <ul>

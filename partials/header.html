@@ -1,0 +1,15 @@
+<!--
+  Shared nav chrome. Not wired into the build yet — TODO: inject this into
+  every page via a transformIndexHtml plugin instead of hand-copying it.
+  Each of index.html / topics/index.html / about/index.html currently
+  inlines its own copy; keep them in sync manually until that's fixed.
+-->
+<header x-data="header('posts')">
+  <div class="brand">$ vespaiach</div>
+  <nav>
+    <a href="/">/posts</a>
+    <a href="/topics/">/topics</a>
+    <a href="/about/">/about</a>
+  </nav>
+  <button type="button" @click="$store.palette.show()">run (⌘K)</button>
+</header>
