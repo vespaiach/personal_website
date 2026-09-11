@@ -11,7 +11,8 @@ personal_website/
 ├── index.html                  → /            Posts: ls-style listing + inline post reader
 ├── topics/index.html           → /topics/     tag list, filters the listing inline
 ├── about/index.html            → /about/      me.md, stack.json, projects
-├── partials/header.html         shared nav — NOT injected into the build yet, each page inlines its own copy
+├── partials/header.html         shared nav, styled — injected into each page via vite-plugin-html-inject
+│                          (<load src="partials/header.html" active="posts|topics|about" />)
 ├── content/
 │   ├── posts/*.md                2 dummy posts — replace with the real 10
 │   └── about/{me.md, stack.json, projects.json}   all placeholder content
@@ -25,7 +26,7 @@ personal_website/
     │                          motion, base defaults, all in one file
     ├── lib/{markdown.ts, highlight.ts, format.ts}    stub functions, all TODO
     └── components/
-        ├── header.ts            ⌘K listener + active-page label
+        ├── header.ts            ⌘K listener (active-page state now lives in partials/header.html)
         ├── commandPalette.ts    Alpine.store('palette') — open/close only, no search yet
         ├── postList.ts          Alpine.data('postList') — 2 dummy posts
         ├── postReader.ts        Alpine.store('reader') — dummy inline post view

@@ -7,16 +7,7 @@
     <title>vespaiach — posts</title>
   </head>
   <body>
-    <!-- TODO: replace with partials/header.html, injected at build time -->
-    <header x-data="header('posts')">
-      <div class="brand">$ vespaiach</div>
-      <nav>
-        <a href="/" aria-current="page">/posts</a>
-        <a href="/topics/">/topics</a>
-        <a href="/about/">/about</a>
-      </nav>
-      <button type="button" @click="$store.palette.show()">run (⌘K)</button>
-    </header>
+    <load src="partials/header.html" active="posts" />
 
     <main x-data="postList">
       <template x-if="loading">
