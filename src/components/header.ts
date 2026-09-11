@@ -1,11 +1,10 @@
 import Alpine from "alpinejs";
 
-// Global ⌘K listener + active-nav-link state.
-// TODO: derive activePage from location.pathname instead of the literal
-// passed in from each page's x-data="header('posts' | 'topics' | 'about')".
+// Global ⌘K listener. The active nav link is resolved statically by
+// partials/header.html itself (via the `active` arg vite-plugin-html-inject
+// substitutes in), so this component no longer needs to track it.
 export function registerHeader() {
-  Alpine.data("header", (activePage: string = "posts") => ({
-    activePage,
+  Alpine.data("header", () => ({
     init() {
       window.addEventListener("keydown", (e: KeyboardEvent) => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {

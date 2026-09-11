@@ -1,13 +1,14 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
+import injectHTML from "vite-plugin-html-inject";
 
 // Multi-page build: Posts (root), Topics, About.
-// Shared nav lives in partials/header.html — not yet injected into these
-// entries at build time (TODO: transformIndexHtml plugin or similar).
-// Each page inlines its own copy of the header markup for now.
+// Shared nav lives in partials/header.html, injected into each entry via
+// <load src="partials/header.html" active="..." />.
 const root = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
+  plugins: [injectHTML()],
   build: {
     rollupOptions: {
       input: {
