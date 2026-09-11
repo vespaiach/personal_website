@@ -1,0 +1,40 @@
+<!-- Alpine.js inline component: renders the 10 posts in docs/ as a `ls -l`-style
+     directory listing. All state and logic live in x-data on the root element,
+     no separate Alpine.data() registration. -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js" defer></script>
+
+<div
+  x-data="{
+    posts: [
+      { name: 'setup-staging-site-wordpress-without-builtin-staging.md', href: '/setting-up-a-staging-site-for-wordpress-without-built-in-staging.html', date: '2025-06-06', bytes: 4576 },
+      { name: 'tailwind-css-in-practice-what-i-ve-learned.md', href: '/tailwind-css-in-practice-what-ive-learned.html', date: '2025-06-05', bytes: 6748 },
+      { name: 'setup-home-dns-server-on-mac.md', href: '/set-up-a-home-dns-server-on-macbook.html', date: '2025-05-23', bytes: 7078 },
+      { name: 'setup-vps-for-rails-apps.md', href: '/setting-up-a-server-for-rails-applications.html', date: '2025-04-21', bytes: 7520 },
+      { name: 'prismjs-loader.md', href: '/prismjs-loader.html', date: '2025-03-29', bytes: 2683 },
+      { name: 'tips-for-react-component-design.md', href: '/tips-for-react-component-design.html', date: '2025-03-26', bytes: 8593 },
+      { name: 'typescript-notes.md', href: '/typescript-notes.html', date: '2025-03-23', bytes: 10214 },
+      { name: 'working-with-javascript-date-object.md', href: '/working-with-javascript-date-object.html', date: '2022-06-20', bytes: 7424 },
+      { name: 'javascript-interesting-things.md', href: '/javascript-interesting-facts-for-developers.html', date: '2022-01-26', bytes: 8096 },
+      { name: 'discard-after-usages.md', href: '/discard-after-usages.html', date: '2022-01-25', bytes: 3494 },
+    ],
+    minutesFor(bytes) {
+      return Math.max(1, Math.round(bytes / 6 / 220))
+    },
+    formatDate(iso) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      const [y, m, d] = iso.split('-').map(Number)
+      return months[m - 1] + ' ' + d + ' ' + y
+    },
+  }"
+  class="rounded-lg bg-[#2e3440] px-4 py-3 font-mono text-[13px] leading-[21px] text-[#d8dee9]"
+>
+  <div class="text-[#616e88]">total <span x-text="posts.length"></span></div>
+  <template x-for="post in posts" :key="post.href">
+    <a :href="post.href" class="flex items-baseline gap-3 hover:text-[#88c0d0]">
+      <span class="shrink-0 text-[#616e88]">-rw-r--r--</span>
+      <span class="w-12 shrink-0 whitespace-nowrap text-right text-[#616e88]" x-text="minutesFor(post.bytes) + ' min'"></span>
+      <span class="w-24 shrink-0 whitespace-nowrap text-[#616e88]" x-text="formatDate(post.date)"></span>
+      <span x-text="post.name"></span>
+    </a>
+  </template>
+</div>
