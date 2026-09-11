@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "biome check ./src",
-    "lint:fix": "biome check --write ./src"
+    "lint": "biome check",
+    "lint:fix": "biome check --write"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.13",
