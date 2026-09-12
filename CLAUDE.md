@@ -81,19 +81,47 @@ Navigating between top-level folders is a real page load; moving around
 | `help` | Prints the command list, plus the current directory's own listing as a hint. |
 | `clear` | Empties the output log. Does not touch cwd. |
 
+### Build-time markdown → component codegen
+
+`cat` never parses markdown in the browser. Instead, every markdown file is
+compiled to a ready-to-mount Alpine HTML fragment **at build time**, and `cat`
+just fetches the fragment that matches the file's name.
+
+- A custom Vite plugin (not written yet) regenerates a flat, static output
+  folder — `public/components/` — from every markdown source under `content/`:
+  `content/posts/*.md`, `content/about/me.md`, `content/about/projects/*.md`.
+  (`content/about/stack.json` is JSON, not markdown, so it's out of scope for
+  this codegen — `aboutPage.ts` still renders it directly.)
+- The plugin runs on `buildStart` for `vite build`, and watches `content/` via
+  `configureServer` for `vite dev` so editing a `.md` file regenerates its
+  component without a restart.
+- For each source file the plugin parses frontmatter and body (reusing
+  `lib/markdown.ts`'s `parseFrontmatter`/`toBlocks` and `lib/highlight.ts`'s
+  `tokenizeCode`, called here in Node at build time rather than in the
+  browser), renders one self-contained HTML fragment with the frontmatter and
+  body baked directly into the markup, and writes it to
+  `public/components/<slug>.html`, where `<slug>` is the source filename
+  without its extension — e.g. `content/posts/typescript-notes.md` →
+  `public/components/typescript-notes.html`.
+- **Flat namespace, one constraint**: because `public/components/` is flat,
+  `<slug>` must be unique across `posts/`, `about/` (`me`), and
+  `about/projects/` combined — two source files that would generate the same
+  `<slug>.html` is a build error, not a silent overwrite.
+
 ### Command → component dispatch
 
-Typing a command doesn't render a template string — it resolves the target
-against the virtual filesystem above and hands off to the Alpine
-store/component that already owns that content type:
+Typing a command resolves the target against the virtual filesystem above and
+hands off to the Alpine store/component that already owns that content type:
 
 - `ls` → a directory-listing view populated from the resolved directory's
   entries (shares styling with today's `postList`/`topicList` row markup).
-- `cat <post-slug>` → `Alpine.store('reader')` (`postReader.ts`): fetch
-  `content/posts/<slug>.md`, split frontmatter/body with `lib/markdown.ts`,
-  tokenize any code blocks with `lib/highlight.ts`.
-- `cat me.md` / `cat stack.json` / `cat projects/<slug>.md` → `aboutPage.ts`,
-  fetching the one requested file instead of returning its hardcoded fields.
+- `cat <file>` → strip the extension to get the component name (`cat
+  typescript-notes.md` → `typescript-notes`), `fetch()` the matching
+  `/components/<name>.html`, insert the returned markup into the terminal's
+  output log, then call `Alpine.initTree()` on the inserted node so any
+  `x-data`/directives baked into the fragment bind. This is how `me.md` and
+  any `projects/<slug>.md` render too. `stack.json` is the one exception —
+  not generated, so `aboutPage.ts` renders it straight from the parsed JSON.
 - `cd` → updates a shared `Alpine.store('shell')` cwd, then either navigates
   (`window.location`) or re-renders the listing in place.
 
@@ -107,11 +135,17 @@ and lets the page read like real shell scrollback instead of one static view.
   planned home for command parsing but isn't wired to the dispatch above yet,
   and reconciling "modal palette" vs. "always-visible inline terminal" is an
   open UI decision.
-- `lib/markdown.ts`, `lib/highlight.ts`, `lib/format.ts` are stubs — `cat`'s
-  rendering depends on all three.
-- `postList.ts`, `topicList.ts`, `aboutPage.ts`, `postReader.ts` all return
-  hardcoded dummy data today; wiring `ls`/`cat` means replacing that with the
-  `import.meta.glob` + frontmatter parsing described above.
+- The `public/components/` codegen Vite plugin described above doesn't exist
+  yet — it's the next concrete build task.
+- `lib/markdown.ts`, `lib/highlight.ts`, `lib/format.ts` are stubs today.
+  Once the codegen plugin lands, they're called from that plugin at build
+  time (Node), not from browser code — `postReader.ts`'s current shape
+  (fetch raw `.md`, parse client-side) is the wrong end-state and should be
+  replaced by the fetch-generated-HTML-and-mount flow above.
+- `postList.ts`, `topicList.ts`, `aboutPage.ts` still return hardcoded dummy
+  data; wiring `ls` means replacing that with `import.meta.glob` reads of
+  `content/` for listings (globbing stays a browser/runtime concern — only
+  the per-file `cat` rendering moves to build time).
 - `package.json` still carries dependencies/scripts from the previous
   Nunjucks/Tailwind-CLI/`gray-matter` build (`tailwindcss`, `marked`,
   `nunjucks`, `gray-matter`, `http-server`, `date-fns`, `async-mutex`)
