@@ -9,25 +9,7 @@
   <body>
     <load src="partials/header.html" active="about" />
 
-    <main x-data="aboutPage">
-      <p x-text="bio"></p>
-      <pre x-text="JSON.stringify(stack, null, 2)"></pre>
-      <template x-for="project in projects" :key="project.name">
-        <div class="project-row">
-          <a :href="project.url" target="_blank" rel="noreferrer" x-text="project.name"></a>
-          <span x-text="project.what"></span>
-        </div>
-      </template>
-    </main>
-
-    <div x-data x-show="$store.palette.open" style="display:none">
-      <input type="text" x-model="$store.palette.query" placeholder="cd /posts && ls" />
-      <ul>
-        <template x-for="s in $store.palette.suggestions" :key="s.label">
-          <li x-text="s.label"></li>
-        </template>
-      </ul>
-    </div>
+    <main x-data="aboutPage"></main>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
