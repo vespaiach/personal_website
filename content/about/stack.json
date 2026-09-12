@@ -1,0 +1,4 @@
+{
+  "languages": ["TypeScript"],
+  "frameworks": ["Alpine.js", "Vite"]
+}
