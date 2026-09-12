@@ -9,7 +9,8 @@
     "tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css",
     "dev:tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css --watch",
     "preview": "http-server ./dist -p 8088",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "test": "tsc && node --test \"./.bin/**/*.test.js\""
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.15",
