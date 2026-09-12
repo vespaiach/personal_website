@@ -1,0 +1,496 @@
+@import "tailwindcss";
+
+/* ── fonts.css ──────────────────────────────────────────── */
+/* Fonts — Inter (narrative), DM Mono (technical), Instrument Serif (editorial).
+   Self-hosted from /public/fonts, extracted from the original Google Fonts
+   embed in Vespaiach Terminal.html. Latin subset only — dropped the
+   cyrillic/greek/vietnamese/latin-ext unicode-range blocks the original
+   had, since this site is English-only. */
+
+@font-face {
+  font-family: "DM Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/dm-mono-italic-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "DM Mono";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/dm-mono-300.woff2") format("woff2");
+}
+@font-face {
+  font-family: "DM Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/dm-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "DM Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/dm-mono-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/instrument-serif-italic-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/instrument-serif-400.woff2") format("woff2");
+}
+/* Inter ships as a variable font from Google Fonts: one file covers weights
+   400/500/600 (three @font-face blocks below, same src — matches the
+   original Google Fonts CSS2 output). */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter-variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter-variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/inter-variable.woff2") format("woff2");
+}
+
+:root {
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+}
+
+/* ── colors.css ──────────────────────────────────────────── */
+/* Colors — Nord-derived dark palette.
+   Base ramp = the sixteen Nord values. Semantic aliases follow the role
+   assignments given in the brand notes (prompt, path, branch, status, dirty). */
+:root {
+  /* Polar Night — surfaces */
+  --nord-0: #2e3440;
+  --nord-1: #3b4252;
+  --nord-2: #434c5e;
+  --nord-3: #4c566a;
+
+  /* Snow Storm — text */
+  --nord-4: #d8dee9;
+  --nord-5: #e5e9f0;
+  --nord-6: #eceff4;
+
+  /* Frost — cool accents */
+  --nord-7: #8fbcbb;
+  --nord-8: #88c0d0;
+  --nord-9: #81a1c1;
+  --nord-10: #5e81ac;
+
+  /* Aurora — warm + semantic accents */
+  --nord-11: #bf616a;
+  --nord-12: #d08770;
+  --nord-13: #ebcb8b;
+  --nord-14: #a3be8c;
+  --nord-15: #b48ead;
+
+  /* Surfaces */
+  --canvas: var(--nord-0);
+  --canvas-soft: var(--nord-1);
+  --canvas-raised: var(--nord-2);
+  --hairline: var(--nord-3);
+  --hairline-soft: #3f4859;
+  --hairline-strong: #5e6a80;
+  --overlay: rgba(46, 52, 64, 0.78);
+
+  /* Text */
+  --ink: var(--nord-6);
+  --text-body: var(--nord-4);
+  --text-strong: var(--nord-5);
+  --text-mute: #b8c1cf;
+  --text-faint: #a6b0c1;
+  --text-on-primary: var(--nord-0);
+  --text-on-accent: var(--nord-0);
+
+  /* Primary action */
+  --primary: var(--nord-6);
+  --primary-hover: #ffffff;
+  --primary-press: var(--nord-5);
+  --on-primary: var(--nord-0);
+
+  /* Role colors (from brand notes) */
+  --prompt-user: var(--nord-12);
+  --prompt-symbol: var(--nord-13);
+  --prompt-separator: var(--nord-15);
+  --path: var(--nord-8);
+  --branch: var(--nord-14);
+  --dirty: var(--nord-11);
+  --dir: var(--nord-9);
+
+  /* Semantic */
+  --success: var(--nord-14);
+  --warning: var(--nord-13);
+  --danger: var(--nord-11);
+  --info: var(--nord-8);
+  --accent: var(--nord-8);
+  --link: var(--nord-8);
+  --link-hover: var(--nord-7);
+  --link-visited: var(--nord-15);
+  --focus-ring: var(--nord-8);
+  --selection: rgba(136, 192, 208, 0.24);
+
+  /* Syntax (terminal + code blocks) */
+  --syn-comment: var(--text-faint);
+  --syn-keyword: var(--nord-9);
+  --syn-string: var(--nord-14);
+  --syn-number: var(--nord-15);
+  --syn-function: var(--nord-8);
+  --syn-operator: var(--nord-9);
+  --syn-constant: var(--nord-7);
+  --syn-error: var(--nord-11);
+}
+
+/* ── typography.css ──────────────────────────────────────────── */
+/* Typography — scale carried verbatim from the brand spec.
+   Inter for narrative, DM Mono for technical, Instrument Serif for editorial. */
+:root {
+  /* families (declared in fonts.css) */
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-code: var(--font-mono);
+
+  /* weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* display-xl — hero */
+  --display-xl-size: 64px;
+  --display-xl-weight: 400;
+  --display-xl-leading: 70.4px;
+  --display-xl-tracking: -1.6px;
+
+  /* display-lg — section headline */
+  --display-lg-size: 48px;
+  --display-lg-weight: 400;
+  --display-lg-leading: 52.8px;
+  --display-lg-tracking: -1.2px;
+
+  /* display-md — sub-section */
+  --display-md-size: 32px;
+  --display-md-weight: 500;
+  --display-md-leading: 40px;
+  --display-md-tracking: -0.8px;
+
+  /* display-sm — card title */
+  --display-sm-size: 24px;
+  --display-sm-weight: 500;
+  --display-sm-leading: 32px;
+  --display-sm-tracking: -0.4px;
+
+  /* display-serif — editorial italic moment */
+  --display-serif-size: 48px;
+  --display-serif-weight: 400;
+  --display-serif-leading: 52px;
+  --display-serif-tracking: -0.5px;
+
+  /* body */
+  --body-lg-size: 18px;
+  --body-lg-leading: 28px;
+  --body-md-size: 16px;
+  --body-md-leading: 24px;
+  --body-sm-size: 14px;
+  --body-sm-leading: 20px;
+  --caption-size: 12px;
+  --caption-leading: 16px;
+
+  /* code */
+  --code-size: 13px;
+  --code-leading: 18px;
+  --code-md-size: 14px;
+  --code-md-leading: 20px;
+
+  /* controls */
+  --button-size: 14px;
+  --button-weight: 500;
+  --button-leading: 20px;
+
+  /* eyebrow — mono caps label, the site's section marker */
+  --eyebrow-size: 12px;
+  --eyebrow-tracking: 0.08em;
+
+  /* semantic roles */
+  --text-hero: var(--display-xl-size);
+  --text-lead: var(--body-lg-size);
+  --text-default: var(--body-md-size);
+  --text-secondary: var(--body-sm-size);
+  --text-fine: var(--caption-size);
+}
+
+/* ── spacing.css ──────────────────────────────────────────── */
+/* Spacing — 4px base, with the spec's 10px and 6px control values kept intact. */
+:root {
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 10px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+  --space-5xl: 96px;
+
+  /* semantic */
+  --pad-card: var(--space-xl);
+  --pad-mockup: var(--space-lg);
+  --pad-band: var(--space-5xl);
+  --pad-band-inline: var(--space-xl);
+  --pad-button-block: var(--space-sm);
+  --pad-button-inline: var(--space-lg);
+  --pad-nav-block: var(--space-md);
+  --pad-nav-inline: var(--space-xl);
+  --pad-row: var(--space-lg);
+  --gap-stack: var(--space-lg);
+  --gap-inline: var(--space-sm);
+  --container: 1200px;
+  --container-prose: 720px;
+}
+
+/* ── shape.css ──────────────────────────────────────────── */
+/* Shape — deliberately tight. Buttons are near-rectangular. */
+:root {
+  --radius-none: 0px;
+  --radius-xxs: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+
+  --border-width: 1px;
+  --border-hairline: 1px solid var(--hairline);
+  --border-hairline-soft: 1px solid var(--hairline-soft);
+
+  --radius-control: var(--radius-sm);
+  --radius-card: var(--radius-md);
+  --radius-surface: var(--radius-lg);
+  --radius-avatar: var(--radius-md);
+}
+
+/* ── elevation.css ──────────────────────────────────────────── */
+/* Elevation — carried by surface contrast and hairlines, not drop-shadows.
+   Level 3 exists only for surfaces that float above the page (modal, toast). */
+:root {
+  --elev-0: none;
+  --elev-1: none;
+  --elev-2: none;
+  --elev-3: 0 16px 40px rgba(23, 27, 36, 0.55);
+  --inset-hairline: inset 0 0 0 1px var(--hairline);
+  --focus-shadow: 0 0 0 2px var(--canvas), 0 0 0 3px var(--focus-ring);
+}
+
+/* ── motion.css ──────────────────────────────────────────── */
+/* Motion — short, linear-ish, no bounce. Terminal software does not spring. */
+:root {
+  --dur-instant: 80ms;
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 280ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0.38, 1);
+  --ease-out: cubic-bezier(0, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --transition-control:
+    color var(--dur-fast) var(--ease-standard), background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard), opacity var(--dur-fast) var(--ease-standard);
+  --caret-blink: 1s steps(1, end) infinite;
+}
+
+/* ── base.css ──────────────────────────────────────────── */
+/* Base — page defaults so every page starts from the brand ground. */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--canvas);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: var(--body-md-size);
+  line-height: var(--body-md-leading);
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--ink);
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(136, 192, 208, 0.35);
+  transition: var(--transition-control);
+}
+a:hover {
+  color: var(--link-hover);
+  border-bottom-color: var(--link-hover);
+}
+a:active {
+  color: var(--nord-7);
+}
+a:visited {
+  color: var(--link);
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-code);
+  font-size: var(--code-size);
+  line-height: var(--code-leading);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@keyframes vp-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes vp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── header.css ──────────────────────────────────────────── */
+/* Site header — ported from Vespaiach Terminal.html's header row (NavLink +
+   IconButton). aria-current="page" (set per-link by partials/header.html
+   from the `active` arg vite-plugin-html-inject substitutes in) drives both
+   the a11y semantics and the active-link style, in place of the mockup's
+   React `active` prop. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--canvas);
+  border-bottom: var(--border-hairline);
+}
+.site-header .row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-xl);
+  box-sizing: border-box;
+}
+.site-header .brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  flex: none;
+  font-family: var(--font-code);
+  font-size: var(--body-sm-size);
+}
+.site-header .brand .prompt {
+  color: var(--prompt-symbol);
+}
+.site-header .brand span:last-child {
+  color: var(--ink);
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  flex: 1;
+  min-width: 0;
+}
+.site-header .nav-link {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-control);
+  font-family: var(--font-code);
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-leading);
+  font-weight: 400;
+  color: var(--text-mute);
+  border-bottom: 0;
+  box-shadow: none;
+  transition: var(--transition-control);
+}
+.site-header .nav-link:hover {
+  color: var(--ink);
+  background: var(--canvas-soft);
+}
+.site-header .nav-link[aria-current="page"] {
+  color: var(--ink);
+  box-shadow: inset 0 -1px 0 0 var(--accent);
+}
+
+.site-header .actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: none;
+}
+.site-header .icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-mute);
+  cursor: pointer;
+  transition: var(--transition-control);
+}
+.site-header .icon-btn:hover {
+  background: var(--canvas-raised);
+  color: var(--ink);
+}
+.site-header .icon-btn svg {
+  display: block;
+}

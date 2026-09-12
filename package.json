@@ -1,32 +1,27 @@
 {
   "name": "personal_website",
-  "version": "2.0.0",
   "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "tsc && node ./.bin/index.js && npm run tailwindcss",
-    "dev:build": "tsc && node ./.bin/index.js --watch",
-    "tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css",
-    "dev:tailwindcss": "tailwindcss -i ./assets/main.css -o ./dist/main.css --watch",
-    "preview": "http-server ./dist -p 8088",
-    "tsc": "tsc"
-  },
-  "dependencies": {
-    "@tailwindcss/cli": "^4.0.15",
-    "@tailwindcss/typography": "^0.5.16",
-    "async-mutex": "^0.5.0",
-    "date-fns": "^4.1.0",
-    "gray-matter": "^4.0.3",
-    "html-minifier-terser": "^7.2.0",
-    "http-server": "^14.1.1",
-    "marked": "^15.0.7",
-    "nunjucks": "^3.2.4",
-    "tailwindcss": "^4.0.15",
-    "typescript": "^5.8.2"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "test": "vitest run"
   },
   "devDependencies": {
-    "@types/html-minifier-terser": "^7.0.2",
-    "@types/node": "^22.13.14",
-    "@types/nunjucks": "^3.2.6"
+    "@biomejs/biome": "2.5.13",
+    "@types/node": "^22.20.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0",
+    "vite-plugin-html-inject": "^1.1.2",
+    "vitest": "^5.0.0"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "alpinejs": "^3.17.2",
+    "tailwindcss": "^4.3.3"
   }
 }
