@@ -165,8 +165,3 @@ and lets the page read like real shell scrollback instead of one static view.
   replacing that dummy data with the fetch-and-mount flow above, not with
   `import.meta.glob` reads in the browser — codegen now owns both the
   per-file and the per-folder rendering, and the browser only fetches.
-- `package.json` still carries dependencies/scripts from the previous
-  Nunjucks/Tailwind-CLI/`gray-matter` build (`tailwindcss`, `marked`,
-  `nunjucks`, `gray-matter`, `http-server`, `date-fns`, `async-mutex`)
-  alongside the new Vite/Alpine stack. Unrelated to the shell architecture,
-  but worth pruning before content wiring lands.
