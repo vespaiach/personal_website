@@ -1,28 +1,3 @@
-<!--
-  Global command palette modal, injected into every page via
-  vite-plugin-html-inject's `load` tag — the plugin scans raw text, not a
-  real parser, and would match this very file's own inclusion if spelled
-  out literally here.
-  Opened by ⌘K/Ctrl+K (src/components/header.ts) or the header icon buttons
-  (partials/header.html), both of which set the shared shell scope's
-  `paletteOpen` to true — this file is loaded inside <body x-data="shell">,
-  so it inherits `paletteOpen` directly, no $store needed.
-  Native <dialog>: `x-effect` watches `paletteOpen` and drives
-  showModal()/close() on it via $refs.dialog instead of x-show, so the
-  browser handles top-layer stacking and focus (the input's `autofocus`
-  re-focuses it on every open) — note `open:flex` (not a bare `flex`) is
-  required on the dialog itself, otherwise the class overrides the UA
-  `dialog:not([open]) { display: none }` rule and it never actually hides.
-  Every close path (button, Escape, backdrop) calls `$refs.dialog.close()`
-  and resets `paletteOpen` to false itself — the native `close` event exists
-  as a defensive fallback (`@close`), but isn't relied on as the only path:
-  it doesn't reliably fire on every dialog.close() call in every browser.
-  `lightDismiss` replicates click-outside-to-close by comparing the click
-  point against the dialog's own box, since a click anywhere on ::backdrop
-  reports the dialog itself as `event.target` too. The explicit
-  `@keydown.escape` alongside `@close` is a deliberate belt-and-suspenders:
-  native Escape-to-cancel isn't guaranteed to fire in every environment.
--->
 <dialog
   x-data="{
     lightDismiss($event) {
@@ -34,34 +9,33 @@
         $event.clientY <= rect.bottom;
       if (!inside) {
         $refs.dialog.close();
-        paletteOpen = false;
       }
     },
   }"
+  id="command-palette"
   x-ref="dialog"
-  x-effect="paletteOpen ? $refs.dialog.showModal() : $refs.dialog.close()"
-  @close="paletteOpen = false"
-  @keydown.escape="$refs.dialog.close(); paletteOpen = false"
+  @close="$refs.dialog.close();"
+  @keydown.escape="$refs.dialog.close();"
   @click="lightDismiss($event)"
   aria-label="Run a command"
-  class="m-auto w-[min(640px,calc(100vw_-_var(--space-2xl)))] border-0 rounded-[var(--radius-surface)] bg-[color:var(--canvas-soft)] text-[color:var(--text-body)] shadow-[var(--elev-3)] p-[var(--space-xl)] gap-[var(--gap-stack)] open:flex open:flex-col backdrop:bg-[color:var(--overlay)]"
+  class="m-auto w-[min(640px,calc(100vw-var(--space-2xl)))] border-0 rounded-(--radius-surface) bg-(--canvas-soft) text-(--text-body) shadow-(--elev-3) p-(--space-xl) gap-(--gap-stack) open:flex open:flex-col backdrop:bg-(--overlay)"
 >
   <div class="flex items-center justify-between">
-    <h2 class="m-0 [font-family:var(--font-sans)] [font-weight:var(--weight-semibold)] text-[length:var(--body-lg-size)] leading-[var(--body-lg-leading)] text-[color:var(--ink)]">Run a command</h2>
-    <button type="button" class="inline-flex items-center justify-center w-7 h-7 p-0 border border-transparent rounded-full bg-transparent text-[color:var(--text-mute)] text-[length:var(--body-md-size)] leading-none cursor-pointer [transition:var(--transition-control)] hover:bg-[color:var(--canvas-raised)] hover:text-[color:var(--ink)]" aria-label="Close" @click="$refs.dialog.close(); paletteOpen = false">
+    <h2 class="m-0 font-sans font-(--weight-semibold) text-(length:--body-lg-size) leading-(--body-lg-leading) text-(--ink)">Run a command</h2>
+    <button type="button" class="btn-icon size-7 text-(length:--body-md-size) leading-none" aria-label="Close" @click="$refs.dialog.close(); paletteOpen = false">
       &times;
     </button>
   </div>
-  <p class="m-0 [font-family:var(--font-code)] text-[length:var(--caption-size)] leading-[var(--caption-leading)] text-[color:var(--text-mute)]" x-text="$store.palette.subtitle"></p>
-  <div class="h-[var(--border-width)] bg-[color:var(--hairline)] border-0"></div>
-  <div class="flex items-center gap-[var(--space-sm)] bg-[color:var(--canvas)] border border-[color:var(--hairline)] rounded-[var(--radius-control)] py-[var(--space-sm)] px-[var(--space-md)] [transition:var(--transition-control)] focus-within:border-[color:var(--focus-ring)] focus-within:shadow-[0_0_0_2px_var(--canvas-soft),0_0_0_3px_var(--focus-ring)]">
-    <span class="text-[color:var(--text-faint)] [font-family:var(--font-code)] select-none" aria-hidden="true">&raquo;</span>
-    <span class="text-[color:var(--prompt-symbol)] [font-family:var(--font-code)]" aria-hidden="true">$</span>
+  <p class="m-0 font-mono text-(length:--caption-size) leading-(--caption-leading) text-(--text-mute)" x-text="$store.palette.subtitle"></p>
+  <div class="divider-line"></div>
+  <div class="flex items-center gap-(--space-sm) bg-(--canvas) border border-(--hairline) rounded-(--radius-control) py-(--space-sm) px-(--space-md) transition-(--transition-control) focus-within:border-(--focus-ring) focus-within:shadow-[0_0_0_2px_var(--canvas-soft),0_0_0_3px_var(--focus-ring)]">
+    <span class="text-(--text-faint) font-mono select-none" aria-hidden="true">&raquo;</span>
+    <span class="text-(--prompt-symbol) font-mono" aria-hidden="true">$</span>
     <input
       x-ref="paletteInput"
       type="text"
       autofocus
-      class="flex-1 min-w-0 bg-transparent border-0 outline-none text-[color:var(--ink)] [font-family:var(--font-code)] text-[length:var(--code-md-size)] leading-[var(--code-md-leading)] placeholder:text-[color:var(--text-faint)]"
+      class="flex-1 min-w-0 bg-transparent border-0 outline-none text-(--ink) font-mono text-(length:--code-md-size) leading-(--code-md-leading) placeholder:text-(--text-faint)"
       autocomplete="off"
       spellcheck="false"
       placeholder="cd /posts && ls"
@@ -76,21 +50,21 @@
   <ul class="list-none m-0 p-0 flex flex-col gap-px max-h-[min(40vh,280px)] overflow-y-auto" x-show="$store.palette.suggestions.length > 0">
     <template x-for="(s, i) in $store.palette.suggestions" :key="s.label + i">
       <li
-        class="flex items-baseline gap-[var(--space-lg)] py-[var(--space-xs)] px-[var(--space-sm)] rounded-[var(--radius-control)] cursor-pointer [transition:var(--transition-control)] hover:bg-[color:var(--canvas-raised)]"
-        :class="i === $store.palette.selectedIndex && 'bg-[var(--canvas-raised)]'"
+        class="flex items-baseline gap-(--space-lg) py-(--space-xs) px-(--space-sm) rounded-(--radius-control) cursor-pointer transition-(--transition-control) hover:bg-(--canvas-raised)"
+        :class="i === $store.palette.selectedIndex && 'bg-(--canvas-raised)'"
         @click="$store.palette.runSuggestion(s)"
       >
-        <span class="[font-family:var(--font-code)] text-[length:var(--code-size)] text-[color:var(--ink)] whitespace-pre" x-text="s.label"></span>
-        <span class="ml-auto [font-family:var(--font-code)] text-[length:var(--caption-size)] text-[color:var(--text-faint)] whitespace-pre" x-text="s.hint"></span>
+        <span class="font-mono text-(length:--code-size) text-(--ink) whitespace-pre" x-text="s.label"></span>
+        <span class="ml-auto font-mono text-(length:--caption-size) text-(--text-faint) whitespace-pre" x-text="s.hint"></span>
       </li>
     </template>
   </ul>
-  <div class="h-[var(--border-width)] bg-[color:var(--hairline)] border-0"></div>
-  <div class="flex gap-[var(--space-lg)] flex-wrap [font-family:var(--font-code)] text-[length:var(--caption-size)] text-[color:var(--text-faint)]">
+  <div class="divider-line"></div>
+  <div class="flex gap-(--space-lg) flex-wrap font-mono text-(length:--caption-size) text-(--text-faint)">
     <span>enter run</span>
     <span>&uarr;&darr; select</span>
     <span>tab complete</span>
     <span>esc close</span>
-    <span class="ml-auto text-[color:var(--text-mute)]" x-text="$store.palette.matchLabel"></span>
+    <span class="ml-auto text-(--text-mute)" x-text="$store.palette.matchLabel"></span>
   </div>
 </dialog>

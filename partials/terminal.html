@@ -1,11 +1,11 @@
-<main x-data="terminal" class="flex flex-col gap-[var(--space-xs)] px-[var(--space-xl)] py-[var(--space-lg)] [font-family:var(--font-code)] text-[length:var(--code-md-size)] leading-[var(--code-md-leading)]">
+<main x-data="terminal" class="flex flex-col gap-(--space-xs) px-(--space-xl) py-(--space-lg) font-mono text-(length:--code-md-size) leading-(--code-md-leading)">
   <template x-for="(prompt, index) in prompts" :key="index">
     <div class="flex flex-wrap items-baseline gap-[0.4em]">
-      <span class="text-[color:var(--prompt-user)]" x-text="`${user}@${host}`"></span>
-      <span class="text-[color:var(--prompt-separator)]">in</span>
-      <span class="text-[color:var(--path)]" x-text="prompt.cwd"></span>
-      <span class="text-[color:var(--prompt-symbol)]">$</span>
-      <span class="text-[color:var(--ink)]" x-text="prompt.command"></span>
+      <span class="text-(--prompt-user)" x-text="`${user}@${host}`"></span>
+      <span class="text-(--prompt-separator)">in</span>
+      <span class="text-(--path)" x-text="prompt.cwd"></span>
+      <span class="text-(--prompt-symbol)">$</span>
+      <span class="text-(--ink)" x-text="prompt.command"></span>
     </div>
   </template>
 </main>

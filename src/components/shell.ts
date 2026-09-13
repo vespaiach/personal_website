@@ -1,11 +1,15 @@
 import Alpine from "alpinejs";
+import { toggleCommandPalette } from "../lib/commandPalette";
 
 export function registerShell() {
-  Alpine.data("shell", () => ({
+  Alpine.data("shell", (cwd: string, initialPrompt?: string) => ({
     user: "trinh",
     host: "vespaiach",
-    cwd: "~/posts",
-    paletteOpen: false,
-    prompts: [{ cwd: "~/posts", command: "cd ~/posts && ls" }],
+    cwd,
+    prompts: initialPrompt ? [initialPrompt] : [],
+
+    togglePalette() {
+      toggleCommandPalette();
+    },
   }));
 }

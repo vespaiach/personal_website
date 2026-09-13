@@ -400,3 +400,51 @@ samp {
     transform: none;
   }
 }
+
+/* ── Utility Classes ── */
+.nav-link {
+  display: inline-block;
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-md);
+  border-radius: var(--radius-control);
+  font-family: var(--font-code);
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-leading);
+  font-weight: 400;
+  color: var(--text-mute);
+  transition: var(--transition-control);
+
+  &:hover {
+    color: var(--ink);
+    background-color: var(--canvas-soft);
+  }
+
+  &[aria-current="page"] {
+    color: var(--ink);
+    box-shadow: inset 0 -1px 0 0 var(--accent);
+  }
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: var(--text-mute);
+  cursor: pointer;
+  transition: var(--transition-control);
+
+  &:hover {
+    background-color: var(--canvas-raised);
+    color: var(--ink);
+  }
+}
+
+.divider-line {
+  height: var(--border-width);
+  background-color: var(--hairline);
+  border: 0;
+}
