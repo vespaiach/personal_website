@@ -1,6 +1,12 @@
 # personal_website
 
-Trinh Nguyen's personal site (`vespaiach`) — a terminal-styled dev blog. Being rebuilt with Vite + Alpine.js, replacing an old React/design-canvas export. Stack: Vite 8, TypeScript, Alpine.js 3, Biome (lint + format).
+Trinh Nguyen's personal site (`vespaiach`) — a terminal-styled dev blog. Being rebuilt with Vite + Alpine.js, replacing an old React/design-canvas export. Stack: Vite 8, TypeScript, Alpine.js 3, Tailwind CSS 4, Biome (lint + format).
+
+## Core Coding Principles
+
+- **Prefer the simple solution over the complex or abstract one.** Don't introduce a pattern, layer, or generalization the current requirement doesn't need.
+- **No dead or unused code.** Remove functions, variables, imports, and files that nothing references — don't leave them "just in case."
+- **No inline code comments.** Write code whose names and structure make its purpose obvious instead of explaining it in a comment.
 
 ## Project Structure
 
@@ -14,7 +20,7 @@ personal_website/
 ├── partials/header.html         shared nav, styled — injected into each page via vite-plugin-html-inject
 │                          (<load src="partials/header.html" active="posts|topics|about" />)
 ├── content/
-│   ├── posts/*.md                 9 real posts (frontmatter: title, date, updatedAt, excerpt, github, tags)
+│   ├── posts/*.md                 10 real posts (frontmatter: title, date, updatedAt, excerpt, github, tags)
 │   └── about/
 │       ├── me.md                  placeholder bio
 │       ├── stack.json             { languages[], frameworks[] }
@@ -24,10 +30,19 @@ personal_website/
 └── src/
     ├── alpine.d.ts              ambient shim — alpinejs ships no TS types of its own
     ├── main.ts                  Alpine.start(), registers every component below
-    ├── styles/global.css      full design system, ported from Vespaiach Terminal.html —
+    ├── styles/global.css      Tailwind CSS 4 entry point (`@import "tailwindcss"`) plus the
+    │                          rest of the design system ported from Vespaiach Terminal.html —
     │                          fonts, colors, typography, spacing, shape, elevation,
     │                          motion, base defaults, all in one file
-    ├── lib/{markdown.ts, highlight.ts, format.ts}    stub functions, all TODO
+    ├── CommandParser.ts         real, tested: splits a raw input line on `&` into
+    │                          `{command, arg}` pairs and validates each against the
+    │                          supported-command/arg-shape rules — not wired to
+    │                          commandPalette.ts yet (see Gaps below)
+    ├── lib/
+    │   ├── path.ts              real, tested: resolves relative/absolute virtual-fs
+    │   │                        paths (`toAbsolutePath`) and lists every path that
+    │   │                        exists under content/ (`getAvailablePaths`)
+    │   └── {markdown.ts, highlight.ts, format.ts}    stub functions, all TODO
     └── components/
         ├── header.ts            ⌘K listener (active-page state now lives in partials/header.html)
         ├── commandPalette.ts    Alpine.store('palette') — open/close only, no search yet
@@ -37,7 +52,9 @@ personal_website/
         └── aboutPage.ts         Alpine.data('aboutPage') — dummy bio/stack/projects
 ```
 
-`tsc --noEmit` is clean. `vite build` / `biome check` weren't verified this round — the verification shell is a Linux sandbox missing rolldown's and biome's Linux-arm64 native binaries (both installed for your Mac's darwin-arm64 only). Run `npm run dev` and `npm run build` locally to confirm.
+`npm run build` (`tsc && vite build`), `npm test` (`vitest run`), and `npm run lint` (`biome check`) are all clean as of 2026-09-12.
+
+**Before committing any code change**, run `npm run lint`, `npm test`, and `npm run build` — all three must pass.
 
 ## Architecture: fake shell over a virtual filesystem
 
@@ -80,6 +97,7 @@ Navigating between top-level folders is a real page load; moving around
 | `cd <dir>` | Changes cwd. A top-level target (`/`, `posts`, `topics`, `about`) is a real page navigation, since each is its own route with no shared router. A target relative to the current page (e.g. `cd projects` while on `/about/`) only updates cwd in place. |
 | `help` | Prints the command list, plus the current directory's own listing as a hint. |
 | `clear` | Empties the output log. Does not touch cwd. |
+| `tree [path]` | Recognized by `CommandParser.ts` (optional arg, like `ls`), but its rendered behavior isn't designed or implemented yet. |
 
 ### Build-time markdown → component codegen
 
@@ -149,10 +167,11 @@ and lets the page read like real shell scrollback instead of one static view.
 
 ### Gaps between this note and today's code
 
-- `commandPalette.ts` is currently a ⌘K modal (open/close only); it is the
-  planned home for command parsing but isn't wired to the dispatch above yet,
-  and reconciling "modal palette" vs. "always-visible inline terminal" is an
-  open UI decision.
+- `commandPalette.ts` is currently a ⌘K modal (open/close only). `CommandParser.ts`
+  and `lib/path.ts` already implement the parsing/path-resolution pieces
+  described above, but neither is wired into `commandPalette.ts` or the
+  dispatch flow yet, and reconciling "modal palette" vs. "always-visible
+  inline terminal" is an open UI decision.
 - The `public/components/` codegen Vite plugin described above doesn't exist
   yet — it's the next concrete build task.
 - `lib/markdown.ts`, `lib/highlight.ts`, `lib/format.ts` are stubs today.
