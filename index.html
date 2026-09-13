@@ -9,25 +9,9 @@
   <body>
     <load src="partials/header.html" active="posts" />
 
-    <main x-data="postList">
-      <template x-if="loading">
-        <p>loading…</p>
-      </template>
-      <template x-for="post in posts" :key="post.slug">
-        <article @click="open(post.slug)">
-          <h2 x-text="post.title"></h2>
-          <p x-text="post.excerpt"></p>
-        </article>
-      </template>
+    <main x-data="terminalPrompts">
+      <load src="partials/command-palette.html" />
     </main>
-
-    <!-- dummy inline post reader — real version fetches + parses content/posts/<slug>.md -->
-    <section x-data x-show="$store.reader.open" style="display:none">
-      <h1 x-text="$store.reader.title"></h1>
-      <p x-text="$store.reader.body"></p>
-    </section>
-
-    <load src="partials/command-palette.html" />
 
     <script type="module" src="/src/main.ts"></script>
   </body>
