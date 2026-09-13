@@ -284,7 +284,6 @@
   --radius-pill: 9999px;
   --radius-full: 9999px;
 
-  --border-width: 1px;
   --border-hairline: 1px solid var(--hairline);
   --border-hairline-soft: 1px solid var(--hairline-soft);
 
@@ -441,10 +440,4 @@ samp {
     background-color: var(--canvas-raised);
     color: var(--ink);
   }
-}
-
-.divider-line {
-  height: var(--border-width);
-  background-color: var(--hairline);
-  border: 0;
 }

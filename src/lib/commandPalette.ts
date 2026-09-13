@@ -1,3 +1,5 @@
+import Alpine from "alpinejs";
+
 export function openCommandPalette() {
   const dialog = document.getElementById("command-palette") as HTMLDialogElement;
   if (!dialog) return;
@@ -11,6 +13,7 @@ export function closeCommandPalette() {
   if (!dialog) return;
   if (dialog.open) {
     dialog.close();
+    Alpine.store("palette").reset();
   }
 }
 
@@ -18,7 +21,7 @@ export function toggleCommandPalette() {
   const dialog = document.getElementById("command-palette") as HTMLDialogElement;
   if (!dialog) return;
   if (dialog.open) {
-    dialog.close();
+    closeCommandPalette();
   } else {
     dialog.showModal();
   }
