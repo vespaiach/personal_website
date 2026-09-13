@@ -1,0 +1,67 @@
+<!--
+  Global command palette modal, injected into every page via
+  vite-plugin-html-inject's `load` tag (same mechanism as partials/header.html —
+  see that file's comment for why an example of the tag can't be spelled out
+  literally here: the plugin scans raw text, not a real parser, and would
+  match this very file's own inclusion).
+  Opened by ⌘K/Ctrl+K (src/components/header.ts) or the header icon buttons
+  (partials/header.html), both via `$store.palette.show()`.
+-->
+<div
+  x-data
+  x-show="$store.palette.open"
+  style="display: none"
+  x-effect="$store.palette.open && $nextTick(() => $refs.paletteInput.focus())"
+  @keydown.escape="$store.palette.hide()"
+  class="command-modal"
+>
+  <div class="command-modal__overlay" @click="$store.palette.hide()"></div>
+  <div class="command-modal__dialog" role="dialog" aria-modal="true" aria-label="Run a command">
+    <div class="command-modal__header">
+      <h2 class="command-modal__title">Run a command</h2>
+      <button type="button" class="command-modal__close" aria-label="Close" @click="$store.palette.hide()">
+        &times;
+      </button>
+    </div>
+    <p class="command-modal__subtitle" x-text="$store.palette.subtitle"></p>
+    <div class="command-modal__divider"></div>
+    <div class="command-modal__input-row">
+      <span class="command-modal__chevrons" aria-hidden="true">&raquo;</span>
+      <span class="command-modal__prompt" aria-hidden="true">$</span>
+      <input
+        x-ref="paletteInput"
+        type="text"
+        class="command-modal__input"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="cd /posts && ls"
+        x-model="$store.palette.query"
+        @input="$store.palette.onInput()"
+        @keydown.enter.prevent="$store.palette.runSelected()"
+        @keydown.up.prevent="$store.palette.onArrowUp()"
+        @keydown.down.prevent="$store.palette.moveSelection(1)"
+        @keydown.tab.prevent="$store.palette.completeSelected()"
+      />
+    </div>
+    <ul class="command-modal__suggestions" x-show="$store.palette.suggestions.length > 0">
+      <template x-for="(s, i) in $store.palette.suggestions" :key="s.label + i">
+        <li
+          class="command-modal__suggestion"
+          :class="i === $store.palette.selectedIndex && 'command-modal__suggestion--selected'"
+          @click="$store.palette.runSuggestion(s)"
+        >
+          <span class="command-modal__suggestion-label" x-text="s.label"></span>
+          <span class="command-modal__suggestion-hint" x-text="s.hint"></span>
+        </li>
+      </template>
+    </ul>
+    <div class="command-modal__divider"></div>
+    <div class="command-modal__footer">
+      <span>enter run</span>
+      <span>&uarr;&darr; select</span>
+      <span>tab complete</span>
+      <span>esc close</span>
+      <span class="command-modal__match-count" x-text="$store.palette.matchLabel"></span>
+    </div>
+  </div>
+</div>
