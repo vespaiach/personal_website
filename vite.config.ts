@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import injectHTML from "vite-plugin-html-inject";
+import { folderListingPlugin } from "./src/plugins/folderListingPlugin.ts";
 
 // Multi-page build: Posts (root), Topics, About.
 // Shared nav lives in partials/header.html, injected into each entry via
@@ -9,7 +10,7 @@ import injectHTML from "vite-plugin-html-inject";
 const root = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
-  plugins: [injectHTML(), tailwindcss()],
+  plugins: [injectHTML(), tailwindcss(), folderListingPlugin()],
   build: {
     rollupOptions: {
       input: {
