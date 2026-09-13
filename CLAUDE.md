@@ -60,7 +60,7 @@ Navigating between top-level folders is a real page load; moving around
 ```
 
 - `posts/` and `about/projects/` are the only directories backed by real files —
-  discovered at build time with `import.meta.glob('/content/**/*.md')`, filename
+  discovered by the codegen plugin at build time (see below), filename
   (minus extension) is the slug.
 - `topics/` is virtual: it has no files of its own. Its listing is computed by
   splitting every post's frontmatter `tags:` (a comma-separated string, e.g.
@@ -75,8 +75,8 @@ Navigating between top-level folders is a real page load; moving around
 
 | Command | Behavior |
 |---|---|
-| `ls [path]` | Lists entries of `path` (default: cwd). Static children for `/`, `about/`; globbed filenames for `posts/` and `about/projects/`; derived tag names for `topics/`. |
-| `cat <file>` | Fetches one file and renders its content inline in the terminal's output log (see below). |
+| `ls [path]` | Fetches the generated listing component for `path` (default: cwd) and renders it inline in the terminal's output log (see below). |
+| `cat <file>` | Fetches the generated component for one file and renders it inline in the terminal's output log (see below). |
 | `cd <dir>` | Changes cwd. A top-level target (`/`, `posts`, `topics`, `about`) is a real page navigation, since each is its own route with no shared router. A target relative to the current page (e.g. `cd projects` while on `/about/`) only updates cwd in place. |
 | `help` | Prints the command list, plus the current directory's own listing as a hint. |
 | `clear` | Empties the output log. Does not touch cwd. |
@@ -108,13 +108,31 @@ just fetches the fragment that matches the file's name.
   `about/projects/` combined — two source files that would generate the same
   `<slug>.html` is a build error, not a silent overwrite.
 
+The same plugin also generates one **listing** component per virtual folder —
+these render `ls`, the way the per-file components above render `cat`:
+
+- `public/components/posts-listings.html` — every post's title/date/excerpt,
+  generated from all of `content/posts/*.md`'s frontmatter.
+- `public/components/topics-listings.html` — every derived tag (see
+  "The virtual filesystem" above) with its post count.
+- `public/components/about-listings.html` — the fixed `about/` entries
+  (`me.md`, `stack.json`, `projects/`).
+- `public/components/projects-listings.html` — every project file's name,
+  generated from all of `content/about/projects/*.md`.
+- The `-listings` suffix keeps this namespace distinct from the per-file one
+  above, so a source file literally named `posts.md` (→ `posts.html`) can't
+  collide with `posts-listings.html`.
+
 ### Command → component dispatch
 
 Typing a command resolves the target against the virtual filesystem above and
 hands off to the Alpine store/component that already owns that content type:
 
-- `ls` → a directory-listing view populated from the resolved directory's
-  entries (shares styling with today's `postList`/`topicList` row markup).
+- `ls <path>` (e.g. `ls /posts`, `ls projects` from `/about/`) → resolve
+  `<path>` to one of `posts`/`topics`/`about`/`projects`, `fetch()` the
+  matching `/components/<folder>-listings.html`, insert it into the output
+  log, and `Alpine.initTree()` it — same mount step as `cat`, just against
+  the listing namespace instead of the per-file one.
 - `cat <file>` → strip the extension to get the component name (`cat
   typescript-notes.md` → `typescript-notes`), `fetch()` the matching
   `/components/<name>.html`, insert the returned markup into the terminal's
@@ -143,9 +161,10 @@ and lets the page read like real shell scrollback instead of one static view.
   (fetch raw `.md`, parse client-side) is the wrong end-state and should be
   replaced by the fetch-generated-HTML-and-mount flow above.
 - `postList.ts`, `topicList.ts`, `aboutPage.ts` still return hardcoded dummy
-  data; wiring `ls` means replacing that with `import.meta.glob` reads of
-  `content/` for listings (globbing stays a browser/runtime concern — only
-  the per-file `cat` rendering moves to build time).
+  data. With listings also moving to generated components, wiring `ls` means
+  replacing that dummy data with the fetch-and-mount flow above, not with
+  `import.meta.glob` reads in the browser — codegen now owns both the
+  per-file and the per-folder rendering, and the browser only fetches.
 - `package.json` still carries dependencies/scripts from the previous
   Nunjucks/Tailwind-CLI/`gray-matter` build (`tailwindcss`, `marked`,
   `nunjucks`, `gray-matter`, `http-server`, `date-fns`, `async-mutex`)
