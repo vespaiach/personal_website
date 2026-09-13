@@ -1,16 +1,22 @@
 <!--
   Global command palette modal, injected into every page via
-  vite-plugin-html-inject's `load` tag (same mechanism as partials/header.html —
-  see that file's comment for why an example of the tag can't be spelled out
-  literally here: the plugin scans raw text, not a real parser, and would
-  match this very file's own inclusion).
+  vite-plugin-html-inject's `load` tag — the plugin scans raw text, not a
+  real parser, and would match this very file's own inclusion if spelled
+  out literally here.
   Opened by ⌘K/Ctrl+K (src/components/header.ts) or the header icon buttons
-  (partials/header.html), both via `$store.palette.show()`.
-  Native <dialog>: showModal()/close() drive it instead of x-show, so the
+  (partials/header.html), both of which set the shared shell scope's
+  `paletteOpen` to true — this file is loaded inside <body x-data="shell">,
+  so it inherits `paletteOpen` directly, no $store needed.
+  Native <dialog>: `x-effect` watches `paletteOpen` and drives
+  showModal()/close() on it via $refs.dialog instead of x-show, so the
   browser handles top-layer stacking and focus (the input's `autofocus`
   re-focuses it on every open) — note `open:flex` (not a bare `flex`) is
   required on the dialog itself, otherwise the class overrides the UA
   `dialog:not([open]) { display: none }` rule and it never actually hides.
+  Every close path (button, Escape, backdrop) calls `$refs.dialog.close()`
+  and resets `paletteOpen` to false itself — the native `close` event exists
+  as a defensive fallback (`@close`), but isn't relied on as the only path:
+  it doesn't reliably fire on every dialog.close() call in every browser.
   `lightDismiss` replicates click-outside-to-close by comparing the click
   point against the dialog's own box, since a click anywhere on ::backdrop
   reports the dialog itself as `event.target` too. The explicit
@@ -26,20 +32,23 @@
         $event.clientX <= rect.right &&
         $event.clientY >= rect.top &&
         $event.clientY <= rect.bottom;
-      if (!inside) $store.palette.hide();
+      if (!inside) {
+        $refs.dialog.close();
+        paletteOpen = false;
+      }
     },
   }"
   x-ref="dialog"
-  x-effect="$store.palette.open ? $refs.dialog.showModal() : $refs.dialog.close()"
-  @close="$store.palette.hide()"
-  @keydown.escape="$store.palette.hide()"
+  x-effect="paletteOpen ? $refs.dialog.showModal() : $refs.dialog.close()"
+  @close="paletteOpen = false"
+  @keydown.escape="$refs.dialog.close(); paletteOpen = false"
   @click="lightDismiss($event)"
   aria-label="Run a command"
   class="m-auto w-[min(640px,calc(100vw_-_var(--space-2xl)))] border-0 rounded-[var(--radius-surface)] bg-[color:var(--canvas-soft)] text-[color:var(--text-body)] shadow-[var(--elev-3)] p-[var(--space-xl)] gap-[var(--gap-stack)] open:flex open:flex-col backdrop:bg-[color:var(--overlay)]"
 >
   <div class="flex items-center justify-between">
     <h2 class="m-0 [font-family:var(--font-sans)] [font-weight:var(--weight-semibold)] text-[length:var(--body-lg-size)] leading-[var(--body-lg-leading)] text-[color:var(--ink)]">Run a command</h2>
-    <button type="button" class="inline-flex items-center justify-center w-7 h-7 p-0 border border-transparent rounded-full bg-transparent text-[color:var(--text-mute)] text-[length:var(--body-md-size)] leading-none cursor-pointer [transition:var(--transition-control)] hover:bg-[color:var(--canvas-raised)] hover:text-[color:var(--ink)]" aria-label="Close" @click="$store.palette.hide()">
+    <button type="button" class="inline-flex items-center justify-center w-7 h-7 p-0 border border-transparent rounded-full bg-transparent text-[color:var(--text-mute)] text-[length:var(--body-md-size)] leading-none cursor-pointer [transition:var(--transition-control)] hover:bg-[color:var(--canvas-raised)] hover:text-[color:var(--ink)]" aria-label="Close" @click="$refs.dialog.close(); paletteOpen = false">
       &times;
     </button>
   </div>
