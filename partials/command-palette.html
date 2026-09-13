@@ -1,5 +1,9 @@
 <dialog
   x-data="{
+    close() {
+      $refs.dialog.close();
+      $store.palette.reset();
+    },
     lightDismiss($event) {
       const rect = $refs.dialog.getBoundingClientRect();
       const inside =
@@ -8,63 +12,64 @@
         $event.clientY >= rect.top &&
         $event.clientY <= rect.bottom;
       if (!inside) {
-        $refs.dialog.close();
+        this.close();
       }
     },
   }"
   id="command-palette"
   x-ref="dialog"
-  @close="$refs.dialog.close();"
-  @keydown.escape="$refs.dialog.close();"
+  @keydown.escape="close();"
   @click="lightDismiss($event)"
   aria-label="Run a command"
-  class="m-auto w-[min(640px,calc(100vw-var(--space-2xl)))] border-0 rounded-(--radius-surface) bg-(--canvas-soft) text-(--text-body) shadow-(--elev-3) p-(--space-xl) gap-(--gap-stack) open:flex open:flex-col backdrop:bg-(--overlay)"
+  class="m-auto w-[min(640px,calc(100vw-(var(--space-xl)*2)))] border border-(--hairline) rounded-(--radius-surface) bg-(--canvas) text-(--text-body) shadow-(--elev-3) overflow-hidden open:flex open:flex-col backdrop:bg-(--overlay) backdrop:[backdrop-filter:blur(3px)]"
 >
-  <div class="flex items-center justify-between">
-    <h2 class="m-0 font-sans font-(--weight-semibold) text-(length:--body-lg-size) leading-(--body-lg-leading) text-(--ink)">Run a command</h2>
-    <button type="button" class="btn-icon size-7 text-(length:--body-md-size) leading-none" aria-label="Close" @click="$refs.dialog.close(); paletteOpen = false">
-      &times;
+  <div class="flex items-start gap-(--space-md) py-(--space-lg) px-(--space-xl) border-b border-(--hairline)">
+    <div class="flex-1 min-w-0">
+      <h2 class="m-0 font-sans font-medium text-(length:--body-md-size) leading-(--body-md-leading) text-(--ink)">Run a command</h2>
+      <p class="m-0 mt-0.5 font-mono text-(length:--caption-size) text-(--text-mute)" x-text="`~${cwd} · esc to close`"></p>
+    </div>
+    <button type="button" class="shrink-0 flex text-(--text-mute) hover:text-(--ink) transition-(--transition-control)" aria-label="Close" @click="close()">
+      <svg class="block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
     </button>
   </div>
-  <p class="m-0 font-mono text-(length:--caption-size) leading-(--caption-leading) text-(--text-mute)" x-text="$store.palette.subtitle"></p>
-  <div class="divider-line"></div>
-  <div class="flex items-center gap-(--space-sm) bg-(--canvas) border border-(--hairline) rounded-(--radius-control) py-(--space-sm) px-(--space-md) transition-(--transition-control) focus-within:border-(--focus-ring) focus-within:shadow-[0_0_0_2px_var(--canvas-soft),0_0_0_3px_var(--focus-ring)]">
-    <span class="text-(--text-faint) font-mono select-none" aria-hidden="true">&raquo;</span>
-    <span class="text-(--prompt-symbol) font-mono" aria-hidden="true">$</span>
-    <input
-      x-ref="paletteInput"
-      type="text"
-      autofocus
-      class="flex-1 min-w-0 bg-transparent border-0 outline-none text-(--ink) font-mono text-(length:--code-md-size) leading-(--code-md-leading) placeholder:text-(--text-faint)"
-      autocomplete="off"
-      spellcheck="false"
-      placeholder="cd /posts && ls"
-      x-model="$store.palette.query"
-      @input="$store.palette.onInput()"
-      @keydown.enter.prevent="$store.palette.runSelected()"
-      @keydown.up.prevent="$store.palette.onArrowUp()"
-      @keydown.down.prevent="$store.palette.moveSelection(1)"
-      @keydown.tab.prevent="$store.palette.completeSelected()"
-    />
-  </div>
-  <ul class="list-none m-0 p-0 flex flex-col gap-px max-h-[min(40vh,280px)] overflow-y-auto" x-show="$store.palette.suggestions.length > 0">
-    <template x-for="(s, i) in $store.palette.suggestions" :key="s.label + i">
-      <li
-        class="flex items-baseline gap-(--space-lg) py-(--space-xs) px-(--space-sm) rounded-(--radius-control) cursor-pointer transition-(--transition-control) hover:bg-(--canvas-raised)"
-        :class="i === $store.palette.selectedIndex && 'bg-(--canvas-raised)'"
-        @click="$store.palette.runSuggestion(s)"
-      >
-        <span class="font-mono text-(length:--code-size) text-(--ink) whitespace-pre" x-text="s.label"></span>
-        <span class="ml-auto font-mono text-(length:--caption-size) text-(--text-faint) whitespace-pre" x-text="s.hint"></span>
-      </li>
-    </template>
-  </ul>
-  <div class="divider-line"></div>
-  <div class="flex gap-(--space-lg) flex-wrap font-mono text-(length:--caption-size) text-(--text-faint)">
-    <span>enter run</span>
-    <span>&uarr;&darr; select</span>
-    <span>tab complete</span>
-    <span>esc close</span>
-    <span class="ml-auto text-(--text-mute)" x-text="$store.palette.matchLabel"></span>
+  <div class="flex flex-col gap-3.5 p-(--space-xl)">
+    <div class="flex items-center gap-(--space-sm) bg-(--canvas-soft) border border-(--hairline) rounded-(--radius-control) py-(--space-sm) px-(--space-md) transition-(--transition-control) focus-within:border-(--focus-ring) focus-within:shadow-[0_0_0_2px_var(--canvas-soft),0_0_0_3px_var(--focus-ring)]">
+      <span class="text-(--text-faint) font-mono select-none" aria-hidden="true">&raquo;</span>
+      <span class="text-(--prompt-symbol) font-mono" aria-hidden="true">$</span>
+      <input
+        x-ref="paletteInput"
+        type="text"
+        autofocus
+        class="flex-1 min-w-0 bg-transparent border-0 outline-none! text-(--ink) font-mono text-(length:--code-md-size) leading-(--code-md-leading) placeholder:text-(--text-faint)"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="cd /posts && ls"
+        x-model="$store.palette.query"
+        @input="$store.palette.onInput()"
+        @keydown.enter.prevent="$store.palette.runSelected()"
+        @keydown.up.prevent="$store.palette.onArrowUp()"
+        @keydown.down.prevent="$store.palette.moveSelection(1)"
+        @keydown.tab.prevent="$store.palette.completeSelected()"
+      />
+    </div>
+    <ul class="list-none m-0 p-0 flex flex-col gap-px max-h-[min(40vh,280px)] overflow-y-auto -mx-1.5" x-show="$store.palette.suggestions.length > 0">
+      <template x-for="(s, i) in $store.palette.suggestions" :key="s.label + i">
+        <li
+          class="flex items-baseline gap-(--space-lg) py-(--space-xs) px-(--space-sm) rounded-(--radius-control) cursor-pointer transition-(--transition-control) hover:bg-(--canvas-raised)"
+          :class="i === $store.palette.selectedIndex && 'bg-(--canvas-raised)'"
+          @click="$store.palette.runSuggestion(s)"
+        >
+          <span class="font-mono text-(length:--code-size) text-(--ink) whitespace-pre" x-text="s.label"></span>
+          <span class="ml-auto font-mono text-(length:--caption-size) text-(--text-faint) whitespace-pre" x-text="s.hint"></span>
+        </li>
+      </template>
+    </ul>
+    <div class="flex gap-(--space-lg) flex-wrap font-mono text-(length:--caption-size) text-(--text-faint) border-t border-(--hairline) pt-3">
+      <span>enter run</span>
+      <span>&uarr;&darr; select</span>
+      <span>tab complete</span>
+      <span>esc close</span>
+      <span class="ml-auto text-(--text-mute)" x-text="$store.palette.matchLabel"></span>
+    </div>
   </div>
 </dialog>
