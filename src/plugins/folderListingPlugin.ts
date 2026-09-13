@@ -151,7 +151,7 @@ function generateListings(root: string): void {
   writeFileSync(join(outputDir, "projects-listings.html"), renderProjectsListing(projectSlugs));
 }
 
-function isUnderDir(file: string, dir: string): boolean {
+export function isUnderDir(file: string, dir: string): boolean {
   const rel = relative(dir, file);
   return rel !== "" && !rel.startsWith("..") && !isAbsolute(rel);
 }

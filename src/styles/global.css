@@ -441,3 +441,60 @@ samp {
     color: var(--ink);
   }
 }
+
+.divider-line {
+  height: var(--border-width);
+  background-color: var(--hairline);
+  border: 0;
+}
+
+.posts-listing-row {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: var(--canvas);
+  color: var(--text-body);
+  font-family: var(--font-code);
+  font-size: var(--code-size);
+  line-height: 21px;
+  list-style: none;
+
+  & li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  & [aria-label="total"] {
+    color: #616e88;
+  }
+
+  & [aria-label="permissions"],
+  & [aria-label="read time"],
+  & [aria-label="date"] {
+    flex-shrink: 0;
+    color: #616e88;
+  }
+
+  & [aria-label="read time"] {
+    width: 48px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  & [aria-label="date"] {
+    width: 96px;
+    white-space: nowrap;
+  }
+
+  & [aria-label="filename"] {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+}
