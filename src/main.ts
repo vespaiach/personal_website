@@ -3,7 +3,7 @@ import "./styles/global.css";
 import Alpine from "alpinejs";
 
 import { registerAboutPage } from "./components/aboutPage";
-import { registerCommandPalette } from "./components/command-palette";
+import { registerCommandPalette } from "./components/commandPalette";
 import { registerHeader } from "./components/header";
 import { registerPostList } from "./components/postList";
 import { registerPostReader } from "./components/postReader";
