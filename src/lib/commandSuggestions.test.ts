@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildSuggestions, FIXED_COMMANDS, pushRecent } from "./commandSuggestions.ts";
+import { buildSuggestions, FIXED_COMMANDS } from "./commandSuggestions.ts";
 
 describe("buildSuggestions", () => {
   it("returns the first 8 fixed commands for an empty query with no recent history", () => {
@@ -53,29 +53,5 @@ describe("buildSuggestions", () => {
 
   it("trims leading and trailing whitespace before matching", () => {
     expect(buildSuggestions("  ls  ", [])).toEqual([{ label: "ls", hint: "list the current directory" }]);
-  });
-});
-
-describe("pushRecent", () => {
-  it("appends a command to the end of the list", () => {
-    expect(pushRecent(["ls"], "pwd")).toEqual(["ls", "pwd"]);
-  });
-
-  it("evicts the oldest entry once the list exceeds the cap", () => {
-    const recent = Array.from({ length: 20 }, (_, i) => `cmd${i}`);
-    const result = pushRecent(recent, "cmd20");
-    expect(result.length).toBe(20);
-    expect(result[0]).toBe("cmd1");
-    expect(result[result.length - 1]).toBe("cmd20");
-  });
-
-  it("keeps duplicate entries without de-duplication", () => {
-    expect(pushRecent(["ls", "pwd"], "ls")).toEqual(["ls", "pwd", "ls"]);
-  });
-
-  it("does not mutate the input array", () => {
-    const recent = ["ls"];
-    pushRecent(recent, "pwd");
-    expect(recent).toEqual(["ls"]);
   });
 });

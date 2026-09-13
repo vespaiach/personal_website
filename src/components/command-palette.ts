@@ -1,13 +1,21 @@
 import Alpine from "alpinejs";
-import { closeCommandPalette } from "../lib/commandPalette";
-import { buildSuggestions, pushRecent, type Suggestion } from "../lib/commandSuggestions";
+import { buildSuggestions, type Suggestion } from "../lib/commandSuggestions";
+import type { Prompt } from "./shell";
+
+interface ShellState {
+  cwd: string;
+  prompts: Prompt[];
+}
+
+interface DialogRefs {
+  $refs: { dialog: HTMLDialogElement };
+}
 
 export function registerCommandPalette() {
-  Alpine.store("palette", {
+  Alpine.data("commandPalette", () => ({
     query: "",
     suggestions: [] as Suggestion[],
     selectedIndex: 0,
-    recent: [] as string[],
 
     init() {
       this.reset();
@@ -16,11 +24,16 @@ export function registerCommandPalette() {
     reset() {
       this.query = "";
       this.selectedIndex = 0;
-      this.suggestions = buildSuggestions("", this.recent);
+      this.suggestions = buildSuggestions("", this.recentCommands());
+    },
+
+    recentCommands(): string[] {
+      const { prompts } = this as unknown as ShellState;
+      return prompts.map((prompt) => prompt.command);
     },
 
     onInput() {
-      this.suggestions = buildSuggestions(this.query, this.recent);
+      this.suggestions = buildSuggestions(this.query, this.recentCommands());
       this.selectedIndex = 0;
     },
 
@@ -41,16 +54,20 @@ export function registerCommandPalette() {
       this.onInput();
     },
 
+    run(command: string) {
+      const { cwd, prompts } = this as unknown as ShellState;
+      prompts.push({ cwd, command });
+      this.close();
+    },
+
     runSuggestion(suggestion: Suggestion) {
-      this.recent = pushRecent(this.recent, suggestion.label);
-      closeCommandPalette();
+      this.run(suggestion.label);
     },
 
     runSelected() {
       const command = this.suggestions[this.selectedIndex]?.label ?? this.query.trim();
       if (!command) return;
-      this.recent = pushRecent(this.recent, command);
-      closeCommandPalette();
+      this.run(command);
     },
 
     get matchLabel(): string {
@@ -58,5 +75,22 @@ export function registerCommandPalette() {
       if (count === 0) return "";
       return `${count} match${count === 1 ? "" : "es"}`;
     },
-  });
+
+    close() {
+      (this as unknown as DialogRefs).$refs.dialog.close();
+      this.reset();
+    },
+
+    lightDismiss(event: MouseEvent) {
+      const rect = (this as unknown as DialogRefs).$refs.dialog.getBoundingClientRect();
+      const inside =
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+      if (!inside) {
+        this.close();
+      }
+    },
+  }));
 }

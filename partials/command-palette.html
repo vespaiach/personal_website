@@ -1,21 +1,5 @@
 <dialog
-  x-data="{
-    close() {
-      $refs.dialog.close();
-      $store.palette.reset();
-    },
-    lightDismiss($event) {
-      const rect = $refs.dialog.getBoundingClientRect();
-      const inside =
-        $event.clientX >= rect.left &&
-        $event.clientX <= rect.right &&
-        $event.clientY >= rect.top &&
-        $event.clientY <= rect.bottom;
-      if (!inside) {
-        this.close();
-      }
-    },
-  }"
+  x-data="commandPalette()"
   id="command-palette"
   x-ref="dialog"
   @keydown.escape="close();"
@@ -44,20 +28,20 @@
         autocomplete="off"
         spellcheck="false"
         placeholder="cd /posts && ls"
-        x-model="$store.palette.query"
-        @input="$store.palette.onInput()"
-        @keydown.enter.prevent="$store.palette.runSelected()"
-        @keydown.up.prevent="$store.palette.onArrowUp()"
-        @keydown.down.prevent="$store.palette.moveSelection(1)"
-        @keydown.tab.prevent="$store.palette.completeSelected()"
+        x-model="query"
+        @input="onInput()"
+        @keydown.enter.prevent="runSelected()"
+        @keydown.up.prevent="onArrowUp()"
+        @keydown.down.prevent="moveSelection(1)"
+        @keydown.tab.prevent="completeSelected()"
       />
     </div>
-    <ul class="list-none m-0 p-0 flex flex-col gap-px max-h-[min(40vh,280px)] overflow-y-auto -mx-1.5" x-show="$store.palette.suggestions.length > 0">
-      <template x-for="(s, i) in $store.palette.suggestions" :key="s.label + i">
+    <ul class="list-none m-0 p-0 flex flex-col gap-px max-h-[min(40vh,280px)] overflow-y-auto -mx-1.5" x-show="suggestions.length > 0">
+      <template x-for="(s, i) in suggestions" :key="s.label + i">
         <li
           class="flex items-baseline gap-(--space-lg) py-(--space-xs) px-(--space-sm) rounded-(--radius-control) cursor-pointer transition-(--transition-control) hover:bg-(--canvas-raised)"
-          :class="i === $store.palette.selectedIndex && 'bg-(--canvas-raised)'"
-          @click="$store.palette.runSuggestion(s)"
+          :class="i === selectedIndex && 'bg-(--canvas-raised)'"
+          @click="runSuggestion(s)"
         >
           <span class="font-mono text-(length:--code-size) text-(--ink) whitespace-pre" x-text="s.label"></span>
           <span class="ml-auto font-mono text-(length:--caption-size) text-(--text-faint) whitespace-pre" x-text="s.hint"></span>
@@ -69,7 +53,7 @@
       <span>&uarr;&darr; select</span>
       <span>tab complete</span>
       <span>esc close</span>
-      <span class="ml-auto text-(--text-mute)" x-text="$store.palette.matchLabel"></span>
+      <span class="ml-auto text-(--text-mute)" x-text="matchLabel"></span>
     </div>
   </div>
 </dialog>

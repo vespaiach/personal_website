@@ -3,8 +3,6 @@ export interface Suggestion {
   hint: string;
 }
 
-export const RECENT_CAP = 20;
-
 export const FIXED_COMMANDS: ReadonlyArray<readonly [string, string]> = [
   ["ls", "list the current directory"],
   ["cd ~/posts", "the notes"],
@@ -44,9 +42,4 @@ export function buildSuggestions(query: string, recent: readonly string[]): Sugg
     ([label, hint]) => ({ label, hint }),
   );
   return recentSuggestions.concat(fixedSuggestions);
-}
-
-export function pushRecent(recent: readonly string[], cmd: string, cap = RECENT_CAP): string[] {
-  const next = [...recent, cmd];
-  return next.length > cap ? next.slice(next.length - cap) : next;
 }
