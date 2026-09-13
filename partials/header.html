@@ -8,20 +8,20 @@
   Alpine sets aria-current="page" (and the CSS active style keyed off it)
   only on the matching link.
 -->
-<header class="site-header" x-data="header()">
-  <div class="row">
-    <div class="brand"><span class="prompt">$</span><span>vespaiach</span></div>
-    <nav>
-      <a class="nav-link" href="/" :aria-current="'{=$active}' === 'posts' ? 'page' : null">/posts</a>
-      <a class="nav-link" href="/topics/" :aria-current="'{=$active}' === 'topics' ? 'page' : null">/topics</a>
-      <a class="nav-link" href="/about/" :aria-current="'{=$active}' === 'about' ? 'page' : null">/about</a>
+<header class="sticky top-0 z-30 bg-[var(--canvas)] border-b border-[color:var(--hairline)]" x-data="header()">
+  <div class="flex items-center gap-[var(--space-2xl)] max-w-[var(--container)] mx-auto py-[var(--space-md)] px-[var(--space-xl)] box-border">
+    <div class="flex items-baseline gap-[0.3em] flex-none [font-family:var(--font-code)] text-[length:var(--body-sm-size)]"><span class="text-[color:var(--prompt-symbol)]">$</span><span class="text-[color:var(--ink)]">vespaiach</span></div>
+    <nav class="flex items-center gap-[var(--space-xxs)] flex-1 min-w-0">
+      <a class="inline-block py-[var(--space-xs)] px-[var(--space-md)] rounded-[var(--radius-control)] [font-family:var(--font-code)] text-[length:var(--body-sm-size)] leading-[var(--body-sm-leading)] font-normal text-[color:var(--text-mute)] [transition:var(--transition-control)] hover:text-[color:var(--ink)] hover:bg-[color:var(--canvas-soft)] aria-[current=page]:text-[color:var(--ink)] aria-[current=page]:shadow-[inset_0_-1px_0_0_var(--accent)]" href="/" :aria-current="'{=$active}' === 'posts' ? 'page' : null">/posts</a>
+      <a class="inline-block py-[var(--space-xs)] px-[var(--space-md)] rounded-[var(--radius-control)] [font-family:var(--font-code)] text-[length:var(--body-sm-size)] leading-[var(--body-sm-leading)] font-normal text-[color:var(--text-mute)] [transition:var(--transition-control)] hover:text-[color:var(--ink)] hover:bg-[color:var(--canvas-soft)] aria-[current=page]:text-[color:var(--ink)] aria-[current=page]:shadow-[inset_0_-1px_0_0_var(--accent)]" href="/topics/" :aria-current="'{=$active}' === 'topics' ? 'page' : null">/topics</a>
+      <a class="inline-block py-[var(--space-xs)] px-[var(--space-md)] rounded-[var(--radius-control)] [font-family:var(--font-code)] text-[length:var(--body-sm-size)] leading-[var(--body-sm-leading)] font-normal text-[color:var(--text-mute)] [transition:var(--transition-control)] hover:text-[color:var(--ink)] hover:bg-[color:var(--canvas-soft)] aria-[current=page]:text-[color:var(--ink)] aria-[current=page]:shadow-[inset_0_-1px_0_0_var(--accent)]" href="/about/" :aria-current="'{=$active}' === 'about' ? 'page' : null">/about</a>
     </nav>
-    <div class="actions">
-      <button type="button" class="icon-btn" title="Run a command (⌘K)" aria-label="Run a command" @click="$store.palette.show()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m7 11 2-2-2-2"></path><path d="M11 13h4"></path><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect></svg>
+    <div class="flex items-center gap-[var(--space-sm)] flex-none">
+      <button type="button" class="inline-flex items-center justify-center w-8 h-8 p-0 border border-transparent rounded-full bg-transparent text-[color:var(--text-mute)] cursor-pointer [transition:var(--transition-control)] hover:bg-[color:var(--canvas-raised)] hover:text-[color:var(--ink)]" title="Run a command (⌘K)" aria-label="Run a command" @click="$store.palette.show()">
+        <svg class="block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m7 11 2-2-2-2"></path><path d="M11 13h4"></path><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect></svg>
       </button>
-      <button type="button" class="icon-btn" title="List all commands (help)" aria-label="List all commands" @click="$store.palette.show()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+      <button type="button" class="inline-flex items-center justify-center w-8 h-8 p-0 border border-transparent rounded-full bg-transparent text-[color:var(--text-mute)] cursor-pointer [transition:var(--transition-control)] hover:bg-[color:var(--canvas-raised)] hover:text-[color:var(--ink)]" title="List all commands (help)" aria-label="List all commands" @click="$store.palette.show()">
+        <svg class="block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
       </button>
     </div>
   </div>
