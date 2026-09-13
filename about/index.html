@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>vespaiach — about</title>
   </head>
-  <body>
+  <body x-data="shell">
     <load src="partials/header.html" active="about" />
-
-    <main x-data="aboutPage"></main>
-
+    <load src="partials/terminal.html" />
     <load src="partials/command-palette.html" />
-
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

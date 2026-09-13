@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseCommand } from "./CommandParser.ts";
+import { parseCommand } from "../CommandParser.ts";
 
 describe("parseCommand", () => {
   it("parses a single command with an arg", () => {
