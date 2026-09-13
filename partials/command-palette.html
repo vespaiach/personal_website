@@ -32,7 +32,7 @@
       <svg class="block" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
     </button>
   </div>
-  <div class="flex flex-col gap-[14px] p-(--space-xl)">
+  <div class="flex flex-col gap-3.5 p-(--space-xl)">
     <div class="flex items-center gap-(--space-sm) bg-(--canvas-soft) border border-(--hairline) rounded-(--radius-control) py-(--space-sm) px-(--space-md) transition-(--transition-control) focus-within:border-(--focus-ring) focus-within:shadow-[0_0_0_2px_var(--canvas-soft),0_0_0_3px_var(--focus-ring)]">
       <span class="text-(--text-faint) font-mono select-none" aria-hidden="true">&raquo;</span>
       <span class="text-(--prompt-symbol) font-mono" aria-hidden="true">$</span>
@@ -40,7 +40,7 @@
         x-ref="paletteInput"
         type="text"
         autofocus
-        class="flex-1 min-w-0 bg-transparent border-0 outline-none text-(--ink) font-mono text-(length:--code-md-size) leading-(--code-md-leading) placeholder:text-(--text-faint)"
+        class="flex-1 min-w-0 bg-transparent border-0 outline-none! text-(--ink) font-mono text-(length:--code-md-size) leading-(--code-md-leading) placeholder:text-(--text-faint)"
         autocomplete="off"
         spellcheck="false"
         placeholder="cd /posts && ls"
@@ -64,7 +64,7 @@
         </li>
       </template>
     </ul>
-    <div class="flex gap-(--space-lg) flex-wrap font-mono text-(length:--caption-size) text-(--text-faint) border-t border-(--hairline) pt-[12px]">
+    <div class="flex gap-(--space-lg) flex-wrap font-mono text-(length:--caption-size) text-(--text-faint) border-t border-(--hairline) pt-3">
       <span>enter run</span>
       <span>&uarr;&darr; select</span>
       <span>tab complete</span>
