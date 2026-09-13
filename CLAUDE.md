@@ -37,7 +37,7 @@ personal_website/
     ├── CommandParser.ts         real, tested: splits a raw input line on `&` into
     │                          `{command, arg}` pairs and validates each against the
     │                          supported-command/arg-shape rules — not wired to
-    │                          commandPalette.ts yet (see Gaps below)
+    │                          command-palette.ts yet (see Gaps below)
     ├── lib/
     │   ├── path.ts              real, tested: resolves relative/absolute virtual-fs
     │   │                        paths (`toAbsolutePath`) and lists every path that
@@ -45,7 +45,7 @@ personal_website/
     │   └── {markdown.ts, highlight.ts, format.ts}    stub functions, all TODO
     └── components/
         ├── header.ts            ⌘K listener (active-page state now lives in partials/header.html)
-        ├── commandPalette.ts    Alpine.store('palette') — open/close only, no search yet
+        ├── command-palette.ts    Alpine.store('palette') — open/close only, no search yet
         ├── postList.ts          Alpine.data('postList') — 2 dummy posts
         ├── postReader.ts        Alpine.store('reader') — dummy inline post view
         ├── topicList.ts         Alpine.data('topicList') — 2 dummy topics
@@ -167,9 +167,9 @@ and lets the page read like real shell scrollback instead of one static view.
 
 ### Gaps between this note and today's code
 
-- `commandPalette.ts` is currently a ⌘K modal (open/close only). `CommandParser.ts`
+- `command-palette.ts` is currently a ⌘K modal (open/close only). `CommandParser.ts`
   and `lib/path.ts` already implement the parsing/path-resolution pieces
-  described above, but neither is wired into `commandPalette.ts` or the
+  described above, but neither is wired into `command-palette.ts` or the
   dispatch flow yet, and reconciling "modal palette" vs. "always-visible
   inline terminal" is an open UI decision.
 - The `public/components/` codegen Vite plugin described above doesn't exist

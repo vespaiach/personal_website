@@ -497,8 +497,8 @@ samp {
 
 /* ── command-modal.css ──────────────────────────────────────────── */
 /* Command palette — ported from Vespaiach Terminal.html's ⌘K Modal + Input +
-   suggestion list. Markup lives in partials/commandPalette.html; state and
-   suggestion logic in src/components/commandPalette.ts. */
+   suggestion list. Markup lives in partials/command-palette.html; state and
+   suggestion logic in src/components/command-palette.ts. */
 .command-modal {
   position: fixed;
   inset: 0;
