@@ -3,9 +3,10 @@
   vite-plugin-html-inject's `load` tag — the plugin scans raw text, not a
   real parser, and would match this very file's own inclusion if spelled
   out literally here.
-  Opened by setting the shared shell scope's `paletteOpen` to true — this
-  file is loaded inside <body x-data="shell">, so it inherits `paletteOpen`
-  directly, no $store needed.
+  Opened by ⌘K/Ctrl+K (src/components/header.ts) or the header icon buttons
+  (partials/header.html), both of which set the shared shell scope's
+  `paletteOpen` to true — this file is loaded inside <body x-data="shell">,
+  so it inherits `paletteOpen` directly, no $store needed.
   Native <dialog>: `x-effect` watches `paletteOpen` and drives
   showModal()/close() on it via $refs.dialog instead of x-show, so the
   browser handles top-layer stacking and focus (the input's `autofocus`
