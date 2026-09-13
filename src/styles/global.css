@@ -494,3 +494,164 @@ samp {
 .site-header .icon-btn svg {
   display: block;
 }
+
+/* ── command-modal.css ──────────────────────────────────────────── */
+/* Command palette — ported from Vespaiach Terminal.html's ⌘K Modal + Input +
+   suggestion list. Markup lives in partials/commandPalette.html; state and
+   suggestion logic in src/components/commandPalette.ts. */
+.command-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.command-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+}
+.command-modal__dialog {
+  position: relative;
+  width: min(640px, calc(100vw - var(--space-2xl)));
+  background: var(--canvas-soft);
+  border-radius: var(--radius-surface);
+  box-shadow: var(--elev-3);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-stack);
+}
+.command-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.command-modal__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  font-size: var(--body-lg-size);
+  line-height: var(--body-lg-leading);
+  color: var(--ink);
+}
+.command-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-mute);
+  font-size: var(--body-md-size);
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition-control);
+}
+.command-modal__close:hover {
+  background: var(--canvas-raised);
+  color: var(--ink);
+}
+.command-modal__subtitle {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--caption-size);
+  line-height: var(--caption-leading);
+  color: var(--text-mute);
+}
+.command-modal__divider {
+  height: var(--border-width);
+  background: var(--hairline);
+  border: 0;
+}
+.command-modal__input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--canvas);
+  border: var(--border-hairline);
+  border-radius: var(--radius-control);
+  padding: var(--space-sm) var(--space-md);
+  transition: var(--transition-control);
+}
+.command-modal__input-row:focus-within {
+  border-color: var(--focus-ring);
+  box-shadow:
+    0 0 0 2px var(--canvas-soft),
+    0 0 0 3px var(--focus-ring);
+}
+.command-modal__chevrons {
+  color: var(--text-faint);
+  font-family: var(--font-code);
+  user-select: none;
+}
+.command-modal__prompt {
+  color: var(--prompt-symbol);
+  font-family: var(--font-code);
+}
+.command-modal__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  font-family: var(--font-code);
+  font-size: var(--code-md-size);
+  line-height: var(--code-md-leading);
+}
+.command-modal__input::placeholder {
+  color: var(--text-faint);
+}
+.command-modal__suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: min(40vh, 280px);
+  overflow-y: auto;
+}
+.command-modal__suggestion {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-lg);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: var(--transition-control);
+}
+.command-modal__suggestion:hover,
+.command-modal__suggestion--selected {
+  background: var(--canvas-raised);
+}
+.command-modal__suggestion-label {
+  font-family: var(--font-code);
+  font-size: var(--code-size);
+  color: var(--ink);
+  white-space: pre;
+}
+.command-modal__suggestion-hint {
+  margin-left: auto;
+  font-family: var(--font-code);
+  font-size: var(--caption-size);
+  color: var(--text-faint);
+  white-space: pre;
+}
+.command-modal__footer {
+  display: flex;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  font-family: var(--font-code);
+  font-size: var(--caption-size);
+  color: var(--text-faint);
+}
+.command-modal__match-count {
+  margin-left: auto;
+  color: var(--text-mute);
+}

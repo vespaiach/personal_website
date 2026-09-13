@@ -18,14 +18,7 @@
       </template>
     </main>
 
-    <div x-data x-show="$store.palette.open" style="display:none">
-      <input type="text" x-model="$store.palette.query" placeholder="cd /posts && ls" />
-      <ul>
-        <template x-for="s in $store.palette.suggestions" :key="s.label">
-          <li x-text="s.label"></li>
-        </template>
-      </ul>
-    </div>
+    <load src="partials/commandPalette.html" />
 
     <script type="module" src="/src/main.ts"></script>
   </body>
