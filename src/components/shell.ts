@@ -7,11 +7,11 @@ export interface Prompt {
 }
 
 export function registerShell() {
-  Alpine.data("shell", (cwd: string, initialPrompt?: Prompt) => ({
+  Alpine.data("shell", (cwd: string, initialPrompt?: string) => ({
     user: "trinh",
     host: "vespaiach",
     cwd,
-    prompts: initialPrompt ? [initialPrompt] : ([] as Prompt[]),
+    prompts: initialPrompt ? [{ command: initialPrompt, cwd }] : ([] as Prompt[]),
 
     togglePalette() {
       toggleCommandPalette();

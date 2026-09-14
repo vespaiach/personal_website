@@ -145,7 +145,7 @@ function generateListings(root: string): void {
   const topics = deriveTopics(posts);
   const projectSlugs = readProjectSlugs(contentDir);
 
-  writeFileSync(join(outputDir, "posts-listings.html"), renderPostsListing(posts));
+  writeFileSync(join(outputDir, "posts-listing.html"), renderPostsListing(posts));
   writeFileSync(join(outputDir, "topics-listings.html"), renderTopicsListing(topics));
   writeFileSync(join(outputDir, "about-listings.html"), renderAboutListing());
   writeFileSync(join(outputDir, "projects-listings.html"), renderProjectsListing(projectSlugs));

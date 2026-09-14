@@ -129,7 +129,7 @@ just fetches the fragment that matches the file's name.
 The same plugin also generates one **listing** component per virtual folder —
 these render `ls`, the way the per-file components above render `cat`:
 
-- `public/components/posts-listings.html` — every post's title/date/excerpt,
+- `public/components/posts-listing.html` — every post's title/date/excerpt,
   generated from all of `content/posts/*.md`'s frontmatter.
 - `public/components/topics-listings.html` — every derived tag (see
   "The virtual filesystem" above) with its post count.
@@ -139,7 +139,7 @@ these render `ls`, the way the per-file components above render `cat`:
   generated from all of `content/about/projects/*.md`.
 - The `-listings` suffix keeps this namespace distinct from the per-file one
   above, so a source file literally named `posts.md` (→ `posts.html`) can't
-  collide with `posts-listings.html`.
+  collide with `posts-listing.html`.
 
 ### Command → component dispatch
 
