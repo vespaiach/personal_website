@@ -13,7 +13,7 @@ export function closeCommandPalette() {
   if (!dialog) return;
   if (dialog.open) {
     dialog.close();
-    Alpine.store("palette").reset();
+    Alpine.$data(dialog).reset();
   }
 }
 
