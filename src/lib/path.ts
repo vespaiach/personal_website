@@ -35,3 +35,12 @@ export function getAvailablePaths(): Record<string, boolean> {
 
   return paths;
 }
+
+// A path is a directory if it's one of the 3 fixed roots (even with zero
+// descendants, e.g. /topics) or some existing path is nested under it —
+// getAvailablePaths() never has its own entry for an intermediate directory.
+export function isDirectory(path: string, paths: Record<string, boolean>): boolean {
+  if (path === "/" || path === "/posts" || path === "/topics" || path === "/about") return true;
+  const prefix = `${path}/`;
+  return Object.keys(paths).some((key) => key.startsWith(prefix));
+}

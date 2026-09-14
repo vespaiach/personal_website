@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getAvailablePaths, toAbsolutePath } from "./path.ts";
+import { getAvailablePaths, isDirectory, toAbsolutePath } from "./path.ts";
 
 describe("toAbsolutePath", () => {
   it("resolves a relative path against a directory", () => {
@@ -56,5 +56,29 @@ describe("getAvailablePaths", () => {
 
   it("does not include paths that don't exist", () => {
     expect(paths["/posts/does-not-exist.md"]).toBeUndefined();
+  });
+});
+
+describe("isDirectory", () => {
+  const paths = getAvailablePaths();
+
+  it("treats the root as a directory", () => {
+    expect(isDirectory("/", paths)).toBe(true);
+  });
+
+  it("treats a fixed root with zero descendants as a directory", () => {
+    expect(isDirectory("/topics", paths)).toBe(true);
+  });
+
+  it("treats an implicit intermediate directory as a directory", () => {
+    expect(isDirectory("/about/projects", paths)).toBe(true);
+  });
+
+  it("does not treat a leaf file as a directory", () => {
+    expect(isDirectory("/about/me.md", paths)).toBe(false);
+  });
+
+  it("does not treat a nonexistent path as a directory", () => {
+    expect(isDirectory("/nope", paths)).toBe(false);
   });
 });
