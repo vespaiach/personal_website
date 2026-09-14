@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "gen:about-listing": "node src/generator/about-listing.ts",
+    "gen:markdown-views": "node src/generator/markdown-views.ts",
     "gen:posts-listing": "node src/generator/posts-listings.ts",
     "gen:projects-listing": "node src/generator/projects-listing.ts",
     "gen:topics-listing": "node src/generator/topics-listing.ts",
