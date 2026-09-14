@@ -1,11 +1,5 @@
-import type { CodeToken } from "../src/lib/highlight.ts";
-import {
-  type Block,
-  type Frontmatter,
-  type InlineSpan,
-  parseFrontmatter,
-  toBlocks,
-} from "../src/lib/markdown.ts";
+import type { CodeToken } from "./highlight.ts";
+import { type Block, type Frontmatter, type InlineSpan, parseFrontmatter, toBlocks } from "./markdown.ts";
 
 function escapeHtml(value: string): string {
   return value
