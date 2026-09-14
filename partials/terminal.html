@@ -1,6 +1,6 @@
-<main x-data="terminal" class="flex flex-col gap-(--space-xs) px-(--space-xl) py-(--space-lg) font-mono text-(length:--code-md-size) leading-(--code-md-leading)">
+<main x-data="terminal" class="shell-wide flex flex-col gap-(--space-xs) px-(--space-xl) py-(--space-lg) font-mono text-(length:--code-md-size) leading-(--code-md-leading)">
   <template x-for="(prompt, index) in prompts" :key="index">
-    <div class="flex flex-wrap items-baseline gap-[0.4em]">
+    <div class="flex flex-wrap items-baseline gap-[0.5em]">
       <span class="text-(--prompt-user)" x-text="`${user}@${host}`"></span>
       <span class="text-(--prompt-separator)">in</span>
       <span class="text-(--path)" x-text="prompt.cwd"></span>
