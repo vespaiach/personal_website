@@ -1,3 +1,5 @@
+import { commands } from "../commands/index.ts";
+
 export interface CommandObject {
   command: string;
   arg?: string;
@@ -9,17 +11,6 @@ export interface ParseResult {
   error: string | null;
 }
 
-type ArgRule = "required" | "optional" | "none";
-
-const COMMAND_ARG_RULES: Record<string, ArgRule> = {
-  cat: "required",
-  ls: "optional",
-  cd: "required",
-  help: "none",
-  clear: "none",
-  tree: "optional",
-};
-
 /**
  * Parses a raw terminal input line into an ordered list of commands.
  * Commands are separated by `&`; each command is split into its name
@@ -29,8 +20,8 @@ const COMMAND_ARG_RULES: Record<string, ArgRule> = {
  * Fails (success: false, result: []) when any segment is empty — e.g.
  * blank input, or leading/trailing/repeated `&` separators — when a
  * segment's command name isn't one of the supported commands — or when
- * a command's arg doesn't match its syntax (cat/cd require an arg,
- * help/clear take none, ls/tree take an optional one).
+ * a command's arg doesn't match its own syntax (each command's own
+ * validate() decides this — see src/commands/).
  */
 export function parseCommand(input: string): ParseResult {
   const segments = input.split("&").map((segment) => segment.trim());
@@ -42,23 +33,19 @@ export function parseCommand(input: string): ParseResult {
   const result: CommandObject[] = [];
   for (const segment of segments) {
     const spaceIndex = segment.indexOf(" ");
-    const command = spaceIndex === -1 ? segment : segment.slice(0, spaceIndex);
+    const commandName = spaceIndex === -1 ? segment : segment.slice(0, spaceIndex);
     const arg = spaceIndex === -1 ? undefined : segment.slice(spaceIndex + 1).trim() || undefined;
 
-    const argRule = COMMAND_ARG_RULES[command];
-    if (!argRule) {
-      return { success: false, result: [], error: `Unknown command: ${command}` };
+    const command = commands[commandName];
+    if (!command) {
+      return { success: false, result: [], error: `Unknown command: ${commandName}` };
     }
 
-    if (argRule === "required" && !arg) {
+    if (!command.validate(arg).valid) {
       return { success: false, result: [], error: "Wrong command syntax" };
     }
 
-    if (argRule === "none" && arg) {
-      return { success: false, result: [], error: "Wrong command syntax" };
-    }
-
-    result.push(arg ? { command, arg } : { command });
+    result.push(arg ? { command: commandName, arg } : { command: commandName });
   }
 
   return { success: true, result, error: null };
