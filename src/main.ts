@@ -12,10 +12,24 @@ registerHeader();
 registerShell();
 registerTerminal();
 
-declare global {
-  interface Window {
-    Alpine: typeof Alpine;
-  }
-}
+Alpine.store("prompts", {
+  values: [] as string[],
+
+  add(value: string) {
+    this.values.push(value);
+  },
+
+  clear() {
+    this.values = [];
+  },
+});
+Alpine.store("cwd", {
+  value: "",
+
+  update(value: string) {
+    this.value = value;
+  },
+});
+
 window.Alpine = Alpine;
 Alpine.start();

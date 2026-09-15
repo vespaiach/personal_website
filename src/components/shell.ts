@@ -1,5 +1,4 @@
 import Alpine from "alpinejs";
-import { toggleCommandPalette } from "../lib/commandPalette";
 
 export interface Prompt {
   cwd: string;
@@ -13,8 +12,14 @@ export function registerShell() {
     cwd,
     prompts: initialPrompt ? [{ command: initialPrompt, cwd }] : ([] as Prompt[]),
 
-    togglePalette() {
-      toggleCommandPalette();
+    toggleCommandPalette() {
+      const dialog = document.getElementById("command-palette") as HTMLDialogElement;
+      if (!dialog) return;
+      if (dialog.open) {
+        dialog.close();
+      } else {
+        dialog.showModal();
+      }
     },
   }));
 }
