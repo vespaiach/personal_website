@@ -8,7 +8,7 @@
   </head>
   <body x-data="shell('/posts')">
     <load src="partials/header.html" active="posts" />
-    <main x-data="terminal" class="shell-wide flex flex-col gap-(--space-xs) px-(--space-xl) py-(--space-lg) font-mono text-(length:--code-md-size) leading-(--code-md-leading)">
+    <main x-data="terminal" class="terminal-main shell-wide">
       <template x-for="(prompt, index) in [{ command: 'cd /posts & ls', cwd: '/posts' }]" :key="index">
         <load src="partials/command-line.html" />
       </template>

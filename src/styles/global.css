@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 /* ── fonts.css ──────────────────────────────────────────── */
 /* Fonts — Inter (narrative), DM Mono (technical), Instrument Serif (editorial).
    Self-hosted from /public/fonts, extracted from the original Google Fonts
@@ -321,6 +319,32 @@
   --caret-blink: 1s steps(1, end) infinite;
 }
 
+/* ── reset.css ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+dialog {
+  padding: 0;
+  border: 0;
+}
+
+svg {
+  display: block;
+}
+
 /* ── base.css ──────────────────────────────────────────── */
 /* Base — page defaults so every page starts from the brand ground. */
 :root {
@@ -428,6 +452,8 @@ samp {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
   padding: 0;
   border: 1px solid transparent;
   border-radius: 9999px;
@@ -504,4 +530,263 @@ samp {
   margin-right: auto;
   padding-left: 16px;
   padding-right: 16px;
+}
+
+/* ── site-header.css ──────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-color: var(--canvas);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+  padding-block: var(--space-md);
+  box-sizing: border-box;
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--body-sm-size);
+}
+
+.site-header__brand-symbol {
+  color: var(--prompt-symbol);
+}
+
+.site-header__brand-name {
+  color: var(--ink);
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  flex: 1;
+  min-width: 0;
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: none;
+}
+
+/* ── command-line.css ──────────────────────────────────────────── */
+.command-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.command-line__user {
+  color: var(--prompt-user);
+}
+
+.command-line__separator {
+  color: var(--prompt-separator);
+}
+
+.command-line__path {
+  color: var(--path);
+}
+
+.command-line__symbol {
+  color: var(--prompt-symbol);
+}
+
+.command-line__command {
+  color: var(--ink);
+}
+
+/* ── terminal.css ──────────────────────────────────────────── */
+.terminal-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-block: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: var(--code-md-size);
+  line-height: var(--code-md-leading);
+}
+
+/* ── command-palette.css ──────────────────────────────────────────── */
+.command-palette {
+  margin: auto;
+  width: min(640px, calc(100vw - (var(--space-xl) * 2)));
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-surface);
+  background: var(--canvas);
+  color: var(--text-body);
+  box-shadow: var(--elev-3);
+  overflow: hidden;
+}
+
+.command-palette[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.command-palette::backdrop {
+  background: var(--overlay);
+  backdrop-filter: blur(3px);
+}
+
+.command-palette__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding-block: var(--space-lg);
+  padding-inline: var(--space-xl);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.command-palette__title-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.command-palette__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--body-md-size);
+  line-height: var(--body-md-leading);
+  color: var(--ink);
+}
+
+.command-palette__subtitle {
+  margin: 2px 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--caption-size);
+  color: var(--text-mute);
+}
+
+.command-palette__close {
+  flex-shrink: 0;
+  display: flex;
+  color: var(--text-mute);
+  transition: var(--transition-control);
+}
+.command-palette__close:hover {
+  color: var(--ink);
+}
+
+.command-palette__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--space-xl);
+}
+
+.command-palette__search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  padding-block: var(--space-sm);
+  padding-inline: var(--space-md);
+  transition: var(--transition-control);
+}
+.command-palette__search:focus-within {
+  border-color: var(--focus-ring);
+  box-shadow:
+    0 0 0 2px var(--canvas-soft),
+    0 0 0 3px var(--focus-ring);
+}
+
+.command-palette__search-prefix {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  user-select: none;
+}
+
+.command-palette__search-symbol {
+  color: var(--prompt-symbol);
+  font-family: var(--font-mono);
+}
+
+.command-palette__search-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--code-md-size);
+  line-height: var(--code-md-leading);
+}
+.command-palette__search-input::placeholder {
+  color: var(--text-faint);
+}
+
+.command-palette__suggestions {
+  list-style: none;
+  margin: 0;
+  margin-inline: -6px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: min(40vh, 280px);
+  overflow-y: auto;
+}
+
+.command-palette__suggestion {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-lg);
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-sm);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: var(--transition-control);
+}
+.command-palette__suggestion:hover,
+.command-palette__suggestion.is-selected {
+  background-color: var(--canvas-raised);
+}
+
+.command-palette__suggestion-label {
+  font-family: var(--font-mono);
+  font-size: var(--code-size);
+  color: var(--ink);
+  white-space: pre;
+}
+
+.command-palette__suggestion-hint {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--caption-size);
+  color: var(--text-faint);
+  white-space: pre;
+}
+
+.command-palette__footer {
+  display: flex;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: var(--caption-size);
+  color: var(--text-faint);
+  border-top: 1px solid var(--hairline);
+  padding-top: 12px;
+}
+
+.command-palette__footer-match {
+  margin-left: auto;
+  color: var(--text-mute);
 }
