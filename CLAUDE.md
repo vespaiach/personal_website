@@ -1,6 +1,6 @@
 # personal_website
 
-Trinh Nguyen's personal site (`vespaiach`) — a terminal-styled dev blog. Being rebuilt with Vite + Alpine.js, replacing an old React/design-canvas export. Stack: Vite 8, TypeScript, Alpine.js 3, Tailwind CSS 4, Biome (lint + format).
+Trinh Nguyen's personal site (`vespaiach`) — a terminal-styled dev blog. Being rebuilt with Vite + Alpine.js, replacing an old React/design-canvas export. Stack: Vite 8, TypeScript, Alpine.js 3, plain CSS, Biome (lint + format).
 
 ## Core Coding Principles
 

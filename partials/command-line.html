@@ -1,7 +1,7 @@
-<div class="flex flex-wrap items-baseline gap-[0.5em]">
-  <span class="text-(--prompt-user)" x-text="`${user}@${host}`"></span>
-  <span class="text-(--prompt-separator)">in</span>
-  <span class="text-(--path)" x-text="prompt.cwd"></span>
-  <span class="text-(--prompt-symbol)">$</span>
-  <span class="text-(--ink)" x-text="prompt.command"></span>
+<div class="command-line">
+  <span class="command-line__user" x-text="`${user}@${host}`"></span>
+  <span class="command-line__separator">in</span>
+  <span class="command-line__path" x-text="prompt.cwd"></span>
+  <span class="command-line__symbol">$</span>
+  <span class="command-line__command" x-text="prompt.command"></span>
 </div>
