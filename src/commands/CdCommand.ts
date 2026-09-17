@@ -9,7 +9,7 @@ const ROUTE_FOR_SECTION: Record<Section, string> = {
   about: "/about/",
 };
 
-function sectionForTopSegment(segment: string): Section {
+export function sectionForTopSegment(segment: string): Section {
   if (segment === "topics") return "topics";
   if (segment === "about") return "about";
   return "posts";
