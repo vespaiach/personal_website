@@ -17,7 +17,7 @@ export function registerCommandLine() {
     commands: [] as ReturnType<typeof resolvePrompt>["commands"],
 
     init() {
-      const { valid, error, commands } = resolvePrompt(this.prompt, this.cwd);
+      const { valid, error, commands } = resolvePrompt(this.prompt, this.cwd, Alpine.store("manifest").paths);
       this.valid = valid;
       this.error = error;
       this.commands = commands;
