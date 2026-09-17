@@ -2,10 +2,12 @@ import "./styles/global.css";
 
 import Alpine from "alpinejs";
 
+import { registerCommandLine } from "./components/command-line";
 import { registerCommandPalette } from "./components/command-palette";
 import { registerHeader } from "./components/header";
 import { registerTerminal } from "./components/terminal";
 
+registerCommandLine();
 registerCommandPalette();
 registerHeader();
 registerTerminal();

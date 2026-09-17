@@ -612,6 +612,10 @@ samp {
   color: var(--ink);
 }
 
+.command-line__error {
+  color: var(--danger);
+}
+
 /* ── terminal.css ──────────────────────────────────────────── */
 .terminal-main {
   display: flex;
