@@ -6,6 +6,7 @@ import { registerCommandLine } from "./components/command-line";
 import { registerCommandPalette } from "./components/command-palette";
 import { registerHeader } from "./components/header";
 import { registerTerminal } from "./components/terminal";
+import manifest from "./manifest.json";
 
 registerCommandLine();
 registerCommandPalette();
@@ -29,6 +30,9 @@ Alpine.store("cwd", {
   update(value: string) {
     this.value = value;
   },
+});
+Alpine.store("manifest", {
+  paths: manifest,
 });
 
 window.Alpine = Alpine;

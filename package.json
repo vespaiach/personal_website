@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "npm run gen:content-views",
     "dev": "vite",
+    "prebuild": "npm run gen:content-views",
     "build": "tsc && vite build",
     "gen:content-views": "node src/scripts/index.ts",
     "preview": "vite preview",
