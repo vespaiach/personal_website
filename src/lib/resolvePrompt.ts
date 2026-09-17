@@ -20,15 +20,20 @@ export function resolvePrompt(prompt: string, cwd: string, manifest: Record<stri
   }
 
   const commands: ResolvedCommand[] = [];
+  const resolutionCwd = cwd || "/";
   for (const cmd of parsed.result) {
     if (!PATH_COMMANDS.has(cmd.command)) {
       commands.push(cmd);
       continue;
     }
 
-    const resolvedPath = toAbsolutePath(cmd.arg ?? "", cwd);
-    if (!(resolvedPath in manifest)) {
-      return { valid: false, error: `No such file or directory: ${resolvedPath}`, commands: [] };
+    let resolvedPath: string | undefined;
+    const arg = cmd.arg?.replace(/^~(?=\/|$)/, "") ?? "";
+    if (arg) {
+      resolvedPath = toAbsolutePath(arg, resolutionCwd);
+      if (!(resolvedPath in manifest)) {
+        return { valid: false, error: `No such file or directory: ${resolvedPath}`, commands: [] };
+      }
     }
 
     commands.push({ ...cmd, resolvedPath });

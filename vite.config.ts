@@ -7,11 +7,10 @@ const root = fileURLToPath(new URL(".", import.meta.url));
 export default defineConfig({
   plugins: [injectHTML()],
   build: {
+    sourcemap: true,
     rollupOptions: {
       input: {
         main: `${root}index.html`,
-        topics: `${root}topics/index.html`,
-        about: `${root}about/index.html`,
       },
     },
   },

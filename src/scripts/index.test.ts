@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { collectFileSources, collectFolderSources } from "./collect.ts";
 import { generateViews } from "./index.ts";
 
-const CONTENT_DIR = new URL("../../../content", import.meta.url).pathname;
+const CONTENT_DIR = new URL("../../content", import.meta.url).pathname;
 const temporaryRoots: string[] = [];
 
 function createRoot(): string {

@@ -590,6 +590,7 @@ samp {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5em;
+  padding-bottom: 8px;
 }
 
 .command-line__user {

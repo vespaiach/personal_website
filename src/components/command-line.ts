@@ -25,6 +25,7 @@ export function registerCommandLine() {
       this.valid = valid;
       this.error = error;
       this.commands = commands;
+      console.log(commands);
 
       if (!valid) return;
 

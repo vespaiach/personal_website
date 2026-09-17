@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { assertNoVirtualPathCollisions, collectFileSources, collectFolderSources } from "./collect.ts";
 
-const CONTENT_DIR = new URL("../../../content", import.meta.url).pathname;
+const CONTENT_DIR = new URL("../../content", import.meta.url).pathname;
 
 describe("collectFileSources", () => {
   it("collects posts, about/me.md, about/stack.json, and projects with virtual paths", () => {

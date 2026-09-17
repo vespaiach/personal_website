@@ -31,7 +31,7 @@ describe("resolvePrompt", () => {
       error: null,
       commands: [
         { command: "cd", arg: "../posts", resolvedPath: "/posts" },
-        { command: "ls", resolvedPath: "/topics" },
+        { command: "ls" },
       ],
     });
   });
@@ -40,7 +40,7 @@ describe("resolvePrompt", () => {
     expect(resolvePrompt("ls", "/about", MANIFEST)).toEqual({
       valid: true,
       error: null,
-      commands: [{ command: "ls", resolvedPath: "/about" }],
+      commands: [{ command: "ls" }],
     });
   });
 
@@ -73,6 +73,17 @@ describe("resolvePrompt", () => {
       valid: false,
       error: "No such file or directory: /posts/missing.md",
       commands: [],
+    });
+  });
+
+  it("verify resolving path when cwd is empty", () => {
+    expect(resolvePrompt("cd ~/posts & ls", "", MANIFEST)).toEqual({
+      valid: true,
+      error: null,
+      commands: [
+        { command: "cd", arg: "~/posts", resolvedPath: "/posts" },
+        { command: "ls" },
+      ],
     });
   });
 });

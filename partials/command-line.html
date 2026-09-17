@@ -1,10 +1,12 @@
-<div class="command-line" x-data="commandLine(prompt)" :class="{ 'command-line--invalid': !valid }">
-  <span class="command-line__user" x-text="`${user}@${host}`"></span>
-  <span class="command-line__separator">in</span>
-  <span class="command-line__path" x-text="cwd"></span>
-  <span class="command-line__symbol">$</span>
-  <span class="command-line__command" x-text="prompt"></span>
-  <span class="command-line__error" x-show="!valid" x-text="error"></span>
+<section x-data="commandLine(prompt)">
+  <div class="command-line">
+    <span class="command-line__user" x-text="`${user}@${host}`"></span>
+    <span class="command-line__separator">in</span>
+    <span class="command-line__path" x-text="cwd"></span>
+    <span class="command-line__symbol">$</span>
+    <span class="command-line__command" x-text="prompt"></span>
+  </div>
+  <div x-show="!valid" class="command-line__error" x-text="error"></div>
   <template x-for="(result, index) in results" :key="index">
     <div class="command-line__output">
       <template x-if="result.kind === 'html'"><div x-html="result.html"></div></template>
@@ -12,4 +14,4 @@
       <template x-if="result.kind === 'error'"><p class="command-line__error" x-text="result.message"></p></template>
     </div>
   </template>
-</div>
+</section>
