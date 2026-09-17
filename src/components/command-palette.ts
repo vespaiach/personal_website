@@ -1,15 +1,6 @@
 import Alpine from "alpinejs";
 import { buildSuggestions, type Suggestion } from "../lib/commandSuggestions";
 
-interface Prompt {
-  command: string;
-}
-
-interface ShellState {
-  cwd: string;
-  prompts: Prompt[];
-}
-
 interface DialogRefs {
   $refs: { dialog: HTMLDialogElement };
 }
@@ -58,8 +49,7 @@ export function registerCommandPalette() {
     },
 
     run(command: string) {
-      const { cwd } = this as unknown as ShellState;
-      Alpine.store("prompts").add(command, cwd);
+      Alpine.store("prompts").add(command, Alpine.store("cwd").value);
       this.close();
     },
 

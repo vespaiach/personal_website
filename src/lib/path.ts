@@ -25,8 +25,8 @@ export function getAvailablePaths(): Record<string, boolean> {
   };
 
   const files = {
-    ...import.meta.glob("/content/posts/**"),
-    ...import.meta.glob("/content/about/**"),
+    ...import.meta.glob("/content/posts/**", { query: "?raw", import: "default" }),
+    ...import.meta.glob("/content/about/**", { query: "?raw", import: "default" }),
   };
 
   for (const filePath of Object.keys(files)) {

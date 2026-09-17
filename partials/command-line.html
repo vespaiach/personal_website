@@ -1,7 +1,8 @@
-<div class="command-line">
+<div class="command-line" x-data="commandLine(prompt)" :class="{ 'command-line--invalid': !valid }">
   <span class="command-line__user" x-text="`${user}@${host}`"></span>
   <span class="command-line__separator">in</span>
-  <span class="command-line__path" x-text="prompt.cwd"></span>
+  <span class="command-line__path" x-text="cwd"></span>
   <span class="command-line__symbol">$</span>
-  <span class="command-line__command" x-text="prompt.command"></span>
+  <span class="command-line__command" x-text="prompt"></span>
+  <span class="command-line__error" x-show="!valid" x-text="error"></span>
 </div>
