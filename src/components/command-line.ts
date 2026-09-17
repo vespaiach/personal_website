@@ -11,7 +11,7 @@ export function registerCommandLine() {
     user: "trinh",
     host: "vespaiach",
     prompt: line.prompt,
-    cwd: line.cwd,
+    cwd: line.cwd ?? "",
     valid: true,
     error: null as string | null,
     commands: [] as ReturnType<typeof resolvePrompt>["commands"],
