@@ -53,8 +53,8 @@ describe("parseCommand", () => {
     });
   });
 
-  it("accepts every supported command with no arg (excluding cat/cd, which require one)", () => {
-    for (const command of ["ls", "help", "clear", "tree"]) {
+  it("accepts every supported command with no arg (excluding cat, which requires one)", () => {
+    for (const command of ["ls", "cd", "help", "clear", "tree"]) {
       expect(parseCommand(command)).toEqual({
         success: true,
         result: [{ command }],
@@ -96,9 +96,12 @@ describe("parseCommand", () => {
     });
   });
 
-  it("fails when cat or cd is missing its required arg", () => {
+  it("fails when cat is missing its required arg", () => {
     expect(parseCommand("cat")).toEqual({ success: false, result: [], error: "Wrong command syntax" });
-    expect(parseCommand("cd")).toEqual({ success: false, result: [], error: "Wrong command syntax" });
+  });
+
+  it("succeeds when cd is given no arg (cd's arg is optional)", () => {
+    expect(parseCommand("cd")).toEqual({ success: true, result: [{ command: "cd" }], error: null });
   });
 
   it("fails when help or clear is given an arg", () => {
