@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>vespaiach — posts</title>
   </head>
-  <body x-data="shell('/posts')">
+  <body>
     <load src="partials/header.html" active="posts" />
     <main x-data="terminal" class="terminal-main shell-wide">
-      <template x-for="(prompt, index) in [{ command: 'cd /posts & ls', cwd: '/posts' }]" :key="index">
-        <load src="partials/command-line.html" />
+      <template x-for="(line, index) in $store.prompts.values" :key="index">
+        <div class="command-line">
+          <span class="command-line__user">trinh@vespaiach</span>
+          <span class="command-line__separator">in</span>
+          <span class="command-line__path" x-text="line.cwd"></span>
+          <span class="command-line__symbol">$</span>
+          <span class="command-line__command" x-text="line.prompt"></span>
+        </div>
       </template>
-      <load src="src/generated/posts-listing.html" />
-      <load src="partials/terminal.html" />
     </main>
     <load src="partials/command-palette.html" />
     <script type="module" src="/src/main.ts"></script>

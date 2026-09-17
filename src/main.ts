@@ -4,19 +4,17 @@ import Alpine from "alpinejs";
 
 import { registerCommandPalette } from "./components/command-palette";
 import { registerHeader } from "./components/header";
-import { registerShell } from "./components/shell";
 import { registerTerminal } from "./components/terminal";
 
 registerCommandPalette();
 registerHeader();
-registerShell();
 registerTerminal();
 
 Alpine.store("prompts", {
-  values: [] as string[],
+  values: [] as Array<{ prompt: string; cwd: string }>,
 
-  add(value: string) {
-    this.values.push(value);
+  add(prompt: string, cwd: string) {
+    this.values.push({ prompt, cwd });
   },
 
   clear() {

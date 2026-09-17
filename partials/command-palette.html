@@ -10,7 +10,7 @@
   <div class="command-palette__header">
     <div class="command-palette__title-group">
       <h2 class="command-palette__title">Run a command</h2>
-      <p class="command-palette__subtitle" x-text="`~${cwd} · esc to close`"></p>
+      <p class="command-palette__subtitle" x-text="`~${$store.cwd.value} · esc to close`"></p>
     </div>
     <button type="button" class="command-palette__close" aria-label="Close" @click="close()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>

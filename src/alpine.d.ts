@@ -1,6 +1,6 @@
 interface Prompts {
-  values: string[];
-  add(prompt: string): void;
+  values: Array<{ prompt: string; cwd: string }>;
+  add(prompt: string, cwd: string): void;
   clear(): void;
 }
 
@@ -12,7 +12,9 @@ interface Cwd {
 interface Alpine {
   data(name: string, callback: unknown): void;
   store(name: "prompts", value: Prompts): void;
+  store(name: "prompts"): Prompts;
   store(name: "cwd", value: Cwd): void;
+  store(name: "cwd"): Cwd;
   store(name: string, value: unknown): void;
   start(): void;
 }

@@ -1,6 +1,9 @@
 import Alpine from "alpinejs";
 import { buildSuggestions, type Suggestion } from "../lib/commandSuggestions";
-import type { Prompt } from "./shell";
+
+interface Prompt {
+  command: string;
+}
 
 interface ShellState {
   cwd: string;
@@ -28,8 +31,8 @@ export function registerCommandPalette() {
     },
 
     recentCommands(): string[] {
-      const { prompts } = this as unknown as ShellState;
-      return prompts.map((prompt) => prompt.command);
+      const prompts = Alpine.store("prompts").values;
+      return prompts.map((it) => it.prompt);
     },
 
     onInput() {
@@ -55,8 +58,8 @@ export function registerCommandPalette() {
     },
 
     run(command: string) {
-      const { cwd, prompts } = this as unknown as ShellState;
-      prompts.push({ cwd, command });
+      const { cwd } = this as unknown as ShellState;
+      Alpine.store("prompts").add(command, cwd);
       this.close();
     },
 

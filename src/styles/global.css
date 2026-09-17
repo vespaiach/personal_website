@@ -425,16 +425,19 @@ samp {
 }
 
 /* ── Utility Classes ── */
-.nav-link {
+.nav-buton {
   display: inline-block;
   padding-block: var(--space-xs);
   padding-inline: var(--space-md);
+  border: 0;
   border-radius: var(--radius-control);
+  background-color: transparent;
   font-family: var(--font-code);
   font-size: var(--body-sm-size);
   line-height: var(--body-sm-leading);
   font-weight: 400;
   color: var(--text-mute);
+  cursor: pointer;
   transition: var(--transition-control);
 
   &:hover {
