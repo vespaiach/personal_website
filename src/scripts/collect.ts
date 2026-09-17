@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
-import { lsDate, readTime } from "../format.ts";
-import { readPosts } from "../utils.ts";
+import { lsDate, readTime } from "../lib/format.ts";
+import { readPosts } from "../lib/utils.ts";
 
 export type ContentKind = "markdown" | "json";
 

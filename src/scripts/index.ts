@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { renderJsonView, renderMarkdownView } from "../markedFragment.ts";
+import { renderJsonView, renderMarkdownView } from "../lib/markedFragment.ts";
 import {
   assertNoVirtualPathCollisions,
   collectFileSources,
