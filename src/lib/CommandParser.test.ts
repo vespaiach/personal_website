@@ -2,133 +2,35 @@ import { describe, expect, it } from "vitest";
 import { parseCommand } from "./CommandParser.ts";
 
 describe("parseCommand", () => {
-  it("parses a single command with an arg", () => {
-    expect(parseCommand("cat abc.md")).toEqual({
-      success: true,
-      result: [{ command: "cat", arg: "abc.md" }],
-      error: null,
-    });
+  it("returns a single command unchanged", () => {
+    expect(parseCommand("ls -la")).toEqual(["ls -la"]);
   });
 
-  it("parses a single command without an arg", () => {
-    expect(parseCommand("ls")).toEqual({
-      success: true,
-      result: [{ command: "ls" }],
-      error: null,
-    });
+  it("splits chained commands on &&", () => {
+    expect(parseCommand("ls -la && cd foo && cat  bar.txt")).toEqual(["ls -la", "cd foo", "cat bar.txt"]);
   });
 
-  it("splits chained commands on &", () => {
-    expect(parseCommand("cd ../posts & ls")).toEqual({
-      success: true,
-      result: [{ command: "cd", arg: "../posts" }, { command: "ls" }],
-      error: null,
-    });
+  it("trims leading and trailing whitespace", () => {
+    expect(parseCommand("   ls -la   ")).toEqual(["ls -la"]);
   });
 
-  it("keeps absolute-path and relative-path args distinct", () => {
-    expect(parseCommand("cd /topics & ls ../")).toEqual({
-      success: true,
-      result: [
-        { command: "cd", arg: "/topics" },
-        { command: "ls", arg: "../" },
-      ],
-      error: null,
-    });
+  it("collapses multiple spaces between command and arguments", () => {
+    expect(parseCommand("ls    -la")).toEqual(["ls -la"]);
   });
 
-  it("collapses extra whitespace around commands and separators", () => {
-    expect(parseCommand("  cd   ../posts   &   ls  ")).toEqual({
-      success: true,
-      result: [{ command: "cd", arg: "../posts" }, { command: "ls" }],
-      error: null,
-    });
+  it("normalizes whitespace around the && separator", () => {
+    expect(parseCommand("ls -la&&cd foo")).toEqual(["ls -la", "cd foo"]);
+    expect(parseCommand("ls -la   &&   cd foo")).toEqual(["ls -la", "cd foo"]);
   });
 
-  it("keeps multi-word args intact as a single arg string", () => {
-    expect(parseCommand("cat notes on things.md")).toEqual({
-      success: true,
-      result: [{ command: "cat", arg: "notes on things.md" }],
-      error: null,
-    });
+  it("drops empty segments from stray or trailing separators", () => {
+    expect(parseCommand("ls -la && && cd foo")).toEqual(["ls -la", "cd foo"]);
+    expect(parseCommand("ls -la &&")).toEqual(["ls -la"]);
+    expect(parseCommand("&& ls -la")).toEqual(["ls -la"]);
   });
 
-  it("accepts every supported command with no arg (excluding cat, which requires one)", () => {
-    for (const command of ["ls", "cd", "help", "clear", "tree"]) {
-      expect(parseCommand(command)).toEqual({
-        success: true,
-        result: [{ command }],
-        error: null,
-      });
-    }
-  });
-
-  it("fails on a completely empty command", () => {
-    expect(parseCommand("")).toEqual({ success: false, result: [], error: "Wrong command syntax" });
-    expect(parseCommand("   ")).toEqual({ success: false, result: [], error: "Wrong command syntax" });
-  });
-
-  it("fails on doubled separators with nothing between them", () => {
-    expect(parseCommand("&&")).toEqual({ success: false, result: [], error: "Wrong command syntax" });
-  });
-
-  it("fails on leading, trailing, or repeated separators", () => {
-    expect(parseCommand("& ls & & cd ..&")).toEqual({
-      success: false,
-      result: [],
-      error: "Wrong command syntax",
-    });
-  });
-
-  it("fails on a command outside the supported list", () => {
-    expect(parseCommand("grep -t react")).toEqual({
-      success: false,
-      result: [],
-      error: "Unknown command: grep",
-    });
-  });
-
-  it("fails the whole chain if any command in it is unsupported", () => {
-    expect(parseCommand("ls & whoami")).toEqual({
-      success: false,
-      result: [],
-      error: "Unknown command: whoami",
-    });
-  });
-
-  it("fails when cat is missing its required arg", () => {
-    expect(parseCommand("cat")).toEqual({ success: false, result: [], error: "Wrong command syntax" });
-  });
-
-  it("succeeds when cd is given no arg (cd's arg is optional)", () => {
-    expect(parseCommand("cd")).toEqual({ success: true, result: [{ command: "cd" }], error: null });
-  });
-
-  it("fails when help or clear is given an arg", () => {
-    expect(parseCommand("help me")).toEqual({
-      success: false,
-      result: [],
-      error: "Wrong command syntax",
-    });
-    expect(parseCommand("clear now")).toEqual({
-      success: false,
-      result: [],
-      error: "Wrong command syntax",
-    });
-  });
-
-  it("allows ls and tree with or without an arg", () => {
-    expect(parseCommand("ls")).toEqual({ success: true, result: [{ command: "ls" }], error: null });
-    expect(parseCommand("ls /posts")).toEqual({
-      success: true,
-      result: [{ command: "ls", arg: "/posts" }],
-      error: null,
-    });
-    expect(parseCommand("tree")).toEqual({ success: true, result: [{ command: "tree" }], error: null });
-    expect(parseCommand("tree /posts")).toEqual({
-      success: true,
-      result: [{ command: "tree", arg: "/posts" }],
-      error: null,
-    });
+  it("returns an empty array for blank input", () => {
+    expect(parseCommand("")).toEqual([]);
+    expect(parseCommand("   ")).toEqual([]);
   });
 });

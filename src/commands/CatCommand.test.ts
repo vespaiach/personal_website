@@ -1,75 +1,95 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { CatCommand } from "./CatCommand.ts";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.stubGlobal(
+  "MutationObserver",
+  class {
+    observe() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  },
+);
+
+vi.mock("alpinejs", () => {
+  const storeMap = new Map<string, unknown>();
+
+  return {
+    default: {
+      store(name: string, value?: unknown) {
+        if (value !== undefined) {
+          storeMap.set(name, value);
+        }
+        return storeMap.get(name);
+      },
+    },
+  };
+});
+
+const { default: Alpine } = await import("alpinejs");
+const { CatCommand } = await import("./CatCommand.ts");
 
 describe("CatCommand", () => {
-  const cat = CatCommand.init();
-  const context = { cwd: "/posts", section: "posts" as const };
-
-  afterEach(() => {
-    vi.unstubAllGlobals();
+  beforeEach(() => {
+    Alpine.store("manifest", {
+      values: {
+        "/": "/generated/root.html",
+        "/posts": "/generated/posts.html",
+        "/posts/typescript-notes.md": "/generated/typescript-notes-view.html",
+      },
+      get(path: string) {
+        return path in this.values ? { existing: true, value: this.values[path] } : { existing: false };
+      },
+    });
   });
 
-  it("rejects a missing arg", () => {
-    expect(cat.validate(undefined)).toEqual({ valid: false, error: "Usage: cat <file_path>" });
-  });
-
-  it("accepts a present arg", () => {
-    expect(cat.validate("typescript-notes.md")).toEqual({ valid: true });
-  });
-
-  it("resolves a relative arg against cwd and fetches its slug", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<article>notes</article>" });
+  it("rejects an invalid path without calling fetch", async () => {
+    const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await CatCommand.init("typescript-notes.md", context).execute();
+    const result = await CatCommand.init("cat /posts//notes.md", "/posts").execute();
 
-    expect(fetchMock).toHaveBeenCalledWith("/src/generated/typescript-notes-view.html");
-    expect(result).toEqual({ kind: "html", html: "<article>notes</article>" });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(result).toEqual({ kind: "error", message: "cat: Invalid path", cwd: "/posts" });
   });
 
-  it("resolves an absolute arg", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<article>me</article>" });
+  it("rejects a path that is not in the manifest without calling fetch", async () => {
+    const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await CatCommand.init("/about/me.md", context).execute();
+    const result = await CatCommand.init("cat missing.md", "/posts").execute();
 
-    expect(fetchMock).toHaveBeenCalledWith("/src/generated/me-view.html");
-    expect(result).toEqual({ kind: "html", html: "<article>me</article>" });
-  });
-
-  it("strips only the last extension from a dotted filename", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<article>project</article>" });
-    vi.stubGlobal("fetch", fetchMock);
-
-    await CatCommand.init("/about/projects/vespaiach.com.md", context).execute();
-
-    expect(fetchMock).toHaveBeenCalledWith("/src/generated/vespaiach.com-view.html");
-  });
-
-  it("returns an error on a non-ok response", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, text: async () => "" }));
-
-    const result = await CatCommand.init("does-not-exist.md", context).execute();
-
+    expect(fetchMock).not.toHaveBeenCalled();
     expect(result).toEqual({
       kind: "error",
-      message: "cat: /posts/does-not-exist.md: No such file or directory",
+      message: "cat: Path does not exist: /posts/missing.md",
+      cwd: "/posts",
     });
+  });
+
+  it("fetches and returns the contents for a resolved file", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<p>notes</p>" });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await CatCommand.init("cat typescript-notes.md", "/posts").execute();
+
+    expect(fetchMock).toHaveBeenCalledWith("/generated/typescript-notes-view.html");
+    expect(result).toEqual({ kind: "html", html: "<p>notes</p>", cwd: "/posts" });
+  });
+
+  it("returns an error when the response is not ok", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false }));
+
+    const result = await CatCommand.init("cat typescript-notes.md", "/posts").execute();
+
+    expect(result).toEqual({ kind: "error", message: "cat: failed to execute command", cwd: "/posts" });
   });
 
   it("returns an error when fetch rejects", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("network down")));
 
-    const result = await CatCommand.init("typescript-notes.md", context).execute();
+    const result = await CatCommand.init("cat typescript-notes.md", "/posts").execute();
 
-    expect(result).toEqual({ kind: "error", message: "cat: failed to load '/posts/typescript-notes.md'" });
-  });
-
-  it("does not special-case stack.json (known limitation: no codegen for it yet)", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, text: async () => "" }));
-
-    const result = await CatCommand.init("/about/stack.json", context).execute();
-
-    expect(result).toEqual({ kind: "error", message: "cat: /about/stack.json: No such file or directory" });
+    expect(result).toEqual({ kind: "error", message: "cat: failed to execute command", cwd: "/posts" });
   });
 });

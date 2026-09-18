@@ -1,8 +1,6 @@
 import Alpine from "alpinejs";
-import { sectionForTopSegment } from "../commands/CdCommand.ts";
-import type { CommandContext, CommandResult } from "../commands/Command.ts";
-import { initCommand } from "../commands/index.ts";
-import { resolvePrompt } from "../lib/resolvePrompt";
+import { execute } from "../commands/index.ts";
+import { parseCommand } from "../lib/CommandParser.ts";
 
 export interface Prompt {
   prompt: string;
@@ -14,40 +12,31 @@ export function registerCommandLine() {
     user: "trinh",
     host: "vespaiach",
     prompt: line.prompt,
-    cwd: line.cwd ?? "",
-    valid: true,
-    error: null as string | null,
-    commands: [] as ReturnType<typeof resolvePrompt>["commands"],
+    cwd: line.cwd ?? "/",
     results: [] as CommandResult[],
 
     async init() {
-      const { valid, error, commands } = resolvePrompt(this.prompt, this.cwd, Alpine.store("manifest").paths);
-      this.valid = valid;
-      this.error = error;
-      this.commands = commands;
+      const commands = parseCommand(this.prompt);
+      if (commands.length === 0) {
+        this.results.push({ kind: "error", message: "No commands entered", cwd: this.cwd });
+        return;
+      }
 
-      if (!valid) return;
-
-      const topSegment = window.location.pathname.split("/").filter(Boolean)[0] ?? "";
-      const context: CommandContext = { cwd: this.cwd, section: sectionForTopSegment(topSegment) };
-
-      for (const resolved of this.commands) {
-        const command = initCommand(resolved.command, resolved.arg, context);
-        if (!command) continue;
-        const result = await command.execute();
-
-        if (result.kind === "html" || result.kind === "text" || result.kind === "error") {
-          this.results.push(result);
-        }
-
-        if (result.kind === "cwd") {
-          Alpine.store("cwd").update(result.cwd);
-        } else if (result.kind === "clear") {
-          Alpine.store("prompts").clear();
-          break;
-        } else if (result.kind === "navigate") {
-          window.location.assign(result.path);
-          break;
+      for (const command of commands) {
+        try {
+          const result = await execute(command, this.cwd);
+          if (result.kind === "error") {
+            this.results.push(result);
+            this.cwd = result.cwd;
+          } else if (result.kind === "clear") {
+            this.results = [];
+          } else {
+            this.results.push(result);
+          }
+          this.cwd = result.cwd;
+        } catch (error) {
+          console.error(error);
+          this.results.push({ kind: "error", message: `Failed: ${command}`, cwd: this.cwd });
         }
       }
     },

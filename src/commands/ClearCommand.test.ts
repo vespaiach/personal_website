@@ -1,20 +1,49 @@
-import { describe, expect, it } from "vitest";
-import { ClearCommand } from "./ClearCommand.ts";
+import { describe, expect, it, vi } from "vitest";
+
+vi.stubGlobal(
+  "MutationObserver",
+  class {
+    observe() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  },
+);
+
+vi.mock("alpinejs", () => ({
+  default: {
+    store() {
+      return undefined;
+    },
+  },
+}));
+
+const { ClearCommand } = await import("./ClearCommand.ts");
 
 describe("ClearCommand", () => {
-  const clear = ClearCommand.init();
-
-  it("rejects an arg", () => {
-    expect(clear.validate("now")).toEqual({ valid: false, error: "Usage: clear" });
+  it("exposes the expected command metadata", () => {
+    expect(ClearCommand.syntax).toBe("clear");
+    expect(ClearCommand.description).toBe("Clear the terminal output log.");
   });
 
-  it("accepts no arg", () => {
-    expect(clear.validate(undefined)).toEqual({ valid: true });
+  it("returns a clear result for the current working directory", async () => {
+    const command = ClearCommand.init("clear", "/posts");
+
+    await expect(command.execute()).resolves.toEqual({
+      kind: "clear",
+      cwd: "/posts",
+    });
   });
 
-  it("always returns a clear result", async () => {
-    const context = { cwd: "/posts", section: "posts" as const };
-    expect(await ClearCommand.init(undefined, context).execute()).toEqual({ kind: "clear" });
-    expect(await ClearCommand.init("ignored", context).execute()).toEqual({ kind: "clear" });
+  it("keeps the working directory unchanged when clearing output", async () => {
+    const command = ClearCommand.init("clear", "/");
+
+    const result = await command.execute();
+
+    expect(result).toEqual({
+      kind: "clear",
+      cwd: "/",
+    });
   });
 });

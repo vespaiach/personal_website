@@ -1,20 +1,20 @@
-import { Command, type CommandContext, type CommandResult } from "./Command.ts";
+import { Command } from "./Command.ts";
 
 export class ClearCommand extends Command {
   readonly name = "clear";
-  readonly syntax = "clear";
-  readonly description = "Clear the terminal output log.";
+  static syntax = "clear";
+  static description = "Clear the terminal output log.";
   protected readonly argRule = "none" as const;
 
-  private constructor(initialArg?: string, context?: CommandContext) {
-    super(initialArg, context);
+  private constructor({ rawCommand, cwd }: { rawCommand: string; cwd: string }) {
+    super({ rawCommand, cwd });
   }
 
-  static init(arg?: string, context?: CommandContext): ClearCommand {
-    return new ClearCommand(arg, context);
+  static init(command: string, cwd: string): ClearCommand {
+    return new ClearCommand({ rawCommand: command, cwd });
   }
 
   async execute(): Promise<CommandResult> {
-    return { kind: "clear" };
+    return Promise.resolve({ kind: "clear", cwd: this.cwd });
   }
 }

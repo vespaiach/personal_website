@@ -802,3 +802,60 @@ samp {
   margin-left: auto;
   color: var(--text-mute);
 }
+
+.terminal-help {
+  background-color: #23222d;
+  color: #8b92b0;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px 0;
+}
+
+.help-header {
+  margin-bottom: 12px;
+}
+
+.help-header .label {
+  color: #8b92b0;
+}
+
+.help-header .args {
+  color: #8b92b0;
+}
+
+.help-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px;
+}
+
+.help-table td {
+  padding: 2px 0;
+  vertical-align: top;
+}
+
+.help-table .cmd {
+  color: #c5c8d6;
+  width: 200px;
+  padding-right: 16px;
+  white-space: nowrap;
+}
+
+.help-table .desc {
+  color: #8b92b0;
+}
+
+.help-footer {
+  margin-top: 16px;
+}
+
+.help-footer .meta-label {
+  color: #8b92b0;
+}
+
+.help-footer .meta-val {
+  color: #c5c8d6;
+}

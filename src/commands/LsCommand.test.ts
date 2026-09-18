@@ -1,65 +1,118 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { LsCommand } from "./LsCommand.ts";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.stubGlobal(
+  "MutationObserver",
+  class {
+    observe() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  },
+);
+
+vi.mock("alpinejs", () => {
+  const storeMap = new Map<string, unknown>();
+
+  return {
+    default: {
+      store(name: string, value?: unknown) {
+        if (value !== undefined) {
+          storeMap.set(name, value);
+        }
+        return storeMap.get(name);
+      },
+    },
+  };
+});
+
+const { default: Alpine } = await import("alpinejs");
+const { LsCommand } = await import("./LsCommand.ts");
 
 describe("LsCommand", () => {
-  const ls = LsCommand.init();
-  const context = { cwd: "/posts", section: "posts" as const };
-
-  afterEach(() => {
-    vi.unstubAllGlobals();
+  beforeEach(() => {
+    Alpine.store("manifest", {
+      values: {
+        "/": "/generated/root.html",
+        "/about": "/generated/about.html",
+        "/about/projects": "/generated/projects.html",
+        "/posts": "/generated/posts.html",
+        "/topics": "/generated/topics.html",
+      },
+      get(path: string) {
+        return path in this.values ? { existing: true, value: this.values[path] } : { existing: false };
+      },
+    });
   });
 
-  it("accepts no arg or an arg", () => {
-    expect(ls.validate(undefined)).toEqual({ valid: true });
-    expect(ls.validate("/about")).toEqual({ valid: true });
+  it("resolves the current directory when no path is given", () => {
+    expect(LsCommand.init("ls", "/posts").resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/posts",
+      resourcePath: "/generated/posts.html",
+    });
   });
 
-  it("fetches the listing for the current directory when no arg is given", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<ul>posts</ul>" });
-    vi.stubGlobal("fetch", fetchMock);
-
-    const result = await LsCommand.init(undefined, context).execute();
-
-    expect(fetchMock).toHaveBeenCalledWith("/src/generated/posts-listing.html");
-    expect(result).toEqual({ kind: "html", html: "<ul>posts</ul>" });
+  it("does not require an arg since ls has an optional argRule", () => {
+    const result = LsCommand.init("ls", "/posts").resolvePath();
+    expect(result).not.toEqual({ valid: false, error: "Usage: ls [file_path]" });
   });
 
-  it("resolves a relative arg against cwd before mapping to a listing", async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<ul>projects</ul>" });
-    vi.stubGlobal("fetch", fetchMock);
-
-    const result = await LsCommand.init("../about/projects", { cwd: "/posts", section: "posts" }).execute();
-
-    expect(fetchMock).toHaveBeenCalledWith("/src/generated/projects-listing.html");
-    expect(result).toEqual({ kind: "html", html: "<ul>projects</ul>" });
+  it("resolves a relative path against cwd", () => {
+    expect(LsCommand.init("ls ../about/projects", "/posts").resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/about/projects",
+      resourcePath: "/generated/projects.html",
+    });
   });
 
-  it("returns an error for a target with no mapped listing, without calling fetch", async () => {
+  it("rejects an invalid path without calling fetch", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await LsCommand.init("typescript-notes.md", context).execute();
+    const result = await LsCommand.init("ls /posts//projects", "/posts").execute();
+
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(result).toEqual({ kind: "error", message: "ls: Invalid path", cwd: "/posts" });
+  });
+
+  it("rejects a path that is not in the manifest without calling fetch", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await LsCommand.init("ls typescript-notes.md", "/posts").execute();
 
     expect(fetchMock).not.toHaveBeenCalled();
     expect(result).toEqual({
       kind: "error",
-      message: "ls: cannot access '/posts/typescript-notes.md': No such directory",
+      message: "ls: Path does not exist: /posts/typescript-notes.md",
+      cwd: "/posts",
     });
+  });
+
+  it("fetches and returns the listing for a resolved directory", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<ul>posts</ul>" });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await LsCommand.init("ls", "/posts").execute();
+
+    expect(fetchMock).toHaveBeenCalledWith("/generated/posts.html");
+    expect(result).toEqual({ kind: "html", html: "<ul>posts</ul>", cwd: "/posts" });
   });
 
   it("returns an error when the response isn't ok", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, text: async () => "" }));
 
-    const result = await LsCommand.init(undefined, context).execute();
+    const result = await LsCommand.init("ls", "/posts").execute();
 
-    expect(result).toEqual({ kind: "error", message: "ls: cannot access '/posts': No such directory" });
+    expect(result).toEqual({ kind: "error", message: "ls: failed to execute command", cwd: "/posts" });
   });
 
   it("returns an error when fetch rejects", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("network down")));
 
-    const result = await LsCommand.init(undefined, context).execute();
+    const result = await LsCommand.init("ls", "/posts").execute();
 
-    expect(result).toEqual({ kind: "error", message: "ls: failed to load '/posts'" });
+    expect(result).toEqual({ kind: "error", message: "ls: failed to execute command", cwd: "/posts" });
   });
 });

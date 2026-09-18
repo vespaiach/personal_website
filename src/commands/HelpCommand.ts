@@ -1,29 +1,54 @@
-import { Command, type CommandContext, type CommandDescriptor, type CommandResult } from "./Command.ts";
+import { CatCommand } from "./CatCommand.ts";
+import { CdCommand } from "./CdCommand.ts";
+import { ClearCommand } from "./ClearCommand.ts";
+import { Command } from "./Command.ts";
+import { LsCommand } from "./LsCommand.ts";
+
+function escapeHtml(text: string): string {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
 
 export class HelpCommand extends Command {
   readonly name = "help";
-  readonly syntax = "help";
-  readonly description = "List every available command.";
+  static syntax = "help";
+  static description = "List every available command.";
   protected readonly argRule = "none" as const;
 
-  private readonly commands: CommandDescriptor[];
-
-  private constructor(
-    initialArg: string | undefined,
-    context: CommandContext | undefined,
-    commands: CommandDescriptor[],
-  ) {
-    super(initialArg, context);
-    this.commands = commands;
+  private constructor({ rawCommand, cwd }: { rawCommand: string; cwd: string }) {
+    super({ rawCommand, cwd });
   }
 
-  static init(arg?: string, context?: CommandContext, commands: CommandDescriptor[] = []): HelpCommand {
-    return new HelpCommand(arg, context, commands);
+  static init(command: string, cwd: string): HelpCommand {
+    return new HelpCommand({ rawCommand: command, cwd });
   }
 
   async execute(): Promise<CommandResult> {
-    const all = [...this.commands, this as CommandDescriptor];
-    const text = all.map((command) => `${command.syntax.padEnd(24)}${command.description}`).join("\n");
-    return { kind: "text", text };
+    const all = [CatCommand, CdCommand, ClearCommand, HelpCommand, LsCommand];
+    const rows = all
+      .map(
+        (command) =>
+          `<tr><td class="cmd">${escapeHtml(command.syntax)}</td><td class="desc">${escapeHtml(command.description)}</td></tr>`,
+      )
+      .join("\n");
+
+    const html = `<div class="terminal-help">
+  <div class="help-header">
+    <span class="label">usage:</span>
+    <span class="args">&lt;command&gt; [args]</span>
+  </div>
+
+  <table class="help-table">
+    <tbody>
+      ${rows}
+    </tbody>
+  </table>
+
+  <div class="help-footer">
+    <div><span class="meta-label">directories:</span> <span class="meta-val">~/posts &nbsp;~/topics &nbsp;~/about</span></div>
+    <div><span class="meta-label">chain with:</span> <span class="meta-val">&amp;&amp;</span></div>
+  </div>
+</div>`;
+
+    return Promise.resolve({ kind: "html", html, cwd: this.cwd });
   }
 }

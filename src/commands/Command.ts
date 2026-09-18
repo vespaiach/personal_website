@@ -1,23 +1,47 @@
-export interface CommandDescriptor {
-  readonly name: string;
-  readonly syntax: string;
-  readonly description: string;
+import Alpine from "alpinejs";
+import { toAbsolutePath } from "../lib/path.ts";
+
+export interface HasPathArgument {
+  resolvePath(): PathResult;
 }
 
-export abstract class Command implements CommandDescriptor {
-  abstract readonly name: string;
-  abstract readonly syntax: string;
-  abstract readonly description: string;
-  protected readonly rawCommand: string;
-  protected readonly cwd: string;
-  protected readonly availablePaths: Record<string, string>;
+type ArgRule = "required" | "optional" | "none";
 
-  protected constructor({ rawCommand, cwd, availablePaths }: { rawCommand: string; cwd?: string; availablePaths: Record<string, string> }) {
+export abstract class Command {
+  abstract readonly name: string;
+  static readonly syntax: string;
+  static readonly description: string;
+  protected abstract readonly argRule: ArgRule;
+  protected readonly rawCommand: string;
+  protected cwd: string;
+
+  protected constructor({ rawCommand, cwd }: { rawCommand: string; cwd?: string }) {
     this.rawCommand = rawCommand;
-    this.availablePaths = availablePaths;
     this.cwd = cwd ?? "/";
   }
 
-  abstract isValid(): boolean;
+  resolvePath(): ResolvedPathResult {
+    const path = this.rawCommand.split(" ")[1] ?? "";
+    let absolutePath = this.cwd;
+
+    if (this.argRule === "required" && !path) {
+      return { valid: false, error: `Usage: ${Command.syntax}` };
+    }
+
+    if (path) {
+      const result = toAbsolutePath(path, this.cwd);
+      if (result.valid) absolutePath = result.absolutePath;
+      else return result;
+    }
+
+    const manifest = Alpine.store("manifest");
+    const manifestResult = manifest.get(absolutePath);
+    if (!manifestResult.existing) {
+      return { valid: false, error: `Path does not exist: ${absolutePath}` };
+    }
+
+    return { valid: true, absolutePath, resourcePath: manifestResult.value };
+  }
+
   abstract execute(): Promise<CommandResult>;
 }

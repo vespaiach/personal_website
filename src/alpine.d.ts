@@ -14,17 +14,25 @@ interface CommandObject {
   arg?: string;
 }
 
-type CommandResult =
-  | { kind: "html"; html: string }
-  | { kind: "text"; text: string }
-  | { kind: "clear" }
-  | { kind: "navigate"; path: string }
-  | { kind: "cwd"; cwd: string }
-  | { kind: "error"; message: string };
+type PathResult = 
+  | { valid: true; absolutePath: string; }
+  | { valid: false; error: string; };
+
+type ResolvedPathResult = 
+  | { valid: true; absolutePath: string; resourcePath: string; }
+  | { valid: false; error: string; };
 
 interface Manifest {
-  paths: Record<string, string>;
+  values: Record<string, string>;
+  get(path: string): { existing: true, value: string } | { existing: false };
 }
+
+type CommandResult =
+  | { kind: "html"; html: string; cwd: string }
+  | { kind: "text"; text: string; cwd: string }
+  | { kind: "clear"; cwd: string }
+  | { kind: "cwd"; cwd: string; }
+  | { kind: "error"; message: string; cwd: string };
 
 interface Alpine {
   data(name: string, callback: unknown): void;

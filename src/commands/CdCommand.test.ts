@@ -1,58 +1,143 @@
-import { describe, expect, it } from "vitest";
-import { CdCommand } from "./CdCommand.ts";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.stubGlobal(
+  "MutationObserver",
+  class {
+    observe() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  },
+);
+
+vi.mock("alpinejs", () => {
+  const storeMap = new Map<string, unknown>();
+
+  return {
+    default: {
+      store(name: string, value?: unknown) {
+        if (value !== undefined) {
+          storeMap.set(name, value);
+        }
+        return storeMap.get(name);
+      },
+    },
+  };
+});
+
+const { default: Alpine } = await import("alpinejs");
+const { CdCommand } = await import("./CdCommand.ts");
 
 describe("CdCommand", () => {
-  const cd = CdCommand.init();
+  beforeEach(() => {
+    Alpine.store("manifest", {
+      values: {
+        "/": "/generated/root.html",
+        "/about": "/generated/about.html",
+        "/posts": "/generated/posts.html",
+        "/topics": "/generated/topics.html",
+      },
+      get(path: string) {
+        return path in this.values ? { existing: true, value: this.values[path] } : { existing: false };
+      },
+    });
 
-  it("accepts no arg or an arg", () => {
-    expect(cd.validate(undefined)).toEqual({ valid: true });
-    expect(cd.validate("/posts")).toEqual({ valid: true });
+    Alpine.store("cwd", {
+      value: "/posts",
+      update(value: string) {
+        this.value = value;
+      },
+    });
   });
 
-  it("uses the argument bound by init when execute receives no argument", async () => {
-    const result = await CdCommand.init("/topics", { cwd: "/posts", section: "posts" }).execute();
-
-    expect(result).toEqual({ kind: "navigate", path: "/topics/" });
+  it("accepts no arg and keeps the current directory", () => {
+    const cd = CdCommand.init("cd", "/posts");
+    expect(cd.resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/posts",
+      resourcePath: "/generated/posts.html",
+    });
   });
 
-  it("prefers an execute argument over the argument bound by init", async () => {
-    const result = await CdCommand.init("/about", { cwd: "/posts", section: "posts" }).execute();
-
-    expect(result).toEqual({ kind: "navigate", path: "/about/" });
+  it("does not require an arg since cd has an optional argRule", () => {
+    const result = CdCommand.init("cd", "/posts").resolvePath();
+    expect(result).not.toEqual({ valid: false, error: "Usage: cd [directory_path]" });
   });
 
-  it("bare cd from a different section navigates to the posts route", async () => {
-    const result = await CdCommand.init(undefined, { cwd: "/about", section: "about" }).execute();
-    expect(result).toEqual({ kind: "navigate", path: "/" });
+  it("rejects invalid paths", () => {
+    const cd = CdCommand.init("cd /posts//abc", "/posts");
+    expect(cd.resolvePath()).toEqual({ valid: false, error: "Invalid path" });
   });
 
-  it("bare cd while already on the posts section updates cwd in place", async () => {
-    const result = await CdCommand.init(undefined, { cwd: "/posts", section: "posts" }).execute();
-    expect(result).toEqual({ kind: "cwd", cwd: "/" });
+  it("rejects paths that do not exist in the manifest", () => {
+    const cd = CdCommand.init("cd /posts/abc.md", "/posts");
+    expect(cd.resolvePath()).toEqual({ valid: false, error: "Path does not exist: /posts/abc.md" });
   });
 
-  it("cd .. within the same section updates cwd in place", async () => {
-    const result = await CdCommand.init("..", { cwd: "/about/projects", section: "about" }).execute();
+  it("accepts the root directory", () => {
+    const cd = CdCommand.init("cd /", "/posts");
+    expect(cd.resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/",
+      resourcePath: "/generated/root.html",
+    });
+  });
+
+  it("accepts the current directory via ~", () => {
+    const cd = CdCommand.init("cd ~", "/posts");
+    expect(cd.resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/posts",
+      resourcePath: "/generated/posts.html",
+    });
+  });
+
+  it("accepts the root directory via ~/", () => {
+    const cd = CdCommand.init("cd ~/", "/posts");
+    expect(cd.resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/",
+      resourcePath: "/generated/root.html",
+    });
+  });
+
+  it("reports a missing directory when the path cannot be resolved in the manifest", () => {
+    const cd = CdCommand.init("cd /nonexistent", "/posts");
+    expect(cd.resolvePath()).toEqual({ valid: false, error: "Path does not exist: /nonexistent" });
+  });
+
+  it("returns a cwd result without mutating the shared store", async () => {
+    const cd = CdCommand.init("cd /about", "/posts");
+    const result = await cd.execute();
+
     expect(result).toEqual({ kind: "cwd", cwd: "/about" });
+    expect(Alpine.store("cwd").value).toBe("/posts");
   });
 
-  it("cd to a different top-level section navigates to its route", async () => {
-    const result = await CdCommand.init("/topics", { cwd: "/posts", section: "posts" }).execute();
-    expect(result).toEqual({ kind: "navigate", path: "/topics/" });
+  it("execute resolves a valid path and updates the instance cwd", async () => {
+    const cd = CdCommand.init("cd /about", "/posts");
+    const result = await cd.execute();
+
+    expect(result).toEqual({ kind: "cwd", cwd: "/about" });
+    expect(cd.resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/about",
+      resourcePath: "/generated/about.html",
+    });
   });
 
-  it("cd to a relative directory within the same section updates cwd in place", async () => {
-    const result = await CdCommand.init("projects", { cwd: "/about", section: "about" }).execute();
-    expect(result).toEqual({ kind: "cwd", cwd: "/about/projects" });
+  it("execute returns an error for an invalid path", async () => {
+    const cd = CdCommand.init("cd /posts//abc", "/posts");
+    const result = await cd.execute();
+
+    expect(result).toEqual({ kind: "error", message: "Invalid path", cwd: "/posts" });
   });
 
-  it("cd into a file path is an error", async () => {
-    const result = await CdCommand.init("me.md", { cwd: "/about", section: "about" }).execute();
-    expect(result).toEqual({ kind: "error", message: "cd: no such directory: me.md" });
-  });
+  it("execute returns an error for a missing manifest entry", async () => {
+    const cd = CdCommand.init("cd /nonexistent", "/posts");
+    const result = await cd.execute();
 
-  it("cd into a nonexistent path is an error", async () => {
-    const result = await CdCommand.init("/nope", { cwd: "/posts", section: "posts" }).execute();
-    expect(result).toEqual({ kind: "error", message: "cd: no such directory: /nope" });
+    expect(result).toEqual({ kind: "error", message: "Path does not exist: /nonexistent", cwd: "/posts" });
   });
 });

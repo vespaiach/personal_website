@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["src/**", "!src/components/*.html", "!src/generated", "vite-plugins/**"]
+    "includes": ["src/**", "!src/components/*.html", "!src/generated", "vite-plugins/**", "!src/alpine.d.ts"]
   },
   "formatter": {
     "enabled": true,

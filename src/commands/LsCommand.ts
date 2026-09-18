@@ -1,44 +1,31 @@
-import { Command, type CommandContext, type CommandResult } from "./Command.ts";
+import { Command, type HasPathArgument } from "./Command.ts";
 
-const SLUG_FOR_PATH: Record<string, string> = {
-  "/posts": "posts-listing",
-  "/topics": "topics-listing",
-  "/about": "about-listing",
-  "/about/projects": "projects-listing",
-};
-
-export class LsCommand extends Command {
+export class LsCommand extends Command implements HasPathArgument {
   readonly name = "ls";
-  readonly syntax = "ls [file_path]";
-  readonly description = "List a virtual directory's contents.";
+  static syntax = "ls [file_path]";
+  static description = "List a virtual directory's contents.";
   protected readonly argRule = "optional" as const;
 
-  private constructor(initialArg?: string, context?: CommandContext) {
-    super(initialArg, context);
+  private constructor({ command, cwd }: { command: string; cwd: string }) {
+    super({ rawCommand: command, cwd });
   }
 
-  static init(arg?: string, context?: CommandContext): LsCommand {
-    return new LsCommand(arg, context);
+  static init(command: string, cwd: string): LsCommand {
+    return new LsCommand({ command, cwd });
   }
 
   async execute(): Promise<CommandResult> {
-    const cwd = this.context?.cwd ?? "";
-    const target = this.initialArg ? this.resolvePath(this.initialArg, cwd) : cwd;
-    const slug = SLUG_FOR_PATH[target];
-    if (!slug) {
-      return { kind: "error", message: `ls: cannot access '${target}': No such directory` };
-    }
+    const result = this.resolvePath();
+    if (!result.valid) return { kind: "error", message: `ls: ${result.error}`, cwd: this.cwd };
 
     try {
-      // src/generated/ is only servable under `vite dev` — a production build
-      // never copies it into dist/, since pages consume it via build-time <load>.
-      const response = await fetch(`/src/generated/${slug}.html`);
+      const response = await fetch(result.resourcePath);
       if (!response.ok) {
-        return { kind: "error", message: `ls: cannot access '${target}': No such directory` };
+        return { kind: "error", message: "ls: failed to execute command", cwd: this.cwd };
       }
-      return { kind: "html", html: await response.text() };
+      return { kind: "html", html: await response.text(), cwd: this.cwd };
     } catch {
-      return { kind: "error", message: `ls: failed to load '${target}'` };
+      return { kind: "error", message: "ls: failed to execute command", cwd: this.cwd };
     }
   }
 }

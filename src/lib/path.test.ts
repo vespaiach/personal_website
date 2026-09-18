@@ -1,98 +1,66 @@
 import { describe, expect, it } from "vitest";
-import { getAvailablePaths, isDirectory, toAbsolutePath } from "./path.ts";
+import { toAbsolutePath } from "./path.ts";
 
 describe("toAbsolutePath", () => {
   it("resolves a relative path against a directory", () => {
-    expect(toAbsolutePath("../posts", "/topics")).toBe("/posts");
+    expect(toAbsolutePath("../posts", "/topics")).toEqual({ valid: true, absolutePath: "/posts" });
   });
 
   it("returns an absolute path unchanged (normalized)", () => {
-    expect(toAbsolutePath("/about", "/topics")).toBe("/about");
+    expect(toAbsolutePath("/about", "/topics")).toEqual({ valid: true, absolutePath: "/about" });
+    expect(toAbsolutePath("~/about", "/topics")).toEqual({ valid: true, absolutePath: "/about" });
   });
 
   it("resolves '.' to the current directory", () => {
-    expect(toAbsolutePath("./", "/about")).toBe("/about");
+    expect(toAbsolutePath("./", "/about")).toEqual({ valid: true, absolutePath: "/about" });
   });
 
   it("no negative path", () => {
-    expect(toAbsolutePath("../../posts", "/topics")).toBe(null);
+    expect(toAbsolutePath("../../posts", "/topics")).toEqual({ valid: true, absolutePath: "/" });
+    expect(toAbsolutePath("../../../posts", "/topics")).toEqual({ valid: true, absolutePath: "/" });
   });
 
   it("resolves a nested relative path", () => {
-    expect(toAbsolutePath("posts/hello", "/topics")).toBe("/topics/posts/hello");
+    expect(toAbsolutePath("posts/hello", "/topics")).toEqual({
+      valid: true,
+      absolutePath: "/topics/posts/hello",
+    });
   });
 
   it("collapses trailing slashes on the current path", () => {
-    expect(toAbsolutePath("../posts", "/topics/")).toBe("/posts");
+    expect(toAbsolutePath("../posts", "/topics/")).toEqual({ valid: true, absolutePath: "/posts" });
   });
 
   it("resolves to root when everything is popped", () => {
-    expect(toAbsolutePath("..", "/topics")).toBe("/");
+    expect(toAbsolutePath("..", "/topics")).toEqual({ valid: true, absolutePath: "/" });
   });
 
   it("resolves when cwd is at root", () => {
-    expect(toAbsolutePath("..", "/")).toBe(null);
-    expect(toAbsolutePath("./about", "/")).toBe("/about");
-    expect(toAbsolutePath("/about/projects", "/")).toBe("/about/projects");
-    expect(toAbsolutePath("/about/projects/abt", "/")).toBe("/about/projects/abt");
+    expect(toAbsolutePath("..", "/")).toEqual({ valid: true, absolutePath: "/" });
+    expect(toAbsolutePath("./about", "/")).toEqual({ valid: true, absolutePath: "/about" });
+    expect(toAbsolutePath("/about/projects", "/")).toEqual({ valid: true, absolutePath: "/about/projects" });
+    expect(toAbsolutePath("/about/projects/abt", "/")).toEqual({
+      valid: true,
+      absolutePath: "/about/projects/abt",
+    });
   });
 
   it("resolves projects folder", () => {
-    expect(toAbsolutePath("about/projects", "/")).toBe("/about/projects");
-    expect(toAbsolutePath("/about/projects", "/")).toBe("/about/projects");
-    expect(toAbsolutePath("~/about/projects", "/")).toBe("/about/projects");
-    expect(toAbsolutePath("../about/projects", "/topics")).toBe("/about/projects");
-  });
-});
-
-describe("getAvailablePaths", () => {
-  const paths = getAvailablePaths();
-
-  it("includes the virtual /topics directory", () => {
-    expect(paths["/topics"]).toBe(true);
+    expect(toAbsolutePath("about/projects", "/")).toEqual({ valid: true, absolutePath: "/about/projects" });
+    expect(toAbsolutePath("/about/projects", "/")).toEqual({ valid: true, absolutePath: "/about/projects" });
+    expect(toAbsolutePath("~/about/projects", "/")).toEqual({ valid: true, absolutePath: "/about/projects" });
+    expect(toAbsolutePath("../about/projects", "/topics")).toEqual({
+      valid: true,
+      absolutePath: "/about/projects",
+    });
   });
 
-  it("includes the /posts directory and a known post", () => {
-    expect(paths["/posts"]).toBe(true);
-    expect(paths["/posts/discard-after-usages.md"]).toBe(true);
+  it("rejects paths that are 512 characters or longer", () => {
+    expect(toAbsolutePath("a".repeat(511), "/")).toEqual({ valid: false, error: "Path is too long" });
   });
 
-  it("includes the /about directory and its files", () => {
-    expect(paths["/about"]).toBe(true);
-    expect(paths["/about/me.md"]).toBe(true);
-    expect(paths["/about/stack.json"]).toBe(true);
-  });
-
-  it("includes a nested file under /about without a separate directory entry", () => {
-    expect(paths["/about/projects/vespaiach.com.md"]).toBe(true);
-    expect(paths["/about/projects"]).toBeUndefined();
-  });
-
-  it("does not include paths that don't exist", () => {
-    expect(paths["/posts/does-not-exist.md"]).toBeUndefined();
-  });
-});
-
-describe("isDirectory", () => {
-  const paths = getAvailablePaths();
-
-  it("treats the root as a directory", () => {
-    expect(isDirectory("/", paths)).toBe(true);
-  });
-
-  it("treats a fixed root with zero descendants as a directory", () => {
-    expect(isDirectory("/topics", paths)).toBe(true);
-  });
-
-  it("treats an implicit intermediate directory as a directory", () => {
-    expect(isDirectory("/about/projects", paths)).toBe(true);
-  });
-
-  it("does not treat a leaf file as a directory", () => {
-    expect(isDirectory("/about/me.md", paths)).toBe(false);
-  });
-
-  it("does not treat a nonexistent path as a directory", () => {
-    expect(isDirectory("/nope", paths)).toBe(false);
+  it("invalid path", () => {
+    expect(toAbsolutePath("about//projects", "/")).toEqual({ valid: false, error: "Invalid path" });
+    expect(toAbsolutePath("about///projects", "/")).toEqual({ valid: false, error: "Invalid path" });
   });
 });

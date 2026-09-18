@@ -15,24 +15,26 @@ registerTerminal();
 
 Alpine.store("prompts", {
   values: [] as Array<{ prompt: string; cwd: string }>,
-
   add(prompt: string, cwd: string) {
     this.values.push({ prompt, cwd });
   },
-
   clear() {
     this.values = [];
   },
 });
+
 Alpine.store("cwd", {
   value: "",
-
   update(value: string) {
     this.value = value;
   },
 });
+
 Alpine.store("manifest", {
-  paths: manifest,
+  values: manifest,
+  get(path: string) {
+    return this.values[path] ? { existing: true, value: this.values[path] } : { existing: false };
+  },
 });
 
 window.Alpine = Alpine;
