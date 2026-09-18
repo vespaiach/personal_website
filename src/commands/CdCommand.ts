@@ -1,5 +1,5 @@
 import { getAvailablePaths, isDirectory } from "../lib/path.ts";
-import { Command, type CommandContext, type CommandResult, type Section } from "./Command.ts";
+import { Command, type Section } from "./Command.ts";
 
 const DEFAULT_ARG = "/";
 
@@ -21,12 +21,12 @@ export class CdCommand extends Command {
   readonly description = "Change the current directory.";
   protected readonly argRule = "optional" as const;
 
-  private constructor(initialArg?: string, context?: CommandContext) {
-    super(initialArg, context);
+private constructor({ arg, cwd, availablePaths }: { arg?: string | null; cwd?: string; availablePaths: Record<string, string> }) {
+    super({ arg, cwd, availablePaths });
   }
 
-  static init(arg?: string, context?: CommandContext): CdCommand {
-    return new CdCommand(arg, context);
+  static init(arg: string | null | undefined, cwd: string, availablePaths: Record<string, string> = {}): CdCommand {
+    return new CdCommand({ arg, cwd, availablePaths });
   }
 
   async execute(): Promise<CommandResult> {

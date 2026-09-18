@@ -14,6 +14,14 @@ interface CommandObject {
   arg?: string;
 }
 
+type CommandResult =
+  | { kind: "html"; html: string }
+  | { kind: "text"; text: string }
+  | { kind: "clear" }
+  | { kind: "navigate"; path: string }
+  | { kind: "cwd"; cwd: string }
+  | { kind: "error"; message: string };
+
 interface Manifest {
   paths: Record<string, string>;
 }

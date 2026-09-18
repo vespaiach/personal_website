@@ -1,4 +1,4 @@
-import { Command, type CommandContext, type CommandResult } from "./Command.ts";
+import { Command } from "./Command.ts";
 
 export class CatCommand extends Command {
   readonly name = "cat";
@@ -6,16 +6,16 @@ export class CatCommand extends Command {
   readonly description = "Print a file's contents.";
   protected readonly argRule = "required" as const;
 
-  private constructor(initialArg?: string, context?: CommandContext) {
-    super(initialArg, context);
+  private constructor({ arg, cwd, availablePaths }: { arg?: string; cwd?: string; availablePaths: Record<string, string> }) {
+    super({ arg, cwd, availablePaths });
   }
 
-  static init(arg?: string, context?: CommandContext): CatCommand {
-    return new CatCommand(arg, context);
+  static init(command: string, cwd: string, availablePaths: Record<string, string> = {}): CatCommand {
+    return new CatCommand({ arg, cwd, availablePaths });
   }
 
   async execute(): Promise<CommandResult> {
-    const target = this.resolvePath(this.initialArg ?? "", this.context?.cwd ?? "");
+    const target = this.resolvePath(this.initialArg ?? "", this.cwd);
     const filename = target.split("/").pop() ?? "";
     const slug = filename.replace(/\.[^./]+$/, "");
 
