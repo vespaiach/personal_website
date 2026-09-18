@@ -27,9 +27,9 @@ describe("generateViews", () => {
 
     const contentDir = join(root, "content");
     const sourceCount = collectFileSources(contentDir).length + collectFolderSources(contentDir).length;
-    expect(Object.keys(manifest)).toHaveLength(sourceCount);
+    expect(Object.keys(manifest)).toHaveLength(sourceCount + 1);
     expect(Object.keys(manifest)).toEqual(
-      expect.arrayContaining(["/", "/posts", "/about", "/about/projects", "/topics"]),
+      expect.arrayContaining(["/", "/posts", "/about", "/about/projects", "/topics", "tree /"]),
     );
 
     const uuidPathPattern = /^\/generated\/[0-9a-f-]{36}\.html$/;
@@ -51,6 +51,12 @@ describe("generateViews", () => {
     const postsListingContent = readFileSync(join(root, "dist", "generated", postsListingFileName), "utf-8");
     expect(postsListingContent).toContain("typescript-notes.md");
     expect(postsListingContent).toContain("-rw-r--r--");
+
+    const treeFileName = manifest["tree /"].replace("/generated/", "");
+    const treeContent = readFileSync(join(root, "dist", "generated", treeFileName), "utf-8");
+    expect(treeContent).toContain(">~<");
+    expect(treeContent).toContain("about");
+    expect(treeContent).toContain("var(--dir)");
   });
 
   it("clears stale files from a previous run instead of accumulating them", async () => {

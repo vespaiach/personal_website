@@ -10,6 +10,7 @@ import {
   type Source,
 } from "./collect.ts";
 import { renderListingView } from "./renderListingView.ts";
+import { renderTreeView } from "./renderTreeView.ts";
 
 async function renderSource(source: Source): Promise<string> {
   if (source.type === "folder") return renderListingView(source.virtualPath, source.entries);
@@ -21,7 +22,8 @@ async function renderSource(source: Source): Promise<string> {
 
 export async function generateViews(root: string): Promise<Record<string, string>> {
   const contentDir = join(root, "content");
-  const sources: Source[] = [...collectFileSources(contentDir), ...collectFolderSources(contentDir)];
+  const folderSources = collectFolderSources(contentDir);
+  const sources: Source[] = [...collectFileSources(contentDir), ...folderSources];
   assertNoVirtualPathCollisions(sources);
 
   const outputDir = join(root, "dist", "generated");
@@ -36,6 +38,11 @@ export async function generateViews(root: string): Promise<Record<string, string
     writeFileSync(join(outputDir, fileName), html);
     manifest[source.virtualPath] = `/generated/${fileName}`;
   }
+
+  const treeHtml = renderTreeView(folderSources);
+  const treeFileName = `${randomUUID()}.html`;
+  writeFileSync(join(outputDir, treeFileName), treeHtml);
+  manifest["tree /"] = `/generated/${treeFileName}`;
 
   const sortedManifest = Object.fromEntries(
     Object.entries(manifest).sort(([left], [right]) => left.localeCompare(right)),
