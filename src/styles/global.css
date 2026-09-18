@@ -621,6 +621,24 @@ samp {
   flex-basis: 100%;
 }
 
+.command-line--idle {
+  cursor: pointer;
+}
+
+.command-line__cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  background: var(--ink);
+  animation: vp-blink var(--caret-blink);
+}
+
+.command-line__idle-hint {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: var(--body-sm-size);
+}
+
 /* ── terminal.css ──────────────────────────────────────────── */
 .terminal-main {
   display: flex;
