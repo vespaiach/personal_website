@@ -11,8 +11,6 @@ export interface ResolveResult {
   commands: ResolvedCommand[];
 }
 
-const PATH_COMMANDS = new Set(["cd", "ls", "cat", "tree"]);
-
 export function resolvePrompt(prompt: string, cwd: string, manifest: Record<string, string>): ResolveResult {
   const parsed = parseCommand(prompt);
   if (!parsed.success) {
@@ -22,15 +20,14 @@ export function resolvePrompt(prompt: string, cwd: string, manifest: Record<stri
   const commands: ResolvedCommand[] = [];
   const resolutionCwd = cwd || "/";
   for (const cmd of parsed.result) {
-    if (!PATH_COMMANDS.has(cmd.command)) {
-      commands.push(cmd);
-      continue;
-    }
-
     let resolvedPath: string | undefined;
     const arg = cmd.arg?.replace(/^~(?=\/|$)/, "") ?? "";
     if (arg) {
-      resolvedPath = toAbsolutePath(arg, resolutionCwd);
+      const absolutePath = toAbsolutePath(arg, resolutionCwd);
+      if (!absolutePath || !manifest[absolutePath]) {
+        return { valid: false, error: `No such file or directory: ${arg}`, commands: [] };
+      }
+      resolvedPath = absolutePath;
       if (!(resolvedPath in manifest)) {
         return { valid: false, error: `No such file or directory: ${resolvedPath}`, commands: [] };
       }

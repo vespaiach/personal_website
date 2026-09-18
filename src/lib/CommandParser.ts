@@ -1,10 +1,5 @@
 import { commands } from "../commands/index.ts";
 
-export interface CommandObject {
-  command: string;
-  arg?: string;
-}
-
 export interface ParseResult {
   success: boolean;
   result: CommandObject[];

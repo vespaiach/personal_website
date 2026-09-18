@@ -33,9 +33,16 @@ export abstract class Command implements CommandDescriptor {
   abstract readonly syntax: string;
   abstract readonly description: string;
   protected abstract readonly argRule: ArgRule;
+  protected readonly initialArg: string | undefined;
+  protected readonly context: CommandContext | undefined;
+
+  protected constructor(initialArg?: string, context?: CommandContext) {
+    this.initialArg = initialArg;
+    this.context = context;
+  }
 
   validate(arg: string | undefined): ValidationResult {
-    const trimmed = arg?.trim();
+    const trimmed = (arg ?? this.initialArg)?.trim();
     if (this.argRule === "required" && !trimmed) {
       return { valid: false, error: `Usage: ${this.syntax}` };
     }
@@ -46,8 +53,8 @@ export abstract class Command implements CommandDescriptor {
   }
 
   protected resolvePath(path: string, cwd: string): string {
-    return toAbsolutePath(path, cwd);
+    return toAbsolutePath(path, cwd) ?? "";
   }
 
-  abstract execute(arg: string | undefined, context: CommandContext): Promise<CommandResult>;
+  abstract execute(): Promise<CommandResult>;
 }

@@ -9,7 +9,7 @@ describe("commands registry", () => {
   });
 
   it("help lists every other command's syntax plus its own", async () => {
-    const result = await commands.help?.execute(undefined, { cwd: "/posts", section: "posts" });
+    const result = await commands.help?.execute();
     expect(result?.kind).toBe("text");
     const text = (result as { kind: "text"; text: string }).text;
     for (const name of ["ls", "cat", "cd", "clear", "tree", "help"]) {

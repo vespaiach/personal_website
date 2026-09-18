@@ -21,10 +21,20 @@ export class CdCommand extends Command {
   readonly description = "Change the current directory.";
   protected readonly argRule = "optional" as const;
 
-  async execute(arg: string | undefined, { cwd, section }: CommandContext): Promise<CommandResult> {
-    const target = this.resolvePath(arg ?? DEFAULT_ARG, cwd);
+  private constructor(initialArg?: string, context?: CommandContext) {
+    super(initialArg, context);
+  }
+
+  static init(arg?: string, context?: CommandContext): CdCommand {
+    return new CdCommand(arg, context);
+  }
+
+  async execute(): Promise<CommandResult> {
+    const { cwd = "", section = "posts" } = this.context ?? {};
+    const targetArg = this.initialArg ?? DEFAULT_ARG;
+    const target = this.resolvePath(targetArg, cwd);
     if (!isDirectory(target, getAvailablePaths())) {
-      return { kind: "error", message: `cd: no such directory: ${arg ?? DEFAULT_ARG}` };
+      return { kind: "error", message: `cd: no such directory: ${targetArg}` };
     }
 
     const topSegment = target.split("/").filter(Boolean)[0] ?? "";

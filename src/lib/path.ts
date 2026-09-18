@@ -1,17 +1,26 @@
-// Resolves any_path (relative or absolute) against current_path, treating
-// current_path as a directory. Example: ('../posts', '/topics') -> '/posts'
-export function toAbsolutePath(anyPath: string, currentPath: string): string {
-  const baseSegments = anyPath.startsWith("/") ? [] : currentPath.split("/").filter(Boolean);
-  const segments = baseSegments.concat(anyPath.split("/"));
+/**
+ * We only have three virtual root directories: /posts, /topics, and /about.
+ * ~
+├── about
+├── posts
+└── topics
+ */
+export function toAbsolutePath(anyPath: string, currentPath: string): string | null {
+  const normalizedPath = anyPath.replace(/^~(?=\/|$)/, "");
+  const baseSegments = normalizedPath.startsWith("/") ? [] : currentPath.split("/").filter(Boolean);
+  const segments = baseSegments.concat(normalizedPath.split("/"));
 
   const resolved: string[] = [];
   for (const segment of segments) {
     if (segment === "" || segment === ".") continue;
-    if (segment === "..") resolved.pop();
-    else resolved.push(segment);
+    if (segment === "..") {
+      if (resolved.length === 0) return null;
+      resolved.pop();
+    } else resolved.push(segment);
   }
 
-  return `/${resolved.join("/")}`;
+  const result = `/${resolved.join("/")}`;
+  return result;
 }
 
 // Hash of every available path (directories and files) under /posts, /topics,

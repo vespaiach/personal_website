@@ -7,7 +7,7 @@ describe("HelpCommand", () => {
     { name: "ls", syntax: "ls [file_path]", description: "List things." },
     { name: "cat", syntax: "cat <file_path>", description: "Print a file." },
   ];
-  const help = new HelpCommand(fakeCommands);
+  const help = HelpCommand.init(undefined, undefined, fakeCommands);
   const context = { cwd: "/posts", section: "posts" as const };
 
   it("rejects an arg", () => {
@@ -19,7 +19,7 @@ describe("HelpCommand", () => {
   });
 
   it("lists the injected commands in order, followed by its own line", async () => {
-    const result = await help.execute(undefined, context);
+    const result = await HelpCommand.init(undefined, context, fakeCommands).execute();
     expect(result.kind).toBe("text");
     const lines = (result as { kind: "text"; text: string }).text.split("\n");
     expect(lines[0]).toContain("ls [file_path]");

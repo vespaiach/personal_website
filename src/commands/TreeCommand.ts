@@ -41,11 +41,21 @@ export class TreeCommand extends Command {
   readonly description = "Print a directory's contents as a tree.";
   protected readonly argRule = "optional" as const;
 
-  async execute(arg: string | undefined, { cwd }: CommandContext): Promise<CommandResult> {
-    const target = arg ? this.resolvePath(arg, cwd) : cwd;
+  private constructor(initialArg?: string, context?: CommandContext) {
+    super(initialArg, context);
+  }
+
+  static init(arg?: string, context?: CommandContext): TreeCommand {
+    return new TreeCommand(arg, context);
+  }
+
+  async execute(): Promise<CommandResult> {
+    const cwd = this.context?.cwd ?? "";
+    const targetArg = this.initialArg;
+    const target = targetArg ? this.resolvePath(targetArg, cwd) : cwd;
     const paths = getAvailablePaths();
     if (!isDirectory(target, paths)) {
-      return { kind: "error", message: `tree: ${arg ?? cwd}: No such directory` };
+      return { kind: "error", message: `tree: ${targetArg ?? cwd}: No such directory` };
     }
 
     const lines = [target];

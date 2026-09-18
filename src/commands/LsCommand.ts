@@ -13,8 +13,17 @@ export class LsCommand extends Command {
   readonly description = "List a virtual directory's contents.";
   protected readonly argRule = "optional" as const;
 
-  async execute(arg: string | undefined, { cwd }: CommandContext): Promise<CommandResult> {
-    const target = arg ? this.resolvePath(arg, cwd) : cwd;
+  private constructor(initialArg?: string, context?: CommandContext) {
+    super(initialArg, context);
+  }
+
+  static init(arg?: string, context?: CommandContext): LsCommand {
+    return new LsCommand(arg, context);
+  }
+
+  async execute(): Promise<CommandResult> {
+    const cwd = this.context?.cwd ?? "";
+    const target = this.initialArg ? this.resolvePath(this.initialArg, cwd) : cwd;
     const slug = SLUG_FOR_PATH[target];
     if (!slug) {
       return { kind: "error", message: `ls: cannot access '${target}': No such directory` };

@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { CatCommand } from "./CatCommand.ts";
 
 describe("CatCommand", () => {
-  const cat = new CatCommand();
+  const cat = CatCommand.init();
   const context = { cwd: "/posts", section: "posts" as const };
 
   afterEach(() => {
@@ -21,7 +21,7 @@ describe("CatCommand", () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<article>notes</article>" });
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await cat.execute("typescript-notes.md", context);
+    const result = await CatCommand.init("typescript-notes.md", context).execute();
 
     expect(fetchMock).toHaveBeenCalledWith("/src/generated/typescript-notes-view.html");
     expect(result).toEqual({ kind: "html", html: "<article>notes</article>" });
@@ -31,7 +31,7 @@ describe("CatCommand", () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<article>me</article>" });
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await cat.execute("/about/me.md", context);
+    const result = await CatCommand.init("/about/me.md", context).execute();
 
     expect(fetchMock).toHaveBeenCalledWith("/src/generated/me-view.html");
     expect(result).toEqual({ kind: "html", html: "<article>me</article>" });
@@ -41,7 +41,7 @@ describe("CatCommand", () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, text: async () => "<article>project</article>" });
     vi.stubGlobal("fetch", fetchMock);
 
-    await cat.execute("/about/projects/vespaiach.com.md", context);
+    await CatCommand.init("/about/projects/vespaiach.com.md", context).execute();
 
     expect(fetchMock).toHaveBeenCalledWith("/src/generated/vespaiach.com-view.html");
   });
@@ -49,7 +49,7 @@ describe("CatCommand", () => {
   it("returns an error on a non-ok response", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, text: async () => "" }));
 
-    const result = await cat.execute("does-not-exist.md", context);
+    const result = await CatCommand.init("does-not-exist.md", context).execute();
 
     expect(result).toEqual({
       kind: "error",
@@ -60,7 +60,7 @@ describe("CatCommand", () => {
   it("returns an error when fetch rejects", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("network down")));
 
-    const result = await cat.execute("typescript-notes.md", context);
+    const result = await CatCommand.init("typescript-notes.md", context).execute();
 
     expect(result).toEqual({ kind: "error", message: "cat: failed to load '/posts/typescript-notes.md'" });
   });
@@ -68,7 +68,7 @@ describe("CatCommand", () => {
   it("does not special-case stack.json (known limitation: no codegen for it yet)", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, text: async () => "" }));
 
-    const result = await cat.execute("/about/stack.json", context);
+    const result = await CatCommand.init("/about/stack.json", context).execute();
 
     expect(result).toEqual({ kind: "error", message: "cat: /about/stack.json: No such file or directory" });
   });

@@ -6,8 +6,16 @@ export class CatCommand extends Command {
   readonly description = "Print a file's contents.";
   protected readonly argRule = "required" as const;
 
-  async execute(arg: string | undefined, { cwd }: CommandContext): Promise<CommandResult> {
-    const target = this.resolvePath(arg ?? "", cwd);
+  private constructor(initialArg?: string, context?: CommandContext) {
+    super(initialArg, context);
+  }
+
+  static init(arg?: string, context?: CommandContext): CatCommand {
+    return new CatCommand(arg, context);
+  }
+
+  async execute(): Promise<CommandResult> {
+    const target = this.resolvePath(this.initialArg ?? "", this.context?.cwd ?? "");
     const filename = target.split("/").pop() ?? "";
     const slug = filename.replace(/\.[^./]+$/, "");
 

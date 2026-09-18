@@ -14,8 +14,8 @@ describe("toAbsolutePath", () => {
     expect(toAbsolutePath("./", "/about")).toBe("/about");
   });
 
-  it("clamps '..' at the root instead of going negative", () => {
-    expect(toAbsolutePath("../../posts", "/topics")).toBe("/posts");
+  it("no negative path", () => {
+    expect(toAbsolutePath("../../posts", "/topics")).toBe(null);
   });
 
   it("resolves a nested relative path", () => {
@@ -28,6 +28,20 @@ describe("toAbsolutePath", () => {
 
   it("resolves to root when everything is popped", () => {
     expect(toAbsolutePath("..", "/topics")).toBe("/");
+  });
+
+  it("resolves when cwd is at root", () => {
+    expect(toAbsolutePath("..", "/")).toBe(null);
+    expect(toAbsolutePath("./about", "/")).toBe("/about");
+    expect(toAbsolutePath("/about/projects", "/")).toBe("/about/projects");
+    expect(toAbsolutePath("/about/projects/abt", "/")).toBe("/about/projects/abt");
+  });
+
+  it("resolves projects folder", () => {
+    expect(toAbsolutePath("about/projects", "/")).toBe("/about/projects");
+    expect(toAbsolutePath("/about/projects", "/")).toBe("/about/projects");
+    expect(toAbsolutePath("~/about/projects", "/")).toBe("/about/projects");
+    expect(toAbsolutePath("../about/projects", "/topics")).toBe("/about/projects");
   });
 });
 

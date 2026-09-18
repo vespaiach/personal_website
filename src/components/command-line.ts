@@ -1,7 +1,7 @@
 import Alpine from "alpinejs";
 import { sectionForTopSegment } from "../commands/CdCommand.ts";
 import type { CommandContext, CommandResult } from "../commands/Command.ts";
-import { commands as commandRegistry } from "../commands/index.ts";
+import { initCommand } from "../commands/index.ts";
 import { resolvePrompt } from "../lib/resolvePrompt";
 
 export interface Prompt {
@@ -25,7 +25,6 @@ export function registerCommandLine() {
       this.valid = valid;
       this.error = error;
       this.commands = commands;
-      console.log(commands);
 
       if (!valid) return;
 
@@ -33,8 +32,9 @@ export function registerCommandLine() {
       const context: CommandContext = { cwd: this.cwd, section: sectionForTopSegment(topSegment) };
 
       for (const resolved of this.commands) {
-        const command = commandRegistry[resolved.command];
-        const result = await command.execute(resolved.arg, context);
+        const command = initCommand(resolved.command, resolved.arg, context);
+        if (!command) continue;
+        const result = await command.execute();
 
         if (result.kind === "html" || result.kind === "text" || result.kind === "error") {
           this.results.push(result);

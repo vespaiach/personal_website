@@ -9,6 +9,11 @@ interface Cwd {
   update(value: string): void;
 }
 
+interface CommandObject {
+  command: string;
+  arg?: string;
+}
+
 interface Manifest {
   paths: Record<string, string>;
 }

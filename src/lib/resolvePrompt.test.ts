@@ -4,8 +4,11 @@ import { resolvePrompt } from "./resolvePrompt.ts";
 const MANIFEST: Record<string, string> = {
   "/": "/generated/root.html",
   "/posts": "/generated/posts.html",
+  "/posts/abc.md": "/generated/posts/abc.html",
   "/topics": "/generated/topics.html",
   "/about": "/generated/about.html",
+  "/about/projects": "/generated/projects/about.html",
+  "/about/projects/me.md": "/generated/projects/about/me.html",
 };
 
 describe("resolvePrompt", () => {
@@ -63,7 +66,7 @@ describe("resolvePrompt", () => {
   it("reports a path missing from the manifest as invalid", () => {
     expect(resolvePrompt("cd ../does-not-exist", "/topics", MANIFEST)).toEqual({
       valid: false,
-      error: "No such file or directory: /does-not-exist",
+      error: "No such file or directory: ../does-not-exist",
       commands: [],
     });
   });
@@ -71,7 +74,7 @@ describe("resolvePrompt", () => {
   it("stops at the first unresolved path in a chain", () => {
     expect(resolvePrompt("ls & cat missing.md", "/posts", MANIFEST)).toEqual({
       valid: false,
-      error: "No such file or directory: /posts/missing.md",
+      error: "No such file or directory: missing.md",
       commands: [],
     });
   });

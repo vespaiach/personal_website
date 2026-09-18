@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ClearCommand } from "./ClearCommand.ts";
 
 describe("ClearCommand", () => {
-  const clear = new ClearCommand();
+  const clear = ClearCommand.init();
 
   it("rejects an arg", () => {
     expect(clear.validate("now")).toEqual({ valid: false, error: "Usage: clear" });
@@ -14,7 +14,7 @@ describe("ClearCommand", () => {
 
   it("always returns a clear result", async () => {
     const context = { cwd: "/posts", section: "posts" as const };
-    expect(await clear.execute(undefined, context)).toEqual({ kind: "clear" });
-    expect(await clear.execute("ignored", context)).toEqual({ kind: "clear" });
+    expect(await ClearCommand.init(undefined, context).execute()).toEqual({ kind: "clear" });
+    expect(await ClearCommand.init("ignored", context).execute()).toEqual({ kind: "clear" });
   });
 });
