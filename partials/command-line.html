@@ -6,7 +6,6 @@
     <span class="command-line__symbol">$</span>
     <span class="command-line__command" x-text="prompt"></span>
   </div>
-  <div x-show="!valid" class="command-line__error" x-text="error"></div>
   <template x-for="(result, index) in results" :key="index">
     <div class="command-line__output">
       <template x-if="result.kind === 'html'"><div x-html="result.html"></div></template>
