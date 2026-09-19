@@ -2,9 +2,9 @@
   <div class="site-header__inner shell-wide">
     <div class="site-header__brand"><span class="site-header__brand-symbol">$</span><span class="site-header__brand-name">vespaiach</span></div>
     <nav class="site-header__nav">
-      <button type="button" class="nav-buton" :aria-current="$store.activeLink.value === 'posts' ? 'page' : null" @click="$store.prompts.add('cd ~/posts && ls', $store.cwd.value)">/posts</button>
-      <button type="button" class="nav-buton" :aria-current="$store.activeLink.value === 'topics' ? 'page' : null" @click="$store.prompts.add('cd ~/topics && ls', $store.cwd.value)">/topics</button>
-      <button type="button" class="nav-buton" :aria-current="$store.activeLink.value === 'about' ? 'page' : null" @click="$store.prompts.add('cd ~/about && ls', $store.cwd.value)">/about</button>
+      <button type="button" class="nav-buton" :aria-current="$store.activeLink.value === 'posts' ? 'page' : null" @click="$store.prompts.add('cd ~/posts && ls', $store.cwd.value);$store.activeLink.update('posts')">/posts</button>
+      <button type="button" class="nav-buton" :aria-current="$store.activeLink.value === 'topics' ? 'page' : null" @click="$store.prompts.add('cd ~/topics && ls', $store.cwd.value);$store.activeLink.update('topics')">/topics</button>
+      <button type="button" class="nav-buton" :aria-current="$store.activeLink.value === 'about' ? 'page' : null" @click="$store.prompts.add('cd ~/about && ls', $store.cwd.value);$store.activeLink.update('about')">/about</button>
     </nav>
     <div class="site-header__actions">
       <button type="button" class="btn-icon" title="Run a command (⌘K)" aria-label="Run a command" @click="toggleCommandPalette()">

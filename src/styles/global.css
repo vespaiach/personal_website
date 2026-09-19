@@ -870,12 +870,15 @@ samp {
 }
 
 /* ls output */
+.command-line-section {
+  margin-top: 10px;
+}
+
 .ls-view {
   max-width: var(--container-prose);
   display: flex;
   flex-direction: column;
   gap: 0px;
-  margin: var(--space-lg) 0 34px;
 }
 
 .ls-view__total {
