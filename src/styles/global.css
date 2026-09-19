@@ -401,6 +401,9 @@ a:visited {
 .ls-link--dir {
   color: var(--dir);
 }
+.ls-link--symlink {
+  color: var(--path);
+}
 
 code,
 kbd,
@@ -942,6 +945,10 @@ samp {
   color: var(--text-strong);
 }
 
+.ls-view__target {
+  color: var(--text-faint);
+}
+
 /* tree output */
 .tree-view {
   max-width: var(--container-prose);
@@ -974,6 +981,10 @@ samp {
 
 .tree-view__name--dir {
   color: var(--dir);
+}
+
+.tree-view__name--link {
+  color: var(--path);
 }
 
 /* cat output (markdown / json) */

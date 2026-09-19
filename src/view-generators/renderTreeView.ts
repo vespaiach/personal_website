@@ -26,7 +26,11 @@ function renderLevel(
   entries.forEach((entry, index) => {
     const isLast = index === entries.length - 1;
     const branch = isLast ? "└── " : "├── ";
-    const nameClass = entry.isDirectory ? "tree-view__name tree-view__name--dir" : "tree-view__name";
+    const nameClass = entry.isDirectory
+      ? "tree-view__name tree-view__name--dir"
+      : entry.linkTarget
+        ? "tree-view__name tree-view__name--link"
+        : "tree-view__name";
 
     lines.push(
       '<div class="tree-view__line">' +

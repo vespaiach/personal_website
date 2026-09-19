@@ -43,6 +43,31 @@ describe("collectFolderSources", () => {
     expect(topics?.entries.some((e) => e.name === "javascript" && e.isDirectory)).toBe(true);
   });
 
+  it("builds one /topics/<tag> listing per tag with symlinks to the tagged posts", () => {
+    const javascript = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/topics/javascript");
+
+    expect(javascript?.entries.map((e) => e.name)).toEqual([
+      "working-with-javascript-date-object.md",
+      "javascript-interesting-things.md",
+      "discard-after-usages.md",
+    ]);
+    expect(javascript?.entries.every((e) => !e.isDirectory)).toBe(true);
+    expect(javascript?.entries[0]).toMatchObject({
+      linkTarget: "../../posts/working-with-javascript-date-object.md",
+      size: "1 min",
+      isoDate: "2022-06-20T00:00:00.000Z",
+    });
+  });
+
+  it("names topics after their tags with whitespace replaced so they can be typed as a path", () => {
+    const folders = collectFolderSources(CONTENT_DIR);
+    const topics = folders.find((s) => s.virtualPath === "/topics");
+
+    expect(topics?.entries.some((e) => e.name === "syntax-highlight")).toBe(true);
+    expect(topics?.entries.some((e) => e.name.includes(" "))).toBe(false);
+    expect(folders.some((s) => s.virtualPath === "/topics/syntax-highlight")).toBe(true);
+  });
+
   it("builds an /about listing with files and a projects directory", () => {
     const about = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/about");
 

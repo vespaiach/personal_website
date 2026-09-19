@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
 import { lsDate, readTime } from "../lib/format.ts";
-import { readPosts } from "../lib/utils.ts";
+import { type PostEntry, readPosts } from "../lib/utils.ts";
 
 export type ContentKind = "markdown" | "json";
 
@@ -19,6 +19,7 @@ export interface ListingEntry {
   date: string;
   isoDate: string;
   title?: string;
+  linkTarget?: string;
 }
 
 export interface FolderSource {
@@ -120,35 +121,51 @@ function postsFolder(contentDir: string): FolderSource {
   };
 }
 
-function topicsFolder(contentDir: string): FolderSource {
-  const posts = readPosts(contentDir);
-  const topics = new Map<string, { count: number; isoDate: string }>();
+function topicName(tag: string): string {
+  return tag.replace(/\s+/g, "-");
+}
 
-  for (const post of posts) {
+function postsByTopic(contentDir: string): Map<string, PostEntry[]> {
+  const topics = new Map<string, PostEntry[]>();
+
+  for (const post of readPosts(contentDir)) {
     for (const tag of post.tags) {
-      const topic = topics.get(tag);
-      if (topic) {
-        topic.count += 1;
-        if (post.date > topic.isoDate) topic.isoDate = post.date;
-      } else {
-        topics.set(tag, { count: 1, isoDate: post.date });
-      }
+      const name = topicName(tag);
+      topics.set(name, [...(topics.get(name) ?? []), post]);
     }
   }
 
+  return topics;
+}
+
+function topicsFolder(topics: Map<string, PostEntry[]>): FolderSource {
   const entries = [...topics.entries()]
-    .map(
-      ([name, topic]): ListingEntry => ({
-        name,
-        isDirectory: true,
-        size: "-",
-        date: lsDate(topic.isoDate),
-        isoDate: topic.isoDate,
-      }),
-    )
+    .map(([name, posts]): ListingEntry => {
+      const isoDate = posts[0].date;
+      return { name, isDirectory: true, size: "-", date: lsDate(isoDate), isoDate };
+    })
     .sort((left, right) => right.isoDate.localeCompare(left.isoDate) || left.name.localeCompare(right.name));
 
   return { type: "folder", virtualPath: "/topics", entries };
+}
+
+function topicFolders(topics: Map<string, PostEntry[]>): FolderSource[] {
+  return [...topics.entries()].map(([name, posts]) => ({
+    type: "folder",
+    virtualPath: `/topics/${name}`,
+    entries: posts.map((post): ListingEntry => {
+      const linkTarget = `../../posts/${post.slug}.md`;
+      return {
+        name: `${post.slug}.md`,
+        isDirectory: false,
+        size: readTime(Buffer.byteLength(linkTarget)),
+        date: post.lsDate,
+        isoDate: post.date,
+        title: post.title,
+        linkTarget,
+      };
+    }),
+  }));
 }
 
 function aboutFolder(contentDir: string): FolderSource {
@@ -184,8 +201,10 @@ export function collectFolderSources(contentDir: string): FolderSource[] {
   const sources: FolderSource[] = [rootFolder()];
 
   if (existsSync(join(contentDir, "posts"))) {
+    const topics = postsByTopic(contentDir);
     sources.push(postsFolder(contentDir));
-    sources.push(topicsFolder(contentDir));
+    sources.push(topicsFolder(topics));
+    sources.push(...topicFolders(topics));
   }
 
   if (existsSync(join(contentDir, "about"))) sources.push(aboutFolder(contentDir));

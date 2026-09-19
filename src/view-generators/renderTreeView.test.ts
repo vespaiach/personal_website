@@ -73,6 +73,27 @@ describe("renderTreeView", () => {
     expect(html).toContain("javascript");
   });
 
+  it("colors symlinks with --path", () => {
+    const html = renderTreeView([
+      {
+        type: "folder",
+        virtualPath: "/",
+        entries: [
+          {
+            name: "post.md",
+            isDirectory: false,
+            size: "1 min",
+            date: "-",
+            isoDate: "",
+            linkTarget: "../posts/post.md",
+          },
+        ],
+      },
+    ]);
+
+    expect(html).toContain('class="tree-view__name tree-view__name--link">post.md<');
+  });
+
   it("escapes entry names", () => {
     const html = renderTreeView([
       {
