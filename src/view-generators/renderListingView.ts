@@ -17,10 +17,9 @@ function renderRow(entry: ListingEntry, virtualPath: string): string {
 
   const fullPath = virtualPath === "/" ? `/${entry.name}` : `${virtualPath}/${entry.name}`;
   const command = entry.isDirectory ? "ls" : "cat";
+  const titleAttr = entry.title ? ` title="${escapeHtml(entry.title)}"` : "";
   const nameElement =
-    `<button @click="$store.prompts.add('${command} ${escapeHtml(fullPath)}', $store.cwd.value)" ` +
-    'style="background: none; border: none; color: var(--text-strong); cursor: pointer; ' +
-    'font-family: var(--font-code); font-size: var(--code-size); padding: 0; text-align: left;">' +
+    `<button class="ls-link" @click="$store.prompts.add('${command} ${escapeHtml(fullPath)}', $store.cwd.value)"${titleAttr}>` +
     `${escapeHtml(entry.name)}</button>`;
 
   return (
