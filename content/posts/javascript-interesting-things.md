@@ -3,7 +3,7 @@ title: 'JavaScript: Interesting Facts for Developers'
 date: '2022-01-26T00:00:00.000-0500'
 updatedAt: '2022-01-26T00:00:00.000-0500'
 excerpt: 'Discover essential JavaScript concepts and tips to enhance your coding skills, including unique features, best practices, and advanced techniques for writing precise and efficient JavaScript code.'
-github: https://github.com/vespaiach/personal_website/blob/main/docs/javascript-interesting-things.md
+github: https://github.com/vespaiach/personal_website/blob/main/content/posts/javascript-interesting-things.md
 tags: javascript
 ---
 

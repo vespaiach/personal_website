@@ -3,7 +3,7 @@ title: 'Tailwind CSS in Practice: What I’ve Learned'
 date: '2025-06-05T00:00:00.000Z'
 updatedAt: '2025-06-05T00:00:00.000Z'
 excerpt: "I've had the opportunity to work with Tailwind CSS in a couple of projects, and I have to admit—it not only has it boosted my development speed, but it has also streamlined my CSS writing process in ways I didn't expect. In this post, I'm sharing my experience with Tailwind CSS, and key takeaways from using this powerful utility-first framework."
-github: https://github.com/vespaiach/personal_website/blob/main/docs/tailwind-css-in-practice-what-i-ve-learned.md
+github: https://github.com/vespaiach/personal_website/blob/main/content/posts/tailwind-css-in-practice-what-i-ve-learned.md
 tags: tailwindcss
 ---
 

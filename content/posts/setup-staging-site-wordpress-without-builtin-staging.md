@@ -3,7 +3,7 @@ title: 'Setting Up a Staging Site for WordPress Without Built-in Staging'
 date: '2025-06-06T00:00:00.000Z'
 updatedAt: '2025-06-06T00:00:00.000Z'
 excerpt: "Not all WordPress hosting providers offer built-in staging functionality. If yours doesn’t, manually setting up a separate WordPress installation allows you to test changes without affecting your live site."
-github: https://github.com/vespaiach/personal_website/blob/main/docs/setup-staging-site-wordpress-without-builtin-staging.md
+github: https://github.com/vespaiach/personal_website/blob/main/content/posts/setup-staging-site-wordpress-without-builtin-staging.md
 tags: wordpress, staging
 ---
 

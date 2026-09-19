@@ -3,7 +3,7 @@ title: 'Typescript Notes'
 date: '2025-03-23T00:00:00.000Z'
 updatedAt: '2025-03-23T00:00:00.000Z'
 excerpt: "Discover essential TypeScript concepts, including types like any, unknown, and never, type inference, type guards, and advanced features like the satisfies keyword. Perfect for developers starting with TypeScript!"
-github: https://github.com/vespaiach/personal_website/blob/main/docs/typescript-notes.md
+github: https://github.com/vespaiach/personal_website/blob/main/content/posts/typescript-notes.md
 tags: typescript
 ---
 
