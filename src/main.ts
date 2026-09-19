@@ -5,12 +5,14 @@ import Alpine from "alpinejs";
 import { registerCommandLine } from "./components/command-line";
 import { registerCommandPalette } from "./components/command-palette";
 import { registerHeader } from "./components/header";
+import { registerHelpModal } from "./components/help-modal";
 import { registerTerminal } from "./components/terminal";
 import manifest from "./manifest.json";
 
 registerCommandLine();
 registerCommandPalette();
 registerHeader();
+registerHelpModal();
 registerTerminal();
 
 Alpine.store("prompts", {

@@ -4,7 +4,7 @@ import { ClearCommand } from "./ClearCommand.ts";
 import { HelpCommand } from "./HelpCommand.ts";
 import { LsCommand } from "./LsCommand.ts";
 
-const commandClasses = {
+export const commandClasses = {
   cat: CatCommand,
   cd: CdCommand,
   clear: ClearCommand,

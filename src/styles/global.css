@@ -833,6 +833,79 @@ samp {
   color: var(--text-mute);
 }
 
+/* ── help-modal.css ──────────────────────────────────────────────── */
+.help-modal {
+  max-height: calc(100vh - (var(--space-xl) * 2));
+}
+
+.help-modal__body {
+  gap: var(--space-xl);
+  min-height: 0;
+  overflow-y: auto;
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-leading);
+}
+
+.help-modal__section > * + * {
+  margin-top: var(--space-sm);
+}
+
+.help-modal__section p,
+.help-modal__section ul,
+.help-modal__section dl {
+  margin-block: 0;
+}
+
+.help-modal__heading {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--caption-size);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+}
+
+.help-modal__list {
+  padding-left: var(--space-xl);
+}
+
+.help-modal__list li + li {
+  margin-top: var(--space-xs);
+}
+
+.help-modal__cmd {
+  font-family: var(--font-mono);
+  font-size: var(--code-size);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.help-modal__dirs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: var(--code-size);
+  color: var(--path);
+}
+
+.help-modal__command {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-lg);
+  padding-block: var(--space-xs);
+}
+
+.help-modal__command dt {
+  flex: 0 0 22ch;
+}
+
+.help-modal__command dd {
+  flex: 1 1 20ch;
+  margin: 0;
+  color: var(--text-mute);
+}
+
 /* ── terminal-help.css ──────────────────────────────────────────── */
 .terminal-help {
   font-family: var(--font-code);

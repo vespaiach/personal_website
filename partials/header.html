@@ -10,7 +10,7 @@
       <button type="button" class="btn-icon" title="Run a command (⌘K)" aria-label="Run a command" @click="toggleCommandPalette()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m7 11 2-2-2-2"></path><path d="M11 13h4"></path><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect></svg>
       </button>
-      <button type="button" class="btn-icon" title="List all commands (help)" aria-label="List all commands" @click="$store.prompts.add('help', $store.cwd.value);">
+      <button type="button" class="btn-icon" title="List all commands (help)" aria-label="List all commands" @click="showHelp()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
       </button>
     </div>
