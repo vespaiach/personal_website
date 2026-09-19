@@ -10,6 +10,10 @@ export class CdCommand extends Command implements HasPathArgument {
     super({ rawCommand, cwd });
   }
 
+  protected get manifestCommand(): string {
+    return "ls";
+  }
+
   static init(command: string, cwd: string): CdCommand {
     return new CdCommand({ rawCommand: command, cwd });
   }

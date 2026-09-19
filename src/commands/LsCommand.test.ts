@@ -33,11 +33,11 @@ describe("LsCommand", () => {
   beforeEach(() => {
     Alpine.store("manifest", {
       values: {
-        "/": "/generated/root.html",
-        "/about": "/generated/about.html",
-        "/about/projects": "/generated/projects.html",
-        "/posts": "/generated/posts.html",
-        "/topics": "/generated/topics.html",
+        "ls /": "/generated/root.html",
+        "ls /about": "/generated/about.html",
+        "ls /about/projects": "/generated/projects.html",
+        "ls /posts": "/generated/posts.html",
+        "ls /topics": "/generated/topics.html",
       },
       get(path: string) {
         return path in this.values ? { existing: true, value: this.values[path] } : { existing: false };

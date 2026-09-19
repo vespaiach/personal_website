@@ -29,7 +29,14 @@ describe("generateViews", () => {
     const sourceCount = collectFileSources(contentDir).length + collectFolderSources(contentDir).length;
     expect(Object.keys(manifest)).toHaveLength(sourceCount + 1);
     expect(Object.keys(manifest)).toEqual(
-      expect.arrayContaining(["/", "/posts", "/about", "/about/projects", "/topics", "tree /"]),
+      expect.arrayContaining([
+        "ls /",
+        "ls /posts",
+        "ls /about",
+        "ls /about/projects",
+        "ls /topics",
+        "tree /",
+      ]),
     );
 
     const uuidPathPattern = /^\/generated\/[0-9a-f-]{36}\.html$/;
@@ -40,14 +47,14 @@ describe("generateViews", () => {
     const manifestOnDisk = JSON.parse(readFileSync(join(root, "src", "manifest.json"), "utf-8"));
     expect(manifestOnDisk).toEqual(manifest);
 
-    const postFileName = manifest["/posts/typescript-notes.md"].replace("/generated/", "");
+    const postFileName = manifest["cat /posts/typescript-notes.md"].replace("/generated/", "");
     const postPath = join(root, "dist", "generated", postFileName);
     expect(existsSync(postPath)).toBe(true);
     const postContent = readFileSync(postPath, "utf-8");
     expect(postContent).toContain("<article");
     expect(postContent).toContain("~/posts/typescript-notes.md");
 
-    const postsListingFileName = manifest["/posts"].replace("/generated/", "");
+    const postsListingFileName = manifest["ls /posts"].replace("/generated/", "");
     const postsListingContent = readFileSync(join(root, "dist", "generated", postsListingFileName), "utf-8");
     expect(postsListingContent).toContain("typescript-notes.md");
     expect(postsListingContent).toContain("-rw-r--r--");
