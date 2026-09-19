@@ -18,8 +18,9 @@ function renderRow(entry: ListingEntry, virtualPath: string): string {
   const fullPath = virtualPath === "/" ? `/${entry.name}` : `${virtualPath}/${entry.name}`;
   const command = entry.isDirectory ? "ls" : "cat";
   const titleAttr = entry.title ? ` title="${escapeHtml(entry.title)}"` : "";
+  const linkClass = entry.isDirectory ? "ls-link ls-link--dir" : "ls-link";
   const nameElement =
-    `<button class="ls-link" @click="$store.prompts.add('${command} ${escapeHtml(fullPath)}', $store.cwd.value)"${titleAttr}>` +
+    `<button class="${linkClass}" @click="$store.prompts.add('${command} ${escapeHtml(fullPath)}', $store.cwd.value)"${titleAttr}>` +
     `${escapeHtml(entry.name)}</button>`;
 
   return (
