@@ -35,7 +35,7 @@ describe("renderListingView", () => {
     expect(html).toContain("$store.prompts.add('cd ~/topics/javascript &amp;&amp; ls', $store.cwd.value)");
   });
 
-  it("renders symlink rows with their target and cats the resolved target when clicked", () => {
+  it("renders symlink rows without their target and cats the resolved target when clicked", () => {
     const html = renderListingView("/topics/javascript", [
       {
         name: "discard-after-usages.md",
@@ -49,8 +49,23 @@ describe("renderListingView", () => {
 
     expect(html).toContain("lrwxr-xr-x");
     expect(html).toContain('class="ls-link ls-link--symlink"');
-    expect(html).toContain('<span class="ls-view__target"> -&gt; ../../posts/discard-after-usages.md</span>');
+    expect(html).not.toContain("-&gt;");
     expect(html).toContain("$store.prompts.add('cat /posts/discard-after-usages.md', $store.cwd.value)");
+  });
+
+  it("words the total line as posts in the topic for a topic folder", () => {
+    const entry = {
+      name: "discard-after-usages.md",
+      isDirectory: false,
+      size: "1 min",
+      date: "Jan 25  2022",
+      isoDate: "2022-01-25",
+    };
+
+    expect(renderListingView("/topics/javascript", [entry, entry, entry])).toContain(
+      "total 3 posts in topic javascript",
+    );
+    expect(renderListingView("/topics/javascript", [entry])).toContain("total 1 post in topic javascript");
   });
 
   it("renders directory rows without a linked date when isoDate is empty", () => {
