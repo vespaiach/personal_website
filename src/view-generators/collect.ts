@@ -18,6 +18,7 @@ export interface ListingEntry {
   size: string;
   date: string;
   isoDate: string;
+  title?: string;
 }
 
 export interface FolderSource {
@@ -114,6 +115,7 @@ function postsFolder(contentDir: string): FolderSource {
       size: post.readTime,
       date: post.lsDate,
       isoDate: post.date,
+      title: post.title,
     })),
   };
 }
