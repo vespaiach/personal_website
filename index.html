@@ -13,14 +13,24 @@
         <load src="partials/command-line.html" />
       </template>
       <section class="command-line-section">
-        <div class="command-line command-line--idle" @click="openPalette()">
+        <div class="command-line command-line--idle" @click="$refs.commandInput.focus()">
           <span class="command-line__user">trinh@vespaiach</span>
           <span class="command-line__separator">in</span>
           <span class="command-line__path" x-text="`~${$store.cwd.value}`"></span>
           <span class="command-line__symbol">$</span>
-          <span class="command-line__cursor" aria-hidden="true"></span>
+          <input
+            x-ref="commandInput"
+            x-model="command"
+            @keydown.enter.prevent="run()"
+            type="text"
+            class="command-line__input"
+            aria-label="Command"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
         </div>
-        <p class="command-line__idle-hint">press ⌘K, or click the prompt, to type a command</p>
+        <p class="command-line__idle-hint">type a command and press enter, or press ⌘K for suggestions</p>
       </section>
     </main>
     <load src="partials/command-palette.html" />

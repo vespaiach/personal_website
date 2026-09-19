@@ -2,8 +2,13 @@ import Alpine from "alpinejs";
 
 export function registerTerminal() {
   Alpine.data("terminal", () => ({
-    openPalette() {
-      document.querySelector("dialog")?.showModal();
+    command: "",
+
+    run() {
+      const command = this.command.trim();
+      if (!command) return;
+      Alpine.store("prompts").add(command, Alpine.store("cwd").value);
+      this.command = "";
     },
   }));
 }

@@ -310,7 +310,6 @@
   --transition-control:
     color var(--dur-fast) var(--ease-standard), background-color var(--dur-fast) var(--ease-standard),
     border-color var(--dur-fast) var(--ease-standard), opacity var(--dur-fast) var(--ease-standard);
-  --caret-blink: 1s steps(1, end) infinite;
 }
 
 /* ── reset.css ──────────────────────────────────────────── */
@@ -417,16 +416,6 @@ samp {
   outline-offset: 2px;
 }
 
-@keyframes vp-blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
 @keyframes vp-fade-up {
   from {
     opacity: 0;
@@ -597,12 +586,15 @@ samp {
   flex-basis: 100%;
 }
 
-.command-line__cursor {
-  display: inline-block;
-  width: 0.6em;
-  height: 1em;
-  background: var(--ink);
-  animation: vp-blink var(--caret-blink);
+.command-line__input {
+  flex: 1 1 12ch;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--ink);
+  font: inherit;
 }
 
 .command-line__idle-hint {
