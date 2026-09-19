@@ -45,8 +45,8 @@ describe("renderTreeView", () => {
   it("colors directories with --dir and files with --ink", () => {
     const html = renderTreeView(folders);
 
-    expect(html).toContain('style="color: var(--dir);">about<');
-    expect(html).toContain('style="color: var(--ink);">me.md<');
+    expect(html).toContain('class="tree-view__name tree-view__name--dir">about<');
+    expect(html).toContain('class="tree-view__name">me.md<');
   });
 
   it("recurses into nested directories that have their own listing", () => {
