@@ -1,4 +1,5 @@
 import type { FolderSource, ListingEntry } from "./collect.ts";
+import { commandFor } from "./entryCommand.ts";
 
 function escapeHtml(value: string): string {
   return value
@@ -35,7 +36,8 @@ function renderLevel(
     lines.push(
       '<div class="tree-view__line">' +
         `<span class="tree-view__prefix">${prefix}${branch}</span>` +
-        `<span class="${nameClass}">${escapeHtml(entry.name)}</span>` +
+        `<button class="${nameClass}" @click="$store.prompts.add('${escapeHtml(commandFor(entry, path))}', $store.cwd.value)">` +
+        `${escapeHtml(entry.name)}</button>` +
         "</div>",
     );
 

@@ -71,8 +71,8 @@ describe("renderTreeView", () => {
   it("colors directories with --dir and files with --ink", () => {
     const html = renderTreeView(folders);
 
-    expect(html).toContain('class="tree-view__name tree-view__name--dir">about<');
-    expect(html).toContain('class="tree-view__name">me.md<');
+    expect(html).toContain('<button class="tree-view__name tree-view__name--dir"');
+    expect(html).toContain('<button class="tree-view__name"');
   });
 
   it("recurses into nested directories that have their own listing", () => {
@@ -117,7 +117,50 @@ describe("renderTreeView", () => {
       },
     ]);
 
-    expect(html).toContain('class="tree-view__name tree-view__name--link">post.md<');
+    expect(html).toContain('<button class="tree-view__name tree-view__name--link"');
+  });
+
+  it("makes file rows cat the file by its full path", () => {
+    const html = renderTreeView(folders);
+
+    expect(html).toContain("$store.prompts.add('cat /about/me.md', $store.cwd.value)");
+    expect(html).toContain("$store.prompts.add('cat /about/projects/vespaiach.com.md', $store.cwd.value)");
+  });
+
+  it("makes directory rows cd into the directory followed by ls", () => {
+    const html = renderTreeView(folders);
+
+    expect(html).toContain("$store.prompts.add('cd ~/about &amp;&amp; ls', $store.cwd.value)");
+    expect(html).toContain("$store.prompts.add('cd ~/about/projects &amp;&amp; ls', $store.cwd.value)");
+  });
+
+  it("makes symlink rows cat the resolved target post", () => {
+    const html = renderTreeView(
+      [
+        {
+          type: "folder",
+          virtualPath: "/topics",
+          entries: [{ name: "javascript", isDirectory: true, size: "-", date: "-", isoDate: "" }],
+        },
+        {
+          type: "folder",
+          virtualPath: "/topics/javascript",
+          entries: [
+            {
+              name: "discard-after-usages.md",
+              isDirectory: false,
+              size: "1 min",
+              date: "-",
+              isoDate: "",
+              linkTarget: "../../posts/discard-after-usages.md",
+            },
+          ],
+        },
+      ],
+      "/topics",
+    );
+
+    expect(html).toContain("$store.prompts.add('cat /posts/discard-after-usages.md', $store.cwd.value)");
   });
 
   it("escapes entry names", () => {
