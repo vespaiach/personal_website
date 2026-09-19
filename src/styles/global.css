@@ -76,13 +76,7 @@
   --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-}
 
-/* ── colors.css ──────────────────────────────────────────── */
-/* Colors — Nord-derived dark palette.
-   Base ramp = the sixteen Nord values. Semantic aliases follow the role
-   assignments given in the brand notes (prompt, path, branch, status, dirty). */
-:root {
   /* Polar Night — surfaces */
   --nord-0: #2e3440;
   --nord-1: #3b4252;
@@ -395,14 +389,12 @@ a:visited {
   padding: 0;
   font-family: var(--font-code);
   font-size: var(--code-size);
-  color: var(--link);
+  color: var(--ink);
   cursor: pointer;
-  border-bottom: 1px solid rgba(136, 192, 208, 0.35);
   transition: var(--transition-control);
 }
 .ls-link:hover {
   color: var(--link-hover);
-  border-bottom-color: var(--link-hover);
 }
 .ls-link:active {
   color: var(--nord-7);
@@ -879,7 +871,7 @@ samp {
   max-width: var(--container-prose);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: 0px;
   margin: var(--space-lg) 0 34px;
 }
 
@@ -895,7 +887,7 @@ samp {
   font-family: var(--font-code);
   font-size: var(--code-size);
   line-height: var(--code-leading);
-  color: var(--text-body);
+  color: var(--text-faint);
 }
 
 .ls-view__col {
@@ -904,15 +896,16 @@ samp {
 }
 
 .ls-view__col--perms {
-  width: 96px;
+  width: 78px;
 }
 
 .ls-view__col--size {
-  width: 56px;
+  width: 48px;
 }
 
 .ls-view__col--date {
-  width: 96px;
+  width: 88px;
+  text-align: right;
 }
 
 .ls-view__col--name {

@@ -37,8 +37,6 @@ export function renderListingView(virtualPath: string, entries: ListingEntry[]):
 
   return (
     '<article class="ls-view">' +
-    `<div class="view-eyebrow">~${escapeHtml(virtualPath)}</div>` +
-    '<hr class="view-rule">' +
     `<div class="ls-view__total">total ${entries.length}</div>` +
     `${rows}` +
     "</article>"
