@@ -945,10 +945,6 @@ samp {
   color: var(--text-strong);
 }
 
-.ls-view__target {
-  color: var(--text-faint);
-}
-
 /* tree output */
 .tree-view {
   max-width: var(--container-prose);
