@@ -976,6 +976,10 @@ samp {
   margin-top: 16px;
 }
 
+.command-line-section--idle {
+  margin-bottom: 36px;
+}
+
 .ls-view {
   max-width: var(--container-prose);
   display: flex;
