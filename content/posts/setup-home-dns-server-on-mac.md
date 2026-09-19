@@ -3,7 +3,7 @@ title: 'Set Up a Home DNS Server on MacBook'
 date: '2025-05-23T00:00:00.000Z'
 updatedAt: '2025-05-23T00:00:00.000Z'
 excerpt: 'In this tutorial, I will walk you through the steps to set up a DNS server on a MacBook using DNSMASQ - a lightweight and easy-to-configure DNS tool.'
-github: https://github.com/vespaiach/personal_website/blob/main/docs/setup-a-home-dns-server-on-macbook.md
+github: https://github.com/vespaiach/personal_website/blob/main/content/posts/setup-home-dns-server-on-mac.md
 tags: dns, dnsmasq
 ---
 

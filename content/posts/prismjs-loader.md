@@ -3,7 +3,7 @@ title: 'PrismJS Loader'
 date: '2025-03-29T00:00:00.000Z'
 updatedAt: '2025-03-29T00:00:00.000Z'
 excerpt: "Discover Prism.js Loader, and learn how it quickly integrate your webpages with PrismJS-Coding syntax highlight"
-github: https://github.com/vespaiach/personal_website/blob/main/docs/prismjs-loader.md
+github: https://github.com/vespaiach/personal_website/blob/main/content/posts/prismjs-loader.md
 tags: prismjs, syntax highlight
 ---
 
