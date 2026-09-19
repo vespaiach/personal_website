@@ -27,6 +27,14 @@ export function registerCommandLine() {
       magics.$dispatch("command-finished");
     },
 
+    async clearTerminal(remainingCommands: string[]) {
+      const prompts = Alpine.store("prompts");
+      prompts.clear();
+      if (remainingCommands.length === 0) return;
+      await Alpine.nextTick();
+      prompts.add(remainingCommands.join(" && "), this.cwd);
+    },
+
     async execute() {
       const commands = parseCommand(this.prompt);
       if (commands.length === 0) {
@@ -34,14 +42,15 @@ export function registerCommandLine() {
         return;
       }
 
-      for (const command of commands) {
+      for (const [index, command] of commands.entries()) {
         try {
           const result = await execute(command, this.cwd);
           if (result.kind === "error") {
             this.results.push(result);
             this.cwd = result.cwd;
           } else if (result.kind === "clear") {
-            this.results = [];
+            await this.clearTerminal(commands.slice(index + 1));
+            return;
           } else {
             this.results.push(result);
           }
