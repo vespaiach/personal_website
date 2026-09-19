@@ -399,6 +399,9 @@ a:visited {
 .ls-link:active {
   color: var(--nord-7);
 }
+.ls-link--dir {
+  color: var(--dir);
+}
 
 code,
 kbd,
@@ -878,34 +881,36 @@ samp {
 .ls-view__total {
   font-family: var(--font-code);
   font-size: var(--code-size);
-  color: var(--text-mute);
+  line-height: 20px;
+  color: var(--text-faint);
 }
 
 .ls-view__row {
   display: flex;
-  gap: var(--space-lg);
+  gap: 2ch;
   font-family: var(--font-code);
   font-size: var(--code-size);
-  line-height: var(--code-leading);
+  line-height: 21px;
   color: var(--text-faint);
 }
 
 .ls-view__col {
-  color: var(--text-mute);
+  color: var(--text-faint);
   flex: none;
+  white-space: pre;
 }
 
 .ls-view__col--perms {
-  width: 78px;
+  width: 10ch;
 }
 
 .ls-view__col--size {
-  width: 48px;
+  width: 6ch;
+  text-align: right;
 }
 
 .ls-view__col--date {
-  width: 88px;
-  text-align: right;
+  width: 12ch;
 }
 
 .ls-view__col--name {
