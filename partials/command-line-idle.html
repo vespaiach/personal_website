@@ -1,0 +1,20 @@
+<section class="command-line-section">
+  <div class="command-line command-line--idle" @click="$refs.commandInput.focus()">
+    <span class="command-line__user">trinh@vespaiach</span>
+    <span class="command-line__separator">in</span>
+    <span class="command-line__path" x-text="`~${$store.cwd.value}`"></span>
+    <span class="command-line__symbol">$</span>
+    <input
+      x-ref="commandInput"
+      x-model="command"
+      @keydown.enter.prevent="run()"
+      type="text"
+      class="command-line__input"
+      aria-label="Command"
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+    />
+  </div>
+  <p class="command-line__idle-hint">type a command and press enter, or press ⌘K for suggestions</p>
+</section>

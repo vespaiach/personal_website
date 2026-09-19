@@ -785,7 +785,6 @@ samp {
 
 /* ── terminal-help.css ──────────────────────────────────────────── */
 .terminal-help {
-  margin-bottom: 10px;
   font-family: var(--font-code);
   font-size: var(--code-size);
   line-height: 21px;
