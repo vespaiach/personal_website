@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderListingView } from "./renderListingView.ts";
 
 describe("renderListingView", () => {
-  it("renders the eyebrow, total count, and one row per entry", () => {
+  it("renders the total count and one row per entry", () => {
     const html = renderListingView("/posts", [
       {
         name: "typescript-notes.md",
@@ -20,10 +20,10 @@ describe("renderListingView", () => {
       },
     ]);
 
-    expect(html).toContain("~/posts");
     expect(html).toContain("total 2");
     expect(html).toContain("-rw-r--r--");
     expect(html).toContain("typescript-notes.md");
+    expect(html).toContain("cat /posts/typescript-notes.md");
     expect(html).toContain('<time datetime="2025-03-23">Mar 23 2025</time>');
   });
 
