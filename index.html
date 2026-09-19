@@ -12,6 +12,14 @@
       <template x-for="(prompt, index) in $store.prompts.values" :key="index">
         <load src="partials/command-line.html" />
       </template>
+      <div class="command-line command-line--idle" @click="openPalette()">
+        <span class="command-line__user">trinh@vespaiach</span>
+        <span class="command-line__separator">in</span>
+        <span class="command-line__path" x-text="`~${$store.cwd.value}`"></span>
+        <span class="command-line__symbol">$</span>
+        <span class="command-line__cursor" aria-hidden="true"></span>
+      </div>
+      <p class="command-line__idle-hint">press ⌘K, or click the prompt, to type a command</p>
     </main>
     <load src="partials/command-palette.html" />
     <script type="module" src="/src/main.ts"></script>

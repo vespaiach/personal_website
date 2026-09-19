@@ -34,6 +34,7 @@ export function registerCommandLine() {
             this.results.push(result);
           }
           this.cwd = result.cwd;
+          Alpine.store("cwd").update(this.cwd);
         } catch (error) {
           console.error(error);
           this.results.push({ kind: "error", message: `Failed: ${command}`, cwd: this.cwd });
