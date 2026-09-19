@@ -7,6 +7,11 @@ export interface Prompt {
   cwd: string;
 }
 
+interface ScopeMagics {
+  $nextTick(): Promise<void>;
+  $dispatch(event: string): void;
+}
+
 export function registerCommandLine() {
   Alpine.data("commandLine", (line: Prompt) => ({
     user: "trinh",
@@ -16,6 +21,13 @@ export function registerCommandLine() {
     results: [] as CommandResult[],
 
     async init() {
+      await this.execute();
+      const magics = this as unknown as ScopeMagics;
+      await magics.$nextTick();
+      magics.$dispatch("command-finished");
+    },
+
+    async execute() {
       const commands = parseCommand(this.prompt);
       if (commands.length === 0) {
         this.results.push({ kind: "error", message: "No commands entered", cwd: this.cwd });

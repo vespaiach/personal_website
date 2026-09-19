@@ -10,5 +10,9 @@ export function registerTerminal() {
       Alpine.store("prompts").add(command, Alpine.store("cwd").value);
       this.command = "";
     },
+
+    scrollToBottom() {
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    },
   }));
 }
