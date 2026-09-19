@@ -617,11 +617,14 @@ samp {
   background: var(--ink);
   transform: translateY(-50%);
   pointer-events: none;
-  animation: command-line-blink 1.1s steps(1) infinite;
 }
 
 .command-line__input:placeholder-shown + .command-line__cursor {
   display: block;
+}
+
+.command-line__input:placeholder-shown:focus + .command-line__cursor {
+  animation: command-line-blink 1.1s steps(1) infinite;
 }
 
 @keyframes command-line-blink {
@@ -631,7 +634,7 @@ samp {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .command-line__cursor {
+  .command-line__input:placeholder-shown:focus + .command-line__cursor {
     animation: none;
   }
 }
