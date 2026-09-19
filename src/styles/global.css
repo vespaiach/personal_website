@@ -486,6 +486,10 @@ samp {
 }
 
 /* ── site-header.css ──────────────────────────────────────────── */
+:root {
+  --site-header-height: 53px;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -535,6 +539,26 @@ samp {
   align-items: center;
   gap: var(--space-sm);
   flex: none;
+}
+
+@media (max-width: 480px) {
+  :root {
+    --site-header-height: 85px;
+  }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+  }
+
+  .site-header__brand {
+    flex: 1;
+  }
+
+  .site-header__nav {
+    order: 1;
+    flex-basis: 100%;
+  }
 }
 
 /* ── terminal-main.css ──────────────────────────────────────────── */
@@ -591,7 +615,7 @@ samp {
 }
 
 .command-line__output article > header {
-  scroll-margin-top: calc(53px + var(--space-lg));
+  scroll-margin-top: calc(var(--site-header-height) + var(--space-lg));
 }
 
 .command-line__field {
