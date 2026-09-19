@@ -8,7 +8,7 @@
   </head>
   <body>
     <load src="partials/header.html" active="posts" />
-    <main x-data="terminal" @command-finished="scrollToBottom()" class="terminal-main shell-wide">
+    <main x-data="terminal" @command-finished="scrollAfterCommand($event)" class="terminal-main shell-wide">
       <template x-for="(prompt, index) in $store.prompts.values" :key="index">
         <load src="partials/command-line.html" />
       </template>
