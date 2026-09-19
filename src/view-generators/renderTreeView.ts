@@ -45,10 +45,11 @@ function renderLevel(
   });
 }
 
-export function renderTreeView(folders: FolderSource[]): string {
+export function renderTreeView(folders: FolderSource[], rootPath = "/"): string {
   const foldersByPath = new Map(folders.map((folder) => [folder.virtualPath, folder.entries]));
   const lines: string[] = [];
-  renderLevel("/", "", foldersByPath, lines);
+  renderLevel(rootPath, "", foldersByPath, lines);
 
-  return `<article class="tree-view"><div class="tree-view__root">~</div>${lines.join("")}</article>`;
+  const rootLabel = rootPath === "/" ? "~" : `~${rootPath}`;
+  return `<article class="tree-view"><div class="tree-view__root">${escapeHtml(rootLabel)}</div>${lines.join("")}</article>`;
 }

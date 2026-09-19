@@ -24,6 +24,12 @@ async function renderSource(source: Source): Promise<string> {
   return source.kind === "json" ? await renderJsonView(raw, eyebrow) : await renderMarkdownView(raw, eyebrow);
 }
 
+function writeView(outputDir: string, html: string): string {
+  const fileName = `${randomUUID()}.html`;
+  writeFileSync(join(outputDir, fileName), html);
+  return `/generated/${fileName}`;
+}
+
 export async function generateViews(root: string): Promise<Record<string, string>> {
   const contentDir = join(root, "content");
   const folderSources = collectFolderSources(contentDir);
@@ -37,16 +43,18 @@ export async function generateViews(root: string): Promise<Record<string, string
   const manifest: Record<string, string> = {};
 
   for (const source of sources) {
-    const html = await renderSource(source);
-    const fileName = `${randomUUID()}.html`;
-    writeFileSync(join(outputDir, fileName), html);
-    manifest[`${commandFor(source)} ${source.virtualPath}`] = `/generated/${fileName}`;
+    manifest[`${commandFor(source)} ${source.virtualPath}`] = writeView(
+      outputDir,
+      await renderSource(source),
+    );
   }
 
-  const treeHtml = renderTreeView(folderSources);
-  const treeFileName = `${randomUUID()}.html`;
-  writeFileSync(join(outputDir, treeFileName), treeHtml);
-  manifest["tree /"] = `/generated/${treeFileName}`;
+  for (const folder of folderSources) {
+    manifest[`tree ${folder.virtualPath}`] = writeView(
+      outputDir,
+      renderTreeView(folderSources, folder.virtualPath),
+    );
+  }
 
   const sortedManifest = Object.fromEntries(
     Object.entries(manifest).sort(([left], [right]) => left.localeCompare(right)),

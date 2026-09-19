@@ -26,8 +26,9 @@ describe("generateViews", () => {
     const manifest = await generateViews(root);
 
     const contentDir = join(root, "content");
-    const sourceCount = collectFileSources(contentDir).length + collectFolderSources(contentDir).length;
-    expect(Object.keys(manifest)).toHaveLength(sourceCount + 1);
+    const folderCount = collectFolderSources(contentDir).length;
+    const sourceCount = collectFileSources(contentDir).length + folderCount;
+    expect(Object.keys(manifest)).toHaveLength(sourceCount + folderCount);
     expect(Object.keys(manifest)).toEqual(
       expect.arrayContaining([
         "ls /",
@@ -37,6 +38,11 @@ describe("generateViews", () => {
         "ls /topics",
         "ls /topics/javascript",
         "tree /",
+        "tree /posts",
+        "tree /about",
+        "tree /about/projects",
+        "tree /topics",
+        "tree /topics/javascript",
       ]),
     );
 
@@ -70,6 +76,12 @@ describe("generateViews", () => {
     expect(treeContent).toContain(">~<");
     expect(treeContent).toContain("about");
     expect(treeContent).toContain("tree-view__name--dir");
+
+    const aboutTreeFileName = manifest["tree /about"].replace("/generated/", "");
+    const aboutTreeContent = readFileSync(join(root, "dist", "generated", aboutTreeFileName), "utf-8");
+    expect(aboutTreeContent).toContain(">~/about<");
+    expect(aboutTreeContent).toContain("projects");
+    expect(aboutTreeContent).not.toContain("typescript-notes.md");
   });
 
   it("clears stale files from a previous run instead of accumulating them", async () => {

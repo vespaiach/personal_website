@@ -25,6 +25,7 @@ describe("helpModal", () => {
       { syntax: "clear", description: "Clear the terminal output log." },
       { syntax: "help", description: "List every available command." },
       { syntax: "ls [file_path]", description: "List a virtual directory's contents." },
+      { syntax: "tree [directory_path]", description: "Show a directory and everything under it as a tree." },
     ]);
   });
 });

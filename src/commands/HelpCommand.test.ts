@@ -39,6 +39,9 @@ describe("HelpCommand", () => {
     expect(html).toContain(
       '<td class="cmd">ls [file_path]</td><td class="desc">List a virtual directory\'s contents.</td>',
     );
+    expect(html).toContain(
+      '<td class="cmd">tree [directory_path]</td><td class="desc">Show a directory and everything under it as a tree.</td>',
+    );
   });
 
   it("escapes angle brackets in syntax", async () => {
