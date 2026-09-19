@@ -20,6 +20,10 @@ export abstract class Command {
     this.cwd = cwd ?? "/";
   }
 
+  protected get manifestCommand(): string {
+    return this.name;
+  }
+
   resolvePath(): ResolvedPathResult {
     const path = this.rawCommand.split(" ")[1] ?? "";
     let absolutePath = this.cwd;
@@ -35,7 +39,7 @@ export abstract class Command {
     }
 
     const manifest = Alpine.store("manifest");
-    const manifestResult = manifest.get(absolutePath);
+    const manifestResult = manifest.get(`${this.manifestCommand} ${absolutePath}`);
     if (!manifestResult.existing) {
       return { valid: false, error: `Path does not exist: ${absolutePath}` };
     }

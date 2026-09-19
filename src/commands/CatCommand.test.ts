@@ -33,9 +33,9 @@ describe("CatCommand", () => {
   beforeEach(() => {
     Alpine.store("manifest", {
       values: {
-        "/": "/generated/root.html",
-        "/posts": "/generated/posts.html",
-        "/posts/typescript-notes.md": "/generated/typescript-notes-view.html",
+        "ls /": "/generated/root.html",
+        "ls /posts": "/generated/posts.html",
+        "cat /posts/typescript-notes.md": "/generated/typescript-notes-view.html",
       },
       get(path: string) {
         return path in this.values ? { existing: true, value: this.values[path] } : { existing: false };

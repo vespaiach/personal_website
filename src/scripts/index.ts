@@ -12,6 +12,10 @@ import {
 import { renderListingView } from "./renderListingView.ts";
 import { renderTreeView } from "./renderTreeView.ts";
 
+function commandFor(source: Source): string {
+  return source.type === "folder" ? "ls" : "cat";
+}
+
 async function renderSource(source: Source): Promise<string> {
   if (source.type === "folder") return renderListingView(source.virtualPath, source.entries);
 
@@ -36,7 +40,7 @@ export async function generateViews(root: string): Promise<Record<string, string
     const html = await renderSource(source);
     const fileName = `${randomUUID()}.html`;
     writeFileSync(join(outputDir, fileName), html);
-    manifest[source.virtualPath] = `/generated/${fileName}`;
+    manifest[`${commandFor(source)} ${source.virtualPath}`] = `/generated/${fileName}`;
   }
 
   const treeHtml = renderTreeView(folderSources);
