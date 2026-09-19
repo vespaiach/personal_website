@@ -16,9 +16,12 @@ function renderRow(entry: ListingEntry, virtualPath: string): string {
     : escapeHtml(entry.date);
 
   const fullPath = virtualPath === "/" ? `/${entry.name}` : `${virtualPath}/${entry.name}`;
-  const nameElement = entry.isDirectory
-    ? `<span style="color: var(--text-strong);">${escapeHtml(entry.name)}</span>`
-    : `<button class="ls-file-link" data-file-path="${escapeHtml(fullPath)}" style="background: none; border: none; color: var(--text-strong); cursor: pointer; font-family: var(--font-code); font-size: var(--code-size); padding: 0; text-align: left;">${escapeHtml(entry.name)}</button>`;
+  const command = entry.isDirectory ? "ls" : "cat";
+  const nameElement =
+    `<button @click="$store.prompts.add('${command} ${escapeHtml(fullPath)}', $store.cwd.value)" ` +
+    'style="background: none; border: none; color: var(--text-strong); cursor: pointer; ' +
+    'font-family: var(--font-code); font-size: var(--code-size); padding: 0; text-align: left;">' +
+    `${escapeHtml(entry.name)}</button>`;
 
   return (
     '<div style="display: flex; gap: 16px; font-family: var(--font-code); font-size: var(--code-size); ' +
