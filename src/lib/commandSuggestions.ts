@@ -9,10 +9,6 @@ export const FIXED_COMMANDS: ReadonlyArray<readonly [string, string]> = [
   ["cd ~/topics", "one dir per tag"],
   ["cd ~/about", "me.md, stack.json, projects"],
   ["tree ~", "two levels"],
-  ["grep -t react", "search by topic"],
-  ["whoami", ""],
-  ["pwd", ""],
-  ["history", ""],
   ["clear", ""],
   ["help", "all commands"],
 ];

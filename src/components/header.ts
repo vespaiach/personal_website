@@ -12,5 +12,16 @@ export function registerHeader() {
         }
       });
     },
+
+    toggleCommandPalette() {
+      const dialog = document.querySelector("dialog");
+      if (dialog) {
+        if (dialog.open) {
+          dialog.close();
+        } else {
+          dialog.showModal();
+        }
+      }
+    },
   }));
 }

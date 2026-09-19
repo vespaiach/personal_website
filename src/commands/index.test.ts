@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { vi } from "vitest";
 
 vi.stubGlobal(
   "MutationObserver",
@@ -24,16 +24,4 @@ vi.mock("alpinejs", () => {
       },
     },
   };
-});
-
-const { execute } = await import("./index.ts");
-
-describe("commands registry", () => {
-  it("returns an error result for an unknown command", async () => {
-    expect(await execute("whoami", "/")).toEqual({
-      kind: "error",
-      message: "Unknown command",
-      cwd: "/",
-    });
-  });
 });

@@ -639,7 +639,7 @@ samp {
 .command-line__idle-hint {
   margin: 0;
   color: var(--text-faint);
-  font-size: var(--body-sm-size);
+  font-size: 12px;
 }
 
 /* ── command-palette.css ──────────────────────────────────────────── */
@@ -978,7 +978,8 @@ samp {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: var(--space-lg) 0 34px;
+  margin: var(--space-md) 0 34px;
+  font-family: var(--font-body);
 }
 
 .content-view__header {
