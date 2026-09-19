@@ -424,7 +424,15 @@ samp {
   }
 }
 
-/* ── Utility Classes ── */
+/* ── utilities.css ──────────────────────────────────────────── */
+.shell-wide {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 .nav-buton {
   display: inline-block;
   padding-block: var(--space-xs);
@@ -471,70 +479,6 @@ samp {
   }
 }
 
-.divider-line {
-  height: var(--border-width);
-  background-color: var(--hairline);
-  border: 0;
-}
-
-.posts-listing-row {
-  margin: 0;
-  padding: 4px 0px;
-  border-radius: 8px;
-  background-color: var(--canvas);
-  color: var(--text-body);
-  font-family: var(--font-code);
-  font-size: var(--code-size);
-  line-height: 21px;
-  list-style: none;
-
-  & li {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
-
-  & .total {
-    color: #616e88;
-  }
-
-  & span,
-  & time {
-    flex-shrink: 0;
-    color: #616e88;
-  }
-
-  & span:nth-child(2) {
-    width: 48px;
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  & time {
-    width: 96px;
-    white-space: nowrap;
-  }
-
-  & button {
-    background: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    font: inherit;
-    color: inherit;
-    text-align: left;
-    cursor: pointer;
-  }
-}
-
-.shell-wide {
-  max-width: 1080px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
 /* ── site-header.css ──────────────────────────────────────────── */
 .site-header {
   position: sticky;
@@ -552,6 +496,7 @@ samp {
   box-sizing: border-box;
 }
 
+/* Brand */
 .site-header__brand {
   display: flex;
   align-items: baseline;
@@ -569,6 +514,7 @@ samp {
   color: var(--ink);
 }
 
+/* Navigation */
 .site-header__nav {
   display: flex;
   align-items: center;
@@ -577,11 +523,23 @@ samp {
   min-width: 0;
 }
 
+/* Actions */
 .site-header__actions {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   flex: none;
+}
+
+/* ── terminal-main.css ──────────────────────────────────────────── */
+.terminal-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-block: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: var(--code-md-size);
+  line-height: var(--code-md-leading);
 }
 
 /* ── command-line.css ──────────────────────────────────────────── */
@@ -591,6 +549,10 @@ samp {
   align-items: baseline;
   gap: 0.5em;
   padding-bottom: 8px;
+}
+
+.command-line--idle {
+  cursor: pointer;
 }
 
 .command-line__user {
@@ -621,10 +583,6 @@ samp {
   flex-basis: 100%;
 }
 
-.command-line--idle {
-  cursor: pointer;
-}
-
 .command-line__cursor {
   display: inline-block;
   width: 0.6em;
@@ -637,17 +595,6 @@ samp {
   margin: 0;
   color: var(--text-faint);
   font-size: var(--body-sm-size);
-}
-
-/* ── terminal.css ──────────────────────────────────────────── */
-.terminal-main {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding-block: var(--space-lg);
-  font-family: var(--font-mono);
-  font-size: var(--code-md-size);
-  line-height: var(--code-md-leading);
 }
 
 /* ── command-palette.css ──────────────────────────────────────────── */
@@ -672,6 +619,7 @@ samp {
   backdrop-filter: blur(3px);
 }
 
+/* Header */
 .command-palette__header {
   display: flex;
   align-items: flex-start;
@@ -708,10 +656,12 @@ samp {
   color: var(--text-mute);
   transition: var(--transition-control);
 }
+
 .command-palette__close:hover {
   color: var(--ink);
 }
 
+/* Body */
 .command-palette__body {
   display: flex;
   flex-direction: column;
@@ -719,6 +669,7 @@ samp {
   padding: var(--space-xl);
 }
 
+/* Search */
 .command-palette__search {
   display: flex;
   align-items: center;
@@ -730,6 +681,7 @@ samp {
   padding-inline: var(--space-md);
   transition: var(--transition-control);
 }
+
 .command-palette__search:focus-within {
   border-color: var(--focus-ring);
   box-shadow:
@@ -759,10 +711,12 @@ samp {
   font-size: var(--code-md-size);
   line-height: var(--code-md-leading);
 }
+
 .command-palette__search-input::placeholder {
   color: var(--text-faint);
 }
 
+/* Suggestions */
 .command-palette__suggestions {
   list-style: none;
   margin: 0;
@@ -785,6 +739,7 @@ samp {
   cursor: pointer;
   transition: var(--transition-control);
 }
+
 .command-palette__suggestion:hover,
 .command-palette__suggestion.is-selected {
   background-color: var(--canvas-raised);
@@ -805,6 +760,7 @@ samp {
   white-space: pre;
 }
 
+/* Footer */
 .command-palette__footer {
   display: flex;
   gap: var(--space-lg);
@@ -821,6 +777,7 @@ samp {
   color: var(--text-mute);
 }
 
+/* ── terminal-help.css ──────────────────────────────────────────── */
 .terminal-help {
   background-color: #23222d;
   color: #8b92b0;
@@ -831,6 +788,7 @@ samp {
   padding: 12px 0;
 }
 
+/* Header */
 .help-header {
   margin-bottom: 12px;
 }
@@ -843,6 +801,7 @@ samp {
   color: #8b92b0;
 }
 
+/* Table */
 .help-table {
   border-collapse: collapse;
   width: 100%;
@@ -866,6 +825,7 @@ samp {
   color: #8b92b0;
 }
 
+/* Footer */
 .help-footer {
   margin-top: 16px;
 }
