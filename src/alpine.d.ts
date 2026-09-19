@@ -41,6 +41,7 @@ type CommandResult =
 
 interface Alpine {
   data(name: string, callback: unknown): void;
+  nextTick(): Promise<void>;
   store(name: "prompts", value: Prompts): void;
   store(name: "prompts"): Prompts;
   store(name: "cwd", value: Cwd): void;
