@@ -40,7 +40,7 @@ describe("renderMarkdownView", () => {
     const html = await renderMarkdownView(raw, "~/posts/code.md");
     expect(html).toContain("data-code-block");
     expect(html).toContain(">javascript<");
-    expect(html).toMatch(/<span style="color:#[0-9A-Fa-f]+">/);
+    expect(html).toContain("color:var(--shiki-token-keyword, var(--syn-keyword))");
     expect(html).not.toContain("```");
   });
 
@@ -57,6 +57,14 @@ describe("renderMarkdownView", () => {
     expect(html).toContain(">first<");
     expect(html).toContain(">1.<");
     expect(html).toContain(">2.<");
+  });
+
+  it("gives each heading depth its own mockup style", async () => {
+    const raw = "---\ntitle: 'Headings'\n---\n# One\n\n## Two\n\n### Three\n";
+    const html = await renderMarkdownView(raw, "~/posts/headings.md");
+    expect(html).toContain('<h2 class="md-h1">One</h2>');
+    expect(html).toContain('<h2 class="md-h2">Two</h2>');
+    expect(html).toContain('<h3 class="md-h3">Three</h3>');
   });
 
   it("adds target=_blank and rel=noreferrer to links", async () => {
@@ -80,7 +88,7 @@ describe("renderJsonView", () => {
     const html = await renderJsonView(raw, "~/about/stack.json");
     expect(html).toContain("~/about/stack.json");
     expect(html).toContain("data-code-block");
-    expect(html).toMatch(/<span style="color:#[0-9A-Fa-f]+">/);
+    expect(html).toMatch(/<span style="color:var\(--shiki-token-[a-z-]+, var\(--/);
     expect(html).toContain("languages");
   });
 });
