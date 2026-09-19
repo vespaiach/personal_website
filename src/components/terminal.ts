@@ -11,7 +11,12 @@ export function registerTerminal() {
       this.command = "";
     },
 
-    scrollToBottom() {
+    scrollAfterCommand(event: Event) {
+      const articleHeader = (event.target as HTMLElement).querySelector("article > header");
+      if (articleHeader) {
+        articleHeader.scrollIntoView();
+        return;
+      }
       window.scrollTo(0, document.documentElement.scrollHeight);
     },
   }));

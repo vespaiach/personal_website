@@ -590,6 +590,10 @@ samp {
   flex-basis: 100%;
 }
 
+.command-line__output article > header {
+  scroll-margin-top: calc(53px + var(--space-lg));
+}
+
 .command-line__field {
   position: relative;
   flex: 1 1 12ch;
