@@ -19,7 +19,7 @@ function resolveTitle(fm: Frontmatter, body: string): { title: string; body: str
 }
 
 const COPY_ICON =
-  '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display: block; flex: 0 0 auto;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>';
+  '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="code-block__icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>';
 
 function extractShikiCode(html: string): string {
   const match = html.match(/<code>([\s\S]*)<\/code>/);
@@ -28,16 +28,16 @@ function extractShikiCode(html: string): string {
 
 function wrapCodeChrome(lang: string, innerCodeHtml: string): string {
   return (
-    '<div data-code-block x-data="{ copied: false }" style="background: var(--canvas-soft); border: 1px solid var(--hairline); border-radius: var(--radius-card); overflow: hidden;">' +
-    '<div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px 6px 12px; border-bottom: 1px solid var(--hairline); background: var(--canvas-raised);">' +
-    `<span style="font-family: var(--font-code); font-size: var(--caption-size); color: var(--text-mute);">${escapeHtml(lang)}</span>` +
-    '<span style="flex: 1 1 0%;"></span>' +
-    '<button type="button" style="display: inline-flex; align-items: center; gap: 5px; background: transparent; border: 0; cursor: pointer; padding: 2px 4px; font-family: var(--font-code); font-size: var(--caption-size); color: var(--text-mute);" ' +
+    '<div data-code-block x-data="{ copied: false }" class="code-block">' +
+    '<div class="code-block__header">' +
+    `<span class="code-block__lang">${escapeHtml(lang)}</span>` +
+    '<span class="code-block__spacer"></span>' +
+    '<button type="button" class="code-block__copy" ' +
     "@click=\"copied = true; setTimeout(() => copied = false, 1500); navigator.clipboard.writeText($el.closest('[data-code-block]').querySelector('code').innerText)\">" +
     `${COPY_ICON}<span x-show="!copied">copy</span><span x-show="copied">copied</span>` +
     "</button>" +
     "</div>" +
-    '<pre style="margin: 0; padding: var(--pad-mockup); overflow-x: auto; font-family: var(--font-code); font-size: var(--code-size); line-height: var(--code-leading); color: var(--text-body);">' +
+    '<pre class="code-block__pre">' +
     `<code>${innerCodeHtml}</code></pre>` +
     "</div>"
   );
@@ -63,24 +63,24 @@ marked.use({
     heading(token) {
       const content = this.parser.parseInline(token.tokens);
       if (token.depth <= 2) {
-        return `<h2 style="margin: 14px 0 0; font-size: 24px; line-height: 32px; letter-spacing: -0.4px; font-weight: 500; color: var(--ink);">${content}</h2>`;
+        return `<h2 class="md-h2">${content}</h2>`;
       }
-      return `<h3 style="margin: 12px 0 0; font-size: 20px; line-height: 28px; font-weight: 500; color: var(--ink);">${content}</h3>`;
+      return `<h3 class="md-h3">${content}</h3>`;
     },
     paragraph(token) {
-      return `<p style="margin: 0; font-size: 16px; line-height: 26px; color: var(--text-body);">${this.parser.parseInline(token.tokens)}</p>`;
+      return `<p class="md-p">${this.parser.parseInline(token.tokens)}</p>`;
     },
     codespan(token) {
-      return `<code style="background: var(--canvas-raised); padding: 1px 5px; border-radius: var(--radius-sm); color: var(--text-strong);">${escapeHtml(token.text)}</code>`;
+      return `<code class="md-codespan">${escapeHtml(token.text)}</code>`;
     },
     link(token) {
       return `<a href="${escapeHtml(token.href)}" target="_blank" rel="noreferrer">${this.parser.parseInline(token.tokens)}</a>`;
     },
     hr() {
-      return '<hr style="border: 0; height: 1px; margin: 8px 0; background: var(--hairline);">';
+      return '<hr class="md-hr">';
     },
     blockquote(token) {
-      return `<div style="border-left: 3px solid var(--hairline); padding-left: 14px; margin: 0; color: var(--text-mute); font-size: 16px; line-height: 26px;">${this.parser.parse(token.tokens)}</div>`;
+      return `<div class="md-blockquote">${this.parser.parse(token.tokens)}</div>`;
     },
     list(token) {
       const start = token.ordered && typeof token.start === "number" ? token.start : 1;
@@ -89,13 +89,13 @@ marked.use({
           const marker = token.ordered ? `${start + index}.` : "-";
           const content = this.parser.parse(item.tokens);
           return (
-            '<div style="display: flex; gap: 8px; align-items: baseline;">' +
-            `<span style="color: var(--text-mute); font-family: var(--font-code); flex: none;">${marker}</span>` +
-            `<span style="color: var(--text-body);">${content}</span></div>`
+            '<div class="md-list__row">' +
+            `<span class="md-list__marker">${marker}</span>` +
+            `<span class="md-list__content">${content}</span></div>`
           );
         })
         .join("");
-      return `<div style="display: flex; flex-direction: column; gap: 6px; font-size: 16px; line-height: 26px;">${rows}</div>`;
+      return `<div class="md-list">${rows}</div>`;
     },
   },
 });
@@ -116,22 +116,14 @@ export async function renderMarkdownView(raw: string, eyebrow: string): Promise<
   const lead = fm.excerpt ?? "";
   const source = fm.github ?? "";
 
-  const tagPills = tags
-    .map(
-      (tag) =>
-        '<span style="display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-code); font-size: var(--caption-size); line-height: 16px; letter-spacing: 0.02em; padding: 2px 8px; border-radius: var(--radius-pill); white-space: nowrap; background: var(--canvas-raised); color: var(--accent); border: 1px solid transparent;">' +
-        `#${escapeHtml(tag)}</span>`,
-    )
-    .join("");
+  const tagPills = tags.map((tag) => `<span class="content-view__tag">#${escapeHtml(tag)}</span>`).join("");
 
-  const leadHtml = lead
-    ? `<p style="margin: 0; font-size: 18px; line-height: 30px; color: var(--text-strong);">${escapeHtml(lead)}</p>`
-    : "";
+  const leadHtml = lead ? `<p class="content-view__lead">${escapeHtml(lead)}</p>` : "";
 
   const footerHtml = source
-    ? '<div style="display: flex; flex-direction: column; gap: 12px; margin-top: 6px;">' +
-      '<hr style="border: 0; height: 1px; margin: 0; background: var(--hairline);">' +
-      '<div style="font-family: var(--font-code); font-size: 12px; line-height: 18px; color: var(--text-faint);">' +
+    ? '<div class="content-view__footer">' +
+      '<hr class="view-rule">' +
+      '<div class="content-view__source">' +
       `source: <a href="${escapeHtml(source)}" target="_blank" rel="noreferrer">${escapeHtml(source)}</a></div>` +
       "</div>"
     : "";
@@ -139,14 +131,14 @@ export async function renderMarkdownView(raw: string, eyebrow: string): Promise<
   const bodyHtml = await marked.parse(body, { async: true });
 
   return (
-    '<article style="max-width: 720px; display: flex; flex-direction: column; gap: 20px; margin: 16px 0 34px;">' +
-    '<header style="display: flex; flex-direction: column; gap: 14px;">' +
-    `<div style="font-family: var(--font-code); font-size: 12px; letter-spacing: 0.04em; color: var(--text-faint);">${escapeHtml(eyebrow)}</div>` +
-    `<h1 style="margin: 0; font-size: 38px; line-height: 42px; letter-spacing: -0.95px; font-weight: 400; color: var(--ink);">${escapeHtml(title)}</h1>` +
-    '<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">' +
-    `<span style="font-family: var(--font-code); font-size: 12px; color: var(--text-mute);">${escapeHtml(meta)}</span>${tagPills}` +
+    '<article class="content-view">' +
+    '<header class="content-view__header">' +
+    `<div class="view-eyebrow">${escapeHtml(eyebrow)}</div>` +
+    `<h1 class="content-view__title">${escapeHtml(title)}</h1>` +
+    '<div class="content-view__meta-row">' +
+    `<span class="content-view__meta">${escapeHtml(meta)}</span>${tagPills}` +
     "</div>" +
-    '<hr style="border: 0; height: 1px; margin: 2px 0 0; background: var(--hairline);">' +
+    '<hr class="content-view__header-rule">' +
     `${leadHtml}` +
     "</header>" +
     `${bodyHtml}${footerHtml}` +
@@ -157,8 +149,8 @@ export async function renderMarkdownView(raw: string, eyebrow: string): Promise<
 export async function renderJsonView(raw: string, eyebrow: string): Promise<string> {
   const html = await codeToHtml(raw, { lang: "json", theme: "nord" });
   return (
-    '<article style="max-width: 720px; display: flex; flex-direction: column; gap: 20px; margin: 16px 0 34px;">' +
-    `<div style="font-family: var(--font-code); font-size: 12px; letter-spacing: 0.04em; color: var(--text-faint);">${escapeHtml(eyebrow)}</div>` +
+    '<article class="content-view">' +
+    `<div class="view-eyebrow">${escapeHtml(eyebrow)}</div>` +
     `${wrapCodeChrome("json", extractShikiCode(html))}` +
     "</article>"
   );

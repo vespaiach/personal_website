@@ -26,13 +26,12 @@ function renderLevel(
   entries.forEach((entry, index) => {
     const isLast = index === entries.length - 1;
     const branch = isLast ? "└── " : "├── ";
-    const color = entry.isDirectory ? "var(--dir)" : "var(--ink)";
+    const nameClass = entry.isDirectory ? "tree-view__name tree-view__name--dir" : "tree-view__name";
 
     lines.push(
-      '<div style="font-family: var(--font-code); font-size: var(--code-size); ' +
-        'line-height: var(--code-leading); white-space: pre;">' +
-        `<span style="color: var(--text-faint);">${prefix}${branch}</span>` +
-        `<span style="color: ${color};">${escapeHtml(entry.name)}</span>` +
+      '<div class="tree-view__line">' +
+        `<span class="tree-view__prefix">${prefix}${branch}</span>` +
+        `<span class="${nameClass}">${escapeHtml(entry.name)}</span>` +
         "</div>",
     );
 
@@ -47,11 +46,5 @@ export function renderTreeView(folders: FolderSource[]): string {
   const lines: string[] = [];
   renderLevel("/", "", foldersByPath, lines);
 
-  return (
-    '<article style="max-width: 720px; display: flex; flex-direction: column; margin: 16px 0 34px;">' +
-    '<div style="font-family: var(--font-code); font-size: var(--code-size); ' +
-    'line-height: var(--code-leading); color: var(--ink);">~</div>' +
-    lines.join("") +
-    "</article>"
-  );
+  return `<article class="tree-view"><div class="tree-view__root">~</div>${lines.join("")}</article>`;
 }

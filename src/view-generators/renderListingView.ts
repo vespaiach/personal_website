@@ -23,12 +23,11 @@ function renderRow(entry: ListingEntry, virtualPath: string): string {
     `${escapeHtml(entry.name)}</button>`;
 
   return (
-    '<div style="display: flex; gap: 16px; font-family: var(--font-code); font-size: var(--code-size); ' +
-    'line-height: var(--code-leading); color: var(--text-body);">' +
-    `<span style="color: var(--text-mute); width: 96px; flex: none;">${permissions}</span>` +
-    `<span style="color: var(--text-mute); width: 56px; flex: none;">${escapeHtml(entry.size)}</span>` +
-    `<span style="color: var(--text-mute); width: 96px; flex: none;">${dateContent}</span>` +
-    `<span style="color: var(--text-strong);">${nameElement}</span>` +
+    '<div class="ls-view__row">' +
+    `<span class="ls-view__col ls-view__col--perms">${permissions}</span>` +
+    `<span class="ls-view__col ls-view__col--size">${escapeHtml(entry.size)}</span>` +
+    `<span class="ls-view__col ls-view__col--date">${dateContent}</span>` +
+    `<span class="ls-view__col ls-view__col--name">${nameElement}</span>` +
     "</div>"
   );
 }
@@ -37,12 +36,10 @@ export function renderListingView(virtualPath: string, entries: ListingEntry[]):
   const rows = entries.map((entry) => renderRow(entry, virtualPath)).join("");
 
   return (
-    '<article style="max-width: 720px; display: flex; flex-direction: column; gap: 12px; margin: 16px 0 34px;">' +
-    '<div style="font-family: var(--font-code); font-size: 12px; letter-spacing: 0.04em; ' +
-    `color: var(--text-faint);">~${escapeHtml(virtualPath)}</div>` +
-    '<hr style="border: 0; height: 1px; margin: 0; background: var(--hairline);">' +
-    '<div style="font-family: var(--font-code); font-size: var(--code-size); ' +
-    `color: var(--text-mute);">total ${entries.length}</div>` +
+    '<article class="ls-view">' +
+    `<div class="view-eyebrow">~${escapeHtml(virtualPath)}</div>` +
+    '<hr class="view-rule">' +
+    `<div class="ls-view__total">total ${entries.length}</div>` +
     `${rows}` +
     "</article>"
   );

@@ -63,7 +63,7 @@ describe("generateViews", () => {
     const treeContent = readFileSync(join(root, "dist", "generated", treeFileName), "utf-8");
     expect(treeContent).toContain(">~<");
     expect(treeContent).toContain("about");
-    expect(treeContent).toContain("var(--dir)");
+    expect(treeContent).toContain("tree-view__name--dir");
   });
 
   it("clears stale files from a previous run instead of accumulating them", async () => {
