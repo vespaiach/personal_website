@@ -1,3 +1,4 @@
+import { posix } from "node:path";
 import type { ListingEntry } from "./collect.ts";
 
 function escapeHtml(value: string): string {
@@ -9,26 +10,41 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
+function permissionsFor(entry: ListingEntry): string {
+  if (entry.isDirectory) return "drwxr-xr-x";
+  return entry.linkTarget ? "lrwxr-xr-x" : "-rw-r--r--";
+}
+
+function linkClassFor(entry: ListingEntry): string {
+  if (entry.isDirectory) return "ls-link ls-link--dir";
+  return entry.linkTarget ? "ls-link ls-link--symlink" : "ls-link";
+}
+
+function commandFor(entry: ListingEntry, virtualPath: string): string {
+  const fullPath = posix.join(virtualPath, entry.name);
+  if (entry.isDirectory) return `cd ~${fullPath} && ls`;
+  return `cat ${entry.linkTarget ? posix.resolve(virtualPath, entry.linkTarget) : fullPath}`;
+}
+
 function renderRow(entry: ListingEntry, virtualPath: string): string {
-  const permissions = entry.isDirectory ? "drwxr-xr-x" : "-rw-r--r--";
   const dateContent = entry.isoDate
     ? `<time datetime="${escapeHtml(entry.isoDate)}">${escapeHtml(entry.date)}</time>`
     : escapeHtml(entry.date);
 
-  const fullPath = virtualPath === "/" ? `/${entry.name}` : `${virtualPath}/${entry.name}`;
-  const command = entry.isDirectory ? "ls" : "cat";
   const titleAttr = entry.title ? ` title="${escapeHtml(entry.title)}"` : "";
-  const linkClass = entry.isDirectory ? "ls-link ls-link--dir" : "ls-link";
   const nameElement =
-    `<button class="${linkClass}" @click="$store.prompts.add('${command} ${escapeHtml(fullPath)}', $store.cwd.value)"${titleAttr}>` +
+    `<button class="${linkClassFor(entry)}" @click="$store.prompts.add('${escapeHtml(commandFor(entry, virtualPath))}', $store.cwd.value)"${titleAttr}>` +
     `${escapeHtml(entry.name)}</button>`;
+  const targetElement = entry.linkTarget
+    ? `<span class="ls-view__target">${escapeHtml(` -> ${entry.linkTarget}`)}</span>`
+    : "";
 
   return (
     '<div class="ls-view__row">' +
-    `<span class="ls-view__col ls-view__col--perms">${permissions}</span>` +
+    `<span class="ls-view__col ls-view__col--perms">${permissionsFor(entry)}</span>` +
     `<span class="ls-view__col ls-view__col--size">${escapeHtml(entry.size)}</span>` +
     `<span class="ls-view__col ls-view__col--date">${dateContent}</span>` +
-    `<span class="ls-view__col ls-view__col--name">${nameElement}</span>` +
+    `<span class="ls-view__col ls-view__col--name">${nameElement}${targetElement}</span>` +
     "</div>"
   );
 }

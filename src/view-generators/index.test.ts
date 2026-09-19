@@ -35,6 +35,7 @@ describe("generateViews", () => {
         "ls /about",
         "ls /about/projects",
         "ls /topics",
+        "ls /topics/javascript",
         "tree /",
       ]),
     );
@@ -58,6 +59,11 @@ describe("generateViews", () => {
     const postsListingContent = readFileSync(join(root, "dist", "generated", postsListingFileName), "utf-8");
     expect(postsListingContent).toContain("typescript-notes.md");
     expect(postsListingContent).toContain("-rw-r--r--");
+
+    const topicListingFileName = manifest["ls /topics/javascript"].replace("/generated/", "");
+    const topicListingContent = readFileSync(join(root, "dist", "generated", topicListingFileName), "utf-8");
+    expect(topicListingContent).toContain("lrwxr-xr-x");
+    expect(topicListingContent).toContain("discard-after-usages.md");
 
     const treeFileName = manifest["tree /"].replace("/generated/", "");
     const treeContent = readFileSync(join(root, "dist", "generated", treeFileName), "utf-8");
