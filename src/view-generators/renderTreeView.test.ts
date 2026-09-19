@@ -42,6 +42,32 @@ describe("renderTreeView", () => {
     expect(html).toContain("│   ");
   });
 
+  it("renders only the subtree under the given root path, labelled ~/path", () => {
+    const html = renderTreeView(folders, "/about");
+
+    expect(html).toContain(">~/about<");
+    expect(html).toContain("me.md");
+    expect(html).toContain("vespaiach.com.md");
+    expect(html).not.toContain("typescript-notes.md");
+    expect(html).not.toContain(">about<");
+  });
+
+  it("renders a nested folder as the root without its parents", () => {
+    const html = renderTreeView(folders, "/about/projects");
+
+    expect(html).toContain(">~/about/projects<");
+    expect(html).toContain("└── ");
+    expect(html).toContain("vespaiach.com.md");
+    expect(html).not.toContain("me.md");
+  });
+
+  it("renders just the root label for a folder with no listing", () => {
+    const html = renderTreeView(folders, "/missing");
+
+    expect(html).toContain(">~/missing<");
+    expect(html).not.toContain("tree-view__line");
+  });
+
   it("colors directories with --dir and files with --ink", () => {
     const html = renderTreeView(folders);
 

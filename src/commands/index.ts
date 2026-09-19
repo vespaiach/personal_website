@@ -3,6 +3,7 @@ import { CdCommand } from "./CdCommand.ts";
 import { ClearCommand } from "./ClearCommand.ts";
 import { HelpCommand } from "./HelpCommand.ts";
 import { LsCommand } from "./LsCommand.ts";
+import { TreeCommand } from "./TreeCommand.ts";
 
 export const commandClasses = {
   cat: CatCommand,
@@ -10,6 +11,7 @@ export const commandClasses = {
   clear: ClearCommand,
   help: HelpCommand,
   ls: LsCommand,
+  tree: TreeCommand,
 };
 
 export async function execute(rawCommand: string, cwd: string): Promise<CommandResult> {
