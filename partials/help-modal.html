@@ -1,0 +1,50 @@
+<dialog
+  x-data="helpModal()"
+  id="help-modal"
+  aria-label="Help"
+  class="command-palette help-modal"
+  @click="$event.target === $el && $el.close()"
+>
+  <div class="command-palette__header">
+    <div class="command-palette__title-group">
+      <h2 class="command-palette__title">Help</h2>
+      <p class="command-palette__subtitle">how this site works · esc to close</p>
+    </div>
+    <form method="dialog">
+      <button type="submit" class="command-palette__close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+    </form>
+  </div>
+  <div class="command-palette__body help-modal__body">
+    <section class="help-modal__section">
+      <h3 class="help-modal__heading">About this site</h3>
+      <p>
+        This is Trinh Nguyen's dev blog, dressed up as a terminal. Instead of clicking through pages,
+        you run commands against a small virtual file system with three directories:
+      </p>
+      <p class="help-modal__dirs"><span>~/posts</span><span>~/topics</span><span>~/about</span></p>
+    </section>
+    <section class="help-modal__section">
+      <h3 class="help-modal__heading">How to use it</h3>
+      <ul class="help-modal__list">
+        <li>Type a command at the prompt and press <kbd>enter</kbd>. Output is added below, like a shell session.</li>
+        <li>Press <kbd>⌘K</kbd> (<kbd>Ctrl</kbd>+<kbd>K</kbd> on Windows/Linux) to open the command palette with suggestions and your recent commands.</li>
+        <li>The <span class="help-modal__cmd">/posts</span>, <span class="help-modal__cmd">/topics</span> and <span class="help-modal__cmd">/about</span> links in the header are shortcuts for <span class="help-modal__cmd">cd ~/posts &amp;&amp; ls</span> and friends.</li>
+        <li>Chain commands with <span class="help-modal__cmd">&amp;&amp;</span>, e.g. <span class="help-modal__cmd">cd ~/about &amp;&amp; cat me.md</span>.</li>
+        <li>To read an article, <span class="help-modal__cmd">ls</span> a directory, then <span class="help-modal__cmd">cat</span> the file you want.</li>
+      </ul>
+    </section>
+    <section class="help-modal__section">
+      <h3 class="help-modal__heading">Commands</h3>
+      <dl class="help-modal__commands">
+        <template x-for="command in commands" :key="command.syntax">
+          <div class="help-modal__command">
+            <dt class="help-modal__cmd" x-text="command.syntax"></dt>
+            <dd x-text="command.description"></dd>
+          </div>
+        </template>
+      </dl>
+    </section>
+  </div>
+</dialog>
