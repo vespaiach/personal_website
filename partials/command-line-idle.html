@@ -4,17 +4,21 @@
     <span class="command-line__separator">in</span>
     <span class="command-line__path" x-text="`~${$store.cwd.value}`"></span>
     <span class="command-line__symbol">$</span>
-    <input
-      x-ref="commandInput"
-      x-model="command"
-      @keydown.enter.prevent="run()"
-      type="text"
-      class="command-line__input"
-      aria-label="Command"
-      autocomplete="off"
-      autocapitalize="off"
-      spellcheck="false"
-    />
+    <div class="command-line__field">
+      <input
+        x-ref="commandInput"
+        x-model="command"
+        @keydown.enter.prevent="run()"
+        type="text"
+        class="command-line__input"
+        placeholder=" "
+        aria-label="Command"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <span class="command-line__cursor" aria-hidden="true"></span>
+    </div>
   </div>
   <p class="command-line__idle-hint">type a command and press enter, or press ⌘K for suggestions</p>
 </section>

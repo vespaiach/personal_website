@@ -586,15 +586,54 @@ samp {
   flex-basis: 100%;
 }
 
-.command-line__input {
+.command-line__field {
+  position: relative;
   flex: 1 1 12ch;
   min-width: 0;
+}
+
+.command-line__input {
+  display: block;
+  width: 100%;
   padding: 0;
   background: transparent;
   border: 0;
   outline: none;
   color: var(--ink);
   font: inherit;
+}
+
+.command-line__input:placeholder-shown {
+  caret-color: transparent;
+}
+
+.command-line__cursor {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0.6em;
+  height: 1.1em;
+  background: var(--ink);
+  transform: translateY(-50%);
+  pointer-events: none;
+  animation: command-line-blink 1.1s steps(1) infinite;
+}
+
+.command-line__input:placeholder-shown + .command-line__cursor {
+  display: block;
+}
+
+@keyframes command-line-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .command-line__cursor {
+    animation: none;
+  }
 }
 
 .command-line__idle-hint {
