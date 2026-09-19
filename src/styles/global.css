@@ -1049,7 +1049,21 @@ samp {
 }
 
 .tree-view__name {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
   color: var(--ink);
+  cursor: pointer;
+  transition: var(--transition-control);
+}
+
+.tree-view__name:hover {
+  color: var(--link-hover);
+}
+
+.tree-view__name:active {
+  color: var(--nord-7);
 }
 
 .tree-view__name--dir {

@@ -1,5 +1,6 @@
 import { posix } from "node:path";
 import type { ListingEntry } from "./collect.ts";
+import { commandFor } from "./entryCommand.ts";
 
 function escapeHtml(value: string): string {
   return value
@@ -18,12 +19,6 @@ function permissionsFor(entry: ListingEntry): string {
 function linkClassFor(entry: ListingEntry): string {
   if (entry.isDirectory) return "ls-link ls-link--dir";
   return entry.linkTarget ? "ls-link ls-link--symlink" : "ls-link";
-}
-
-function commandFor(entry: ListingEntry, virtualPath: string): string {
-  const fullPath = posix.join(virtualPath, entry.name);
-  if (entry.isDirectory) return `cd ~${fullPath} && ls`;
-  return `cat ${entry.linkTarget ? posix.resolve(virtualPath, entry.linkTarget) : fullPath}`;
 }
 
 function renderRow(entry: ListingEntry, virtualPath: string): string {
