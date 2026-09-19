@@ -580,6 +580,7 @@ samp {
 
 .command-line__error {
   color: var(--danger);
+  margin: 8px 0;
 }
 
 .command-line__output {
@@ -892,7 +893,7 @@ samp {
 
 /* ls output */
 .command-line-section {
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
 .ls-view {
