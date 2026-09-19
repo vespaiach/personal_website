@@ -1,4 +1,9 @@
 {
-  "languages": ["TypeScript"],
-  "frameworks": ["Alpine.js", "Vite"]
+  "languages": ["JavaScript", "NodeJS", "TypeScript", "CSS", "HTML", "Ruby", "PHP"],
+  "frameworks": ["React.js", "React-Router", "Tailwind CSS", "Next.js", "Alpine.js", "Ruby on Rails", "WordPress"],
+  "tests": ["Jest", "React Testing Library", "Mocha"],
+  "databases": ["PostgreSQL"],
+  "tools": ["Vite.js", "Rollup.js", "Esbuild", "Git", "VS Code", "Vim", "ESLint", "Prettier", "Biome"],
+  "web-servers": ["Nginx"],
+  "skills": ["Web development"]
 }
