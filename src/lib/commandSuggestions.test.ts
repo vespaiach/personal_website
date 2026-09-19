@@ -42,7 +42,6 @@ describe("buildSuggestions", () => {
     expect(result).toEqual([
       { label: "history", hint: "recent" },
       { label: "help", hint: "recent" },
-      { label: "history", hint: "" },
       { label: "help", hint: "all commands" },
     ]);
   });
