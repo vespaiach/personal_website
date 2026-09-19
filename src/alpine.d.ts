@@ -9,6 +9,11 @@ interface Cwd {
   update(value: string): void;
 }
 
+interface ActiveLink {
+  value: string;
+  update(value: string): void;
+}
+
 interface CommandObject {
   command: string;
   arg?: string;
@@ -40,6 +45,8 @@ interface Alpine {
   store(name: "prompts"): Prompts;
   store(name: "cwd", value: Cwd): void;
   store(name: "cwd"): Cwd;
+  store(name: "activeLink", value: ActiveLink): void;
+  store(name: "activeLink"): ActiveLink;
   store(name: "manifest", value: Manifest): void;
   store(name: "manifest"): Manifest;
   store(name: string, value: unknown): void;
@@ -57,6 +64,7 @@ declare module "alpinejs" {
   interface Stores {
     prompts: Prompts;
     cwd: Cwd;
+    activeLink: ActiveLink;
     manifest: Manifest;
   }
 }

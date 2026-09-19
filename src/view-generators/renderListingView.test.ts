@@ -23,6 +23,7 @@ describe("renderListingView", () => {
     expect(html).toContain("total 2");
     expect(html).toContain("-rw-r--r--");
     expect(html).toContain("typescript-notes.md");
+    expect(html).toContain("cat /posts/typescript-notes.md");
     expect(html).toContain('<time datetime="2025-03-23">Mar 23 2025</time>');
   });
 
