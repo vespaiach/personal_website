@@ -32,10 +32,7 @@ export class HelpCommand extends Command {
       .join("\n");
 
     const html = `<div class="terminal-help">
-  <div class="help-header">
-    <span class="label">usage:</span>
-    <span class="args">&lt;command&gt; [args]</span>
-  </div>
+  <div class="help-header">usage: &lt;command&gt; [args]</div>
 
   <table class="help-table">
     <tbody>
@@ -44,8 +41,8 @@ export class HelpCommand extends Command {
   </table>
 
   <div class="help-footer">
-    <div><span class="meta-label">directories:</span> <span class="meta-val">~/posts &nbsp;~/topics &nbsp;~/about</span></div>
-    <div><span class="meta-label">chain with:</span> <span class="meta-val">&amp;&amp;</span></div>
+    <div><span class="meta-label">directories:</span><span class="meta-val meta-val--path">~/posts  ~/topics  ~/about</span></div>
+    <div><span class="meta-label">chain with:</span><span class="meta-val">&amp;&amp;</span></div>
   </div>
 </div>`;
 
