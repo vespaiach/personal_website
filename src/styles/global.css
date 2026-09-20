@@ -626,6 +626,7 @@ samp {
 
 .command-line__command {
   color: var(--ink);
+  background-color: var(--canvas-raised);
 }
 
 .command-line__error {
