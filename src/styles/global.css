@@ -1050,6 +1050,61 @@ samp {
   color: var(--text-strong);
 }
 
+.ls-view__date--short {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .ls-view {
+    gap: var(--space-md);
+  }
+
+  .ls-view__row {
+    flex-wrap: wrap;
+    gap: 0 1ch;
+  }
+
+  .ls-view__col--perms,
+  .ls-view__col--blank {
+    display: none;
+  }
+
+  .ls-view__col--date {
+    order: 1;
+    width: auto;
+  }
+
+  .ls-view__col--size {
+    order: 2;
+    width: auto;
+    text-align: left;
+  }
+
+  .ls-view__col--size::before {
+    content: "·";
+    margin-right: 1ch;
+  }
+
+  .ls-view__col--name {
+    order: 3;
+    flex-basis: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .ls-view__col--name .ls-link {
+    text-align: left;
+  }
+
+  .ls-view__date--full {
+    display: none;
+  }
+
+  .ls-view__date--short {
+    display: inline;
+  }
+}
+
 /* tree output */
 .tree-view {
   max-width: var(--container-prose);
