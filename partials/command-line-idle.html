@@ -4,19 +4,19 @@
     <span class="command-line__separator">in</span>
     <span class="command-line__path" x-text="`~${$store.cwd.value}`"></span>
     <span class="command-line__symbol">$</span>
-    <div class="command-line__field">
-      <input
+    <div class="command-line__field" :data-value="command">
+      <textarea
         x-ref="commandInput"
         x-model="command"
         @keydown.enter.prevent="run()"
-        type="text"
+        rows="1"
         class="command-line__input"
         placeholder=" "
         aria-label="Command"
         autocomplete="off"
         autocapitalize="off"
         spellcheck="false"
-      />
+      ></textarea>
       <span class="command-line__cursor" aria-hidden="true"></span>
     </div>
   </div>

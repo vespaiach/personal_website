@@ -620,19 +620,39 @@ samp {
 
 .command-line__field {
   position: relative;
+  display: grid;
   flex: 1 1 12ch;
   min-width: 0;
 }
 
+@media (max-width: 480px) {
+  .command-line__field {
+    flex-basis: 100%;
+  }
+}
+
+.command-line__field::after {
+  content: attr(data-value) " ";
+  grid-area: 1 / 1;
+  visibility: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .command-line__input {
-  display: block;
+  grid-area: 1 / 1;
   width: 100%;
+  margin: 0;
   padding: 0;
   background: transparent;
   border: 0;
   outline: none;
+  resize: none;
+  overflow: hidden;
   color: var(--ink);
   font: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .command-line__input:placeholder-shown {
