@@ -24,7 +24,11 @@ I've worked solo and in teams of 10 to 20, remote and hybrid, and I'm comfortabl
 
 ## About This Site
 
-This site isn't built on a specific framework or hosted on a specialized platform. It's a static site, built with plain HTML and styled with Tailwind CSS. I set up a simple dev environment using Node.js to generate the static files, and Overmind to run the dev server and manage the build process.
+This site is a terminal-styled dev blog, and I kept the stack small on purpose. It's a static site built with Vite and TypeScript, with Alpine.js for the little bit of interactivity (the command palette, mostly) and plain CSS for styling. Biome handles linting and formatting, and Vitest covers the tests.
+
+Posts and pages are written in Markdown. At build time, small Node scripts turn them into HTML with marked and Shiki for syntax highlighting, so the browser only receives static files. Every push to `main` runs the tests and the build in GitHub Actions and deploys the result to GitHub Pages.
+
+For more details on how it's put together and how to run it locally, see the [README](https://github.com/vespaiach/personal_website#readme) in the repository.
 
 ## Reach Me
 
