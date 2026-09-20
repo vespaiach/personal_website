@@ -543,39 +543,35 @@ samp {
 
 @media (max-width: 480px) {
   :root {
-    --site-header-height: 93px;
+    --site-header-height: 45px;
   }
 
   .site-header__inner {
-    flex-wrap: wrap;
-    gap: 6px var(--space-lg);
-    padding-bottom: 0;
+    gap: var(--space-sm);
+    padding-block: var(--space-sm);
   }
 
   .site-header__brand {
-    flex: 1;
-    font-size: 15px;
+    font-size: var(--code-size);
   }
 
   .site-header__nav {
-    order: 1;
-    flex-basis: 100%;
-    gap: var(--space-xs);
+    gap: var(--space-xxs);
   }
 
   .site-header__nav .nav-buton {
-    min-height: 38px;
-    border-radius: var(--radius-control) var(--radius-control) 0 0;
+    padding-inline: var(--space-sm);
     font-size: var(--code-size);
     line-height: var(--code-leading);
-
-    &[aria-current="page"] {
-      box-shadow: inset 0 -2px 0 0 var(--accent);
-    }
   }
 
   .site-header__actions {
-    gap: 6px;
+    gap: var(--space-xxs);
+  }
+
+  .btn-icon {
+    width: 28px;
+    height: 28px;
   }
 
   .site-header__actions svg {
