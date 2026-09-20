@@ -24,7 +24,34 @@ describe("renderListingView", () => {
     expect(html).toContain("-rw-r--r--");
     expect(html).toContain("typescript-notes.md");
     expect(html).toContain("cat /posts/typescript-notes.md");
-    expect(html).toContain('<time datetime="2025-03-23">Mar 23 2025</time>');
+    expect(html).toContain(
+      '<time datetime="2025-03-23"><span class="ls-view__date--full">Mar 23 2025</span><span class="ls-view__date--short">Mar 23</span></time>',
+    );
+  });
+
+  it("renders the short date with a zero-padded day for the mobile layout", () => {
+    const html = renderListingView("/posts", [
+      { name: "a.md", isDirectory: false, size: "4 min", date: "Jun  6  2025", isoDate: "2025-06-06" },
+    ]);
+
+    expect(html).toContain('<span class="ls-view__date--short">Jun 06</span>');
+  });
+
+  it("marks placeholder size and date columns so the mobile layout can hide them", () => {
+    const html = renderListingView("/", [
+      { name: "posts", isDirectory: true, size: "-", date: "-", isoDate: "" },
+    ]);
+
+    expect(html).toContain('class="ls-view__col ls-view__col--size ls-view__col--blank"');
+    expect(html).toContain('class="ls-view__col ls-view__col--date ls-view__col--blank"');
+  });
+
+  it("does not mark real size and date columns as blank", () => {
+    const html = renderListingView("/posts", [
+      { name: "a.md", isDirectory: false, size: "4 min", date: "Jun  6  2025", isoDate: "2025-06-06" },
+    ]);
+
+    expect(html).not.toContain("ls-view__col--blank");
   });
 
   it("makes directory rows run cd into the directory followed by ls", () => {

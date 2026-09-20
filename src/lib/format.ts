@@ -22,6 +22,12 @@ const MONTH_ABBREVIATIONS = [
   "Dec",
 ];
 
+export function shortDate(iso: string): string {
+  const date = new Date(iso);
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${MONTH_ABBREVIATIONS[date.getUTCMonth()]} ${day}`;
+}
+
 // Formats an ISO date string as an `ls -l`-style date, e.g. "Jun  6  2025".
 export function lsDate(iso: string): string {
   const date = new Date(iso);

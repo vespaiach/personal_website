@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lsDate, readTime } from "./format.ts";
+import { lsDate, readTime, shortDate } from "./format.ts";
 
 describe("readTime", () => {
   it("estimates minutes from byte size", () => {
@@ -18,5 +18,11 @@ describe("lsDate", () => {
 
   it("does not shift the day for a non-UTC offset at midnight", () => {
     expect(lsDate("2022-01-26T00:00:00.000-0500")).toBe("Jan 26  2022");
+  });
+});
+describe("shortDate", () => {
+  it("formats an ISO date as 'Mon DD' with a zero-padded day", () => {
+    expect(shortDate("2025-06-06T00:00:00.000Z")).toBe("Jun 06");
+    expect(shortDate("2025-05-23T00:00:00.000Z")).toBe("May 23");
   });
 });
