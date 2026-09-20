@@ -105,6 +105,14 @@ describe("renderListingView", () => {
     expect(html).not.toContain("<time");
   });
 
+  it("marks topic rows with [t] and other directory rows with [d]", () => {
+    const entry = { name: "javascript", isDirectory: true, size: "3 posts", date: "-", isoDate: "" };
+
+    expect(renderListingView("/topics", [entry])).toContain("[t]");
+    expect(renderListingView("/topics", [entry])).not.toContain("[d]");
+    expect(renderListingView("/", [entry])).toContain("[d]");
+  });
+
   it("escapes entry names", () => {
     const html = renderListingView("/topics", [
       { name: "<script>", isDirectory: true, size: "-", date: "-", isoDate: "" },
