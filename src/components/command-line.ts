@@ -12,17 +12,41 @@ interface ScopeMagics {
   $dispatch(event: string): void;
 }
 
+const TYPE_INTERVAL_MS = 16;
+const TYPE_MAX_TICKS = 34;
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
 export function registerCommandLine() {
-  Alpine.data("commandLine", (line: Prompt) => ({
+  Alpine.data("commandLine", (line: Prompt, index: number) => ({
     prompt: line.prompt,
     cwd: line.cwd ?? "/",
     results: [] as CommandResult[],
+    typed: "",
+    typing: true,
 
     async init() {
+      await this.type();
       await this.execute();
       const magics = this as unknown as ScopeMagics;
       await magics.$nextTick();
       magics.$dispatch("command-finished");
+    },
+
+    type(): Promise<void> {
+      const reducedMotion = matchMedia(REDUCED_MOTION).matches;
+      const step = reducedMotion
+        ? this.prompt.length
+        : Math.max(1, Math.ceil(this.prompt.length / TYPE_MAX_TICKS));
+      const superseded = () => Alpine.store("prompts").values.length > index + 1;
+      return new Promise((resolve) => {
+        const timer = setInterval(() => {
+          this.typed = this.prompt.slice(0, superseded() ? this.prompt.length : this.typed.length + step);
+          if (this.typed.length < this.prompt.length) return;
+          clearInterval(timer);
+          this.typing = false;
+          resolve();
+        }, TYPE_INTERVAL_MS);
+      });
     },
 
     async clearTerminal(remainingCommands: string[]) {
