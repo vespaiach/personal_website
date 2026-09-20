@@ -37,6 +37,10 @@ describe("buildSuggestions", () => {
     ]);
   });
 
+  it("suggests the resume command by prefix", () => {
+    expect(buildSuggestions("res", [])).toEqual([{ label: "resume", hint: "work history and skills" }]);
+  });
+
   it("orders matching recent commands ahead of matching fixed commands", () => {
     const result = buildSuggestions("h", ["ls", "help", "history"]);
     expect(result).toEqual([
