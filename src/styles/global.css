@@ -111,7 +111,7 @@
   --overlay: rgba(46, 52, 64, 0.78);
 
   /* Text */
-  --ink: var(--nord-6);
+  --ink: white;
   --text-body: var(--nord-4);
   --text-strong: var(--nord-5);
   --text-mute: #b8c1cf;
@@ -564,7 +564,7 @@ samp {
   }
 
   .site-header__nav .nav-buton {
-    min-height: 44px;
+    min-height: 38px;
     border-radius: var(--radius-control) var(--radius-control) 0 0;
     font-size: var(--code-size);
     line-height: var(--code-leading);
@@ -575,12 +575,12 @@ samp {
   }
 
   .site-header__actions {
-    gap: 12px;
+    gap: 6px;
   }
 
   .site-header__actions svg {
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
   }
 }
 
@@ -1105,6 +1105,8 @@ samp {
   .ls-view__row {
     flex-wrap: wrap;
     gap: 0 1ch;
+    font-size: 11px;
+    line-height: 1.6;
   }
 
   .ls-view__col--perms,
