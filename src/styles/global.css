@@ -521,7 +521,7 @@ samp {
 }
 
 .site-header__brand-name {
-  color: var(--ink);
+  color: var(--path);
 }
 
 /* Navigation */
