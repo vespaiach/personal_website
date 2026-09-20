@@ -3,6 +3,7 @@ import { CdCommand } from "./CdCommand.ts";
 import { ClearCommand } from "./ClearCommand.ts";
 import { HelpCommand } from "./HelpCommand.ts";
 import { LsCommand } from "./LsCommand.ts";
+import { ResumeCommand } from "./ResumeCommand.ts";
 import { TreeCommand } from "./TreeCommand.ts";
 
 export const commandClasses = {
@@ -11,6 +12,7 @@ export const commandClasses = {
   clear: ClearCommand,
   help: HelpCommand,
   ls: LsCommand,
+  resume: ResumeCommand,
   tree: TreeCommand,
 };
 

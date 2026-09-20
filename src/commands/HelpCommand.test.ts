@@ -40,6 +40,9 @@ describe("HelpCommand", () => {
       '<td class="cmd">ls [file_path]</td><td class="desc">List a virtual directory\'s contents.</td>',
     );
     expect(html).toContain(
+      '<td class="cmd">resume</td><td class="desc">Print my resume from anywhere: cd ~/about &amp;&amp; cat resume.md.</td>',
+    );
+    expect(html).toContain(
       '<td class="cmd">tree [directory_path]</td><td class="desc">Show a directory and everything under it as a tree.</td>',
     );
   });

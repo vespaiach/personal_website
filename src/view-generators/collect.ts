@@ -3,7 +3,7 @@ import { extname, join } from "node:path";
 import { lsDate, postCount, readTime } from "../lib/format.ts";
 import { type PostEntry, readPosts } from "../lib/utils.ts";
 
-export type ContentKind = "markdown" | "json";
+export type ContentKind = "markdown" | "json" | "resume";
 
 export interface FileSource {
   type: "file";
@@ -52,6 +52,16 @@ export function collectFileSources(contentDir: string): FileSource[] {
       virtualPath: "/about/me.md",
       filePath: aboutMePath,
       kind: kindFor(aboutMePath),
+    });
+  }
+
+  const resumePath = join(contentDir, "about", "resume.md");
+  if (existsSync(resumePath)) {
+    sources.push({
+      type: "file",
+      virtualPath: "/about/resume.md",
+      filePath: resumePath,
+      kind: "resume",
     });
   }
 

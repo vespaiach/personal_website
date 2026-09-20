@@ -10,6 +10,7 @@ import {
   type Source,
 } from "./collect.ts";
 import { renderListingView } from "./renderListingView.ts";
+import { renderResumeView } from "./renderResumeView.ts";
 import { renderTreeView } from "./renderTreeView.ts";
 
 function commandFor(source: Source): string {
@@ -21,7 +22,9 @@ async function renderSource(source: Source): Promise<string> {
 
   const raw = readFileSync(source.filePath, "utf-8");
   const eyebrow = `~${source.virtualPath}`;
-  return source.kind === "json" ? await renderJsonView(raw, eyebrow) : await renderMarkdownView(raw, eyebrow);
+  if (source.kind === "json") return await renderJsonView(raw, eyebrow);
+  if (source.kind === "resume") return renderResumeView(raw, eyebrow);
+  return await renderMarkdownView(raw, eyebrow);
 }
 
 function writeView(outputDir: string, html: string): string {

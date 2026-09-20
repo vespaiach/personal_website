@@ -8,6 +8,7 @@ export const FIXED_COMMANDS: ReadonlyArray<readonly [string, string]> = [
   ["cd ~/posts", "the notes"],
   ["cd ~/topics", "one dir per tag"],
   ["cd ~/about", "me.md, stack.json, projects"],
+  ["resume", "work history and skills"],
   ["tree ~", "two levels"],
   ["clear", ""],
   ["help", "all commands"],
