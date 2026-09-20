@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
-import { lsDate, readTime } from "../lib/format.ts";
+import { lsDate, postCount, readTime } from "../lib/format.ts";
 import { type PostEntry, readPosts } from "../lib/utils.ts";
 
 export type ContentKind = "markdown" | "json";
@@ -142,7 +142,7 @@ function topicsFolder(topics: Map<string, PostEntry[]>): FolderSource {
   const entries = [...topics.entries()]
     .map(([name, posts]): ListingEntry => {
       const isoDate = posts[0].date;
-      return { name, isDirectory: true, size: "-", date: lsDate(isoDate), isoDate };
+      return { name, isDirectory: true, size: postCount(posts.length), date: lsDate(isoDate), isoDate };
     })
     .sort((left, right) => right.isoDate.localeCompare(left.isoDate) || left.name.localeCompare(right.name));
 

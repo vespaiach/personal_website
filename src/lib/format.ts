@@ -7,6 +7,10 @@ export function readTime(bytes: number): string {
   return `${Math.max(1, Math.round(bytes / 6 / 220))} min`;
 }
 
+export function postCount(count: number): string {
+  return `${count} ${count === 1 ? "post" : "posts"}`;
+}
+
 const MONTH_ABBREVIATIONS = [
   "Jan",
   "Feb",

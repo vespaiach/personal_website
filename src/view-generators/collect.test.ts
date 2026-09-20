@@ -43,6 +43,13 @@ describe("collectFolderSources", () => {
     expect(topics?.entries.some((e) => e.name === "javascript" && e.isDirectory)).toBe(true);
   });
 
+  it("shows how many posts each topic has in the size column", () => {
+    const topics = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/topics");
+
+    expect(topics?.entries.find((e) => e.name === "javascript")?.size).toBe("3 posts");
+    expect(topics?.entries.find((e) => e.name === "dns")?.size).toBe("1 post");
+  });
+
   it("builds one /topics/<tag> listing per tag with symlinks to the tagged posts", () => {
     const javascript = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/topics/javascript");
 

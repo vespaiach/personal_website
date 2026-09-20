@@ -1,5 +1,5 @@
 import { posix } from "node:path";
-import { shortDate } from "../lib/format.ts";
+import { postCount, shortDate } from "../lib/format.ts";
 import type { ListingEntry } from "./collect.ts";
 import { commandFor } from "./entryCommand.ts";
 
@@ -55,7 +55,7 @@ function renderRow(entry: ListingEntry, virtualPath: string): string {
 
 function totalFor(virtualPath: string, count: number): string {
   if (posix.dirname(virtualPath) !== "/topics") return `total ${count}`;
-  return `total ${count} ${count === 1 ? "post" : "posts"} in topic ${posix.basename(virtualPath)}`;
+  return `total ${postCount(count)} in topic ${posix.basename(virtualPath)}`;
 }
 
 export function renderListingView(virtualPath: string, entries: ListingEntry[]): string {

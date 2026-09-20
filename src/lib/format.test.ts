@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lsDate, readTime, shortDate } from "./format.ts";
+import { lsDate, postCount, readTime, shortDate } from "./format.ts";
 
 describe("readTime", () => {
   it("estimates minutes from byte size", () => {
@@ -8,6 +8,16 @@ describe("readTime", () => {
 
   it("never returns less than 1 minute", () => {
     expect(readTime(10)).toBe("1 min");
+  });
+});
+
+describe("postCount", () => {
+  it("uses the singular for one post", () => {
+    expect(postCount(1)).toBe("1 post");
+  });
+
+  it("uses the plural otherwise", () => {
+    expect(postCount(3)).toBe("3 posts");
   });
 });
 
