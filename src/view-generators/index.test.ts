@@ -84,6 +84,19 @@ describe("generateViews", () => {
     expect(aboutTreeContent).not.toContain("typescript-notes.md");
   });
 
+  it("renders /about/resume.md with the resume layout instead of the generic markdown view", async () => {
+    const root = createRoot();
+
+    const manifest = await generateViews(root);
+
+    const resumeFileName = manifest["cat /about/resume.md"].replace("/generated/", "");
+    const resumeContent = readFileSync(join(root, "dist", "generated", resumeFileName), "utf-8");
+    expect(resumeContent).toContain('<article class="resume-view">');
+    expect(resumeContent).toContain("~/about/resume.md");
+    expect(resumeContent).toContain("resume-view__role-entry");
+    expect(resumeContent).not.toContain("content-view");
+  });
+
   it("clears stale files from a previous run instead of accumulating them", async () => {
     const root = createRoot();
 

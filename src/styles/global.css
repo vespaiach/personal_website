@@ -1381,6 +1381,279 @@ samp {
   color: var(--text-body);
 }
 
+/* cat output (resume) */
+.resume-view {
+  max-width: var(--container-prose);
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin: var(--space-md) 0 34px;
+  font-family: var(--font-body);
+  line-height: var(--body-md-leading);
+}
+
+.resume-view__header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-view__name {
+  margin: 0;
+  font-size: 38px;
+  line-height: 42px;
+  letter-spacing: -0.95px;
+  font-weight: 400;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.resume-view__role {
+  font-family: var(--font-code);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: var(--prompt-user);
+}
+
+.resume-view__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.resume-view__contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 10px;
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.resume-view__contact-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.resume-view__contact-separator {
+  color: var(--prompt-separator);
+}
+
+.resume-view__contact-text {
+  color: var(--text-mute);
+}
+
+.resume-view__updated {
+  font-family: var(--font-code);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-faint);
+}
+
+.resume-view__section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.resume-view__section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resume-view__section-label {
+  margin: 0;
+  flex: none;
+  font-family: var(--font-code);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.resume-view__section-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.resume-view__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-view__summary-text {
+  margin: 0;
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--text-strong);
+  text-wrap: pretty;
+}
+
+.resume-view__summary-text code {
+  font-size: 15px;
+  color: var(--path);
+}
+
+.resume-view__summary-text strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.resume-view__summary-text em {
+  color: var(--text-strong);
+}
+
+.resume-view__skills {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resume-view__skill-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 16px;
+}
+
+.resume-view__skill-label,
+.resume-view__skill-value {
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.resume-view__skill-label {
+  flex: none;
+  width: 118px;
+  color: var(--path);
+}
+
+.resume-view__skill-value {
+  flex: 1;
+  min-width: 200px;
+  color: var(--text-body);
+  text-wrap: pretty;
+}
+
+.resume-view__roles {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.resume-view__role-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resume-view__role-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+}
+
+.resume-view__role-title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.resume-view__role-company {
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--path);
+}
+
+.resume-view__role-spacer {
+  flex: 1;
+  min-width: 8px;
+}
+
+.resume-view__role-meta {
+  font-family: var(--font-code);
+  font-size: 12px;
+  line-height: 24px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.resume-view__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resume-view__bullet {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.resume-view__bullet-marker {
+  flex: none;
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 26px;
+  color: var(--text-faint);
+}
+
+.resume-view__bullet-text {
+  margin: 0;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--text-body);
+  text-wrap: pretty;
+}
+
+.resume-view__bullet-text code {
+  font-size: 14px;
+  color: var(--path);
+}
+
+.resume-view__bullet-text strong {
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.resume-view__bullet-text em {
+  color: var(--text-strong);
+}
+
+.resume-view__notes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resume-view__note {
+  font-family: var(--font-code);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--text-faint);
+}
+
+.resume-view__note--lead {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--text-strong);
+}
+
 /* code block chrome */
 .code-block {
   background: var(--canvas-soft);

@@ -47,7 +47,7 @@ export function parseFrontmatter(raw: string): ParsedMarkdown {
 
 const INLINE_RE = /`([^`]+)`|\*\*([^*]+)\*\*|\*([^*\n]+)\*|\[([^\]]+)\]\(([^)\s]+)\)|(https?:\/\/[^\s)\]]+)/g;
 
-function inlineSpans(text: string): InlineSpan[] {
+export function inlineSpans(text: string): InlineSpan[] {
   const spans: InlineSpan[] = [];
   const push = (span: InlineSpan) => {
     if (span.text) spans.push(span);

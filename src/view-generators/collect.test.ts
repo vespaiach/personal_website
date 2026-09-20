@@ -4,13 +4,14 @@ import { assertNoVirtualPathCollisions, collectFileSources, collectFolderSources
 const CONTENT_DIR = new URL("../../content", import.meta.url).pathname;
 
 describe("collectFileSources", () => {
-  it("collects posts, about/me.md, about/stack.json, and projects with virtual paths", () => {
+  it("collects posts, about/me.md, about/resume.md, about/stack.json, and projects with virtual paths", () => {
     const sources = collectFileSources(CONTENT_DIR);
 
     expect(sources.some((s) => s.virtualPath === "/posts/typescript-notes.md" && s.kind === "markdown")).toBe(
       true,
     );
     expect(sources.some((s) => s.virtualPath === "/about/me.md" && s.kind === "markdown")).toBe(true);
+    expect(sources.some((s) => s.virtualPath === "/about/resume.md" && s.kind === "resume")).toBe(true);
     expect(sources.some((s) => s.virtualPath === "/about/stack.json" && s.kind === "json")).toBe(true);
     expect(
       sources.some((s) => s.virtualPath === "/about/projects/vespaiach.com.md" && s.kind === "markdown"),
@@ -78,7 +79,12 @@ describe("collectFolderSources", () => {
   it("builds an /about listing with files and a projects directory", () => {
     const about = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/about");
 
-    expect(about?.entries.map((e) => e.name).sort()).toEqual(["me.md", "projects", "stack.json"]);
+    expect(about?.entries.map((e) => e.name).sort()).toEqual([
+      "me.md",
+      "projects",
+      "resume.md",
+      "stack.json",
+    ]);
     expect(about?.entries.find((e) => e.name === "projects")?.isDirectory).toBe(true);
   });
 
