@@ -78,7 +78,12 @@ describe("collectFolderSources", () => {
   it("builds an /about listing with files and a projects directory", () => {
     const about = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/about");
 
-    expect(about?.entries.map((e) => e.name).sort()).toEqual(["me.md", "projects", "resume.md", "stack.json"]);
+    expect(about?.entries.map((e) => e.name).sort()).toEqual([
+      "me.md",
+      "projects",
+      "resume.md",
+      "stack.json",
+    ]);
     expect(about?.entries.find((e) => e.name === "projects")?.isDirectory).toBe(true);
   });
 
