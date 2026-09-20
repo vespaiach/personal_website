@@ -1,3 +1,6 @@
+---
+github: https://github.com/vespaiach/personal_website/blob/main/content/about/resume.md
+---
 # Trinh Nguyen
 
 Full-Stack Software Engineer

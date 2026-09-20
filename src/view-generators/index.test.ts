@@ -94,7 +94,8 @@ describe("generateViews", () => {
     expect(resumeContent).toContain('<article class="resume-view">');
     expect(resumeContent).toContain("~/about/resume.md");
     expect(resumeContent).toContain("resume-view__role-entry");
-    expect(resumeContent).not.toContain("content-view");
+    expect(resumeContent).not.toContain('<article class="content-view">');
+    expect(resumeContent).toContain("source: <a");
   });
 
   it("clears stale files from a previous run instead of accumulating them", async () => {
