@@ -1,4 +1,5 @@
-import { type InlineSpan, inlineSpans } from "../lib/markdown.ts";
+import { type InlineSpan, inlineSpans, parseFrontmatter } from "../lib/markdown.ts";
+import { renderSourceFooter } from "../lib/markedFragment.ts";
 
 interface ResumeHead {
   name: string;
@@ -256,6 +257,7 @@ function renderSection(section: ResumeSection): string {
 }
 
 export function renderResumeView(raw: string, eyebrow: string): string {
-  const { head, sections } = parseResume(raw);
-  return `<article class="resume-view">${renderHeader(head, eyebrow)}${sections.map(renderSection).join("")}</article>`;
+  const { fm, body } = parseFrontmatter(raw);
+  const { head, sections } = parseResume(body);
+  return `<article class="resume-view">${renderHeader(head, eyebrow)}${sections.map(renderSection).join("")}${renderSourceFooter(fm.github ?? "")}</article>`;
 }

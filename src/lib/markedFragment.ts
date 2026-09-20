@@ -119,6 +119,18 @@ marked.use({
   },
 });
 
+export function renderSourceFooter(source: string): string {
+  if (!source) return "";
+
+  return (
+    '<div class="content-view__footer">' +
+    '<hr class="view-rule">' +
+    '<div class="content-view__source">' +
+    `source: <a href="${escapeHtml(source)}" target="_blank" rel="noreferrer">${escapeHtml(source)}</a></div>` +
+    "</div>"
+  );
+}
+
 export async function renderMarkdownView(raw: string, eyebrow: string): Promise<string> {
   const { fm, body: rawBody } = parseFrontmatter(raw);
   const { title, body: titledBody } = resolveTitle(fm, rawBody.replace(/^\n+/, ""));
@@ -139,14 +151,7 @@ export async function renderMarkdownView(raw: string, eyebrow: string): Promise<
 
   const leadHtml = lead ? `<p class="content-view__lead">${escapeHtml(lead)}</p>` : "";
 
-  const footerHtml = source
-    ? '<div class="content-view__footer">' +
-      '<hr class="view-rule">' +
-      '<div class="content-view__source">' +
-      `source: <a href="${escapeHtml(source)}" target="_blank" rel="noreferrer">${escapeHtml(source)}</a></div>` +
-      "</div>"
-    : "";
-
+  const footerHtml = renderSourceFooter(source);
   const bodyHtml = await marked.parse(body, { async: true });
 
   return (

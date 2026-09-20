@@ -120,6 +120,36 @@ describe("renderResumeView", () => {
     expect(html).toContain('<div class="resume-view__note resume-view__note--lead">Nothing yet.</div>');
   });
 
+  it("ignores frontmatter when parsing the resume", () => {
+    const html = renderResumeView(
+      "---\ngithub: https://example.com/r.md\n---\n# Jane Doe\n\nEngineer\n",
+      "~/x",
+    );
+
+    expect(html).toContain('<h1 class="resume-view__name">Jane Doe</h1>');
+    expect(html).toContain('<div class="resume-view__role">Engineer</div>');
+  });
+
+  it("ends with a source footer linking to the github frontmatter field", () => {
+    const html = renderResumeView(
+      "---\ngithub: https://github.com/x/y/blob/main/resume.md\n---\n# Jane Doe\n\nEngineer\n\n## Summary\n\nHi.\n",
+      "~/x",
+    );
+
+    expect(html).toContain(
+      '<div class="content-view__source">source: <a href="https://github.com/x/y/blob/main/resume.md" target="_blank" rel="noreferrer">https://github.com/x/y/blob/main/resume.md</a></div>',
+    );
+    expect(html.endsWith("</div></div></article>")).toBe(true);
+    expect(html.lastIndexOf("content-view__footer")).toBeGreaterThan(html.lastIndexOf("</section>"));
+  });
+
+  it("omits the source footer when the resume has no github field", () => {
+    const html = renderResumeView("# Jane Doe\n\nEngineer\n\n## Summary\n\nHi.\n", "~/x");
+
+    expect(html).not.toContain("source:");
+    expect(html).not.toContain("content-view__footer");
+  });
+
   it("escapes html in resume content", () => {
     const html = renderResumeView(
       "# <b>Name</b>\n\nRole\n\n## Summary\n\n<script>alert(1)</script>\n",
@@ -140,5 +170,8 @@ describe("renderResumeView", () => {
     expect(html.match(/resume-view__section-label/g)).toHaveLength(5);
     expect(html.match(/resume-view__skill-row/g)).toHaveLength(5);
     expect(html.match(/resume-view__role-entry/g)).toHaveLength(4);
+    expect(html).toContain(
+      'source: <a href="https://github.com/vespaiach/personal_website/blob/main/content/about/resume.md"',
+    );
   });
 });
