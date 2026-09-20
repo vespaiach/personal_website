@@ -1259,6 +1259,11 @@ samp {
   color: var(--text-faint);
 }
 
+.content-view__source a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* markdown block rendering */
 .md-h1 {
   margin: 14px 0 0;
