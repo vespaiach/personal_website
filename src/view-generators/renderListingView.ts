@@ -12,8 +12,8 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function permissionsFor(entry: ListingEntry): string {
-  if (entry.isDirectory) return "[d]";
+function permissionsFor(entry: ListingEntry, virtualPath: string): string {
+  if (entry.isDirectory) return virtualPath === "/topics" ? "[t]" : "[d]";
   return entry.linkTarget ? "[t]" : "[f]";
 }
 
@@ -45,7 +45,7 @@ function renderRow(entry: ListingEntry, virtualPath: string): string {
 
   return (
     '<div class="ls-view__row">' +
-    `<span class="ls-view__col ls-view__col--perms">${permissionsFor(entry)}</span>` +
+    `<span class="ls-view__col ls-view__col--perms">${permissionsFor(entry, virtualPath)}</span>` +
     `<span class="ls-view__col ls-view__col--size${blankModifierFor(entry.size === "-")}">${escapeHtml(entry.size)}</span>` +
     `<span class="ls-view__col ls-view__col--date${blankModifierFor(!entry.isoDate)}">${renderDate(entry)}</span>` +
     `<span class="ls-view__col ls-view__col--name">${nameElement}</span>` +
