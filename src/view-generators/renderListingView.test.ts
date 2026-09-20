@@ -21,7 +21,7 @@ describe("renderListingView", () => {
     ]);
 
     expect(html).toContain("total 2");
-    expect(html).toContain("-rw-r--r--");
+    expect(html).toContain("[f]");
     expect(html).toContain("typescript-notes.md");
     expect(html).toContain("cat /posts/typescript-notes.md");
     expect(html).toContain(
@@ -74,7 +74,7 @@ describe("renderListingView", () => {
       },
     ]);
 
-    expect(html).toContain("lrwxr-xr-x");
+    expect(html).toContain("[t]");
     expect(html).toContain('class="ls-link ls-link--symlink"');
     expect(html).not.toContain("-&gt;");
     expect(html).toContain("$store.prompts.add('cat /posts/discard-after-usages.md', $store.cwd.value)");
@@ -100,7 +100,7 @@ describe("renderListingView", () => {
       { name: "posts", isDirectory: true, size: "-", date: "-", isoDate: "" },
     ]);
 
-    expect(html).toContain("drwxr-xr-x");
+    expect(html).toContain("[d]");
     expect(html).toContain('class="ls-link ls-link--dir"');
     expect(html).not.toContain("<time");
   });

@@ -26,7 +26,7 @@ Alpine.store("prompts", {
 });
 
 Alpine.store("cwd", {
-  value: "",
+  value: "/",
   update(value: string) {
     this.value = value;
   },

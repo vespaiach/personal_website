@@ -13,8 +13,8 @@ function escapeHtml(value: string): string {
 }
 
 function permissionsFor(entry: ListingEntry): string {
-  if (entry.isDirectory) return "drwxr-xr-x";
-  return entry.linkTarget ? "lrwxr-xr-x" : "-rw-r--r--";
+  if (entry.isDirectory) return "[d]";
+  return entry.linkTarget ? "[t]" : "[f]";
 }
 
 function linkClassFor(entry: ListingEntry): string {

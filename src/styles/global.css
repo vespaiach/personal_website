@@ -461,7 +461,7 @@ samp {
 
   &[aria-current="page"] {
     color: var(--ink);
-    box-shadow: inset 0 -1px 0 0 var(--accent);
+    background-color: var(--canvas-raised);
   }
 }
 
@@ -581,6 +581,10 @@ samp {
   .site-header__actions svg {
     width: 15px;
     height: 15px;
+  }
+
+  .command-line__command {
+    background-color: var(--canvas-raised);
   }
 }
 
@@ -1077,7 +1081,7 @@ samp {
 }
 
 .ls-view__col--perms {
-  width: 10ch;
+  width: 4ch;
 }
 
 .ls-view__col--size {
@@ -1109,7 +1113,6 @@ samp {
     line-height: 1.6;
   }
 
-  .ls-view__col--perms,
   .ls-view__col--blank {
     display: none;
   }

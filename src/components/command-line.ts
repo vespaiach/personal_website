@@ -14,8 +14,6 @@ interface ScopeMagics {
 
 export function registerCommandLine() {
   Alpine.data("commandLine", (line: Prompt) => ({
-    user: "trinh",
-    host: "vespaiach",
     prompt: line.prompt,
     cwd: line.cwd ?? "/",
     results: [] as CommandResult[],

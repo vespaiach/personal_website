@@ -64,11 +64,11 @@ describe("generateViews", () => {
     const postsListingFileName = manifest["ls /posts"].replace("/generated/", "");
     const postsListingContent = readFileSync(join(root, "dist", "generated", postsListingFileName), "utf-8");
     expect(postsListingContent).toContain("typescript-notes.md");
-    expect(postsListingContent).toContain("-rw-r--r--");
+    expect(postsListingContent).toContain("[f]");
 
     const topicListingFileName = manifest["ls /topics/javascript"].replace("/generated/", "");
     const topicListingContent = readFileSync(join(root, "dist", "generated", topicListingFileName), "utf-8");
-    expect(topicListingContent).toContain("lrwxr-xr-x");
+    expect(topicListingContent).toContain("[t]");
     expect(topicListingContent).toContain("discard-after-usages.md");
 
     const treeFileName = manifest["tree /"].replace("/generated/", "");
