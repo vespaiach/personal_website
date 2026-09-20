@@ -1,10 +1,10 @@
-<section x-data="commandLine(prompt)" class="command-line-section">
+<section x-data="commandLine(prompt, index)" class="command-line-section">
   <div class="command-line">
     <span class="command-line__user">[&gt;_]</span>
     <span class="command-line__separator">in</span>
     <span class="command-line__path" x-text="cwd"></span>
     <span class="command-line__symbol">$</span>
-    <span class="command-line__command" x-text="prompt"></span>
+    <span class="command-line__command" :class="{ 'command-line__command--typing': typing }" x-text="typed"></span>
   </div>
   <template x-for="(result, index) in results" :key="index">
     <div class="command-line__output">
