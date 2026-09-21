@@ -2,7 +2,7 @@ import { marked } from "marked";
 import { codeToHtml, createCssVariablesTheme } from "shiki";
 import { type Frontmatter, parseFrontmatter } from "./markdown.ts";
 
-function escapeHtml(value: string): string {
+export function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
