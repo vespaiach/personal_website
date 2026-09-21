@@ -11,7 +11,7 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function resolveTitle(fm: Frontmatter, body: string): { title: string; body: string } {
+export function resolveTitle(fm: Frontmatter, body: string): { title: string; body: string } {
   if (fm.title) return { title: fm.title, body };
   const match = body.match(/^#\s+(.+)\n?/);
   if (match) return { title: match[1].trim(), body: body.slice(match[0].length) };

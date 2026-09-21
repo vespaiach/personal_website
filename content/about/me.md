@@ -1,3 +1,6 @@
+---
+description: 'Trinh Nguyen is a software engineer and full-stack web developer who has built websites and web apps since 2006 with TypeScript, React, Rails and WordPress.'
+---
 # About Me
 
 *Building, troubleshooting, and always moving forward.*

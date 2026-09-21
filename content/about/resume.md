@@ -1,4 +1,6 @@
 ---
+title: "Trinh Nguyen's Resume"
+description: 'Resume of Trinh Nguyen, a full-stack software engineer building production web apps with React, Next.js, TypeScript, Node.js and Ruby on Rails.'
 github: https://github.com/vespaiach/personal_website/blob/main/content/about/resume.md
 ---
 # Trinh Nguyen
