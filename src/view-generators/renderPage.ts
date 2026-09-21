@@ -1,13 +1,9 @@
 import { posix } from "node:path";
 import { escapeHtml } from "../lib/markedFragment.ts";
 import type { Source } from "./collect.ts";
+import { type HeadMeta, renderHead } from "./renderHead.ts";
 
-export const SITE_NAME = "vespaiach.com";
-
-export interface Page {
-  title: string;
-  description?: string;
-  pagePath: string;
+export interface Page extends HeadMeta {
   active: string;
   command: string;
   viewHtml: string;
@@ -19,20 +15,9 @@ export function pagePathFor(source: Source): string {
   return relativePath.replace(/\.[^./]+$/, ".html");
 }
 
-export function pageUrl(pagePath: string): string {
-  return encodeURI(`https://${SITE_NAME}/${pagePath.replace(/(^|\/)index\.html$/, "$1")}`);
-}
-
 function replaceAnchor(html: string, anchor: RegExp, replacement: (match: string) => string): string {
   if (!anchor.test(html)) throw new Error(`content-views: index.html no longer contains ${anchor}.`);
   return html.replace(anchor, replacement);
-}
-
-function renderHead(page: Page): string {
-  const tags = [`<title>${escapeHtml(page.title)}</title>`];
-  if (page.description) tags.push(`<meta name="description" content="${escapeHtml(page.description)}" />`);
-  tags.push(`<link rel="canonical" href="${escapeHtml(pageUrl(page.pagePath))}" />`);
-  return tags.join("\n    ");
 }
 
 function renderStaticCommandLine(command: string, viewHtml: string): string {
@@ -51,10 +36,10 @@ function renderStaticCommandLine(command: string, viewHtml: string): string {
 }
 
 export function renderPage(template: string, page: Page): string {
-  const withHead = replaceAnchor(template, /<title>[^<]*<\/title>/, () => renderHead(page));
-  const withActiveLink = replaceAnchor(withHead, /active="[^"]*"/, () => `active="${page.active}"`);
+  const withActiveLink = replaceAnchor(template, /active="[^"]*"/, () => `active="${page.active}"`);
+  const withHead = replaceAnchor(withActiveLink, /<title>[^<]*<\/title>/, () => renderHead(page));
   return replaceAnchor(
-    withActiveLink,
+    withHead,
     /<main\b[^>]*>/,
     (mainTag) => `${mainTag}\n      ${renderStaticCommandLine(page.command, page.viewHtml)}`,
   );

@@ -68,7 +68,7 @@ dist/generated/<uuid>.html  +  src/manifest.json
 browser: command → manifest lookup → fetch fragment → render in terminal
 ```
 
-For search engines, every `cat` and `ls` view is also written as a full page to `pages/` — `index.html` with the view pre-rendered inside it — so `cat /about/me.md` is served at `/about/me.html` and `ls /about` at `/about/`. The home page pre-renders `ls /posts`. All pages are listed in `public/sitemap.xml`, which `public/robots.txt` points to.
+For search engines, every `cat` and `ls` view is also written as a full page to `pages/` — `index.html` with the view pre-rendered inside it — so `cat /about/me.md` is served at `/about/me.html` and `ls /about` at `/about/`. The home page pre-renders `ls /posts`. Each page's `<head>` carries a title and description sized for search results, a canonical link, robots directives, Open Graph and Twitter Card tags (sharing `public/og-image.png`) and schema.org JSON-LD. All pages are listed in `public/sitemap.xml`, which `public/robots.txt` points to.
 
 `dist/generated/`, `src/manifest.json`, `pages/` and `public/sitemap.xml` are build output and are gitignored.
 
@@ -99,6 +99,8 @@ tags: typescript, notes
 ---
 ```
 
+`title` and `excerpt` also become the page's search title and description. A page that should not show an excerpt can set `description` instead, which is only used in the `<head>`.
+
 `tags` is a comma-separated list. A tag with spaces becomes a hyphenated topic folder (`syntax highlight` → `syntax-highlight`). The file name is the post's slug.
 
 To add a post, drop a Markdown file in `content/posts/` and rebuild.
@@ -116,7 +118,7 @@ src/
 ├── styles/global.css
 └── main.ts            registers components and Alpine stores
 partials/              HTML partials injected into pages at build time
-public/                fonts, CNAME and robots.txt
+public/                fonts, CNAME, robots.txt and the social sharing image
 ```
 
 ## Deployment

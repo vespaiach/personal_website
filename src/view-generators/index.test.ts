@@ -115,7 +115,7 @@ describe("generateViews", () => {
 
     const pagesDir = join(root, "pages");
     const aboutMe = readFileSync(join(pagesDir, "about", "me.html"), "utf-8");
-    expect(aboutMe).toContain("<title>me.md - vespaiach.com</title>");
+    expect(aboutMe).toContain("<title>About Me - vespaiach.com</title>");
     expect(aboutMe).toContain('<link rel="canonical" href="https://vespaiach.com/about/me.html" />');
     expect(aboutMe).toContain('active="about"');
     expect(aboutMe).toContain('<span class="command-line__command">cat /about/me.md</span>');
@@ -124,17 +124,22 @@ describe("generateViews", () => {
     const post = readFileSync(join(pagesDir, "posts", "typescript-notes.html"), "utf-8");
     expect(post).toContain("<title>Typescript Notes - vespaiach.com</title>");
     expect(post).toContain('<meta name="description" content="Discover essential TypeScript concepts');
+    expect(post).toContain('<meta property="og:type" content="article" />');
+    expect(post).toContain('"@type":"BlogPosting"');
 
     const topic = readFileSync(join(pagesDir, "topics", "javascript", "index.html"), "utf-8");
-    expect(topic).toContain("<title>javascript - vespaiach.com</title>");
+    expect(topic).toContain("<title>Posts about javascript - vespaiach.com</title>");
     expect(topic).toContain('active="topics"');
     expect(topic).toContain('<article class="ls-view">');
 
     const home = readFileSync(join(pagesDir, "index.html"), "utf-8");
-    expect(home).toContain("<title>vespaiach.com</title>");
+    expect(home).toContain("<title>Trinh Nguyen&#39;s Web Development Blog - vespaiach.com</title>");
     expect(home).toContain('<link rel="canonical" href="https://vespaiach.com/" />');
     expect(home).toContain('<span class="command-line__command">ls /posts</span>');
     expect(home).toContain("typescript-notes.md");
+
+    const posts = readFileSync(join(pagesDir, "posts", "index.html"), "utf-8");
+    expect(posts).toContain('<link rel="canonical" href="https://vespaiach.com/" />');
 
     const pageFiles = readdirSync(pagesDir, { recursive: true, encoding: "utf-8" }).filter((file) =>
       file.endsWith(".html"),
@@ -146,7 +151,7 @@ describe("generateViews", () => {
     expect(pageFiles.some((file) => file.endsWith("tree.html"))).toBe(false);
   });
 
-  it("lists every page in public/sitemap.xml", async () => {
+  it("lists every page but the home page's duplicate in public/sitemap.xml", async () => {
     const root = createRoot();
 
     await generateViews(root);
@@ -155,7 +160,8 @@ describe("generateViews", () => {
     const pageFiles = readdirSync(join(root, "pages"), { recursive: true, encoding: "utf-8" }).filter(
       (file) => file.endsWith(".html"),
     );
-    expect(sitemap.match(/<loc>/g)).toHaveLength(pageFiles.length);
+    expect(sitemap.match(/<loc>/g)).toHaveLength(pageFiles.length - 1);
+    expect(sitemap).not.toContain("<loc>https://vespaiach.com/posts/</loc>");
     expect(sitemap).toContain("<loc>https://vespaiach.com/</loc>");
     expect(sitemap).toContain("<loc>https://vespaiach.com/about/</loc>");
     expect(sitemap).toContain(

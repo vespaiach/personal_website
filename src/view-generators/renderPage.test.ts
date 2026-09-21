@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import type { Source } from "./collect.ts";
-import { type Page, pagePathFor, pageUrl, renderPage } from "./renderPage.ts";
+import { type Page, pagePathFor, renderPage } from "./renderPage.ts";
 
 const TEMPLATE = readFileSync(new URL("../../index.html", import.meta.url), "utf-8");
 
@@ -14,7 +14,7 @@ function folderSource(virtualPath: string): Source {
 }
 
 const PAGE: Page = {
-  title: "me.md - vespaiach.com",
+  title: "About Me",
   pagePath: "about/me.html",
   active: "about",
   command: "cat /about/me.md",
@@ -37,30 +37,14 @@ describe("pagePathFor", () => {
   });
 });
 
-describe("pageUrl", () => {
-  it("keeps file names and drops a trailing index.html", () => {
-    expect(pageUrl("about/me.html")).toBe("https://vespaiach.com/about/me.html");
-    expect(pageUrl("about/index.html")).toBe("https://vespaiach.com/about/");
-    expect(pageUrl("index.html")).toBe("https://vespaiach.com/");
-  });
-});
-
 describe("renderPage", () => {
-  it("replaces the title and adds a canonical link", () => {
+  it("replaces the title with the page's head tags", () => {
     const html = renderPage(TEMPLATE, PAGE);
 
-    expect(html).toContain("<title>me.md - vespaiach.com</title>");
+    expect(html).toContain("<title>About Me - vespaiach.com</title>");
     expect(html).toContain('<link rel="canonical" href="https://vespaiach.com/about/me.html" />');
     expect(html.match(/<title>/g)).toHaveLength(1);
-  });
-
-  it("adds an escaped description only when the page has one", () => {
-    expect(renderPage(TEMPLATE, PAGE)).not.toContain('name="description"');
-
-    const html = renderPage(TEMPLATE, { ...PAGE, description: 'Types like "any" & <never>' });
-    expect(html).toContain(
-      '<meta name="description" content="Types like &quot;any&quot; &amp; &lt;never&gt;" />',
-    );
+    expect(html.indexOf('<script type="application/ld+json">')).toBeLessThan(html.indexOf("</head>"));
   });
 
   it("points the header partial at the page's section and keeps every load tag", () => {
