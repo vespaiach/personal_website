@@ -17,7 +17,7 @@ Trinh Nguyen's personal site (`vespaiach`) — a terminal-styled dev blog. Stack
 ```bash
 npm run build          # gen:views → tsc → vite build (output in dist/)
 npm run preview        # serve dist/ — the only way to see real posts/pages
-npm run gen:views      # regenerate dist/generated/ and src/manifest.json only
+npm run gen:views      # regenerate dist/generated/, src/manifest.json, pages/ and public/sitemap.xml only
 npm test               # vitest run (all tests)
 npx vitest run src/commands/LsCommand.test.ts   # one test file
 npx vitest run -t "returns an error"            # tests matching a name
@@ -29,18 +29,21 @@ npm run lint:fix       # biome check --write
 
 ## Architecture
 
-The site is a static "shell" over a virtual filesystem. There is one real page (`index.html`); `about/index.html` and `topics/index.html` are stale leftovers (not in the Vite `input`, and they reference an unregistered `shell` component).
+The site is a static "shell" over a virtual filesystem. `index.html` is the only hand-written page: it is the dev entry and the template for the generated SEO pages in `pages/` (gitignored), which are what Vite actually builds — `index.html` itself is not a Vite `input`.
 
 **Build-time content pipeline** (`src/view-generators/`, run by `gen:views` via `node src/view-generators/index.ts`):
 - `collect.ts` maps `content/` onto virtual paths: `content/posts/*.md` → `/posts/*`, `content/about/*` → `/about/*`, and `/topics/<tag>` folders derived from each post's `tags` front matter (no files of their own). Colliding virtual paths throw.
 - Each source is rendered to an HTML fragment (markdown via `marked`, code via `shiki`, resume via `renderResumeView.ts`, JSON via `renderJsonView`) and written to `dist/generated/<uuid>.html`.
 - A manifest keyed by the command string (`"cat /posts/x.md"`, `"ls /topics"`, `"tree /about"`) → fragment URL is written to `src/manifest.json` (gitignored). `src/main.ts` imports it, so it must exist before `tsc` or the bundle runs — `prebuild` guarantees that.
+- Every `cat` and `ls` view also gets a full page in `pages/` (`renderPage.ts`): `cat /about/me.md` → `pages/about/me.html`, `ls /about` → `pages/about/index.html`. `ls /` and `tree` views get none; `pages/index.html` (the home page) pre-renders `ls /posts`. A page is `index.html` with three anchors rewritten — `<title>` (plus description and canonical), the header's `active="…"`, and the `<main …>` open tag, after which the view is injected under a static prompt line. Keep those anchors when editing `index.html`; generation throws otherwise.
+- `renderSitemap.ts` lists every page in `public/sitemap.xml` (gitignored; `public/robots.txt` points at it).
+- `vite.config.ts` takes every `pages/**/*.html` as an `input`, so `pages/` must exist before any Vite command (`prebuild` guarantees that). `src/vite-plugins/flattenPages.ts` re-emits the built pages without the `pages/` prefix, so `pages/about/me.html` is served at `/about/me.html`; it must stay `enforce: "post"` and relies on `base` being `/`.
 - `src/vite-plugins/cleanDist.ts` empties `dist/` on build but keeps `generated/`, since `gen:views` writes there before Vite runs.
 - These files run directly under Node's type stripping: import with explicit `.ts` extensions and use only erasable TypeScript syntax (`erasableSyntaxOnly`).
 
 **Runtime** (browser):
 - `commands/` — one class per shell command extending `Command` (private constructor + static `init`, static `syntax`/`description`, `argRule`). `Command.resolvePath()` resolves the argument against `cwd`, then looks the `"<name> <absolutePath>"` key up in the manifest; commands `fetch` the fragment and return a `CommandResult`. Register new commands in `commandClasses` in `commands/index.ts`.
-- `components/` — Alpine components registered in `main.ts`. Each submitted prompt is pushed onto `$store.prompts`; a `commandLine` component per prompt types it out, then runs `parseCommand` (splits `&&` chains) and `execute` sequentially, threading `cwd` through results. `clear` empties the prompts store and re-queues any chained commands after it.
+- `components/` — Alpine components registered in `main.ts`. Each submitted prompt is pushed onto `$store.prompts`; a `commandLine` component per prompt types it out, then runs `parseCommand` (splits `&&` chains) and `execute` sequentially, threading `cwd` through results. `clear` empties the prompts store, sets its `cleared` flag (which hides a page's pre-rendered view), and re-queues any chained commands after it.
 - Global state lives in Alpine stores (`prompts`, `cwd`, `activeLink`, `manifest`) declared in `main.ts`; their types and `CommandResult`/`PathResult` are ambient declarations in `src/alpine.d.ts`. Extend both places when adding a store.
 - `partials/*.html` are injected into `index.html` at build time via `<load src="…" />` (`vite-plugin-html-inject`); Alpine markup in them can call methods of enclosing `x-data` scopes.
 - `lib/` holds framework-free helpers (path resolution, command parsing/suggestions, markdown, formatting, highlighting).

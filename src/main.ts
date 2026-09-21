@@ -17,11 +17,13 @@ registerTerminal();
 
 Alpine.store("prompts", {
   values: [] as Array<{ prompt: string; cwd: string }>,
+  cleared: false,
   add(prompt: string, cwd: string) {
     this.values.push({ prompt, cwd });
   },
   clear() {
     this.values = [];
+    this.cleared = true;
   },
 });
 

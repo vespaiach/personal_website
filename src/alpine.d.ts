@@ -1,5 +1,6 @@
 interface Prompts {
   values: Array<{ prompt: string; cwd: string }>;
+  cleared: boolean;
   add(prompt: string, cwd: string): void;
   clear(): void;
 }

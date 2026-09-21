@@ -68,7 +68,9 @@ dist/generated/<uuid>.html  +  src/manifest.json
 browser: command → manifest lookup → fetch fragment → render in terminal
 ```
 
-Both `dist/generated/` and `src/manifest.json` are build output and are gitignored.
+For search engines, every `cat` and `ls` view is also written as a full page to `pages/` — `index.html` with the view pre-rendered inside it — so `cat /about/me.md` is served at `/about/me.html` and `ls /about` at `/about/`. The home page pre-renders `ls /posts`. All pages are listed in `public/sitemap.xml`, which `public/robots.txt` points to.
+
+`dist/generated/`, `src/manifest.json`, `pages/` and `public/sitemap.xml` are build output and are gitignored.
 
 ## Content
 
@@ -108,12 +110,13 @@ src/
 ├── commands/          one class per terminal command, with tests
 ├── components/        Alpine components (terminal, command line, palette, header, help modal)
 ├── lib/               command parsing, path resolution, Markdown and highlighting helpers
-├── view-generators/   turns content/ into HTML fragments and the manifest
+├── view-generators/   turns content/ into HTML fragments, the manifest, full pages and the sitemap
 ├── vite-plugins/      cleanDist: clears dist/ between builds but keeps generated/
+│                      flattenPages: serves pages/about/me.html at /about/me.html
 ├── styles/global.css
 └── main.ts            registers components and Alpine stores
 partials/              HTML partials injected into pages at build time
-public/                fonts and CNAME
+public/                fonts, CNAME and robots.txt
 ```
 
 ## Deployment
