@@ -25,6 +25,21 @@ I write defensive code, favor DRY and KISS principles, and make sure test covera
 
 I've worked solo and in teams of 10 to 20, remote and hybrid, and I'm comfortable either way. My style is casual and friendly, but focused. I care about honesty, quality, and continuous learning, and those values shape how I communicate and how I code. Whether it's a client, a teammate, or an AI agent reading this, what you see is what you get.
 
+## What I hate
+
+- Adding microservices, k8s, and heavy layering to projects that don't need them. Fine for big teams, too much ops overhead for small ones and clients stuck maintaining it.
+- Docs and comments that lie: a README that's out of date, comments explaining code that isn't there anymore.
+- Silent failures: only the happy path gets handled, catch blocks hide errors instead of surfacing them.
+- Too verbose: explains too much, repeats my question back to me, recaps what it already did.
+
+## My rules
+
+1. Never ship code I do not understand.
+2. Never hide bad news from a client.
+3. Never touch prod data without a backup and a rollback path.
+4. Every change must be the smallest one that solves the problem.
+5. Every change must be pickup-able by someone else.
+
 ## About This Site
 
 This site is a terminal-styled dev blog, and I kept the stack small on purpose. It's a static site built with Vite and TypeScript, with Alpine.js for the little bit of interactivity (the command palette, mostly) and plain CSS for styling. Biome handles linting and formatting, and Vitest covers the tests.

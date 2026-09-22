@@ -1,0 +1,3 @@
+# Sol Mountain Lodge 
+
+[solmountain.com](solmountain.com) is a Squarespace 7.1 site for a backcountry ski and hiking lodge in BC's Monashee Mountains. I maintain the site post-launch, handling content updates, seasonal changes, and fixes, rather than having built it from scratch. One recurring pain point: the lodge's availability/booking table needed to appear on several pages, but Squarespace has no native way to define a block once and have it update everywhere. Every edit meant manually updating each page and hoping nothing drifted out of sync. I built a small tool around this: the availability data lives in one place, and a script injected across the relevant pages fetches it live and renders the table wherever it's needed.

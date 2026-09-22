@@ -1,0 +1,3 @@
+# Moose Mountain Bike Trail Society (MMBTS), 
+
+[mmbts.com](https://www.mmbts.com/) a nonprofit dedicated to building and maintaining mountain bike trails on Moose and Prairie Mountains, needed ongoing support for their public website and a better way to handle event registration data. I maintain the MMBTS site (mmbts.com), a Squarespace site, for the organization. To solve a recurring operational headache, I also built a Google Apps Script that automatically pulls event registration data into a Google Sheet and generates organized reports from it, replacing manual data wrangling with a repeatable, low-maintenance process the organizing team could rely on for each event.
