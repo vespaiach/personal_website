@@ -91,7 +91,14 @@ describe("collectFolderSources", () => {
   it("builds an /about/projects listing from project files", () => {
     const projects = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/about/projects");
 
-    expect(projects?.entries.map((e) => e.name).sort()).toEqual(["app.junecare.co.md", "vespaiach.com.md"]);
+    expect(projects?.entries.map((e) => e.name).sort()).toEqual([
+      "absporu.ca.md",
+      "mmbts.com.md",
+      "muddyboots.online.md",
+      "smiil.ca.md",
+      "solmountain.com.md",
+      "vespaiach.com.md",
+    ]);
     expect(projects?.entries.every((e) => !e.isDirectory)).toBe(true);
   });
 });

@@ -1,4 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { afterEach, describe, expect, it } from "vitest";
 import type { Source } from "./collect.ts";
 import { metaFor } from "./pageMeta.ts";
 
@@ -7,6 +10,12 @@ const CONTENT_DIR = new URL("../../content", import.meta.url).pathname;
 function fileSource(virtualPath: string, kind: "markdown" | "resume" = "markdown"): Source {
   return { type: "file", virtualPath, filePath: `${CONTENT_DIR}${virtualPath}`, kind };
 }
+
+const temporaryRoots: string[] = [];
+
+afterEach(() => {
+  for (const root of temporaryRoots.splice(0)) rmSync(root, { force: true, recursive: true });
+});
 
 describe("metaFor", () => {
   it("reads a post's title, excerpt, dates and tags from its front matter", () => {
@@ -36,8 +45,15 @@ describe("metaFor", () => {
   });
 
   it("falls back to the file name when a page has neither a title nor a heading", () => {
-    expect(metaFor(fileSource("/about/projects/vespaiach.com.md"))).toEqual({
-      title: "vespaiach.com.md",
+    const root = mkdtempSync(join(tmpdir(), "page-meta-"));
+    temporaryRoots.push(root);
+    const filePath = join(root, "untitled.md");
+    writeFileSync(filePath, "No heading here, just plain text.\n");
+
+    expect(
+      metaFor({ type: "file", virtualPath: "/about/projects/untitled.md", filePath, kind: "markdown" }),
+    ).toEqual({
+      title: "untitled.md",
       description: undefined,
       article: undefined,
     });
