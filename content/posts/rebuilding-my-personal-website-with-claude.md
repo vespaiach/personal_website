@@ -2,14 +2,12 @@
 title: 'Rebuilding My Personal Website with Claude'
 date: '2026-09-22T00:00:00.000Z'
 updatedAt: '2026-09-22T00:00:00.000Z'
-excerpt: 'I recently rebuilt my personal website, [vespaiach.com](https://vespaiach.com), from the ground up with Claude Design and Claude Code.'
+excerpt: 'I recently rebuilt my personal website, vespaiach.com, from the ground up with Claude Design and Claude Code.'
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/rebuilding-my-personal-website-with-claude.md
 tags: claude-code, claude-design, alpine.js, vite.js
 ---
 
-I recently rebuilt my personal website, vespaiach.com, from the ground up with Claude Design and Claude Code.
-
-The idea was to create a terminal-like blog with a virtual filesystem for browsing articles, topics, projects, and information about me. I wanted the site to feel like a small operating environment for my writing—not just another blog with a different visual theme.
+The idea was to create a terminal-like blog with a virtual filesystem for browsing articles, topics, projects, and information about me. I wanted the site to feel like a small operating environment for my writing, not just another blog with a different visual theme.
 
 The result is a static website where visitors can navigate with familiar links and buttons, or use commands such as:
 
