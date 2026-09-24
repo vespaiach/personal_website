@@ -44,7 +44,7 @@ Once the design system was established, I asked Claude Design to generate mockup
 
 - /posts for articles
 - /topics for topics and categories
- -/about for my profile, resume, technology stack, and projects
+- /about for my profile, resume, technology stack, and projects
 
 From there, I created mockups for:
 
@@ -186,3 +186,4 @@ My workflow became:
 7. Perform a final verification pass.
 
 The finished website is more than a new skin for an old blog. It is an experiment in treating a personal website as an interface—a small operating environment for my writing, projects, and ideas.
+

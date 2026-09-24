@@ -16,8 +16,8 @@ I like figuring things out: fixing bugs, improving performance, integrating comp
 I build customer-facing web applications and work across the stack.
 
 - **Frontend:** TypeScript, React, Next.js, Tailwind CSS, Vite, Esbuild
-- **Backend:** Ruby, PHP, Node.js, PostgreSQL
-- **Frameworks I use most:** React, Next.js, Ruby on Rails, WordPress, Express.js
+- **Backend:** Node.js, PHP, Ruby, PostgreSQL
+- **Frameworks I use most:** React, Next.js, Express.js, WordPress, Ruby on Rails
 
 I write defensive code, favor DRY and KISS principles, and make sure test coverage is solid before anything ships. I move fast, but I don't cut corners — quality and reliability matter more to me than speed for its own sake.
 
@@ -38,7 +38,6 @@ I've worked solo and in teams of 10 to 20, remote and hybrid, and I'm comfortabl
 2. Never hide bad news from a client.
 3. Never touch prod data without a backup and a rollback path.
 4. Every change must be the smallest one that solves the problem.
-5. Every change must be pickup-able by someone else.
 
 ## About This Site
 

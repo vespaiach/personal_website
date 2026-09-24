@@ -1,5 +1,5 @@
 {
-  "languages": ["JavaScript", "NodeJS", "TypeScript", "CSS", "HTML", "Ruby", "PHP"],
+  "languages": ["JavaScript", "Node.js", "TypeScript", "CSS", "HTML", "Ruby", "PHP"],
   "frameworks": ["React.js", "React-Router", "Tailwind CSS", "Next.js", "Alpine.js", "Ruby on Rails", "WordPress"],
   "tests": ["Jest", "React Testing Library", "Mocha"],
   "databases": ["PostgreSQL"],
