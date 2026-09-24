@@ -34,13 +34,6 @@ Alpine.store("cwd", {
   },
 });
 
-Alpine.store("activeLink", {
-  value: "",
-  update(value: string) {
-    this.value = value;
-  },
-});
-
 Alpine.store("manifest", {
   values: manifest,
   get(path: string) {
