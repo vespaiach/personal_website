@@ -46,6 +46,28 @@ describe("renderResumeView", () => {
     expect(html).toContain('<div class="resume-view__updated">Updated May 2026</div>');
   });
 
+  it("renders share-by-email and download-PDF actions on the eyebrow row", () => {
+    const html = renderResumeView(SAMPLE, "~/about/resume.md", "https://vespaiach.com/about/resume.html");
+
+    expect(html).toContain('<div class="resume-view__eyebrow-row">');
+    expect(html).toContain(
+      'href="mailto:?subject=Jane%20Doe&amp;body=https%3A%2F%2Fvespaiach.com%2Fabout%2Fresume.html"',
+    );
+    expect(html).toContain('aria-label="Share by email"');
+    expect(html).toContain('<a class="resume-view__action" href="/resume.pdf" download');
+    expect(html).toContain('aria-label="Download as PDF"');
+  });
+
+  it("uses the frontmatter title for the share-by-email subject", () => {
+    const html = renderResumeView(
+      "---\ntitle: My Resume\n---\n# Jane Doe\n\nEngineer\n",
+      "~/about/resume.md",
+      "https://vespaiach.com/about/resume.html",
+    );
+
+    expect(html).toContain("subject=My%20Resume&amp;");
+  });
+
   it("omits the updated line when the resume has none", () => {
     const html = renderResumeView("# Jane Doe\n\nEngineer\n\n## Summary\n\nHi.\n", "~/about/resume.md");
 
