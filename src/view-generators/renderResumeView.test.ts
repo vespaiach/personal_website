@@ -54,7 +54,7 @@ describe("renderResumeView", () => {
       'href="mailto:?subject=Jane%20Doe&amp;body=https%3A%2F%2Fvespaiach.com%2Fabout%2Fresume.html"',
     );
     expect(html).toContain('aria-label="Share by email"');
-    expect(html).toContain('<a class="resume-view__action" href="/resume.pdf" download');
+    expect(html).toContain('<a class="resume-view__action" href="/trinh_nguyen_resume.pdf" download');
     expect(html).toContain('aria-label="Download as PDF"');
   });
 

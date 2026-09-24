@@ -46,7 +46,7 @@ function renderActions(title: string, url: string): string {
   return (
     '<div class="resume-view__actions">' +
     `<a class="resume-view__action" href="${escapeHtml(mail)}" title="Share by email" aria-label="Share by email">${MAIL_ICON}</a>` +
-    `<a class="resume-view__action" href="/resume.pdf" download title="Download as PDF" aria-label="Download as PDF">${DOWNLOAD_ICON}</a>` +
+    `<a class="resume-view__action" href="/trinh_nguyen_resume.pdf" download title="Download as PDF" aria-label="Download as PDF">${DOWNLOAD_ICON}</a>` +
     "</div>"
   );
 }
