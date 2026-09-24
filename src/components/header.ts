@@ -5,10 +5,8 @@ function dialogById(id: string) {
 }
 
 export function registerHeader() {
-  Alpine.data("header", (activeLink: string) => ({
+  Alpine.data("header", () => ({
     init() {
-      Alpine.store("activeLink").update(activeLink);
-
       window.addEventListener("keydown", (e: KeyboardEvent) => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
           e.preventDefault();

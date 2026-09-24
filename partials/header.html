@@ -1,10 +1,10 @@
-<header class="site-header" x-data="header('{=$active}')">
+<header class="site-header" x-data="header">
   <div class="site-header__inner shell-wide">
     <div class="site-header__brand"><span class="site-header__brand-name">[TN]</span></div>
     <nav class="site-header__nav">
-      <a href="/posts/" class="nav-buton" :aria-current="$store.activeLink.value === 'posts' ? 'page' : null">/posts</a>
-      <a href="/topics/" class="nav-buton" :aria-current="$store.activeLink.value === 'topics' ? 'page' : null">/topics</a>
-      <a href="/about/" class="nav-buton" :aria-current="$store.activeLink.value === 'about' ? 'page' : null">/about</a>
+      <a href="/posts/" class="nav-buton" :aria-current="'{=$active}' === 'posts' ? 'page' : null">/posts</a>
+      <a href="/topics/" class="nav-buton" :aria-current="'{=$active}' === 'topics' ? 'page' : null">/topics</a>
+      <a href="/about/" class="nav-buton" :aria-current="'{=$active}' === 'about' ? 'page' : null">/about</a>
     </nav>
     <div class="site-header__actions">
       <button type="button" class="btn-icon" title="Run a command (⌘K)" aria-label="Run a command" @click="toggleCommandPalette()">
