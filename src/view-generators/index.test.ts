@@ -124,6 +124,7 @@ describe("generateViews", () => {
     const post = readFileSync(join(pagesDir, "posts", "typescript-notes.html"), "utf-8");
     expect(post).toContain("<title>Typescript Notes - vespaiach.com</title>");
     expect(post).toContain('<meta name="description" content="Discover essential TypeScript concepts');
+    expect(post).toContain('active="posts"');
     expect(post).toContain('<meta property="og:type" content="article" />');
     expect(post).toContain('"@type":"BlogPosting"');
 
