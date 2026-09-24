@@ -30,7 +30,7 @@ async function renderSource(source: Source): Promise<string> {
   const eyebrow = `~${source.virtualPath}`;
   if (source.kind === "json") return await renderJsonView(raw, eyebrow);
   if (source.kind === "resume") return renderResumeView(raw, eyebrow);
-  return await renderMarkdownView(raw, eyebrow);
+  return await renderMarkdownView(raw, eyebrow, pageUrl(pagePathFor(source)));
 }
 
 function writeView(outputDir: string, html: string): string {
