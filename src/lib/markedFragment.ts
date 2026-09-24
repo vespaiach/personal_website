@@ -137,8 +137,6 @@ const LINK_ICON = `${ACTION_STROKE_OPEN}<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 
 
 const COPIED_ICON = `${ACTION_STROKE_OPEN}<path d="M20 6 9 17l-5-5"></path></svg>`;
 
-const FULLSCREEN_ICON = `${ACTION_STROKE_OPEN}<path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>`;
-
 function actionLink(href: string, label: string, icon: string): string {
   return (
     `<a class="content-view__action" href="${escapeHtml(href)}" target="_blank" rel="noreferrer" ` +
@@ -171,9 +169,6 @@ function renderActions(title: string, url: string): string {
     `@click="copied = true; setTimeout(() => copied = false, 1200); navigator.clipboard.writeText('${escapeHtml(url)}')">` +
     `<span x-show="!copied">${LINK_ICON}</span><span x-show="copied">${COPIED_ICON}</span>` +
     "</button>" +
-    '<button type="button" class="content-view__action" title="View full screen" aria-label="View full screen" ' +
-    "@click=\"document.fullscreenElement ? document.exitFullscreen() : $el.closest('.content-view').requestFullscreen()\">" +
-    `${FULLSCREEN_ICON}</button>` +
     "</div>"
   );
 }

@@ -105,7 +105,6 @@ describe("renderMarkdownView", () => {
     expect(html).toContain("https://bsky.app/intent/compose?text=Share%20Me%20https%3A%2F%2F");
     expect(html).toContain('href="mailto:?subject=Share%20Me&amp;body=https%3A%2F%2F');
     expect(html).toContain("navigator.clipboard.writeText('https://vespaiach.com/posts/share-me.html')");
-    expect(html).toContain("$el.closest('.content-view').requestFullscreen()");
   });
 
   it("matches the known values for the real discard-after-usages.md post", async () => {

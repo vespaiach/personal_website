@@ -34,6 +34,23 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
+const ACTION_STROKE_OPEN =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">';
+
+const MAIL_ICON = `${ACTION_STROKE_OPEN}<rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`;
+
+const DOWNLOAD_ICON = `${ACTION_STROKE_OPEN}<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path><path d="M12 15V3"></path></svg>`;
+
+function renderActions(title: string, url: string): string {
+  const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`;
+  return (
+    '<div class="resume-view__actions">' +
+    `<a class="resume-view__action" href="${escapeHtml(mail)}" title="Share by email" aria-label="Share by email">${MAIL_ICON}</a>` +
+    `<a class="resume-view__action" href="/resume.pdf" download title="Download as PDF" aria-label="Download as PDF">${DOWNLOAD_ICON}</a>` +
+    "</div>"
+  );
+}
+
 function parseResume(raw: string): { head: ResumeHead; sections: ResumeSection[] } {
   const rows = raw.replace(/\r/g, "").split("\n");
   const firstSection = rows.findIndex((row) => /^##\s+/.test(row.trim()));
@@ -90,11 +107,14 @@ function renderContactRow(row: string): string {
   return `<div class="resume-view__contact-row">${items}</div>`;
 }
 
-function renderHeader(head: ResumeHead, eyebrow: string): string {
+function renderHeader(head: ResumeHead, eyebrow: string, actions: string): string {
   const updated = head.updated ? `<div class="resume-view__updated">${escapeHtml(head.updated)}</div>` : "";
   return (
     '<header class="resume-view__header">' +
+    '<div class="resume-view__eyebrow-row">' +
     `<div class="view-eyebrow">${escapeHtml(eyebrow)}</div>` +
+    actions +
+    "</div>" +
     `<h1 class="resume-view__name">${escapeHtml(head.name)}</h1>` +
     `<div class="resume-view__role">${escapeHtml(head.role)}</div>` +
     `<div class="resume-view__contact">${head.contact.map(renderContactRow).join("")}</div>` +
@@ -256,8 +276,9 @@ function renderSection(section: ResumeSection): string {
   );
 }
 
-export function renderResumeView(raw: string, eyebrow: string): string {
+export function renderResumeView(raw: string, eyebrow: string, url = ""): string {
   const { fm, body } = parseFrontmatter(raw);
   const { head, sections } = parseResume(body);
-  return `<article class="resume-view">${renderHeader(head, eyebrow)}${sections.map(renderSection).join("")}${renderSourceFooter(fm.github ?? "")}</article>`;
+  const actions = renderActions(fm.title ?? head.name, url);
+  return `<article class="resume-view">${renderHeader(head, eyebrow, actions)}${sections.map(renderSection).join("")}${renderSourceFooter(fm.github ?? "")}</article>`;
 }

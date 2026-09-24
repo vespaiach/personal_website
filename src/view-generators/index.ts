@@ -29,7 +29,7 @@ async function renderSource(source: Source): Promise<string> {
   const raw = readFileSync(source.filePath, "utf-8");
   const eyebrow = `~${source.virtualPath}`;
   if (source.kind === "json") return await renderJsonView(raw, eyebrow);
-  if (source.kind === "resume") return renderResumeView(raw, eyebrow);
+  if (source.kind === "resume") return renderResumeView(raw, eyebrow, pageUrl(pagePathFor(source)));
   return await renderMarkdownView(raw, eyebrow, pageUrl(pagePathFor(source)));
 }
 
