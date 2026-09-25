@@ -17,7 +17,7 @@ I build customer-facing web applications and work across the stack.
 
 - **Frontend:** TypeScript, React, Next.js, Tailwind CSS, Vite, Esbuild
 - **Backend:** Node.js, PHP, Ruby, PostgreSQL
-- **Frameworks I use most:** React, Next.js, Express.js, WordPress, Ruby on Rails
+- **Frameworks I use most:** React, Next.js, Express.js, WordPress
 
 I write defensive code, favor DRY and KISS principles, and make sure test coverage is solid before anything ships. I move fast, but I don't cut corners — quality and reliability matter more to me than speed for its own sake.
 
@@ -27,17 +27,15 @@ I've worked solo and in teams of 10 to 20, remote and hybrid, and I'm comfortabl
 
 ## What I hate
 
-- Adding microservices, k8s, and heavy layering to projects that don't need them. Fine for big teams, too much ops overhead for small ones and clients stuck maintaining it.
-- Docs and comments that lie: a README that's out of date, comments explaining code that isn't there anymore.
-- Silent failures: only the happy path gets handled, catch blocks hide errors instead of surfacing them.
-- Too verbose: explains too much, repeats my question back to me, recaps what it already did.
+- Overengineering small projects with microservices, Kubernetes, and heavy abstraction layers that add unnecessary operational overhead for small teams and clients.
+- Outdated READMEs and comments explaining code that no longer exists.
+- Swallowing errors in catch blocks instead of surfacing them properly.
 
 ## My rules
 
 1. Never ship code I do not understand.
 2. Never hide bad news from a client.
 3. Never touch prod data without a backup and a rollback path.
-4. Every change must be the smallest one that solves the problem.
 
 ## About This Site
 
