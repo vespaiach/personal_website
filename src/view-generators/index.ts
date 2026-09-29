@@ -3,6 +3,7 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { renderJsonView, renderMarkdownView } from "../lib/markedFragment.ts";
+import { closeMermaidBrowser } from "../lib/mermaid.ts";
 import {
   assertNoVirtualPathCollisions,
   collectFileSources,
@@ -124,5 +125,9 @@ export async function generateViews(root: string): Promise<Record<string, string
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  await generateViews(process.cwd());
+  try {
+    await generateViews(process.cwd());
+  } finally {
+    await closeMermaidBrowser();
+  }
 }

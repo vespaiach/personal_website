@@ -1,6 +1,7 @@
-import { marked } from "marked";
+import { marked, Renderer } from "marked";
 import { codeToHtml, createCssVariablesTheme } from "shiki";
 import { type Frontmatter, parseFrontmatter } from "./markdown.ts";
+import { renderMermaidSvg } from "./mermaid.ts";
 
 export function escapeHtml(value: string): string {
   return value
@@ -64,11 +65,16 @@ const shikiTheme = createCssVariablesTheme({
 });
 
 const shikiHtmlByToken = new WeakMap<object, string>();
+const mermaidSvgByToken = new WeakMap<object, string>();
 
 marked.use({
   async: true,
   async walkTokens(token) {
     if (token.type !== "code") return;
+    if (token.lang === "mermaid") {
+      mermaidSvgByToken.set(token, await renderMermaidSvg(token.text));
+      return;
+    }
     const lang = (token.lang || "text").split(/\s+/)[0] || "text";
     try {
       shikiHtmlByToken.set(token, await codeToHtml(token.text, { lang, theme: shikiTheme }));
@@ -78,6 +84,8 @@ marked.use({
   },
   renderer: {
     code(token) {
+      const svg = mermaidSvgByToken.get(token);
+      if (svg) return `<div class="md-mermaid">${svg}</div>`;
       return wrapCodeChrome(token.lang || "text", extractShikiCode(shikiHtmlByToken.get(token) ?? ""));
     },
     heading(token) {
@@ -97,6 +105,9 @@ marked.use({
     },
     hr() {
       return '<hr class="md-hr">';
+    },
+    table(token) {
+      return `<div class="md-table">${Renderer.prototype.table.call(this, token)}</div>`;
     },
     blockquote(token) {
       return `<div class="md-blockquote">${this.parser.parse(token.tokens)}</div>`;

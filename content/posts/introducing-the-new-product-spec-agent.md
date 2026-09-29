@@ -73,3 +73,17 @@ A few things to know before you try it:
 - **It's long.** The prompt is about 40,000 characters. If your tool limits custom instructions to a few thousand characters, upload it as a file or paste it as your first message.
 - **It's smoothest with structured input.** It works in plain chat, but tools with buttons and multi-select make the interview faster.
 - **A full session takes a while.** One question per turn adds up for a large product. The light depth and "draft it now" keep small products quick.
+
+## A solo dev would do
+
+If you are the only developer, product owner, and project manager, this solo edition of a product specification is for you. Everything that exists for other people to read or sign off on is removed:
+
+- The status box and approvals
+- Owners and approvers
+- Goals with metrics
+- The readiness checklist
+- Cross-feature journeys
+- Proposed/Approved status on features
+- The discovery step that asked for owners
+
+[product-spec-agent-loop-solo.md](/product-spec-agent-loop-solo.md)

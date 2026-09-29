@@ -1422,6 +1422,48 @@ samp {
   color: var(--text-body);
 }
 
+.md-table {
+  overflow-x: auto;
+  border: var(--border-hairline);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--canvas-soft) 60%, var(--canvas));
+}
+
+.md-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.md-table th,
+.md-table td {
+  padding: 14px var(--space-lg);
+  text-align: left;
+  vertical-align: top;
+}
+
+.md-table th {
+  font-family: var(--font-code);
+  font-size: var(--eyebrow-size);
+  line-height: var(--caption-leading);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  background: var(--canvas-soft);
+}
+
+.md-table td {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--text-body);
+  border-top: var(--border-hairline);
+}
+
+.md-table td a {
+  font-family: var(--font-code);
+  font-size: 14px;
+}
+
 /* cat output (resume) */
 .resume-view {
   max-width: var(--container-prose);

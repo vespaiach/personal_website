@@ -1,6 +1,9 @@
 import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { renderJsonView, renderMarkdownView } from "./markedFragment.ts";
+import { closeMermaidBrowser } from "./mermaid.ts";
+
+afterAll(closeMermaidBrowser);
 
 describe("renderMarkdownView", () => {
   it("uses the frontmatter title, meta line, and tag pills", async () => {
@@ -62,6 +65,19 @@ describe("renderMarkdownView", () => {
     expect(html).toContain("data-code-block");
     expect(html).toContain("echo hi");
   });
+
+  it("renders mermaid fences as inline themed SVG diagrams instead of code blocks", async () => {
+    const raw = "---\ntitle: 'Diagram'\n---\n```mermaid\nflowchart LR\n  A[Idea] --> B[Spec]\n```\n";
+    const html = await renderMarkdownView(
+      raw,
+      "~/posts/diagram.md",
+      "https://vespaiach.com/posts/diagram.html",
+    );
+    expect(html).toMatch(/<div class="md-mermaid"><svg id="mermaid-[0-9a-f]{8}"/);
+    expect(html).toContain("Idea");
+    expect(html).toContain("#3b4252");
+    expect(html).not.toContain("data-code-block");
+  }, 60_000);
 
   it("renders unordered and ordered lists with the custom marker style", async () => {
     const raw = "---\ntitle: 'Lists'\n---\n- first\n- second\n\n1. one\n2. two\n";
