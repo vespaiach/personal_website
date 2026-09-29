@@ -1464,6 +1464,73 @@ samp {
   font-size: 14px;
 }
 
+.md-diagram {
+  margin: 0;
+  overflow-x: auto;
+}
+
+.md-diagram svg {
+  display: block;
+  width: 100%;
+  min-width: 600px;
+  height: auto;
+}
+
+.md-diagram__box {
+  fill: var(--canvas-soft);
+  stroke: var(--hairline);
+}
+
+.md-diagram__box--key {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.md-diagram__title,
+.md-diagram__text {
+  font-family: var(--font-body);
+  text-anchor: middle;
+}
+
+.md-diagram__title {
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--text-strong);
+}
+
+.md-diagram__text {
+  font-size: 13px;
+  fill: var(--text-mute);
+}
+
+.md-diagram__label {
+  font-family: var(--font-code);
+  font-size: var(--eyebrow-size);
+  text-anchor: end;
+  fill: var(--text-faint);
+}
+
+.md-diagram__edge {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-width: 1.5;
+}
+
+.md-diagram__edge--loop {
+  stroke-dasharray: 4 4;
+}
+
+.md-diagram__arrowhead {
+  fill: var(--hairline-strong);
+}
+
+.md-diagram figcaption {
+  margin-top: var(--space-md);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--text-mute);
+}
+
 /* cat output (resume) */
 .resume-view {
   max-width: var(--container-prose);

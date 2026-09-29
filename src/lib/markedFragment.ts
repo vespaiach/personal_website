@@ -1,7 +1,6 @@
 import { marked, Renderer } from "marked";
 import { codeToHtml, createCssVariablesTheme } from "shiki";
 import { type Frontmatter, parseFrontmatter } from "./markdown.ts";
-import { renderMermaidSvg } from "./mermaid.ts";
 
 export function escapeHtml(value: string): string {
   return value
@@ -65,16 +64,11 @@ const shikiTheme = createCssVariablesTheme({
 });
 
 const shikiHtmlByToken = new WeakMap<object, string>();
-const mermaidSvgByToken = new WeakMap<object, string>();
 
 marked.use({
   async: true,
   async walkTokens(token) {
     if (token.type !== "code") return;
-    if (token.lang === "mermaid") {
-      mermaidSvgByToken.set(token, await renderMermaidSvg(token.text));
-      return;
-    }
     const lang = (token.lang || "text").split(/\s+/)[0] || "text";
     try {
       shikiHtmlByToken.set(token, await codeToHtml(token.text, { lang, theme: shikiTheme }));
@@ -84,8 +78,6 @@ marked.use({
   },
   renderer: {
     code(token) {
-      const svg = mermaidSvgByToken.get(token);
-      if (svg) return `<div class="md-mermaid">${svg}</div>`;
       return wrapCodeChrome(token.lang || "text", extractShikiCode(shikiHtmlByToken.get(token) ?? ""));
     },
     heading(token) {
@@ -201,7 +193,10 @@ export async function renderMarkdownView(raw: string, eyebrow: string, url: stri
   const { title, body: titledBody } = resolveTitle(fm, rawBody.replace(/^\n+/, ""));
   const body = titledBody.replace(/^\n+/, "");
 
-  const words = body.split(/\s+/).filter(Boolean).length;
+  const words = body
+    .replace(/<svg[\s\S]*?<\/svg>/g, "")
+    .split(/\s+/)
+    .filter(Boolean).length;
   const date = (fm.date ?? "").slice(0, 10);
   const minutes = Math.max(1, Math.round(words / 220));
   const meta = [date, `${words} words`, `${minutes} min read`].filter(Boolean).join("   ·   ");

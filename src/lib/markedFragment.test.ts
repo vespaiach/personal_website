@@ -1,9 +1,6 @@
 import { readFileSync } from "node:fs";
-import { afterAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { renderJsonView, renderMarkdownView } from "./markedFragment.ts";
-import { closeMermaidBrowser } from "./mermaid.ts";
-
-afterAll(closeMermaidBrowser);
 
 describe("renderMarkdownView", () => {
   it("uses the frontmatter title, meta line, and tag pills", async () => {
@@ -66,18 +63,20 @@ describe("renderMarkdownView", () => {
     expect(html).toContain("echo hi");
   });
 
-  it("renders mermaid fences as inline themed SVG diagrams instead of code blocks", async () => {
-    const raw = "---\ntitle: 'Diagram'\n---\n```mermaid\nflowchart LR\n  A[Idea] --> B[Spec]\n```\n";
+  it("passes inline SVG diagrams through and leaves their markup out of the word count", async () => {
+    const raw =
+      "---\ntitle: 'Diagram'\n---\nOne two three.\n\n" +
+      '<figure class="md-diagram">\n<svg viewBox="0 0 10 10">\n  <rect x="1" y="1" width="8" height="8"/>\n</svg>\n' +
+      "<figcaption>Four five.</figcaption>\n</figure>\n";
     const html = await renderMarkdownView(
       raw,
       "~/posts/diagram.md",
       "https://vespaiach.com/posts/diagram.html",
     );
-    expect(html).toMatch(/<div class="md-mermaid"><svg id="mermaid-[0-9a-f]{8}"/);
-    expect(html).toContain("Idea");
-    expect(html).toContain("#3b4252");
-    expect(html).not.toContain("data-code-block");
-  }, 60_000);
+    expect(html).toContain('<svg viewBox="0 0 10 10">');
+    expect(html).toContain("<figcaption>Four five.</figcaption>");
+    expect(html).toContain("8 words");
+  });
 
   it("renders unordered and ordered lists with the custom marker style", async () => {
     const raw = "---\ntitle: 'Lists'\n---\n- first\n- second\n\n1. one\n2. two\n";

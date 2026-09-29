@@ -39,15 +39,47 @@ The spec is a single Markdown document in three layers, so each reader can stop 
 
 The spec is the first half of a pipeline. A second prompt, the Spec-to-Tasks Agent, reads a finished spec and turns it into ordered tasks. Each task is a ready-to-run prompt: paste it into a fresh coding-agent session and it has everything it needs, copied word for word from the spec.
 
-```mermaid
-flowchart LR
-    A["Your idea<br/>One sentence, plus any notes or a PRD"] --> B["Product Spec Agent<br/>Interviews you, one question at a time"]
-    B --> C["The spec<br/>One Markdown file that people and agents share"]
-    C -->|Ready for implementation| D["Spec-to-Tasks Agent<br/>Checks the spec, then plans tasks in waves"]
-    D --> E["Task prompts<br/>One ready-to-run prompt per task"]
-    E --> F["Coding agents<br/>Build, test and report, one task per session"]
-    F -.->|Blocked on an unclear rule: the decision owner updates the spec| C
-```
+<figure class="md-diagram">
+<svg viewBox="0 0 720 280" role="img" aria-label="Your idea goes to the Product Spec Agent, which writes the spec. When ready, the Spec-to-Tasks Agent turns the spec into task prompts for coding agents. A blocked coding agent sends a question back to the spec.">
+  <defs>
+    <marker id="spec-flow-arrow" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="md-diagram__arrowhead" d="M0 0L8 4L0 8z"/>
+    </marker>
+  </defs>
+  <rect class="md-diagram__box" x="1" y="1" width="194" height="84" rx="6"/>
+  <text class="md-diagram__title" x="98" y="31">Your idea</text>
+  <text class="md-diagram__text" x="98" y="51">One sentence, plus any</text>
+  <text class="md-diagram__text" x="98" y="69">notes or a PRD</text>
+  <rect class="md-diagram__box" x="241" y="1" width="194" height="84" rx="6"/>
+  <text class="md-diagram__title" x="338" y="31">Product Spec Agent</text>
+  <text class="md-diagram__text" x="338" y="51">Interviews you, one</text>
+  <text class="md-diagram__text" x="338" y="69">question at a time</text>
+  <rect class="md-diagram__box md-diagram__box--key" x="481" y="1" width="194" height="84" rx="6"/>
+  <text class="md-diagram__title" x="578" y="31">The spec</text>
+  <text class="md-diagram__text" x="578" y="51">One Markdown file that</text>
+  <text class="md-diagram__text" x="578" y="69">people and agents share</text>
+  <rect class="md-diagram__box" x="481" y="165" width="194" height="84" rx="6"/>
+  <text class="md-diagram__title" x="578" y="195">Spec-to-Tasks Agent</text>
+  <text class="md-diagram__text" x="578" y="215">Checks the spec, then</text>
+  <text class="md-diagram__text" x="578" y="233">plans tasks in waves</text>
+  <rect class="md-diagram__box" x="241" y="165" width="194" height="84" rx="6"/>
+  <text class="md-diagram__title" x="338" y="195">Task prompts</text>
+  <text class="md-diagram__text" x="338" y="215">One ready-to-run prompt</text>
+  <text class="md-diagram__text" x="338" y="233">per task</text>
+  <rect class="md-diagram__box" x="1" y="165" width="194" height="84" rx="6"/>
+  <text class="md-diagram__title" x="98" y="195">Coding agents</text>
+  <text class="md-diagram__text" x="98" y="215">Build, test and report,</text>
+  <text class="md-diagram__text" x="98" y="233">one task per session</text>
+  <path class="md-diagram__edge" d="M197 43H239" marker-end="url(#spec-flow-arrow)"/>
+  <path class="md-diagram__edge" d="M437 43H479" marker-end="url(#spec-flow-arrow)"/>
+  <path class="md-diagram__edge" d="M578 87V163" marker-end="url(#spec-flow-arrow)"/>
+  <path class="md-diagram__edge" d="M479 207H437" marker-end="url(#spec-flow-arrow)"/>
+  <path class="md-diagram__edge" d="M239 207H197" marker-end="url(#spec-flow-arrow)"/>
+  <text class="md-diagram__label" x="566" y="129">Ready for implementation</text>
+  <path class="md-diagram__edge md-diagram__edge--loop" d="M98 251V273H703V43H677" marker-end="url(#spec-flow-arrow)"/>
+</svg>
+<figcaption>Blocked on an unclear rule? The agent stops and proposes a decision. The decision owner updates the spec, and only affected tasks are regenerated.</figcaption>
+</figure>
 
 - **A checker runs first.** `spec-check.py` confirms every ID is defined, every rule has examples, and every TBD points to an open decision. It can also run in CI.
 - **Tasks follow feature blocks.** A task builds one feature end to end, and the feature's examples define when it's done.
