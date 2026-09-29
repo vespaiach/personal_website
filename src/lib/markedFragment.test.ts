@@ -63,6 +63,21 @@ describe("renderMarkdownView", () => {
     expect(html).toContain("echo hi");
   });
 
+  it("passes inline SVG diagrams through and leaves their markup out of the word count", async () => {
+    const raw =
+      "---\ntitle: 'Diagram'\n---\nOne two three.\n\n" +
+      '<figure class="md-diagram">\n<svg viewBox="0 0 10 10">\n  <rect x="1" y="1" width="8" height="8"/>\n</svg>\n' +
+      "<figcaption>Four five.</figcaption>\n</figure>\n";
+    const html = await renderMarkdownView(
+      raw,
+      "~/posts/diagram.md",
+      "https://vespaiach.com/posts/diagram.html",
+    );
+    expect(html).toContain('<svg viewBox="0 0 10 10">');
+    expect(html).toContain("<figcaption>Four five.</figcaption>");
+    expect(html).toContain("8 words");
+  });
+
   it("renders unordered and ordered lists with the custom marker style", async () => {
     const raw = "---\ntitle: 'Lists'\n---\n- first\n- second\n\n1. one\n2. two\n";
     const html = await renderMarkdownView(raw, "~/posts/lists.md", "https://vespaiach.com/posts/lists.html");

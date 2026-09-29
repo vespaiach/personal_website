@@ -1,4 +1,4 @@
-import { marked } from "marked";
+import { marked, Renderer } from "marked";
 import { codeToHtml, createCssVariablesTheme } from "shiki";
 import { type Frontmatter, parseFrontmatter } from "./markdown.ts";
 
@@ -98,6 +98,9 @@ marked.use({
     hr() {
       return '<hr class="md-hr">';
     },
+    table(token) {
+      return `<div class="md-table">${Renderer.prototype.table.call(this, token)}</div>`;
+    },
     blockquote(token) {
       return `<div class="md-blockquote">${this.parser.parse(token.tokens)}</div>`;
     },
@@ -190,7 +193,10 @@ export async function renderMarkdownView(raw: string, eyebrow: string, url: stri
   const { title, body: titledBody } = resolveTitle(fm, rawBody.replace(/^\n+/, ""));
   const body = titledBody.replace(/^\n+/, "");
 
-  const words = body.split(/\s+/).filter(Boolean).length;
+  const words = body
+    .replace(/<svg[\s\S]*?<\/svg>/g, "")
+    .split(/\s+/)
+    .filter(Boolean).length;
   const date = (fm.date ?? "").slice(0, 10);
   const minutes = Math.max(1, Math.round(words / 220));
   const meta = [date, `${words} words`, `${minutes} min read`].filter(Boolean).join("   ·   ");
