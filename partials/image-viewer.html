@@ -1,0 +1,11 @@
+<dialog
+  x-data="imageViewer()"
+  id="image-viewer"
+  x-ref="dialog"
+  @click.document="open($event)"
+  @click="close()"
+  aria-label="Image viewer"
+  class="image-viewer"
+>
+  <img :src="src" :alt="alt" class="image-viewer__image" />
+</dialog>
