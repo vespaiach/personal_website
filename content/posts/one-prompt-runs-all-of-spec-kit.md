@@ -4,17 +4,14 @@ date: '2026-10-01T00:00:00.000Z'
 updatedAt: '2026-10-01T00:00:00.000Z'
 excerpt: "I build web applications mostly alone, with Claude Code doing most of the heavy tasks."
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/one-prompt-runs-all-of-spec-kit.md
-tags: speckit, sdd, speckit-glow, claude 
+tags: speckit, sdd, speckit-flow, agent-loop, claude 
 ---
-# Running Spec Kit on autopilot, with four stops for me
 
-I build web products mostly alone, with Claude Code doing most of the typing. Spec Kit gave me a good process for that work: write the spec, plan it, break it into tasks, build, then check the code against the spec. The weak part was me. I was the one typing ten slash commands in order, reading every output and deciding what to run next.
-
-So I wrote an agent loop that does the typing. It runs the whole Spec Kit pipeline from one Claude Code session and stops only when it needs a human decision. It finishes when `/speckit-converge` reports that the code matches the spec.
+[Spec Kit](https://github.github.com/spec-kit/index.html) gave me a good process for that work: write the spec, plan it, break it into tasks, build, then check the code against the spec. I was the one typing ten slash commands in order, reading every output and deciding what to run next. So I wrote an agent loop that does the typing. It runs the whole Spec Kit pipeline from one Claude Code session and stops only when it needs a human decision.
 
 ## What Spec Kit gives you
 
-Spec Kit is GitHub's toolkit for spec-driven development (SDD). You describe a feature, and a set of slash commands turns that description into files the agent works from:
+Spec Kit is toolkit for spec-driven development (SDD). You describe a feature, and a set of slash commands turns that description into files the agent works from:
 
 | # | Command | Output |
 |---|---|---|

@@ -4,7 +4,7 @@ date: '2026-09-29T00:00:00.000Z'
 updatedAt: '2026-09-29T00:00:00.000Z'
 excerpt: "This is a new version of the agent from Turning Product Ideas into Clear Specifications with AI, now it's organized by feature."
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/introducing-the-new-product-spec-agent.md
-tags: PRD, product-specification, claude 
+tags: PRD, product-specification, claude, agent-loop 
 ---
 
 Read the post [Turning Product Ideas into Clear Specifications with AI](https://vespaiach.com/posts/turning-product-ideas-into-clear-specifications-with-ai.html) for more detail.
