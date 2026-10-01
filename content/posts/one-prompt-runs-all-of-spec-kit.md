@@ -61,7 +61,8 @@ Next time I open a session in the same worktree and paste the prompt. It reads t
 
 ## Try it
 
-The full design, with diagrams and the complete operating prompt, is here: [speckit-converge-loop.md](/speckit-converge-loop.md).
+The full design, with diagrams and the complete operating prompt is speckit-converge-loop.
+
 | File | What it is |
 | --- | --- |
 | [speckit-converge-loop.md](/speckit-converge-loop.md) | The operating prompt |
