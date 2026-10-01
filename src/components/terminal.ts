@@ -1,6 +1,7 @@
 import Alpine from "alpinejs";
 
-const INTERACTIVE_SELECTOR = "a, button, input, textarea, select, summary, label, dialog, [contenteditable]";
+const INTERACTIVE_SELECTOR =
+  "a, button, input, textarea, select, summary, label, dialog, [contenteditable], .content-view img";
 
 interface TerminalRefs {
   $refs: { commandInput: HTMLInputElement };
