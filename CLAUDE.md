@@ -56,4 +56,4 @@ The site is a static "shell" over a virtual filesystem. `index.html` is the only
 
 ## Deployment
 
-Pushes to `main` run `.github/workflows/deploy.yml` (`npm ci`, `npm test`, `npm run build`, publish `dist/` to GitHub Pages; custom domain in `public/CNAME`). CI does not run lint.
+Pushes to `main` run `.github/workflows/deploy.yml` (`npm ci`, `npm test`, `npm run build`, `wrangler deploy`, which uploads `dist/` as a static-assets Worker per `wrangler.jsonc`; needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets). CI does not run lint.

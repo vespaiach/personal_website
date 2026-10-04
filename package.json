@@ -22,7 +22,8 @@
     "typescript": "~6.0.2",
     "vite": "^8.3.0",
     "vite-plugin-html-inject": "^1.1.2",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.0",
+    "wrangler": "^4.147.0"
   },
   "dependencies": {
     "alpinejs": "^3.17.2"
