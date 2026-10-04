@@ -2,7 +2,12 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "vespaiach",
   "compatibility_date": "2026-10-01",
+  "workers_dev": false,
   "assets": {
     "directory": "./dist"
-  }
+  },
+  "routes": [
+    { "pattern": "vespaiach.com", "custom_domain": true },
+    { "pattern": "www.vespaiach.com", "custom_domain": true }
+  ]
 }

@@ -118,7 +118,7 @@ src/
 ├── styles/global.css
 └── main.ts            registers components and Alpine stores
 partials/              HTML partials injected into pages at build time
-public/                fonts, CNAME, robots.txt and the social sharing image
+public/                fonts, robots.txt and the social sharing image
 ```
 
 ## Deployment
