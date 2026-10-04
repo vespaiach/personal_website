@@ -118,9 +118,9 @@ src/
 ├── styles/global.css
 └── main.ts            registers components and Alpine stores
 partials/              HTML partials injected into pages at build time
-public/                fonts, CNAME, robots.txt and the social sharing image
+public/                fonts, robots.txt and the social sharing image
 ```
 
 ## Deployment
 
-Pushes to `main` trigger [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which runs the tests, builds, and publishes `dist/` to GitHub Pages. The custom domain is set in [`public/CNAME`](public/CNAME).
+Pushes to `main` trigger [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which runs the tests, builds, and deploys `dist/` to Cloudflare with `wrangler deploy` (config in [`wrangler.jsonc`](wrangler.jsonc)). It needs the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository secrets.
