@@ -30,7 +30,7 @@ Alpine.store("prompts", {
 });
 
 Alpine.store("cwd", {
-  value: "/",
+  value: document.querySelector("main")?.dataset.cwd ?? "/",
   update(value: string) {
     this.value = value;
   },

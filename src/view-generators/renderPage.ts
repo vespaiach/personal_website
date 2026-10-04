@@ -5,6 +5,7 @@ import { type HeadMeta, renderHead } from "./renderHead.ts";
 
 export interface Page extends HeadMeta {
   active: string;
+  cwd: string;
   command: string;
   viewHtml: string;
 }
@@ -20,13 +21,13 @@ function replaceAnchor(html: string, anchor: RegExp, replacement: (match: string
   return html.replace(anchor, replacement);
 }
 
-function renderStaticCommandLine(command: string, viewHtml: string): string {
+function renderStaticCommandLine(cwd: string, command: string, viewHtml: string): string {
   return (
     '<section class="command-line-section" x-show="!$store.prompts.cleared">' +
     '<div class="command-line">' +
     '<span class="command-line__user">[&gt;_]</span>' +
     '<span class="command-line__separator">in</span>' +
-    '<span class="command-line__path">~/</span>' +
+    `<span class="command-line__path">${escapeHtml(`~${cwd}`)}</span>` +
     '<span class="command-line__symbol">$</span>' +
     `<span class="command-line__command">${escapeHtml(command)}</span>` +
     "</div>" +
@@ -41,6 +42,8 @@ export function renderPage(template: string, page: Page): string {
   return replaceAnchor(
     withHead,
     /<main\b[^>]*>/,
-    (mainTag) => `${mainTag}\n      ${renderStaticCommandLine(page.command, page.viewHtml)}`,
+    (mainTag) =>
+      `<main data-cwd="${escapeHtml(page.cwd)}"${mainTag.slice("<main".length)}\n      ` +
+      renderStaticCommandLine(page.cwd, page.command, page.viewHtml),
   );
 }

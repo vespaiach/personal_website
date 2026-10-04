@@ -11,6 +11,10 @@ describe("toAbsolutePath", () => {
     expect(toAbsolutePath("~/about", "/topics")).toEqual({ valid: true, absolutePath: "/about" });
   });
 
+  it("resolves a bare ~ to the root", () => {
+    expect(toAbsolutePath("~", "/topics")).toEqual({ valid: true, absolutePath: "/" });
+  });
+
   it("resolves '.' to the current directory", () => {
     expect(toAbsolutePath("./", "/about")).toEqual({ valid: true, absolutePath: "/about" });
   });

@@ -14,6 +14,10 @@ export class CdCommand extends Command implements HasPathArgument {
     return "ls";
   }
 
+  protected get defaultPath(): string {
+    return "/";
+  }
+
   static init(command: string, cwd: string): CdCommand {
     return new CdCommand({ rawCommand: command, cwd });
   }

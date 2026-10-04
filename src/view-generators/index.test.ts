@@ -156,6 +156,12 @@ describe("generateViews", () => {
     const posts = readFileSync(join(pagesDir, "posts", "index.html"), "utf-8");
     expect(posts).toContain('<link rel="canonical" href="https://vespaiach.com/" />');
 
+    expect(aboutMe).toContain('<main data-cwd="/about"');
+    expect(post).toContain('<main data-cwd="/posts"');
+    expect(topic).toContain('<main data-cwd="/topics/javascript"');
+    expect(posts).toContain('<main data-cwd="/posts"');
+    expect(home).toContain('<main data-cwd="/posts"');
+
     const pageFiles = readdirSync(pagesDir, { recursive: true, encoding: "utf-8" }).filter((file) =>
       file.endsWith(".html"),
     );

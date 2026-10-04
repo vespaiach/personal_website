@@ -69,6 +69,7 @@ export async function generateViews(root: string): Promise<Record<string, string
       ...metaFor(source),
       pagePath: pagePathFor(source),
       active: source.virtualPath.split("/")[1],
+      cwd: source.type === "folder" ? source.virtualPath : posix.dirname(source.virtualPath),
       command,
       viewHtml,
     };
