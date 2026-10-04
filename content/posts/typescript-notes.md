@@ -289,7 +289,7 @@ It's worth to understand the differences between structural typing, nominal typi
 
 **References:**
 
-- https://www.learningtypescript.com/articles
-- https://exploringjs.com/tackling-ts/index.html
-- https://2ality.com/2025/02/satisfies-operator.html#type-checking-object-property-values
-- https://www.typescriptlang.org/docs/handbook/intro.html 
+- [Learning TypeScript: Articles](https://www.learningtypescript.com/articles)
+- [Tackling TypeScript, by Dr. Axel Rauschmayer](https://exploringjs.com/tackling-ts/index.html)
+- [2ality: The satisfies operator](https://2ality.com/2025/02/satisfies-operator.html#type-checking-object-property-values)
+- [The TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) 

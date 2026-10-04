@@ -73,7 +73,7 @@ address=/mydomain.local/your_local_ip_address
 
 Since DNSMASQ listens on port 53, root permissions are required. Homebrew services do not run as root by default, so the recommended method is to use sudo with launchd.
 
-First, create a service plist file at /Library/LaunchDaemons/homebrew.dnsmasq.plist:
+First, create a service plist file at `/Library/LaunchDaemons/homebrew.dnsmasq.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
