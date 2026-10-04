@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import { renderJsonView, renderMarkdownView } from "../lib/markedFragment.ts";
 import {
@@ -87,6 +87,14 @@ export async function generateViews(root: string): Promise<Record<string, string
       outputDir,
       renderTreeView(folderSources, folder.virtualPath),
     );
+  }
+
+  for (const folder of folderSources) {
+    for (const { name, linkTarget } of folder.entries) {
+      if (!linkTarget) continue;
+      manifest[`cat ${posix.join(folder.virtualPath, name)}`] =
+        manifest[`cat ${posix.resolve(folder.virtualPath, linkTarget)}`];
+    }
   }
 
   const template = readFileSync(join(root, "index.html"), "utf-8");

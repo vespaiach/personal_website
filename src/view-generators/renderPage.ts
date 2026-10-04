@@ -26,7 +26,7 @@ function renderStaticCommandLine(command: string, viewHtml: string): string {
     '<div class="command-line">' +
     '<span class="command-line__user">[&gt;_]</span>' +
     '<span class="command-line__separator">in</span>' +
-    '<span class="command-line__path">/</span>' +
+    '<span class="command-line__path">~/</span>' +
     '<span class="command-line__symbol">$</span>' +
     `<span class="command-line__command">${escapeHtml(command)}</span>` +
     "</div>" +

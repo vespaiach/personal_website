@@ -74,7 +74,7 @@ describe("ResumeCommand", () => {
     const result = await ResumeCommand.init("resume", "/posts").execute();
 
     expect(fetchMock).not.toHaveBeenCalled();
-    expect(result).toEqual({ kind: "error", message: "Path does not exist: /about", cwd: "/posts" });
+    expect(result).toEqual({ kind: "error", message: "cd: Path does not exist: /about", cwd: "/posts" });
   });
 
   it("returns a cat error when the resume view is missing from the manifest", async () => {

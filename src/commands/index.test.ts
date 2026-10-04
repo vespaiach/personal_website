@@ -33,7 +33,7 @@ describe("execute", () => {
   it("returns an error for an unknown command and keeps the working directory", async () => {
     await expect(execute("rm -rf /", "/topics")).resolves.toEqual({
       kind: "error",
-      message: "Unknown command",
+      message: "command not found: rm",
       cwd: "/topics",
     });
   });

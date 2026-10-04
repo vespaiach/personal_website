@@ -29,6 +29,10 @@ describe("parseCommand", () => {
     expect(parseCommand("&& ls -la")).toEqual(["ls -la"]);
   });
 
+  it("lowercases the command name but keeps the case of its arguments", () => {
+    expect(parseCommand("CD ~/topics/PRD && Cat Notes.md")).toEqual(["cd ~/topics/PRD", "cat Notes.md"]);
+  });
+
   it("returns an empty array for blank input", () => {
     expect(parseCommand("")).toEqual([]);
     expect(parseCommand("   ")).toEqual([]);

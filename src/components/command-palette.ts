@@ -1,15 +1,6 @@
 import Alpine from "alpinejs";
 import { buildSuggestions, type Suggestion } from "../lib/commandSuggestions";
 
-interface Prompt {
-  command: string;
-}
-
-interface ShellState {
-  cwd: string;
-  prompts: Prompt[];
-}
-
 interface DialogRefs {
   $refs: { dialog: HTMLDialogElement };
 }
@@ -35,15 +26,19 @@ export function registerCommandPalette() {
       return prompts.map((it) => it.prompt);
     },
 
+    get queryIndex(): number {
+      return this.query.trim() ? -1 : 0;
+    },
+
     onInput() {
       this.suggestions = buildSuggestions(this.query, this.recentCommands());
-      this.selectedIndex = 0;
+      this.selectedIndex = this.queryIndex;
     },
 
     moveSelection(delta: number) {
       if (this.suggestions.length === 0) return;
       const max = this.suggestions.length - 1;
-      this.selectedIndex = Math.min(max, Math.max(0, this.selectedIndex + delta));
+      this.selectedIndex = Math.min(max, Math.max(this.queryIndex, this.selectedIndex + delta));
     },
 
     onArrowUp() {
@@ -51,15 +46,14 @@ export function registerCommandPalette() {
     },
 
     completeSelected() {
-      const selected = this.suggestions[this.selectedIndex];
+      const selected = this.suggestions[Math.max(0, this.selectedIndex)];
       if (!selected) return;
       this.query = selected.label;
       this.onInput();
     },
 
     run(command: string) {
-      const { cwd } = this as unknown as ShellState;
-      Alpine.store("prompts").add(command, cwd);
+      Alpine.store("prompts").add(command, Alpine.store("cwd").value);
       this.close();
     },
 

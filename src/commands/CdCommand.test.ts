@@ -131,13 +131,17 @@ describe("CdCommand", () => {
     const cd = CdCommand.init("cd /posts//abc", "/posts");
     const result = await cd.execute();
 
-    expect(result).toEqual({ kind: "error", message: "Invalid path", cwd: "/posts" });
+    expect(result).toEqual({ kind: "error", message: "cd: Invalid path", cwd: "/posts" });
   });
 
   it("execute returns an error for a missing manifest entry", async () => {
     const cd = CdCommand.init("cd /nonexistent", "/posts");
     const result = await cd.execute();
 
-    expect(result).toEqual({ kind: "error", message: "Path does not exist: /nonexistent", cwd: "/posts" });
+    expect(result).toEqual({
+      kind: "error",
+      message: "cd: Path does not exist: /nonexistent",
+      cwd: "/posts",
+    });
   });
 });

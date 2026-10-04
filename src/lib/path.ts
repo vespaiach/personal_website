@@ -15,10 +15,8 @@ export function toAbsolutePath(anyPath: string, currentPath: string): PathResult
   const resolved: string[] = [];
   for (const segment of segments) {
     if (segment === "" || segment === ".") continue;
-    if (segment === "..") {
-      if (resolved.length === 0) return { valid: true, absolutePath: "/" };
-      resolved.pop();
-    } else resolved.push(segment);
+    if (segment === "..") resolved.pop();
+    else resolved.push(segment);
   }
 
   const result = `/${resolved.join("/")}`;

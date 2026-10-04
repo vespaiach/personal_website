@@ -25,11 +25,15 @@ export abstract class Command {
   }
 
   resolvePath(): ResolvedPathResult {
-    const path = this.rawCommand.split(" ")[1] ?? "";
+    const path =
+      this.rawCommand
+        .split(" ")
+        .slice(1)
+        .find((arg) => !arg.startsWith("-")) ?? "";
     let absolutePath = this.cwd;
 
     if (this.argRule === "required" && !path) {
-      return { valid: false, error: `Usage: ${Command.syntax}` };
+      return { valid: false, error: `Usage: ${(this.constructor as typeof Command).syntax}` };
     }
 
     if (path) {

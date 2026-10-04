@@ -21,7 +21,7 @@ export class CdCommand extends Command implements HasPathArgument {
   async execute(): Promise<CommandResult> {
     const result = this.resolvePath();
     if (!result.valid) {
-      return Promise.resolve({ kind: "error", message: result.error, cwd: this.cwd });
+      return Promise.resolve({ kind: "error", message: `cd: ${result.error}`, cwd: this.cwd });
     }
 
     this.cwd = result.absolutePath;
