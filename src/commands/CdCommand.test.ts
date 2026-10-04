@@ -51,12 +51,12 @@ describe("CdCommand", () => {
     });
   });
 
-  it("accepts no arg and keeps the current directory", () => {
+  it("goes to the root when no arg is given", () => {
     const cd = CdCommand.init("cd", "/posts");
     expect(cd.resolvePath()).toEqual({
       valid: true,
-      absolutePath: "/posts",
-      resourcePath: "/generated/posts.html",
+      absolutePath: "/",
+      resourcePath: "/generated/root.html",
     });
   });
 
@@ -84,12 +84,12 @@ describe("CdCommand", () => {
     });
   });
 
-  it("accepts the current directory via ~", () => {
+  it("goes to the root via ~", () => {
     const cd = CdCommand.init("cd ~", "/posts");
     expect(cd.resolvePath()).toEqual({
       valid: true,
-      absolutePath: "/posts",
-      resourcePath: "/generated/posts.html",
+      absolutePath: "/",
+      resourcePath: "/generated/root.html",
     });
   });
 
@@ -131,13 +131,17 @@ describe("CdCommand", () => {
     const cd = CdCommand.init("cd /posts//abc", "/posts");
     const result = await cd.execute();
 
-    expect(result).toEqual({ kind: "error", message: "Invalid path", cwd: "/posts" });
+    expect(result).toEqual({ kind: "error", message: "cd: Invalid path", cwd: "/posts" });
   });
 
   it("execute returns an error for a missing manifest entry", async () => {
     const cd = CdCommand.init("cd /nonexistent", "/posts");
     const result = await cd.execute();
 
-    expect(result).toEqual({ kind: "error", message: "Path does not exist: /nonexistent", cwd: "/posts" });
+    expect(result).toEqual({
+      kind: "error",
+      message: "cd: Path does not exist: /nonexistent",
+      cwd: "/posts",
+    });
   });
 });

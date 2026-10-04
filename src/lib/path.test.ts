@@ -11,13 +11,19 @@ describe("toAbsolutePath", () => {
     expect(toAbsolutePath("~/about", "/topics")).toEqual({ valid: true, absolutePath: "/about" });
   });
 
+  it("resolves a bare ~ to the root", () => {
+    expect(toAbsolutePath("~", "/topics")).toEqual({ valid: true, absolutePath: "/" });
+  });
+
   it("resolves '.' to the current directory", () => {
     expect(toAbsolutePath("./", "/about")).toEqual({ valid: true, absolutePath: "/about" });
   });
 
-  it("no negative path", () => {
-    expect(toAbsolutePath("../../posts", "/topics")).toEqual({ valid: true, absolutePath: "/" });
-    expect(toAbsolutePath("../../../posts", "/topics")).toEqual({ valid: true, absolutePath: "/" });
+  it("stops .. at the root and keeps resolving the rest of the path", () => {
+    expect(toAbsolutePath("../../posts", "/topics")).toEqual({ valid: true, absolutePath: "/posts" });
+    expect(toAbsolutePath("../../../posts", "/topics")).toEqual({ valid: true, absolutePath: "/posts" });
+    expect(toAbsolutePath("../posts", "/")).toEqual({ valid: true, absolutePath: "/posts" });
+    expect(toAbsolutePath("/../about", "/")).toEqual({ valid: true, absolutePath: "/about" });
   });
 
   it("resolves a nested relative path", () => {

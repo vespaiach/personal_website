@@ -66,6 +66,19 @@ describe("LsCommand", () => {
     });
   });
 
+  it("ignores flags when picking the path", () => {
+    expect(LsCommand.init("ls -la", "/posts").resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/posts",
+      resourcePath: "/generated/posts.html",
+    });
+    expect(LsCommand.init("ls -la ../about/projects", "/posts").resolvePath()).toEqual({
+      valid: true,
+      absolutePath: "/about/projects",
+      resourcePath: "/generated/projects.html",
+    });
+  });
+
   it("rejects an invalid path without calling fetch", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);

@@ -14,6 +14,10 @@ export class CdCommand extends Command implements HasPathArgument {
     return "ls";
   }
 
+  protected get defaultPath(): string {
+    return "/";
+  }
+
   static init(command: string, cwd: string): CdCommand {
     return new CdCommand({ rawCommand: command, cwd });
   }
@@ -21,7 +25,7 @@ export class CdCommand extends Command implements HasPathArgument {
   async execute(): Promise<CommandResult> {
     const result = this.resolvePath();
     if (!result.valid) {
-      return Promise.resolve({ kind: "error", message: result.error, cwd: this.cwd });
+      return Promise.resolve({ kind: "error", message: `cd: ${result.error}`, cwd: this.cwd });
     }
 
     this.cwd = result.absolutePath;

@@ -21,7 +21,7 @@ export async function execute(rawCommand: string, cwd: string): Promise<CommandR
   const CommandClass = commandClasses[name as keyof typeof commandClasses];
 
   if (!CommandClass) {
-    return { kind: "error", message: "Unknown command", cwd };
+    return { kind: "error", message: `command not found: ${name}`, cwd };
   }
 
   return CommandClass.init(rawCommand, cwd).execute();

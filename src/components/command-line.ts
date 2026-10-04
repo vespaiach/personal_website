@@ -49,12 +49,12 @@ export function registerCommandLine() {
       });
     },
 
-    async clearTerminal(remainingCommands: string[]) {
+    async clearTerminal(remainingCommands: string[], cwd: string) {
       const prompts = Alpine.store("prompts");
       prompts.clear();
       if (remainingCommands.length === 0) return;
       await Alpine.nextTick();
-      prompts.add(remainingCommands.join(" && "), this.cwd);
+      prompts.add(remainingCommands.join(" && "), cwd);
     },
 
     async execute() {
@@ -64,23 +64,22 @@ export function registerCommandLine() {
         return;
       }
 
+      let cwd = this.cwd;
       for (const [index, command] of commands.entries()) {
         try {
-          const result = await execute(command, this.cwd);
-          if (result.kind === "error") {
-            this.results.push(result);
-            this.cwd = result.cwd;
-          } else if (result.kind === "clear") {
-            await this.clearTerminal(commands.slice(index + 1));
+          const result = await execute(command, cwd);
+          if (result.kind === "clear") {
+            await this.clearTerminal(commands.slice(index + 1), cwd);
             return;
-          } else {
-            this.results.push(result);
           }
-          this.cwd = result.cwd;
-          Alpine.store("cwd").update(this.cwd);
+          this.results.push(result);
+          if (result.kind === "error") return;
+          cwd = result.cwd;
+          Alpine.store("cwd").update(cwd);
         } catch (error) {
           console.error(error);
-          this.results.push({ kind: "error", message: `Failed: ${command}`, cwd: this.cwd });
+          this.results.push({ kind: "error", message: `Failed: ${command}`, cwd });
+          return;
         }
       }
     },

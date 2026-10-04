@@ -17,6 +17,7 @@ const PAGE: Page = {
   title: "About Me",
   pagePath: "about/me.html",
   active: "about",
+  cwd: "/about",
   command: "cat /about/me.md",
   viewHtml: '<article class="content-view">hello</article>',
 };
@@ -62,6 +63,13 @@ describe("renderPage", () => {
     expect(section).toBeLessThan(html.indexOf("<template x-for"));
     expect(html).toContain('<span class="command-line__command">cat /about/me.md</span>');
     expect(html).toContain(`<div class="command-line__output"><div>${PAGE.viewHtml}</div></div>`);
+  });
+
+  it("starts the shell in the page's directory", () => {
+    const html = renderPage(TEMPLATE, PAGE);
+
+    expect(html).toContain('<main data-cwd="/about" x-data="terminal"');
+    expect(html).toContain('<span class="command-line__path">~/about</span>');
   });
 
   it("keeps replacement patterns inside the view verbatim", () => {

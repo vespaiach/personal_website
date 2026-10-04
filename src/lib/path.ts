@@ -6,7 +6,7 @@
 └── topics
  */
 export function toAbsolutePath(anyPath: string, currentPath: string): PathResult {
-  const normalizedPath = anyPath.replace(/^~(?=\/|$)/, "");
+  const normalizedPath = anyPath.replace(/^~(\/|$)/, "/");
   if (/\/{2,}/.test(normalizedPath)) return { valid: false, error: "Invalid path" };
 
   const baseSegments = normalizedPath.startsWith("/") ? [] : currentPath.split("/").filter(Boolean);
@@ -15,10 +15,8 @@ export function toAbsolutePath(anyPath: string, currentPath: string): PathResult
   const resolved: string[] = [];
   for (const segment of segments) {
     if (segment === "" || segment === ".") continue;
-    if (segment === "..") {
-      if (resolved.length === 0) return { valid: true, absolutePath: "/" };
-      resolved.pop();
-    } else resolved.push(segment);
+    if (segment === "..") resolved.pop();
+    else resolved.push(segment);
   }
 
   const result = `/${resolved.join("/")}`;

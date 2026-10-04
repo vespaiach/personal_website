@@ -83,6 +83,34 @@ describe("commandLine", () => {
     expect(prompts.add).not.toHaveBeenCalled();
   });
 
+  it("stops the chain after a failing command", async () => {
+    execute
+      .mockResolvedValueOnce({ kind: "error", message: "cd: Path does not exist: /nope", cwd: "/" })
+      .mockResolvedValueOnce({ kind: "html", html: "<p>root</p>", cwd: "/" });
+    const component = factory({ prompt: "cd /nope && ls", cwd: "/" }, 0);
+
+    await component.execute();
+
+    expect(execute).toHaveBeenCalledTimes(1);
+    expect(component.results).toEqual([
+      { kind: "error", message: "cd: Path does not exist: /nope", cwd: "/" },
+    ]);
+    expect(cwd.update).not.toHaveBeenCalled();
+  });
+
+  it("threads the working directory through the chain but keeps showing the one it was typed in", async () => {
+    execute
+      .mockResolvedValueOnce({ kind: "cwd", cwd: "/posts" })
+      .mockResolvedValueOnce({ kind: "html", html: "<p>posts</p>", cwd: "/posts" });
+    const component = factory({ prompt: "cd ~/posts && ls", cwd: "/" }, 0);
+
+    await component.execute();
+
+    expect(execute).toHaveBeenLastCalledWith("ls", "/posts");
+    expect(cwd.update).toHaveBeenLastCalledWith("/posts");
+    expect(component.cwd).toBe("/");
+  });
+
   it("keeps the prompts when another command runs", async () => {
     execute.mockResolvedValue({ kind: "text", text: "hello", cwd: "/" });
     const component = factory({ prompt: "pwd", cwd: "/" }, 0);

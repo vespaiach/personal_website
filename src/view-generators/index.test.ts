@@ -36,9 +36,13 @@ describe("generateViews", () => {
     const manifest = await generateViews(root);
 
     const contentDir = join(root, "content");
-    const folderCount = collectFolderSources(contentDir).length;
+    const folderSources = collectFolderSources(contentDir);
+    const folderCount = folderSources.length;
     const sourceCount = collectFileSources(contentDir).length + folderCount;
-    expect(Object.keys(manifest)).toHaveLength(sourceCount + folderCount);
+    const linkCount = folderSources
+      .flatMap((folder) => folder.entries)
+      .filter((entry) => entry.linkTarget).length;
+    expect(Object.keys(manifest)).toHaveLength(sourceCount + folderCount + linkCount);
     expect(Object.keys(manifest)).toEqual(
       expect.arrayContaining([
         "ls /",
@@ -94,6 +98,16 @@ describe("generateViews", () => {
     expect(aboutTreeContent).not.toContain("typescript-notes.md");
   });
 
+  it("lets cat read a topic's linked posts through the topic folder", async () => {
+    const root = createRoot();
+
+    const manifest = await generateViews(root);
+
+    expect(manifest["cat /topics/javascript/discard-after-usages.md"]).toBe(
+      manifest["cat /posts/discard-after-usages.md"],
+    );
+  });
+
   it("renders /about/resume.md with the resume layout instead of the generic markdown view", async () => {
     const root = createRoot();
 
@@ -141,6 +155,12 @@ describe("generateViews", () => {
 
     const posts = readFileSync(join(pagesDir, "posts", "index.html"), "utf-8");
     expect(posts).toContain('<link rel="canonical" href="https://vespaiach.com/" />');
+
+    expect(aboutMe).toContain('<main data-cwd="/about"');
+    expect(post).toContain('<main data-cwd="/posts"');
+    expect(topic).toContain('<main data-cwd="/topics/javascript"');
+    expect(posts).toContain('<main data-cwd="/posts"');
+    expect(home).toContain('<main data-cwd="/posts"');
 
     const pageFiles = readdirSync(pagesDir, { recursive: true, encoding: "utf-8" }).filter((file) =>
       file.endsWith(".html"),

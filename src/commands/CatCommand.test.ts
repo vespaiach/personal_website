@@ -43,6 +43,12 @@ describe("CatCommand", () => {
     });
   });
 
+  it("prints its usage when no path is given", async () => {
+    const result = await CatCommand.init("cat", "/posts").execute();
+
+    expect(result).toEqual({ kind: "error", message: "cat: Usage: cat <file_path>", cwd: "/posts" });
+  });
+
   it("rejects an invalid path without calling fetch", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);

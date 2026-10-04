@@ -24,12 +24,20 @@ export abstract class Command {
     return this.name;
   }
 
+  protected get defaultPath(): string {
+    return this.cwd;
+  }
+
   resolvePath(): ResolvedPathResult {
-    const path = this.rawCommand.split(" ")[1] ?? "";
-    let absolutePath = this.cwd;
+    const path =
+      this.rawCommand
+        .split(" ")
+        .slice(1)
+        .find((arg) => !arg.startsWith("-")) ?? "";
+    let absolutePath = this.defaultPath;
 
     if (this.argRule === "required" && !path) {
-      return { valid: false, error: `Usage: ${Command.syntax}` };
+      return { valid: false, error: `Usage: ${(this.constructor as typeof Command).syntax}` };
     }
 
     if (path) {
