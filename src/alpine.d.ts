@@ -23,6 +23,12 @@ type ResolvedPathResult =
   | { valid: true; absolutePath: string; resourcePath: string; }
   | { valid: false; error: string; };
 
+interface Contact {
+  sending: boolean;
+  sentAt: number | null;
+  markSent(): void;
+}
+
 interface Manifest {
   values: Record<string, string>;
   get(path: string): { existing: true, value: string } | { existing: false };
@@ -33,7 +39,8 @@ type CommandResult =
   | { kind: "text"; text: string; cwd: string }
   | { kind: "clear"; cwd: string }
   | { kind: "cwd"; cwd: string; }
-  | { kind: "error"; message: string; cwd: string };
+  | { kind: "error"; message: string; cwd: string }
+  | { kind: "contact"; cwd: string };
 
 interface Alpine {
   data(name: string, callback: unknown): void;
@@ -44,6 +51,8 @@ interface Alpine {
   store(name: "cwd"): Cwd;
   store(name: "manifest", value: Manifest): void;
   store(name: "manifest"): Manifest;
+  store(name: "contact", value: Contact): void;
+  store(name: "contact"): Contact;
   store(name: string, value: unknown): void;
   start(): void;
 }
@@ -60,5 +69,6 @@ declare module "alpinejs" {
     prompts: Prompts;
     cwd: Cwd;
     manifest: Manifest;
+    contact: Contact;
   }
 }
