@@ -986,6 +986,197 @@ samp {
   color: var(--text-mute);
 }
 
+/* ── contact-form.css ───────────────────────────────────────────── */
+.contact-form {
+  max-width: 560px;
+  margin-block: var(--space-sm) var(--space-lg);
+  font-family: var(--font-body);
+}
+
+.contact-form__form,
+.contact-form__fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.contact-form__form {
+  margin-top: var(--space-xl);
+}
+
+.contact-form__fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.contact-form__label {
+  font-family: var(--font-code);
+  font-size: var(--eyebrow-size);
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.contact-form__input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background-color: var(--canvas-soft);
+  font-family: var(--font-body);
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-leading);
+  color: var(--ink);
+  transition: var(--transition-control);
+
+  &::placeholder {
+    color: var(--text-faint);
+    opacity: 0.6;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.contact-form__input--mono {
+  font-family: var(--font-code);
+  font-size: var(--code-size);
+}
+
+.contact-form__input--invalid,
+.contact-form__input--invalid:focus {
+  border-color: var(--danger);
+}
+
+.contact-form__textarea {
+  resize: vertical;
+}
+
+.contact-form__hint {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--caption-size);
+  color: var(--text-faint);
+}
+
+.contact-form__hint--error {
+  font-family: var(--font-body);
+  color: var(--danger);
+}
+
+.contact-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.contact-form__send {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  border: 0;
+  border-radius: var(--radius-md);
+  background-color: var(--primary);
+  font-family: var(--font-body);
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-leading);
+  color: var(--on-primary);
+  cursor: pointer;
+  transition: var(--transition-control);
+
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+}
+
+.contact-form__shortcut {
+  font-family: var(--font-code);
+  font-size: var(--caption-size);
+  color: var(--text-faint);
+}
+
+.contact-form__status:empty {
+  display: none;
+}
+
+.contact-form__status,
+.contact-form__cooldown,
+.contact-form__sent {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--code-size);
+}
+
+.contact-form__status {
+  color: var(--danger);
+}
+
+.contact-form__cooldown {
+  color: var(--text-mute);
+}
+
+.contact-form__receipt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+.contact-form__receipt-list {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--code-size);
+  line-height: var(--code-leading);
+
+  & div {
+    display: flex;
+  }
+
+  & dt {
+    flex: 0 0 10ch;
+    color: var(--text-mute);
+  }
+
+  & dd {
+    margin: 0;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+}
+
+.contact-form__sent {
+  color: var(--success);
+}
+
 /* ── terminal-help.css ──────────────────────────────────────────── */
 .terminal-help {
   font-family: var(--font-code);

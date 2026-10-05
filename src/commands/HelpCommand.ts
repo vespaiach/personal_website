@@ -2,6 +2,7 @@ import { CatCommand } from "./CatCommand.ts";
 import { CdCommand } from "./CdCommand.ts";
 import { ClearCommand } from "./ClearCommand.ts";
 import { Command } from "./Command.ts";
+import { ContactCommand } from "./ContactCommand.ts";
 import { LsCommand } from "./LsCommand.ts";
 import { ResumeCommand } from "./ResumeCommand.ts";
 import { TreeCommand } from "./TreeCommand.ts";
@@ -25,7 +26,16 @@ export class HelpCommand extends Command {
   }
 
   async execute(): Promise<CommandResult> {
-    const all = [CatCommand, CdCommand, ClearCommand, HelpCommand, LsCommand, ResumeCommand, TreeCommand];
+    const all = [
+      CatCommand,
+      CdCommand,
+      ClearCommand,
+      ContactCommand,
+      HelpCommand,
+      LsCommand,
+      ResumeCommand,
+      TreeCommand,
+    ];
     const rows = all
       .map(
         (command) =>

@@ -23,6 +23,7 @@ describe("helpModal", () => {
       { syntax: "cat <file_path>", description: "Print a file's contents." },
       { syntax: "cd [directory_path]", description: "Change the current directory." },
       { syntax: "clear", description: "Clear the terminal output log." },
+      { syntax: "contact", description: "Show a form to send me a message." },
       { syntax: "help", description: "List every available command." },
       { syntax: "ls [file_path]", description: "List a virtual directory's contents." },
       { syntax: "resume", description: "Print my resume from anywhere: cd ~/about && cat resume.md." },

@@ -11,6 +11,7 @@
       <template x-if="result.kind === 'html'"><div x-html="result.html"></div></template>
       <template x-if="result.kind === 'text'"><pre x-text="result.text"></pre></template>
       <template x-if="result.kind === 'error'"><p class="command-line__error" x-text="result.message"></p></template>
+      <template x-if="result.kind === 'contact'"><load src="partials/contact-form.html" /></template>
     </div>
   </template>
 </section>

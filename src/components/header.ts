@@ -29,5 +29,9 @@ export function registerHeader() {
     showHelp() {
       dialogById("help-modal")?.showModal();
     },
+
+    showContact() {
+      Alpine.store("prompts").add("contact", Alpine.store("cwd").value);
+    },
   }));
 }

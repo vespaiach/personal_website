@@ -35,6 +35,9 @@ describe("HelpCommand", () => {
       '<td class="cmd">cd [directory_path]</td><td class="desc">Change the current directory.</td>',
     );
     expect(html).toContain('<td class="cmd">clear</td><td class="desc">Clear the terminal output log.</td>');
+    expect(html).toContain(
+      '<td class="cmd">contact</td><td class="desc">Show a form to send me a message.</td>',
+    );
     expect(html).toContain('<td class="cmd">help</td><td class="desc">List every available command.</td>');
     expect(html).toContain(
       '<td class="cmd">ls [file_path]</td><td class="desc">List a virtual directory\'s contents.</td>',

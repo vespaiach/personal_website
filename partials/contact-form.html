@@ -1,0 +1,86 @@
+<div x-data="contactForm()" x-id="['contact-name', 'contact-email', 'contact-message']" class="contact-form">
+  <p x-show="blocked" class="contact-form__cooldown">you can send another one after 5 minutes</p>
+  <div x-show="!blocked" class="contact-form__body">
+    <header class="content-view__header">
+      <div class="view-eyebrow">~/contact</div>
+      <h2 class="content-view__title">Send me a message</h2>
+      <p class="content-view__lead">All fields are required. I reply from my own inbox, usually within a few days.</p>
+    </header>
+
+    <form x-show="status !== 'sent'" class="contact-form__form" novalidate @submit.prevent="submit()">
+      <fieldset class="contact-form__fieldset" :disabled="$store.contact.sending">
+        <div class="contact-form__field">
+          <label class="contact-form__label" :for="$id('contact-name')">Name</label>
+          <input
+            x-ref="name"
+            x-model="fields.name"
+            :id="$id('contact-name')"
+            type="text"
+            name="name"
+            autocomplete="name"
+            class="contact-form__input"
+            :class="{ 'contact-form__input--invalid': errors.name }"
+            :aria-invalid="errors.name ? 'true' : 'false'"
+            :aria-describedby="$id('contact-name') + '-hint'"
+          />
+          <p :id="$id('contact-name') + '-hint'" class="contact-form__hint" :class="{ 'contact-form__hint--error': errors.name }" x-text="errors.name || nameCount"></p>
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" :for="$id('contact-email')">Email</label>
+          <input
+            x-ref="email"
+            x-model="fields.email"
+            :id="$id('contact-email')"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="name@example.com"
+            class="contact-form__input contact-form__input--mono"
+            :class="{ 'contact-form__input--invalid': errors.email }"
+            :aria-invalid="errors.email ? 'true' : 'false'"
+            :aria-describedby="$id('contact-email') + '-hint'"
+          />
+          <p :id="$id('contact-email') + '-hint'" x-show="errors.email" class="contact-form__hint contact-form__hint--error" x-text="errors.email"></p>
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" :for="$id('contact-message')">Message</label>
+          <textarea
+            x-ref="message"
+            x-model="fields.message"
+            :id="$id('contact-message')"
+            name="message"
+            rows="8"
+            class="contact-form__input contact-form__textarea"
+            :class="{ 'contact-form__input--invalid': errors.message }"
+            :aria-invalid="errors.message ? 'true' : 'false'"
+            :aria-describedby="$id('contact-message') + '-hint'"
+            @keydown.meta.enter.prevent="submit()"
+            @keydown.ctrl.enter.prevent="submit()"
+          ></textarea>
+          <p :id="$id('contact-message') + '-hint'" class="contact-form__hint" :class="{ 'contact-form__hint--error': errors.message }" x-text="errors.message || messageCount"></p>
+        </div>
+
+        <input x-model="fields.website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="contact-form__honeypot" />
+
+        <div class="contact-form__actions">
+          <button type="submit" class="contact-form__send">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <span x-text="status === 'sending' ? 'Sending...' : 'Send'">Send</span>
+          </button>
+          <span class="contact-form__shortcut">⌘ enter to send</span>
+        </div>
+      </fieldset>
+      <p class="contact-form__status" aria-live="polite" x-text="status === 'error' ? '→ couldn\'t send. try again.' : ''"></p>
+    </form>
+
+    <div x-show="status === 'sent'" class="contact-form__receipt">
+      <dl class="contact-form__receipt-list">
+        <div><dt>from:</dt><dd x-text="`${sentTo.name} <${sentTo.email}>`"></dd></div>
+        <div><dt>message:</dt><dd x-text="receiptMessage"></dd></div>
+      </dl>
+      <p class="contact-form__sent" x-text="`→ sent. I will reply to ${sentTo.email}.`"></p>
+    </div>
+  </div>
+</div>

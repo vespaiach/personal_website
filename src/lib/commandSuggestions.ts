@@ -12,6 +12,7 @@ export const FIXED_COMMANDS: ReadonlyArray<readonly [string, string]> = [
   ["tree ~", "two levels"],
   ["clear", ""],
   ["help", "all commands"],
+  ["contact", "send me a message"],
 ];
 
 function matches(label: string, query: string): boolean {

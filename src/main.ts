@@ -4,14 +4,27 @@ import Alpine from "alpinejs";
 
 import { registerCommandLine } from "./components/command-line";
 import { registerCommandPalette } from "./components/command-palette";
+import { registerContactForm } from "./components/contact-form";
 import { registerHeader } from "./components/header";
 import { registerHelpModal } from "./components/help-modal";
 import { registerImageViewer } from "./components/image-viewer";
 import { registerTerminal } from "./components/terminal";
 import manifest from "./manifest.json";
 
+const CONTACT_SENT_AT_KEY = "contact-sent-at";
+
+function readContactSentAt(): number | null {
+  try {
+    const value = Number(localStorage.getItem(CONTACT_SENT_AT_KEY));
+    return value > 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
 registerCommandLine();
 registerCommandPalette();
+registerContactForm();
 registerHeader();
 registerHelpModal();
 registerImageViewer();
@@ -40,6 +53,17 @@ Alpine.store("manifest", {
   values: manifest,
   get(path: string) {
     return this.values[path] ? { existing: true, value: this.values[path] } : { existing: false };
+  },
+});
+
+Alpine.store("contact", {
+  sending: false,
+  sentAt: readContactSentAt(),
+  markSent() {
+    this.sentAt = Date.now();
+    try {
+      localStorage.setItem(CONTACT_SENT_AT_KEY, String(this.sentAt));
+    } catch {}
   },
 });
 

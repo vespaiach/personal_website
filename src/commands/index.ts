@@ -1,6 +1,7 @@
 import { CatCommand } from "./CatCommand.ts";
 import { CdCommand } from "./CdCommand.ts";
 import { ClearCommand } from "./ClearCommand.ts";
+import { ContactCommand } from "./ContactCommand.ts";
 import { HelpCommand } from "./HelpCommand.ts";
 import { LsCommand } from "./LsCommand.ts";
 import { ResumeCommand } from "./ResumeCommand.ts";
@@ -10,6 +11,7 @@ export const commandClasses = {
   cat: CatCommand,
   cd: CdCommand,
   clear: ClearCommand,
+  contact: ContactCommand,
   help: HelpCommand,
   ls: LsCommand,
   resume: ResumeCommand,
