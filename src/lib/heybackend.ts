@@ -3,7 +3,7 @@ export const HEYBACKEND_ENDPOINT = "https://heybackend.com/v1/s/FWgE3Ek1jwoPxc4p
 export async function submitToHeybackend(payload: Record<string, string>): Promise<void> {
   const response = await fetch(HEYBACKEND_ENDPOINT, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 

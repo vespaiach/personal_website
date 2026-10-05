@@ -116,7 +116,6 @@ describe("contactForm", () => {
     await form.submit();
 
     expect(submitToHeybackend).toHaveBeenCalledWith({
-      type: "contact",
       name: "Trinh",
       email: "trinh@example.com",
       message: "Hello from a coder",

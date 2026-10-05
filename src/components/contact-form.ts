@@ -87,7 +87,7 @@ export function registerContactForm() {
         this.status = "sending";
         store.sending = true;
         try {
-          await submitToHeybackend({ type: "contact", ...sentTo });
+          await submitToHeybackend(sentTo);
         } catch {
           this.status = "error";
           return;

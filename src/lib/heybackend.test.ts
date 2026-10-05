@@ -10,18 +10,18 @@ describe("submitToHeybackend", () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200 });
     vi.stubGlobal("fetch", fetchMock);
 
-    await submitToHeybackend({ type: "contact", name: "Trinh" });
+    await submitToHeybackend({ name: "Trinh" });
 
     expect(fetchMock).toHaveBeenCalledWith(HEYBACKEND_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ type: "contact", name: "Trinh" }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "Trinh" }),
     });
   });
 
   it("throws when the response is not ok", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 500 }));
 
-    await expect(submitToHeybackend({ type: "contact" })).rejects.toThrow("Heybackend responded with 500");
+    await expect(submitToHeybackend({ name: "Trinh" })).rejects.toThrow("Heybackend responded with 500");
   });
 });
