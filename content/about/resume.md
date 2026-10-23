@@ -8,7 +8,7 @@ github: https://github.com/vespaiach/personal_website/blob/main/content/about/re
 Senior Full-Stack Engineer, front-end focus
 
 nta.toan@gmail.com · (657) 257-9420 · Carmel, IN
-linkedin.com/in/trinh-nguyen-us · github.com/vespaiach
+linkedin.com/in/trinh-nguyen-us · github.com/vespaiach · vespaiach.com/about/me
 
 Updated October 2026
 
