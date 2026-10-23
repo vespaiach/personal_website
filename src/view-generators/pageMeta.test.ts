@@ -40,7 +40,7 @@ describe("metaFor", () => {
     const meta = metaFor(fileSource("/about/me.md"));
 
     expect(meta.title).toBe("About Me");
-    expect(meta.description).toContain("full-stack web developer");
+    expect(meta.description).toContain("senior full-stack engineer");
     expect(meta.article).toBeUndefined();
   });
 
