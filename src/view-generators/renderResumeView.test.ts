@@ -188,9 +188,11 @@ describe("renderResumeView", () => {
     const html = renderResumeView(raw, "~/about/resume.md");
 
     expect(html).toContain('<h1 class="resume-view__name">Trinh Nguyen</h1>');
-    expect(html).toContain('<div class="resume-view__role">Full-Stack Software Engineer</div>');
-    expect(html.match(/resume-view__section-label/g)).toHaveLength(5);
-    expect(html.match(/resume-view__skill-row/g)).toHaveLength(5);
+    expect(html).toContain(
+      '<div class="resume-view__role">Senior Full-Stack Engineer, front-end focus</div>',
+    );
+    expect(html.match(/resume-view__section-label/g)).toHaveLength(6);
+    expect(html.match(/resume-view__skill-row/g)).toHaveLength(6);
     expect(html.match(/resume-view__role-entry/g)).toHaveLength(4);
     expect(html).toContain(
       'source: <a href="https://github.com/vespaiach/personal_website/blob/main/content/about/resume.md"',
