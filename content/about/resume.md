@@ -30,7 +30,6 @@ I've worked at product companies and consultancies, first in Vietnam and since 2
 ## Experience
 
 ### Senior Full-Stack Engineer (Contract) · Cream + Sugar Creative
-
 Design agency · Remote · Feb 2025 – Present
 - Built client projects from the agency's Figma designs across WordPress (Elementor), Squarespace, Webflow and Next.js.
 - Built a static Next.js site for a national healthcare research survey, and an internal web tool for healthcare teams.
@@ -40,7 +39,6 @@ Design agency · Remote · Feb 2025 – Present
 - Maintain live sites for the agency: new features, bug fixes, and technical advice. Joined early planning on projects with the agency team.
 
 ### Full-Stack Engineer · The June Care Company
-
 Childcare marketplace · Remote · Jan 2022 – Feb 2025
 - Built front-end and back-end features for a marketplace app connecting families with childcare providers.
 - Built in-app chat, provider matching and map-based search, designed to work on both desktop and mobile.
@@ -51,7 +49,6 @@ Childcare marketplace · Remote · Jan 2022 – Feb 2025
 - Worked with product and design on each feature, from UI implementation through release.
 
 ### Full-Stack Engineer · CoderPush
-
 Software consultancy · Remote, Ho Chi Minh City · Mar 2020 – Jan 2022
 - Built SEO-friendly web apps with React, Next.js, TypeScript and Node.js for client projects.
 - Added features and improved performance in existing React codebases.
@@ -59,7 +56,6 @@ Software consultancy · Remote, Ho Chi Minh City · Mar 2020 – Jan 2022
 - Wrote Jest unit tests and took part in code reviews across client projects.
 
 ### Software Engineer · Saritasa
-
 US custom software company, Vietnam office · Ho Chi Minh City · Mar 2014 – Dec 2019
 - Worked on many client projects, building front ends in Angular.js and React and back ends in ASP.NET and C#.
 - Gave input on system design, API design and database performance.
