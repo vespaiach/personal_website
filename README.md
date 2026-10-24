@@ -62,7 +62,7 @@ The site is static. At build time, `src/view-generators/` turns the files in `co
 content/*.md, *.json
         │  npm run gen:views
         ▼
-dist/generated/<uuid>.html  +  src/manifest.json
+dist/generated/<content-hash>.html  +  src/manifest.json
         │  Vite bundles the app with the manifest
         ▼
 browser: command → manifest lookup → fetch fragment → render in terminal

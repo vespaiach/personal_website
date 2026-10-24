@@ -10,11 +10,6 @@ interface Cwd {
   update(value: string): void;
 }
 
-interface CommandObject {
-  command: string;
-  arg?: string;
-}
-
 type PathResult = 
   | { valid: true; absolutePath: string; }
   | { valid: false; error: string; };

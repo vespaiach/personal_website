@@ -15,6 +15,6 @@ export class ContactCommand extends Command {
   }
 
   async execute(): Promise<CommandResult> {
-    return Promise.resolve({ kind: "contact", cwd: this.cwd });
+    return { kind: "contact", cwd: this.cwd };
   }
 }

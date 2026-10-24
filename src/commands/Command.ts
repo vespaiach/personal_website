@@ -1,10 +1,6 @@
 import Alpine from "alpinejs";
 import { toAbsolutePath } from "../lib/path.ts";
 
-export interface HasPathArgument {
-  resolvePath(): PathResult;
-}
-
 type ArgRule = "required" | "optional" | "none";
 
 export abstract class Command {
@@ -53,6 +49,21 @@ export abstract class Command {
     }
 
     return { valid: true, absolutePath, resourcePath: manifestResult.value };
+  }
+
+  protected async fetchView(): Promise<CommandResult> {
+    const result = this.resolvePath();
+    if (!result.valid) return { kind: "error", message: `${this.name}: ${result.error}`, cwd: this.cwd };
+
+    try {
+      const response = await fetch(result.resourcePath);
+      if (!response.ok) {
+        return { kind: "error", message: `${this.name}: failed to execute command`, cwd: this.cwd };
+      }
+      return { kind: "html", html: await response.text(), cwd: this.cwd };
+    } catch {
+      return { kind: "error", message: `${this.name}: failed to execute command`, cwd: this.cwd };
+    }
   }
 
   abstract execute(): Promise<CommandResult>;

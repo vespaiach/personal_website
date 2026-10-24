@@ -1,6 +1,6 @@
-import { Command, type HasPathArgument } from "./Command.ts";
+import { Command } from "./Command.ts";
 
-export class TreeCommand extends Command implements HasPathArgument {
+export class TreeCommand extends Command {
   readonly name = "tree";
   static syntax = "tree [directory_path]";
   static description = "Show a directory and everything under it as a tree.";
@@ -14,18 +14,7 @@ export class TreeCommand extends Command implements HasPathArgument {
     return new TreeCommand({ command, cwd });
   }
 
-  async execute(): Promise<CommandResult> {
-    const result = this.resolvePath();
-    if (!result.valid) return { kind: "error", message: `tree: ${result.error}`, cwd: this.cwd };
-
-    try {
-      const response = await fetch(result.resourcePath);
-      if (!response.ok) {
-        return { kind: "error", message: "tree: failed to execute command", cwd: this.cwd };
-      }
-      return { kind: "html", html: await response.text(), cwd: this.cwd };
-    } catch {
-      return { kind: "error", message: "tree: failed to execute command", cwd: this.cwd };
-    }
+  execute(): Promise<CommandResult> {
+    return this.fetchView();
   }
 }

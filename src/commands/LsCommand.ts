@@ -1,6 +1,6 @@
-import { Command, type HasPathArgument } from "./Command.ts";
+import { Command } from "./Command.ts";
 
-export class LsCommand extends Command implements HasPathArgument {
+export class LsCommand extends Command {
   readonly name = "ls";
   static syntax = "ls [file_path]";
   static description = "List a virtual directory's contents.";
@@ -14,18 +14,7 @@ export class LsCommand extends Command implements HasPathArgument {
     return new LsCommand({ command, cwd });
   }
 
-  async execute(): Promise<CommandResult> {
-    const result = this.resolvePath();
-    if (!result.valid) return { kind: "error", message: `ls: ${result.error}`, cwd: this.cwd };
-
-    try {
-      const response = await fetch(result.resourcePath);
-      if (!response.ok) {
-        return { kind: "error", message: "ls: failed to execute command", cwd: this.cwd };
-      }
-      return { kind: "html", html: await response.text(), cwd: this.cwd };
-    } catch {
-      return { kind: "error", message: "ls: failed to execute command", cwd: this.cwd };
-    }
+  execute(): Promise<CommandResult> {
+    return this.fetchView();
   }
 }

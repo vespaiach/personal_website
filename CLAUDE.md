@@ -25,7 +25,7 @@ npm run lint           # biome check (lint + format + import order)
 npm run lint:fix       # biome check --write
 ```
 
-`npm run dev` is currently broken: its `predev` hook calls `gen:content-views`, which doesn't exist (the script is `gen:views`). Even when fixed, generated views live in `dist/generated/`, so the dev server can't serve them — use `build` + `preview` to see content.
+`npm run dev` runs `gen:views` first, but generated views live in `dist/generated/`, so the dev server can't serve them — use `build` + `preview` to see content.
 
 ## Architecture
 
@@ -33,7 +33,7 @@ The site is a static "shell" over a virtual filesystem. `index.html` is the only
 
 **Build-time content pipeline** (`src/view-generators/`, run by `gen:views` via `node src/view-generators/index.ts`):
 - `collect.ts` maps `content/` onto virtual paths: `content/posts/*.md` → `/posts/*`, `content/about/*` → `/about/*`, and `/topics/<tag>` folders derived from each post's `tags` front matter (no files of their own). Colliding virtual paths throw.
-- Each source is rendered to an HTML fragment (markdown via `marked`, code via `shiki`, resume via `renderResumeView.ts`, JSON via `renderJsonView`) and written to `dist/generated/<uuid>.html`.
+- Each source is rendered to an HTML fragment (markdown via `marked`, code via `shiki`, resume via `renderResumeView.ts`, JSON via `renderJsonView`) and written to `dist/generated/<content-hash>.html`.
 - A manifest keyed by the command string (`"cat /posts/x.md"`, `"ls /topics"`, `"tree /about"`) → fragment URL is written to `src/manifest.json` (gitignored). Posts listed under a topic folder also get a `cat /topics/<tag>/<post>.md` key pointing at the post's fragment. `src/main.ts` imports it, so it must exist before `tsc` or the bundle runs — `prebuild` guarantees that.
 - Every `cat` and `ls` view also gets a full page in `pages/` (`renderPage.ts`): `cat /about/me.md` → `pages/about/me.html`, `ls /about` → `pages/about/index.html`. `ls /` and `tree` views get none; `pages/index.html` (the home page) pre-renders `ls /posts`. A page is `index.html` with three anchors rewritten — `<title>` (replaced by the whole SEO head), the header's `active="…"`, and the `<main …>` open tag, which gets a `data-cwd` (the folder itself, or a file's folder; `main.ts` starts `$store.cwd` there) and is followed by the view under a static prompt line. Keep those anchors when editing `index.html`; generation throws otherwise.
 - `renderHead.ts` writes each page's SEO head: title (≤ 60 characters) and description (≤ 160), robots, canonical, Open Graph and Twitter Card tags sharing `public/og-image.png`, and JSON-LD (`WebSite` + `Person`, plus `BlogPosting` on posts). `pageMeta.ts` supplies the text: front matter `title` (else the first heading, else the file name) and `description` (else `excerpt`; unlike `excerpt` it is never shown in the view), a dated file counts as an article, sections have hand-written meta in `SECTION_META`, and topic folders are described by the posts they list.

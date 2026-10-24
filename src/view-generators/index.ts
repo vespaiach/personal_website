@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -34,7 +34,7 @@ async function renderSource(source: Source): Promise<string> {
 }
 
 function writeView(outputDir: string, html: string): string {
-  const fileName = `${randomUUID()}.html`;
+  const fileName = `${createHash("sha256").update(html).digest("hex").slice(0, 16)}.html`;
   writeFileSync(join(outputDir, fileName), html);
   return `/generated/${fileName}`;
 }

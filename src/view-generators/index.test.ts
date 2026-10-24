@@ -30,7 +30,7 @@ afterEach(() => {
 });
 
 describe("generateViews", () => {
-  it("writes uuid-named fragments to dist/generated and a matching src/manifest.json", async () => {
+  it("writes content-hash-named fragments to dist/generated and a matching src/manifest.json", async () => {
     const root = createRoot();
 
     const manifest = await generateViews(root);
@@ -60,9 +60,9 @@ describe("generateViews", () => {
       ]),
     );
 
-    const uuidPathPattern = /^\/generated\/[0-9a-f-]{36}\.html$/;
+    const hashPathPattern = /^\/generated\/[0-9a-f]{16}\.html$/;
     for (const value of Object.values(manifest)) {
-      expect(value).toMatch(uuidPathPattern);
+      expect(value).toMatch(hashPathPattern);
     }
 
     const manifestOnDisk = JSON.parse(readFileSync(join(root, "src", "manifest.json"), "utf-8"));
@@ -206,13 +206,14 @@ describe("generateViews", () => {
   it("clears stale files from a previous run instead of accumulating them", async () => {
     const root = createRoot();
 
-    await generateViews(root);
+    const firstManifest = await generateViews(root);
     const outputDir = join(root, "dist", "generated");
     const firstRunFiles = readdirSync(outputDir);
 
     const secondManifest = await generateViews(root);
     const secondRunFiles = readdirSync(outputDir);
 
+    expect(secondManifest).toEqual(firstManifest);
     expect(secondRunFiles).toHaveLength(firstRunFiles.length);
     expect(secondRunFiles.every((f) => Object.values(secondManifest).includes(`/generated/${f}`))).toBe(true);
   });

@@ -1,6 +1,6 @@
-import { Command, type HasPathArgument } from "./Command.ts";
+import { Command } from "./Command.ts";
 
-export class CdCommand extends Command implements HasPathArgument {
+export class CdCommand extends Command {
   readonly name = "cd";
   static syntax = "cd [directory_path]";
   static description = "Change the current directory.";
@@ -24,11 +24,9 @@ export class CdCommand extends Command implements HasPathArgument {
 
   async execute(): Promise<CommandResult> {
     const result = this.resolvePath();
-    if (!result.valid) {
-      return Promise.resolve({ kind: "error", message: `cd: ${result.error}`, cwd: this.cwd });
-    }
+    if (!result.valid) return { kind: "error", message: `cd: ${result.error}`, cwd: this.cwd };
 
     this.cwd = result.absolutePath;
-    return Promise.resolve({ kind: "cwd", cwd: this.cwd });
+    return { kind: "cwd", cwd: this.cwd };
   }
 }
