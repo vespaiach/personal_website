@@ -97,6 +97,8 @@ describe("collectFolderSources", () => {
       "muddyboots.online.md",
       "smiil.ca.md",
       "solmountain.com.md",
+      "takeaglance.app.md",
+      "tracklite.md",
       "vespaiach.com.md",
     ]);
     expect(projects?.entries.every((e) => !e.isDirectory)).toBe(true);
