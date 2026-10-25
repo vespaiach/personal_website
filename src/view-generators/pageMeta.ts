@@ -32,10 +32,10 @@ const SECTION_META: Record<string, PageMeta> = {
   "/about": {
     title: "About Trinh Nguyen",
     description:
-      "About Trinh Nguyen, a full-stack web developer building for the web since 2006: bio, resume, " +
-      "tech stack and projects.",
+      "About Trinh Nguyen, a full-stack web developer building for the web since 2006: bio, resume " +
+      "and tech stack.",
   },
-  "/about/projects": {
+  "/projects": {
     title: "Projects by Trinh Nguyen",
     description:
       "A selection of projects built by Trinh Nguyen, a full-stack web developer working with TypeScript, " +

@@ -33,7 +33,8 @@ describe("buildSuggestions", () => {
     expect(buildSuggestions("CD", [])).toEqual([
       { label: "cd ~/posts", hint: "the notes" },
       { label: "cd ~/topics", hint: "one dir per tag" },
-      { label: "cd ~/about", hint: "me.md, stack.json, projects" },
+      { label: "cd ~/about", hint: "me.md, resume.md, stack.json" },
+      { label: "cd ~/projects", hint: "things I built" },
     ]);
   });
 

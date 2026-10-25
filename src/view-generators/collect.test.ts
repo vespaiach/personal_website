@@ -13,20 +13,20 @@ describe("collectFileSources", () => {
     expect(sources.some((s) => s.virtualPath === "/about/me.md" && s.kind === "markdown")).toBe(true);
     expect(sources.some((s) => s.virtualPath === "/about/resume.md" && s.kind === "resume")).toBe(true);
     expect(sources.some((s) => s.virtualPath === "/about/stack.json" && s.kind === "json")).toBe(true);
-    expect(
-      sources.some((s) => s.virtualPath === "/about/projects/vespaiach.com.md" && s.kind === "markdown"),
-    ).toBe(true);
+    expect(sources.some((s) => s.virtualPath === "/projects/vespaiach.com.md" && s.kind === "markdown")).toBe(
+      true,
+    );
     expect(sources.some((s) => s.virtualPath.startsWith("/topics"))).toBe(false);
     expect(sources.every((s) => s.type === "file")).toBe(true);
   });
 });
 
 describe("collectFolderSources", () => {
-  it("builds a root listing of the three top-level folders", () => {
+  it("builds a root listing of the four top-level folders", () => {
     const [root] = collectFolderSources(CONTENT_DIR);
 
     expect(root.virtualPath).toBe("/");
-    expect(root.entries.map((e) => e.name)).toEqual(["about", "posts", "topics"]);
+    expect(root.entries.map((e) => e.name)).toEqual(["about", "posts", "projects", "topics"]);
     expect(root.entries.every((e) => e.isDirectory)).toBe(true);
   });
 
@@ -76,20 +76,15 @@ describe("collectFolderSources", () => {
     expect(folders.some((s) => s.virtualPath === "/topics/syntax-highlight")).toBe(true);
   });
 
-  it("builds an /about listing with files and a projects directory", () => {
+  it("builds an /about listing with files only", () => {
     const about = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/about");
 
-    expect(about?.entries.map((e) => e.name).sort()).toEqual([
-      "me.md",
-      "projects",
-      "resume.md",
-      "stack.json",
-    ]);
-    expect(about?.entries.find((e) => e.name === "projects")?.isDirectory).toBe(true);
+    expect(about?.entries.map((e) => e.name).sort()).toEqual(["me.md", "resume.md", "stack.json"]);
+    expect(about?.entries.every((e) => !e.isDirectory)).toBe(true);
   });
 
-  it("builds an /about/projects listing from project files", () => {
-    const projects = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/about/projects");
+  it("builds a /projects listing from project files", () => {
+    const projects = collectFolderSources(CONTENT_DIR).find((s) => s.virtualPath === "/projects");
 
     expect(projects?.entries.map((e) => e.name).sort()).toEqual([
       "absporu.ca.md",
@@ -117,7 +112,7 @@ describe("assertNoVirtualPathCollisions", () => {
       {
         type: "file" as const,
         virtualPath: "/posts/duplicate.md",
-        filePath: "content/about/projects/duplicate.md",
+        filePath: "content/projects/duplicate.md",
         kind: "markdown" as const,
       },
     ];

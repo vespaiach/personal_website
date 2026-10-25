@@ -75,13 +75,13 @@ export function collectFileSources(contentDir: string): FileSource[] {
     });
   }
 
-  const projectsDir = join(contentDir, "about", "projects");
+  const projectsDir = join(contentDir, "projects");
   if (existsSync(projectsDir)) {
     for (const file of readdirSync(projectsDir).filter((f) => f.endsWith(".md"))) {
       const filePath = join(projectsDir, file);
       sources.push({
         type: "file",
-        virtualPath: `/about/projects/${file}`,
+        virtualPath: `/projects/${file}`,
         filePath,
         kind: kindFor(filePath),
       });
@@ -109,7 +109,7 @@ function rootFolder(): FolderSource {
   return {
     type: "folder",
     virtualPath: "/",
-    entries: ["about", "posts", "topics"]
+    entries: ["about", "posts", "projects", "topics"]
       .map(dashEntry)
       .sort((left, right) => left.name.localeCompare(right.name)),
   };
@@ -192,7 +192,7 @@ function aboutFolder(contentDir: string): FolderSource {
 }
 
 function projectsFolder(contentDir: string): FolderSource {
-  const projectsDir = join(contentDir, "about", "projects");
+  const projectsDir = join(contentDir, "projects");
   const entries = readdirSync(projectsDir, { withFileTypes: true })
     .filter((entry) => entry.isFile())
     .map((entry) =>
@@ -204,7 +204,7 @@ function projectsFolder(contentDir: string): FolderSource {
     )
     .sort((left, right) => left.name.localeCompare(right.name));
 
-  return { type: "folder", virtualPath: "/about/projects", entries };
+  return { type: "folder", virtualPath: "/projects", entries };
 }
 
 export function collectFolderSources(contentDir: string): FolderSource[] {
@@ -218,7 +218,7 @@ export function collectFolderSources(contentDir: string): FolderSource[] {
   }
 
   if (existsSync(join(contentDir, "about"))) sources.push(aboutFolder(contentDir));
-  if (existsSync(join(contentDir, "about", "projects"))) sources.push(projectsFolder(contentDir));
+  if (existsSync(join(contentDir, "projects"))) sources.push(projectsFolder(contentDir));
 
   return sources.sort((left, right) => left.virtualPath.localeCompare(right.virtualPath));
 }

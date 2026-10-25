@@ -1,8 +1,9 @@
 /**
- * We only have three virtual root directories: /posts, /topics, and /about.
+ * We only have four virtual root directories: /posts, /topics, /projects, and /about.
  * ~
 ├── about
 ├── posts
+├── projects
 └── topics
  */
 export function toAbsolutePath(anyPath: string, currentPath: string): PathResult {
