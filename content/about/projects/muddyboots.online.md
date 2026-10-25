@@ -10,7 +10,7 @@ MuddyBoots is an operations platform for oil & gas and building management teams
 
 ## What I did
 
-I built the marketing site from scratch in WordPress, turning Figma designs from the [Cream & Sugar](https://www.creamsugar.ca/) design team into a fully custom Gutenberg block build, with no page builder plugin and no off-the-shelf theme. I broke the design into modular, reusable block patterns, so the client's team can edit every section without touching code while the site stays true to a detailed, multi-section design system. I continue to maintain the site.
+I built the marketing site from scratch in WordPress, turning Figma designs from the [Cream & Sugar](https://www.creamsugar.ca/) design team into a custom Gutenberg block build, with no page builder plugin and no off-the-shelf theme. I broke the design into reusable block patterns, so the client's team can edit every section without touching code. I continue to maintain the site.
 
 ## The problem I solved
 
