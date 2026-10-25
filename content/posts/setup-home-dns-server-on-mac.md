@@ -6,6 +6,7 @@ excerpt: 'In this tutorial, I will walk you through the steps to set up a DNS se
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/setup-home-dns-server-on-mac.md
 tags: dns, dnsmasq
 ---
+In this tutorial, I will walk you through the steps to set up a DNS server on a MacBook using DNSMASQ - a lightweight and easy-to-configure DNS tool.
 
 Setting up your own DNS server grants greater control over your local network. Imagine hosting a home web server to share content within your private network—having a DNS server makes this easier. Additionally, it can improve browsing speed.
 

@@ -6,6 +6,7 @@ excerpt: 'I recently rebuilt my personal website, vespaiach.com, from the ground
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/rebuilding-my-personal-website-with-claude.md
 tags: claude-code, claude-design, alpine.js, vite.js
 ---
+I recently rebuilt my personal website, vespaiach.com, from the ground up with Claude Design and Claude Code.
 
 The idea was to create a terminal-like blog with a virtual filesystem for browsing articles, topics, projects, and information about me. I wanted the site to feel like a small operating environment for my writing, not just another blog with a different visual theme.
 

@@ -204,12 +204,9 @@ export async function renderMarkdownView(raw: string, eyebrow: string, url: stri
     .split(",")
     .map((t) => t.trim())
     .filter(Boolean);
-  const lead = fm.excerpt ?? "";
   const source = fm.github ?? "";
 
   const tagPills = tags.map((tag) => `<span class="content-view__tag">#${escapeHtml(tag)}</span>`).join("");
-
-  const leadHtml = lead ? `<p class="content-view__lead">${escapeHtml(lead)}</p>` : "";
 
   const footerHtml = renderSourceFooter(source);
   const bodyHtml = await marked.parse(body, { async: true });
@@ -224,7 +221,6 @@ export async function renderMarkdownView(raw: string, eyebrow: string, url: stri
     "</div>" +
     renderActions(title, url) +
     '<hr class="content-view__header-rule">' +
-    `${leadHtml}` +
     "</header>" +
     `${bodyHtml}${footerHtml}` +
     "</article>"

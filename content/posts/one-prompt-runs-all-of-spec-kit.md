@@ -6,6 +6,7 @@ excerpt: "I build web applications mostly alone, with Claude Code doing most of 
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/one-prompt-runs-all-of-spec-kit.md
 tags: speckit, sdd, speckit-flow, agent-loop, claude 
 ---
+I build web applications mostly alone, with Claude Code doing most of the heavy tasks.
 
 [Spec Kit](https://github.github.com/spec-kit/index.html) gave me a good process for that work: write the spec, plan it, break it into tasks, build, then check the code against the spec. I was the one typing ten slash commands in order, reading every output and deciding what to run next. So I wrote an agent loop that does the typing. It runs the whole Spec Kit pipeline from one Claude Code session and stops only when it needs a human decision.
 
