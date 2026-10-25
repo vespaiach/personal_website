@@ -48,13 +48,13 @@ describe("generateViews", () => {
         "ls /",
         "ls /posts",
         "ls /about",
-        "ls /about/projects",
+        "ls /projects",
         "ls /topics",
         "ls /topics/javascript",
         "tree /",
         "tree /posts",
         "tree /about",
-        "tree /about/projects",
+        "tree /projects",
         "tree /topics",
         "tree /topics/javascript",
       ]),
@@ -94,7 +94,8 @@ describe("generateViews", () => {
     const aboutTreeFileName = manifest["tree /about"].replace("/generated/", "");
     const aboutTreeContent = readFileSync(join(root, "dist", "generated", aboutTreeFileName), "utf-8");
     expect(aboutTreeContent).toContain(">~/about<");
-    expect(aboutTreeContent).toContain("projects");
+    expect(aboutTreeContent).toContain("me.md");
+    expect(aboutTreeContent).not.toContain("projects");
     expect(aboutTreeContent).not.toContain("typescript-notes.md");
   });
 
