@@ -6,6 +6,7 @@ excerpt: "After spending a lot of time back and forth with AI agents on software
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/turning-product-ideas-into-clear-specifications-with-ai.md
 tags: ai-prompt, product-specification, claude
 ---
+After spending a lot of time back and forth with AI agents on software product specifications, I created a reusable prompt to help AI collaborate with users during the specification process.
 
 The prompt has two parts:
 

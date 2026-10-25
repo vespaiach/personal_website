@@ -6,6 +6,7 @@ excerpt: "This is a new version of the agent from Turning Product Ideas into Cle
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/introducing-the-new-product-spec-agent.md
 tags: PRD, product-specification, claude, agent-loop 
 ---
+This is a new version of the agent from Turning Product Ideas into Clear Specifications with AI, now it's organized by feature.
 
 Read the post [Turning Product Ideas into Clear Specifications with AI](https://vespaiach.com/posts/turning-product-ideas-into-clear-specifications-with-ai.html) for more detail.
 

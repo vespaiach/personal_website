@@ -55,7 +55,7 @@ describe("renderMarkdownFragment", () => {
     const raw = readFileSync("content/posts/discard-after-usages.md", "utf-8");
     const html = renderMarkdownFragment(raw, "~/posts/discard-after-usages.md");
     expect(html).toContain(">Discard after usages<");
-    expect(html).toContain("2022-01-25   ·   411 words   ·   2 min read");
+    expect(html).toContain("2022-01-25   ·   434 words   ·   2 min read");
     expect(html).toContain(">#javascript<");
   });
 });

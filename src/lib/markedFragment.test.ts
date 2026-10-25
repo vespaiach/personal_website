@@ -130,7 +130,7 @@ describe("renderMarkdownView", () => {
       "https://vespaiach.com/posts/discard-after-usages.html",
     );
     expect(html).toContain(">Discard after usages<");
-    expect(html).toContain("2022-01-25   ·   411 words   ·   2 min read");
+    expect(html).toContain("2022-01-25   ·   434 words   ·   2 min read");
     expect(html).toContain(">#javascript<");
   });
 });

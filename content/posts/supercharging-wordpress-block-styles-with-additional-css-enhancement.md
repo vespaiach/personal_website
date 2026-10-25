@@ -6,6 +6,7 @@ excerpt: "WordPress built-in block Additional CSS is simple and useful for small
 github: https://github.com/vespaiach/personal_website/blob/main/content/posts/supercharging-wordpress-block-styles-with-additional-css-enhancement.md
 tags: wordpress, wp-plugin 
 ---
+WordPress built-in block Additional CSS is simple and useful for small style changes, but it is limited when a block needs more flexible styling.
 
 So, I built [Additional CSS Enhancement](https://github.com/vespaiach/additional-css-enhancement-plugin) to give us a safer, more powerful way to write scoped, block-level CSS directly inside the Block Editor.
 

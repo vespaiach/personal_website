@@ -136,7 +136,6 @@ export function renderMarkdownFragment(raw: string, eyebrow: string): string {
     .split(",")
     .map((t) => t.trim())
     .filter(Boolean);
-  const lead = fm.excerpt ?? "";
   const source = fm.github ?? "";
   const blocks = toBlocks(body);
 
@@ -147,10 +146,6 @@ export function renderMarkdownFragment(raw: string, eyebrow: string): string {
         `#${escapeHtml(tag)}</span>`,
     )
     .join("");
-
-  const leadHtml = lead
-    ? `<p style="margin: 0; font-size: 18px; line-height: 30px; color: var(--text-strong);">${escapeHtml(lead)}</p>`
-    : "";
 
   const footerHtml = source
     ? '<div style="display: flex; flex-direction: column; gap: 12px; margin-top: 6px;">' +
@@ -171,7 +166,6 @@ export function renderMarkdownFragment(raw: string, eyebrow: string): string {
     `<span style="font-family: var(--font-code); font-size: 12px; color: var(--text-mute);">${escapeHtml(meta)}</span>${tagPills}` +
     "</div>" +
     '<hr style="border: 0; height: 1px; margin: 2px 0 0; background: var(--hairline);">' +
-    `${leadHtml}` +
     "</header>" +
     `${blocksHtml}${footerHtml}` +
     "</article>"
