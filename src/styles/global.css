@@ -560,18 +560,10 @@ samp {
   display: none;
 }
 
-@media (max-width: 640px) {
-  .site-header__inner {
-    justify-content: space-between;
-  }
-
+@media (max-width: 499px) {
   .site-header__nav,
   .site-header__actions {
     position: relative;
-  }
-
-  .site-header__nav {
-    flex: none;
   }
 
   .site-header__menu-toggle {
