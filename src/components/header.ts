@@ -6,6 +6,9 @@ function dialogById(id: string) {
 
 export function registerHeader() {
   Alpine.data("header", () => ({
+    navOpen: false,
+    menuOpen: false,
+
     init() {
       window.addEventListener("keydown", (e: KeyboardEvent) => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
