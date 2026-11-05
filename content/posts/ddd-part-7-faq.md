@@ -18,6 +18,7 @@ tags: ddd
 5. [A walkthrough](https://vespaiach.com/posts/ddd-part-5-a-walkthrough.html) — one feature built end to end through every layer
 6. [Common pitfalls](https://vespaiach.com/posts/ddd-part-6-common-pitfalls.html) — the modeling mistakes and the runtime traps
 7. **Frequently asked questions** — the concepts people get tangled, and the two that quietly lose data ← *you are here*
+8. [DDD in a real Next.js project](https://vespaiach.com/posts/ddd-part-8-nextjs-in-practice.html) — the same issue tracker, from Postgres to the form
 
 Every question here came from someone actually trying to apply DDD for the first time — half of them while reading about it, half while writing the code. They are grouped by what they are really about, because several are the same confusion wearing different clothes.
 

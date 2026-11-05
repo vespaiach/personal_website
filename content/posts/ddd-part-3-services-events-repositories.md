@@ -18,6 +18,7 @@ tags: ddd
 5. [A walkthrough](https://vespaiach.com/posts/ddd-part-5-a-walkthrough.html) — one feature built end to end through every layer
 6. [Common pitfalls](https://vespaiach.com/posts/ddd-part-6-common-pitfalls.html) — the modeling mistakes and the runtime traps
 7. [Frequently asked questions](https://vespaiach.com/posts/ddd-part-7-faq.html) — the concepts people get tangled, and the two that quietly lose data
+8. [DDD in a real Next.js project](https://vespaiach.com/posts/ddd-part-8-nextjs-in-practice.html) — the same issue tracker, from Postgres to the form
 
 Part 2 covered entities, value objects and aggregates. This part covers the three patterns that handle everything those cannot: logic that spans objects, side effects that should not be hard-wired, and persistence that should stay out of the domain.
 

@@ -18,6 +18,7 @@ tags: ddd
 5. [A walkthrough](https://vespaiach.com/posts/ddd-part-5-a-walkthrough.html) — one feature built end to end through every layer
 6. **Common pitfalls** — the modeling mistakes and the runtime traps ← *you are here*
 7. [Frequently asked questions](https://vespaiach.com/posts/ddd-part-7-faq.html) — the concepts people get tangled, and the two that quietly lose data
+8. [DDD in a real Next.js project](https://vespaiach.com/posts/ddd-part-8-nextjs-in-practice.html) — the same issue tracker, from Postgres to the form
 
 Part 5 showed the pattern working. This part is the other half of learning it: everything that goes wrong, in roughly the order you will hit it.
 
