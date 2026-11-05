@@ -2054,7 +2054,6 @@ samp {
   font-size: 12px;
   line-height: 24px;
   color: var(--text-faint);
-  white-space: nowrap;
 }
 
 .resume-view__bullets {

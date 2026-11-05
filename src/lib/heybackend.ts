@@ -1,4 +1,4 @@
-export const HEYBACKEND_ENDPOINT = "https://heybackend.com/v1/s/FWgE3Ek1jwoPxc4pYe4dwogi";
+export const HEYBACKEND_ENDPOINT = "https://heybackend.com/v1/s/WIwNWsmK8N4HB0bB3NVCsrLi";
 
 export async function submitToHeybackend(payload: Record<string, string>): Promise<void> {
   const response = await fetch(HEYBACKEND_ENDPOINT, {
