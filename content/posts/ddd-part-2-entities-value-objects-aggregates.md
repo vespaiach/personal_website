@@ -139,7 +139,7 @@ issue.status = IssueStatus.DONE               // only valid values exist
 ┌─────────────────────────────────────────────┐
 │  Project Aggregate                          │
 │                                             │
-│  Project (Root) ← only entry point         │
+│  Project (Root) ← only entry point          │
 │    ├── Member[]    ← child entity           │
 │    ├── Milestone[] ← child entity           │
 │    ├── Comment[]   ← child entity           │

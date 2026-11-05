@@ -133,14 +133,14 @@ They share only the `userId` — a thin reference, never the full object.
 **Why:** Contexts cannot be completely isolated — they need to share data. Without a context map, those relationships are implicit and undocumented. Teams accidentally create tight coupling between contexts, making independent deployment and change impossible. The context map makes integration points explicit and intentional.
 
 ```
-┌──────────────┐   userId   ┌──────────────┐   issueId    ┌──────────────┐
+┌──────────────┐   userId  ┌──────────────┐   issueId    ┌──────────────┐
 │   Identity   │──────────►│   Project    │─────────────►│    Issue     │
 │   context    │           │   context    │              │   context    │
 └──────────────┘           └──────────────┘              └──────┬───────┘
-                                                                 │
+                                                                │
                                                     IssueAssigned event
-                                                                 │
-                                                                 ▼
+                                                                │
+                                                                ▼
                                                          ┌──────────────┐
                                                          │ Notification │
                                                          │   context    │──► email

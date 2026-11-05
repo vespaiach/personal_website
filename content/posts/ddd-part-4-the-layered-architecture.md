@@ -79,6 +79,50 @@ Parts 2 and 3 covered the tactical building blocks. This part gives them a place
 - Infrastructure depends on Domain (to implement its interfaces)
 - Nothing depends on Infrastructure except the composition root
 
+## Use cases
+
+The application layer has exactly one building block, and it is the one piece of tactical DDD that Parts 2 and 3 did not cover — because it does not belong to the domain.
+
+**What:** A use case is one thing a user can do, written as one class with one public method. It loads the aggregates it needs, calls them, saves them, and publishes what happened.
+
+**Why:** Something has to sequence a request, and the domain cannot do it. An entity cannot load another aggregate. A domain service holds rules, not orchestration. A request handler could do the sequencing, but then the logic only exists for callers arriving over HTTP — a scheduled job or a CLI command doing the same thing would have to duplicate it. The use case is where the sequence lives, independent of what triggered it.
+
+```ts
+class AssignIssueUseCase {
+  constructor(
+    private readonly issues:   IIssueRepository,
+    private readonly projects: IProjectRepository,
+    private readonly auth:     ProjectAuthorizationService,
+    private readonly events:   IEventPublisher,
+  ) {}
+
+  async execute(cmd: AssignIssueCommand): Promise<void> {
+    // load → authorize → check what spans aggregates → change → save → announce
+  }
+}
+```
+
+### What a use case does, and what it must not
+
+| A use case does | A use case does not |
+| --- | --- |
+| Load aggregates through repositories | Contain business rules that belong on an entity |
+| Call a domain service to authorize | Know about HTTP, queues, or the database |
+| Check rules that genuinely span two aggregates | Reference another use case |
+| Call methods on aggregates | Decide what happens after the event |
+| Save what changed, publish the events | Format a response |
+
+The defining constraint is the third row on the left. A use case is the **only** place two aggregates may meet, because the aggregate rules from Part 2 forbid either one from holding a reference to the other. That is what the layer exists for.
+
+### Four habits that keep them honest
+
+- **One public method.** A class with `assign`, `unassign` and `reassign` is three use cases wearing a coat.
+- **Input is a plain command object.** No framework request types; the presentation layer translates.
+- **No branching on the caller.** A use case that behaves differently for the web and the API is two use cases.
+- **Past about fifty lines, look for the rule that escaped.** Fat use cases are almost always an entity's logic that leaked outward.
+
+Use cases are also the natural seam for anything that wraps a whole user action — a transaction, an audit entry, a metric. Those are cross-cutting concerns, applied around `execute()` rather than written inside it.
+
 ## Everything in the app at a glance
 
 | Concept | Example in the app | What / why |
