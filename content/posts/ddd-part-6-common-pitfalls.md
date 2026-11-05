@@ -14,13 +14,14 @@ tags: ddd
 1. [Strategic DDD](https://vespaiach.com/posts/ddd-part-1-strategic-design.html) — subdomains, bounded contexts, ubiquitous language, the context map
 2. [The building blocks](https://vespaiach.com/posts/ddd-part-2-entities-value-objects-aggregates.html) — entities, value objects, aggregates and aggregate roots
 3. [Services, events, repositories](https://vespaiach.com/posts/ddd-part-3-services-events-repositories.html) — logic that spans objects, and keeping storage out of the domain
-4. [The layered architecture](https://vespaiach.com/posts/ddd-part-4-the-layered-architecture.html) — the four layers and the dependency rule
+4. [The layered architecture](https://vespaiach.com/posts/ddd-part-4-the-layered-architecture.html) — the four layers, the dependency rule, and use cases
 5. [A walkthrough](https://vespaiach.com/posts/ddd-part-5-a-walkthrough.html) — one feature built end to end through every layer
-6. **Common pitfalls** — the modeling mistakes, the runtime traps, and the questions that always come up ← *you are here*
+6. **Common pitfalls** — the modeling mistakes and the runtime traps ← *you are here*
+7. [Frequently asked questions](https://vespaiach.com/posts/ddd-part-7-faq.html) — the concepts people get tangled, and the two that quietly lose data
 
 Part 5 showed the pattern working. This part is the other half of learning it: everything that goes wrong, in roughly the order you will hit it.
 
-Three kinds of problem, and they fail differently. **Modeling mistakes** are visible in the code and caught in review if anyone is looking. **Operational pitfalls** look fine in review and surface in production. **Conceptual confusion** shows up as questions people ask while applying DDD for the first time — and a wrong answer there quietly shapes the whole design.
+Two kinds of problem, and they fail differently. **Modeling mistakes** are visible in the code and caught in review if anyone is looking. **Operational pitfalls** look fine in review and surface in production — nothing about them shows up until the day a queue retries or two people click at once. A third kind, the conceptual confusion that shapes a design before any of this, has its own post: [Part 7](https://vespaiach.com/posts/ddd-part-7-faq.html).
 
 ## Modeling mistakes
 
@@ -139,173 +140,6 @@ The most expensive one, and the hardest to see while doing it. Aggregate boundar
 
 If you cannot yet explain the difference between two concepts to a domain expert without hedging, you are not ready to put a boundary between them. Build the obvious version, learn what the arguments are actually about, then refactor toward the model.
 
-## The questions that always come up
-
-These five come up every time someone applies DDD for the first time. Each one is a reasonable question hiding a specific misconception, and each is worth answering before you write the code rather than after.
-
-### "Is a notification an entity or a value object?"
-
-The question usually comes from noticing that notifications feel small and disposable — more like data than like a thing with a life of its own.
-
-It is an entity. The test is not size or importance, it is identity plus mutable state:
-
-```ts
-class Notification {
-  constructor(
-    readonly notificationId: string,   // identity
-    readonly userId: string,
-    readonly type: NotificationType,
-    private read: boolean,             // state that changes
-  ) {}
-
-  markAsRead(): void {
-    this.read = true
-  }
-}
-```
-
-It has an ID, and `read` goes from false to true over its lifetime. That is an entity.
-
-The real question underneath is usually a different one: *should it be its own aggregate?* No — a notification has no meaning without the person being notified, so it lives inside the User aggregate. Being an entity and being an aggregate root are separate questions, and conflating them is where the confusion starts.
-
-### "What actually separates an aggregate root from a regular entity?"
-
-Both have identity. Both can have mutable state. The difference is entirely about access.
-
-|  | Aggregate root | Regular entity |
-| --- | --- | --- |
-| Identity | Yes | Yes |
-| Reachable from outside | Directly | Only through its root |
-| Has a repository | Yes | No |
-| Lifecycle | Independent | Lives and dies with its root |
-| Publishes domain events | Yes | No — the root does it |
-
-In the tracker: `Project`, `Issue` and `User` are roots. `Member`, `Milestone`, `Comment`, `Log` and `Notification` are not.
-
-What going around the root actually costs you:
-
-```ts
-// Bypassing the root
-const milestone = await milestoneRepo.findById("m1")
-milestone.name = "Sprint 2"
-await milestoneRepo.save(milestone)
-// Nobody checked the caller's permission on the project.
-// No log entry was written.
-// No event was published.
-// The project's own updatedAt is now wrong.
-
-// Through the root
-const project = await projectRepo.findById("p1")
-project.updateMilestone("m1", { name: "Sprint 2" }, actorId)
-await projectRepo.save(project)
-```
-
-The rule of thumb worth memorizing: **if you find yourself wanting a repository for a non-root entity, either it should be its own aggregate root, or you are about to break a boundary.**
-
-### "Doesn't the aggregate root just become a god object?"
-
-It can, and this is the most legitimate objection to the whole pattern. Left unchecked, `Project` ends up with forty methods covering members, milestones, comments, attachments, issues, ranking and permissions.
-
-Three things keep it from happening:
-
-**Draw the boundary correctly.** Issue is its own aggregate, not a child of Project. That decision alone removes roughly half of what `Project` would otherwise be asked to do — assignment, ranking, issue comments, issue logs.
-
-**Let child entities validate themselves.** The root coordinates; it does not implement.
-
-```ts
-// The root doing the child's job
-class Project {
-  updateMilestone(id: string, changes: MilestoneProps): void {
-    const milestone = this.milestones.find(m => m.milestoneId === id)
-    if (!milestone) throw new DomainError("Not found")
-    if (changes.dueDate < changes.startDate) throw new DomainError("Invalid dates")
-    if (changes.name.length > 100) throw new DomainError("Name too long")
-    milestone.name = changes.name
-  }
-}
-
-// The child owning its own rules
-class Milestone {
-  applyChanges(changes: Partial<MilestoneProps>): void {
-    if (changes.dueDate && changes.startDate && changes.dueDate < changes.startDate) {
-      throw new DomainError("Due date cannot be before start date")
-    }
-    if (changes.name && changes.name.length > 100) {
-      throw new DomainError("Milestone name too long")
-    }
-    Object.assign(this, changes)
-  }
-}
-
-class Project {
-  updateMilestone(id: string, changes: Partial<MilestoneProps>): void {
-    const milestone = this.milestones.find(m => m.milestoneId === id)
-    if (!milestone) throw new DomainError("Milestone not found in this project")
-    milestone.applyChanges(changes)
-    this.updatedAt = new Date()
-  }
-}
-```
-
-**Move cross-cutting concerns out.** Authorization, ranking and text parsing are domain services, not methods on the root.
-
-After all three, `Project` holds around fifteen focused methods — three for members, three for milestones, a few for comments and attachments, one for project info, and some read-only getters. If yours passes twenty, something in that list has escaped.
-
-### "If aggregates can't reference each other, how do they work together?"
-
-They do not. The use case layer is the only place where two aggregates meet.
-
-```ts
-// An aggregate reaching for another aggregate
-class Issue {
-  async assignTo(userId: string): Promise<void> {
-    const project = await projectRepository.findById(this.projectId)
-    // Issue now depends on a repository, and on Project.
-    // Two aggregates are welded together and neither can be tested alone.
-  }
-}
-```
-
-The use case holds both instead, and the shape is the same every time:
-
-```
-1. Load the aggregates it needs (in parallel where possible)
-2. Authorize, via a domain service
-3. Check the rules that span aggregates
-4. Call methods on each aggregate
-5. Save what changed
-6. Publish the events
-```
-
-Assigning an issue touches three: `Project` (is the assignee a member?), `Issue` (add the assignee), and `User` (notification preferences). None of the three imports either of the others.
-
-A practical consequence worth knowing up front: each aggregate saves separately, so a use case that changes two of them is not atomic unless your store gives you a transaction across both. Decide per use case whether that matters. For an assignment it usually does not; for anything involving money it does.
-
-### "Where do the side effects actually run?"
-
-The use case publishes an event and returns. Something else does the work:
-
-```
-Use case          Queue              Handler            Email service
-   │                │                   │                    │
-   │ publish ──────►│                   │                    │
-   │◄── returns     │                   │                    │
-   │                │─── delivers ─────►│                    │
-   │                │                   │─── send ──────────►│
-   │                │◄── acknowledges ──│                    │
-```
-
-The request finishes as soon as the event is published. The user is not waiting on an email server, and an email failure does not fail the assignment.
-
-Three things this buys you, and one it costs:
-
-- The API stays fast — publishing is a single write, not a round trip to a mail provider.
-- Failures retry on their own, instead of surfacing as a failed user action.
-- New side effects are new handlers; the use case never changes.
-- The cost: the work now happens somewhere the original request cannot see. Handler failures need their own logging and their own alerting, or they fail silently — and that is a genuinely different operational posture from code that runs inline.
-
-None of this is tied to a particular queue or mail provider. The domain defines `publish(event)` and `send(email)`; which products sit behind those two methods is a deployment decision, and the point of the whole exercise is that it stays one.
-
 ## When not to use DDD
 
 Everything in this series costs effort, and it costs reading effort too — a new engineer meets five files for one update where they expected one. That is worth paying only when the complexity is genuinely in the business rules.
@@ -321,4 +155,4 @@ What is worth taking even into a small project: ubiquitous language, value objec
 
 ---
 
-That is the series. The ideas here are old and the code is ordinary. What makes them work is being deliberate about where each rule lives, and holding that line when the shortcut is right there.
+**Next:** [Part 7](https://vespaiach.com/posts/ddd-part-7-faq.html) closes the series with the questions people ask about DDD itself — what separates a subdomain from a domain object, a root from a child entity, a domain service from infrastructure, and the two about events and saving that quietly lose data when answered wrongly.
