@@ -19,6 +19,7 @@ tags: ddd
 6. [Common pitfalls](https://vespaiach.com/posts/ddd-part-6-common-pitfalls.html) — the modeling mistakes and the runtime traps
 7. [Frequently asked questions](https://vespaiach.com/posts/ddd-part-7-faq.html) — the concepts people get tangled, and the two that quietly lose data
 8. [DDD in a real Next.js project](https://vespaiach.com/posts/ddd-part-8-nextjs-in-practice.html) — the same issue tracker, from Postgres to the form
+9. [Error logs and audit trails](https://vespaiach.com/posts/ddd-part-9-logging-and-audit.html) — the two concerns the books skip
 
 The first four parts introduced the pieces one at a time. This one builds a single feature through all of them, in order, so you can see where each decision gets made — and, just as importantly, why it gets made there rather than somewhere more convenient.
 

@@ -19,6 +19,7 @@ tags: ddd
 6. **Common pitfalls** — the modeling mistakes and the runtime traps ← *you are here*
 7. [Frequently asked questions](https://vespaiach.com/posts/ddd-part-7-faq.html) — the concepts people get tangled, and the two that quietly lose data
 8. [DDD in a real Next.js project](https://vespaiach.com/posts/ddd-part-8-nextjs-in-practice.html) — the same issue tracker, from Postgres to the form
+9. [Error logs and audit trails](https://vespaiach.com/posts/ddd-part-9-logging-and-audit.html) — the two concerns the books skip
 
 Part 5 showed the pattern working. This part is the other half of learning it: everything that goes wrong, in roughly the order you will hit it.
 
