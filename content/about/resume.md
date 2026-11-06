@@ -31,8 +31,7 @@ I've worked at product companies and consultancies, first in Vietnam and since 2
 
 ### Senior Full-Stack Engineer (Contract) · Cream + Sugar Creative
 Design agency · Remote · Feb 2025 – Present
-- Built client projects from the agency's Figma designs across WordPress (Elementor), Squarespace, Webflow and Next.js.
-- Built a static Next.js site for a national healthcare research survey, and an internal web tool for healthcare teams.
+- Built client projects from the agency’s Figma designs in WordPress, Squarespace, Webflow and Next.js, including marketing sites and internal tools for client teams.
 - Built utility tools for clients, such as scripts that collect site data into Google Sheets reports, replacing manual exports.
 - Wrote scripts that reuse content across a site, so clients update information in one place instead of copying it to every page.
 - Set up integrations between client sites and third-party services, so data like new subscribers flows into the client's marketing tools automatically.
