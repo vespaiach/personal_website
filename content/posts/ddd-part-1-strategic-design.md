@@ -7,7 +7,7 @@ github: https://github.com/vespaiach/personal_website/blob/main/content/posts/dd
 tags: ddd
 ---
 
-> *This post was generated with AI assistance.*
+> *This post was written with AI assistance.*
 
 **The series**
 
